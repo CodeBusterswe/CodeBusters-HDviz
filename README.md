@@ -1,3 +1,9 @@
+![Continuos integration](https://github.com/CodeBusterswe/CodeBusters-HDviz/workflows/CI/badge.svg)
+[![codecov](https://codecov.io/gh/CodeBusterswe/CodeBusters-HDviz/branch/main/graph/badge.svg?token=RE8H5BVP7D)](https://codecov.io/gh/CodeBusterswe/CodeBusters-HDviz)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=CodeBusterswe_CodeBusters-HDviz&metric=ncloc)](https://sonarcloud.io/dashboard?id=CodeBusterswe_CodeBusters-HDviz)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=CodeBusterswe_CodeBusters-HDviz&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=CodeBusterswe_CodeBusters-HDviz)
+
+
 ![CodeBustersLogo](./extra/CodeBsuters.JPG)
 
 # HD Viz: visualizzazione di dati multidimensionali
