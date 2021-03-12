@@ -8,8 +8,8 @@ class Model {
     
     //tutte le strutture dati, quindi array per dimensioni, dati delle dimensioni, dimensioni selezionate, dimensioni ridotte, 
 
-    dim = new Dimension;
-    dims = new Dimensions;
+    dim = new Dimension();
+    dims = new Dimensions();
 
     constructor(){
         makeAutoObservable(this)

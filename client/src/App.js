@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import Store from './Model'
-import ViewModel from './components/ViewModel'
-import Controller from './components/Controller'
+import Store from './model/Model'
+import ViewModel from './ViewModel'
+import Controller from './ViewController'
 
 const App = () => {
   const store = useContext(Store);

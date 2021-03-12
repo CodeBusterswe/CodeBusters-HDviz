@@ -1,16 +1,17 @@
 // import vari
 
-class Dimensions{
-    constructor(){
-        this.dimensions = [];
+class Dimension{
+    constructor(value = "dims", isChecked = true, isNumeric=true, isRedux = false, toRedux = true){
+        this.value = value;
+        this.isChecked = isChecked;
+        this.isNumeric = isNumeric;
+        this.isRedux = isRedux;
+        this.toRedux = toRedux;
     }
-    addDimension(value = "dims", isChecked = true, isNumeric=true, isRedux = false, toRedux = true){
-        let d = new Dimension(value, isChecked, isNumeric, isRedux, toRedux);
-        this.dimensions.push(d);
-    }
-    get allDimensionsName(){
-        return this.dimensions.map(d => d.value())
+    get value(){
+        return this.value;
     }
 
     //metodi per manipolare la classe
 }
+export default Dimension
