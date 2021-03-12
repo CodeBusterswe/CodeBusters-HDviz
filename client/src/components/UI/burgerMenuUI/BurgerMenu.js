@@ -13,7 +13,7 @@ const BurgerMenu = props => {
     return (
 
 <Menu {...props}>
-
+      <div>
       <CSVReader id="MyCSVReader"
         onDrop={handleOnDrop}
         onError={handleOnError}
@@ -23,6 +23,7 @@ const BurgerMenu = props => {
       >
         <span>Drop CSV file here or click to upload.</span>
       </CSVReader>
+      </div>
 
 
       <a className="menu-item" href="/burgers">
