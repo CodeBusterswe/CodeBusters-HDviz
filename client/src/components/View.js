@@ -1,5 +1,7 @@
 import React from 'react'
 import {observer} from 'mobx-react-lite'
+import BurgerMenu from './UI/burgerMenuUI/BurgerMenu'
+import "./style.css"
 
 const View = observer((props) => {
     const{
@@ -7,8 +9,9 @@ const View = observer((props) => {
     } = props
 
     return (
-        <div>
-            <p>Prova</p>
+        <div id="App">
+        <BurgerMenu
+        />
         </div>
     )
 })
