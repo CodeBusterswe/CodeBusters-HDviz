@@ -8,16 +8,15 @@ const algoritmi = [
   { label: "LLE", value: 4 }
 ];
 
-const SelectorDimension = () => (
-  <div className="container">
-    <div className="row">
-      <div className="col-md-4"></div>
-      <div className="col-md-4">
-        <Select options={ algoritmi } />
-      </div>
-      <div className="col-md-4"></div>
-    </div>
+const SelectorDimension = props => {
+  const {
+
+  } = props
+
+return (
+  <div className="col-md-4">
+  <Select options={ algoritmi } />  
   </div>
-);
-      
+)
+}
 export default SelectorDimension       
