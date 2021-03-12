@@ -8,6 +8,12 @@ body {
     outline: 0;
 }
 
+.listDimension
+{
+  margin:auto;
+  width: 15em;
+}
+
 /* BURGER MENU                                         */
 
 #App {

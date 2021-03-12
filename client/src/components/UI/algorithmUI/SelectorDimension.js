@@ -14,7 +14,7 @@ const SelectorDimension = props => {
   } = props
 
 return (
-  <div className="col-md-4">
+  <div className="listDimension">
   <Select options={ algoritmi } />  
   </div>
 )
