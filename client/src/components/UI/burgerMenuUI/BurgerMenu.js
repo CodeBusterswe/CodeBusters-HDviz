@@ -1,16 +1,13 @@
 import React from 'react'
-import { slide as Menu } from 'react-burger-menu'
+import { bubble as Menu } from 'react-burger-menu'
 
 const BurgerMenu = props => {
 
     return (
 <Menu {...props}>
-      <a className="menu-item" href="/">
-        Home
-      </a>
 
       <a className="menu-item" href="/burgers">
-        Burgers
+        Burgerssssssssssss
       </a>
 
       <a className="menu-item" href="/pizzas">

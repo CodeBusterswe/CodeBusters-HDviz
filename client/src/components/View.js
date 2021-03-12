@@ -10,9 +10,13 @@ const View = observer((props) => {
 
     return (
         <div id="App">
-        <BurgerMenu
-        />
-        </div>
+        <BurgerMenu pageWrapId={"page-wrap"} outerContainerId={"App"} width={ '40%' } isOpen={ true }/>
+  
+        <main id="page-wrap">
+          <h1>all the rest</h1>
+          <h2>of the application</h2>
+        </main>
+      </div>
     )
 })
 export default View
