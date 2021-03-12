@@ -2,10 +2,8 @@ import Model from "./model/Model";
 
 class ViewModel{
 
-    model = new Model();
-
-    constructor(model){
-        this.model = model;
+    constructor(_model){
+        this.model = _model;
     }
 
     getDimensions(){

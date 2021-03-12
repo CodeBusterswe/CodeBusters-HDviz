@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
-import Store from './model/Model'
+import Model from './model/Model'
 import ViewModel from './ViewModel'
 import ViewController from './ViewController'
 
 const App = () => {
-  const store = useContext(Store);
-  const viewModel = new ViewModel(store);
+  const model = useContext(Model);
+  const viewModel = new ViewModel(model);
   return (
     <ViewController viewModel = {viewModel}/>
   )
