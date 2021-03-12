@@ -8,36 +8,17 @@ class ViewModel{
         return this.model.getDimensions();
     }
 
-    //metodo per validazione del file CSV caricato
-    
-    //trasformazione del CSV e caricamento dei dati
+    /*
+    reduceDimensions(algorithm) {
+        //dimensioni o dati passati come parametro?
+        const data = []; //dati ricavati dalle dimensioni interessate 
 
-    //settaggio dell'algoritmo di riduzione dimensionale e settaggi personalizzazioni varie
-    
-    //set/get del grafico di D3 scelto
-    
-    //caricamento nel model dei dati di un file JSON
+        const dimRedStrategy = new DimReductionStrategy();
+      
+        dimRedStrategy.setStrategy(algorithm);
 
-    /*esempi:
-                validateCSV();
-                csvToData();
-                
-                loadData(){
-                    validateCSV()
-                    csvToData()
-                    model.setData(); //carica i dati
-                }
-
-                setDimRedAlgorithm(){
-                    model.setAlgorithm(); //imposta algoritmo di riduzione dimensionale
-                }
-
-                loadDataFromJSON(){
-                    //comunica con il model e carica
-                }
-
-                getD3Graph();
-                setD3Graph();
+        dimRedStrategy.executeStrategy(paramaters,data);
+    }
     */
 
 }

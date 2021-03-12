@@ -14,26 +14,39 @@ class Model {
         makeAutoObservable(this)
     }
 
-    //getters e setters vari, in modo da passare dati alla ModelView e caricare i dati nel Model dalla ModelView, 
-    //tra cui anche dei setters per settare l'algoritmo di riduzione dimensionale e parametri annessi
     getDimensions(){
         return this.dims;
     }
 
-    //metodi per la riduzione dimensionale per poi creare l'array con le dimensioni ridotte
-    
-    //creazione del file JSON per la sessione e download, i dati son passati dal viewModel e lo genera
-    
-    //caricamento dati da JSON della sessione, in modo che venga richiamato dal ViewModel per settare le strutture dati
+    /*
+    constructor(){
+        dimensions = new Dimensions();
+        originalData = [];
+        selectedData = [];
+        makeAutoObservable(this);
+    }
 
-    /*esempi:
-            setData();
-            getData();
-            setAlgorithm();
-            riduzioneDimensionale();
-            getNumericDimension();
-            getCategoricDimension();
-            .....
+    getDimensions() {
+        return this.dimensions;
+    }
+
+    getOriginalData() {
+        return this.originalData;
+    }
+
+    getSelectedData() {
+        return this.selectedData;
+    }
+
+    getNumericDimensions() {
+        return this.dimensions.filter(dim => dim.isNumeric && dim.isChecked && dim.toRedux) //is o to redux?
+                              .map(d => d.value);
+    }
+
+    getSelectedDimensions() {
+        return this.dimensions.filter(dim => dim.isChecked && !dim.isRedux) //is o to redux?
+                              .map(d => d.value);
+    }
     */
        
 }
