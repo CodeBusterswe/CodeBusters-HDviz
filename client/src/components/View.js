@@ -10,7 +10,7 @@ const View = observer((props) => {
 
     return (
         <div id="App">
-        <BurgerMenu pageWrapId={"page-wrap"} outerContainerId={"App"} width={ '40%' } isOpen={ true }/>
+        <BurgerMenu pageWrapId={"page-wrap"} outerContainerId={"App"} width={ '40%' } isOpen={ true } />
   
         <main id="page-wrap">
           <h1>all the rest</h1>

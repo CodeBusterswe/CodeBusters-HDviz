@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DimList = props => {
+const CheckBox = props => {
     const {
 
     } = props
@@ -19,3 +19,4 @@ const DimList = props => {
   )
  }
 
+export default CheckBox
