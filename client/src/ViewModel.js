@@ -1,5 +1,3 @@
-import Model from "./model/Model";
-
 class ViewModel{
 
     constructor(_model){

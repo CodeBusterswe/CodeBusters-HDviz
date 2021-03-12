@@ -1,4 +1,3 @@
-import { createContext } from 'react'
 import { makeAutoObservable } from "mobx"
 
 import Dimension from './Dimension';
@@ -39,4 +38,4 @@ class Model {
        
 }
 
-export default createContext(new Model())
+export default Model
