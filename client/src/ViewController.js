@@ -1,5 +1,5 @@
 import React from 'react'
-import View from './View'
+import View from './components/View'
 import {observer} from 'mobx-react-lite'
 
 const Controller = observer((props) => {
