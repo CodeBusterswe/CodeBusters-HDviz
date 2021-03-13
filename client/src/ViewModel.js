@@ -1,15 +1,15 @@
 class ViewModel{
 
-    /*
+    
 
     constructor(_model){
         this.model = _model;
     }
 
     getDimensions(){
-        return this.model.getDimensions();
+     //   return this.model.getDimensions();
     }
-*/
+
 
 
     /*
