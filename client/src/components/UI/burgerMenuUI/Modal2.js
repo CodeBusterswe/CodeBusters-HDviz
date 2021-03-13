@@ -18,9 +18,6 @@ const Modal2 = props => {
                 overlay: {
                     backgroundColor: '#373a47'
                 },
-                content: {
-                    left: '5%'
-                }
             }}
         >
 

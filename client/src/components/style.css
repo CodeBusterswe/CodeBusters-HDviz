@@ -16,9 +16,6 @@ body {
 
 /* BURGER MENU                                         */
 
-
-
-
 /* Individual item */
 
 .bm-item {
@@ -41,6 +38,7 @@ body {
 
 /* Position and sizing of burger button */
 .bm-burger-button {
+  z-index: 0!important; /* burger icon hidden behind modal */
   position: fixed;
   width: 36px;
   height: 30px;
