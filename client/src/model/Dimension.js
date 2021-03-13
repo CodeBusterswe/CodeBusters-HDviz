@@ -8,10 +8,5 @@ class Dimension{
         this._isRedux = isRedux;
         this._toRedux = toRedux;
     }
-    get value(){
-        return this._value;
-    }
-
-    //metodi per manipolare la classe
 }
 export default Dimension

@@ -5,22 +5,8 @@ import Dimensions from './Dimensions';
 
 class Model {
     
-    //tutte le strutture dati, quindi array per dimensioni, dati delle dimensioni, dimensioni selezionate, dimensioni ridotte, 
-
-    dim = new Dimension();
-    dims = new Dimensions();
-
     constructor(){
-        makeAutoObservable(this)
-    }
-
-    getDimensions(){
-        return this.dims;
-    }
-
-    /*
-    constructor(){
-        dimensions = new Dimensions();
+        dimensions = [];
         originalData = [];
         selectedData = [];
         makeAutoObservable(this);
@@ -37,18 +23,42 @@ class Model {
     getSelectedData() {
         return this.selectedData;
     }
-
+    //viewModel?
     getNumericDimensions() {
-        return this.dimensions.filter(dim => dim.isNumeric && dim.isChecked && dim.toRedux) //is o to redux?
+        return this.dimensions.filter(dim => dim.isNumeric && dim.isChecked && dim.toRedux)
                               .map(d => d.value);
+    }
+    //viewModel?
+    getSelectedDimensions() {
+        return this.dimensions.filter(dim => dim.isChecked && !dim.isRedux) 
+                              .map(d => d.value);
+    }
+    
+    loadData(dimensions, data) {
+        this.originalData = data;
+        this.dimensions = dimensions;
+        this.selectedData = data;
     }
 
-    getSelectedDimensions() {
-        return this.dimensions.filter(dim => dim.isChecked && !dim.isRedux) //is o to redux?
-                              .map(d => d.value);
+    addDimensionToDataset(dimension, data) {
+        this.dimensions.push(dimension);
+        this.getSelectedData.push(data);
     }
-    */
-       
+
+    //assumo che siano nello stesso ordine 
+    removeDimensionToDataset(dimension) {
+        const pos = this.dimensions.indexOf(dimension);
+        if(pos > -1) {
+            this.dimensions.splice(pos,1);
+            this.selectedData.splice(pos,1);
+        }
+    }
+
+    reset() {
+        this.originalData = [];
+        this.dimensions = [];
+        this.selectedData = [];
+    }   
 }
 
 export default Model
