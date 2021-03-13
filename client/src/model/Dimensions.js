@@ -1,5 +1,5 @@
 import Dimension from './Dimension'
-
+/*
 class Dimensions{
     constructor(){
         this.dimensions = [];
@@ -14,3 +14,4 @@ class Dimensions{
     //metodi per manipolare la classe
 }
 export default Dimensions
+*/

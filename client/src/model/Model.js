@@ -5,6 +5,8 @@ import Dimensions from './Dimensions';
 
 class Model {
     
+    /*
+
     constructor(){
         dimensions = [];
         originalData = [];
@@ -59,6 +61,7 @@ class Model {
         this.dimensions = [];
         this.selectedData = [];
     }   
+    */
 }
 
 export default Model
