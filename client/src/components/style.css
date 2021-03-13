@@ -16,18 +16,7 @@ body {
 
 /* BURGER MENU                                         */
 
-#App {
-  font-family: sans-serif;
 
-  /* Give app full page to work with */
-  height: 100vh;
-}
-
-#page-wrap {
-  text-align: center;
-
-
-}
 
 
 /* Individual item */
