@@ -7,7 +7,7 @@ const MyCSVReader = props => {
     const viewModel = useStore()
 
     function handleOnDrop(file){
-        viewModel.readFile(file)
+        viewModel.parseAndLoadCsvData(file);
     }
     function handleOnError(error){
         console.log("errore")
