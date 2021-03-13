@@ -1,5 +1,7 @@
 class ViewModel{
 
+    /*
+
     constructor(_model){
         this.model = _model;
     }
@@ -7,6 +9,8 @@ class ViewModel{
     getDimensions(){
         return this.model.getDimensions();
     }
+*/
+
 
     /*
     reduceDimensions(algorithm) {
