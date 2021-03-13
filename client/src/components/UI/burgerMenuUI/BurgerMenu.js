@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { slide as Menu } from 'react-burger-menu'
 // try scaleRotate at the end (elastic) or slide
-import MyCSVReader from './MyCSVReader'
-import DimList from './DimList'
 import { useStore } from "../../../ContextProvider"
 import Modal1 from './Modal1'
 import Modal2 from './Modal2'
@@ -37,19 +35,16 @@ const BurgerMenu = props => {
 
     <Menu width={'40%'} isOpen={menuIsOpen}>
       <div>
-        <button onClick={openModal1}>Open Modal 1</button>
+        <button onClick={openModal1}>Carica Dati</button>
         <Modal1
           modal1IsOpen={modal1IsOpen}
           closeModal1={closeModal1}
         />
-        <button onClick={openModal2}>Open Modal 2</button>
+        <button onClick={openModal2}>Secondo Modal</button>
         <Modal2
           modal2IsOpen={modal2IsOpen}
           closeModal2={closeModal2}
         />
-      </div>
-      <div>
-        <DimList />
       </div>
     </Menu>
   )

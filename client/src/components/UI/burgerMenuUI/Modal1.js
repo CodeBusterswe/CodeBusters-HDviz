@@ -1,6 +1,7 @@
 import React from 'react'
 import Modal from 'react-modal'
 import MyCSVReader from './MyCSVReader'
+import DimList from './DimList'
 
 const Modal1 = props => {
 
@@ -19,18 +20,18 @@ const Modal1 = props => {
                 overlay: {
                     backgroundColor: '#373a47'
                 }
-                
+
             }}
         >
-
-            <button onClick={closeModal1}>close</button>
-            BISOGNA DISABILITARE IL TASTO DI POTER APRIRE IL MENU COL MODAL APERTO
             <div>
-            <MyCSVReader />
+                <MyCSVReader />
+                qui poi ci stanno le dimList
+                <DimList />
+                <button onClick={closeModal1}>Torna al menù</button>
             </div>
         </Modal>
-
-    )
-}
+            
+            )
+        }
 
 export default Modal1
