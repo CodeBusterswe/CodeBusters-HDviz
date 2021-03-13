@@ -1,6 +1,6 @@
 import {createContext, useContext} from 'react'
-import Model from './model/Model'
+import ViewModel from "./ViewModel";
 
-export const AppContext = createContext(new Model());
+export const AppContext = createContext(ViewModel);
 export const AppContextProvider = AppContext.Provider;
 export const useStore = () => useContext(AppContext);

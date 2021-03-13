@@ -1,15 +1,17 @@
+import Model from "./model/Model";
 class ViewModel{
 
-    
-
-    constructor(_model){
-        this.model = _model;
+    constructor(){
+        this.model = new Model();
     }
 
     getDimensions(){
      //   return this.model.getDimensions();
     }
 
+    readFile(file){
+        console.log(file);
+    }
 
 
     /*
