@@ -22,6 +22,7 @@ const Modal1 = props => {
         >
 
             <button onClick={closeModal1}>close</button>
+            BISOGNA DISABILITARE IL TASTO DI POTER APRIRE IL MENU COL MODAL APERTO
             <div>
             <MyCSVReader />
             </div>
