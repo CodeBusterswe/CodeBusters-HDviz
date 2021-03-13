@@ -1,16 +1,13 @@
 import { makeAutoObservable } from "mobx"
 
 import Dimension from './Dimension';
-import Dimensions from './Dimensions';
 
 class Model {
     
-    /*
-
     constructor(){
-        dimensions = [];
-        originalData = [];
-        selectedData = [];
+        this.dimensions = [];
+        this.originalData = [];
+        this.selectedData = [];
         makeAutoObservable(this);
     }
 
@@ -25,15 +22,13 @@ class Model {
     getSelectedData() {
         return this.selectedData;
     }
-    //viewModel?
+    
     getNumericDimensions() {
-        return this.dimensions.filter(dim => dim.isNumeric && dim.isChecked && dim.toRedux)
-                              .map(d => d.value);
+        return this.dimensions.filter(dim => dim.getChecked() && dim.getNumeric() && dim.getToReduce());
     }
-    //viewModel?
+    
     getSelectedDimensions() {
-        return this.dimensions.filter(dim => dim.isChecked && !dim.isRedux) 
-                              .map(d => d.value);
+        return this.dimensions.filter(dim => dim.getChecked() && !dim.getIsReduced());
     }
     
     loadData(dimensions, data) {
@@ -44,10 +39,10 @@ class Model {
 
     addDimensionToDataset(dimension, data) {
         this.dimensions.push(dimension);
-        this.getSelectedData.push(data);
+        this.selectedData.push(data);
     }
 
-    //assumo che siano nello stesso ordine 
+    //se non serve calncellare
     removeDimensionToDataset(dimension) {
         const pos = this.dimensions.indexOf(dimension);
         if(pos > -1) {
@@ -61,7 +56,6 @@ class Model {
         this.dimensions = [];
         this.selectedData = [];
     }   
-    */
 }
 
 export default Model
