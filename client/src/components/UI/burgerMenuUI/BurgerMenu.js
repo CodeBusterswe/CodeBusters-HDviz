@@ -33,13 +33,15 @@ const BurgerMenu = props => {
 
   return (
 
-    <Menu width={'40%'} isOpen={menuIsOpen}>
+    <Menu width={'10%'} isOpen={menuIsOpen}>
       <div>
         <button onClick={openModal1}>Carica Dati</button>
         <Modal1
           modal1IsOpen={modal1IsOpen}
           closeModal1={closeModal1}
         />
+        <br>
+        </br>
         <button onClick={openModal2}>Secondo Modal</button>
         <Modal2
           modal2IsOpen={modal2IsOpen}
