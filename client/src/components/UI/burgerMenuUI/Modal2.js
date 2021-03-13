@@ -13,6 +13,7 @@ const Modal2 = props => {
         <Modal
             isOpen={modal2IsOpen}
             onRequestClose={closeModal2}
+            ariaHideApp={false}
             style={{
                 overlay: {
                     backgroundColor: '#373a47'
