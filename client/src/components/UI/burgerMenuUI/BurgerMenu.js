@@ -3,14 +3,13 @@ import { elastic as Menu } from 'react-burger-menu'
 // try scaleRotate at the end (elastic) or slide
 import MyCSVReader from './MyCSVReader'
 import DimList from './DimList'
+import { useStore } from "../../../ContextProvider";
 
 const BurgerMenu = props => {
-  const {
-  } = props
-
+  const viewModel = useStore()
     return (
 
-<Menu {...props}>
+<Menu>
       <div>
       <MyCSVReader/>
       <DimList/>

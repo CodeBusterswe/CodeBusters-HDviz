@@ -11,8 +11,6 @@ const View = observer(() => {
         <div id="App">
         <BurgerMenu pageWrapId={"page-wrap"} outerContainerId={"App"} width={ '40%' } isOpen={ true }/>
         <main id="page-wrap">
-          <h1>all the rest</h1>
-          <h2>of the application</h2>
           <SelectorDimension width={ '40%' }/>
         </main>
       </div>
