@@ -1,6 +1,6 @@
 import React from "react"
 import { CSVReader } from "react-papaparse"
-import { useStore } from "../../../ContextProvider";
+import { useStore } from "../../../../ContextProvider"
 
 function MyCSVReader(props) {
 	const config = {

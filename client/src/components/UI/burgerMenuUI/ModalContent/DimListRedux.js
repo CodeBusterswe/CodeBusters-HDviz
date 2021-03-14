@@ -1,6 +1,6 @@
 import React from "react"
-import CheckBoxRedux from "./CheckBoxRedux"
-import { useStore } from "../../../ContextProvider"
+import CheckBoxRedux from "../CheckBoxRedux"
+import { useStore } from "../../../../ContextProvider"
 
 const DimListRedux = props => {
 	const viewModel = useStore()
