@@ -13,7 +13,7 @@ class FastmapStrategy extends AlgorithmInterface{
 
 	startDR(parameters,data) {
 		const matrix = dr.Matrix.from(data);
-		let alg = new dr.FASTMAP(matrix, parameters);
+		let alg = new dr.FASTMAP(matrix, parameters.DimensionsNumber);
 		return alg.transform();
 	}
 }

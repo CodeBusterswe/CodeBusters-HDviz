@@ -13,6 +13,7 @@ class ViewModel{
 	getDimensions(){
 		return this.model.getDimensions();
 	}
+
 	getOriginalData(){
 		return this.model.getOriginalData();
 	}
@@ -39,18 +40,33 @@ class ViewModel{
 			let d = new Dimension(dimName);
 			d.isNumeric(+parsedData[0][dimName] ? true : false)
 			return d;
-		});                                           
+		});  
 
 		return [parsedData, dimensions];
 	}
+
 	loadDataAndDims(data, dims){
-		this.model.loadData(dims, data)
-		this.updateSelectedData()
+		this.model.loadData(dims, data);
+		this.updateSelectedData();
+
+		//per provare riduzione dimensionale
+		/*
+		const paramaters = {
+			Name: "Prova",
+			DimensionsNumber: 2,
+			Neighbors: 20,
+			Perplexity: 40,
+			Epsilon: 10
+		}
+		this.reduceDimensions(AlgorithmType.tSNE, paramaters, data);
+		*/
 	}
+
 	updateDims(dims){
 		this.model.loadDimensions(dims);
 		this.updateSelectedData()
 	}
+
 	haveNotANumberValue(dataset) {
 		//const notNumber = value => isNaN(value);
 		//dataset.some( row => Object.values(row).some(notNumber) );
@@ -63,7 +79,8 @@ class ViewModel{
 			}
 		}); 
 		return not_nan;
-	}  
+	}
+
 	updateSelectedData(){
 		const checkedDims = this.model.getSelectedDimensions()
 		//con filter tolgo i dati che hanno alcune dimensioni numeriche selezionate NaN; e con map prendo le dimensioni selezionate
@@ -101,7 +118,7 @@ class ViewModel{
 		
 		let newDimsFromReduction = [];
     	for (let i = 1; i <= reduction._cols; i++) {
-			let d = new Dimension(algorithm+i); //set the name of the new reduced dimensions (alg1, alg2, ...)
+			let d = new Dimension(paramaters.Name+i);
 			d.isReduced(true);
       		newDimsFromReduction.push(d);
     	}
@@ -115,7 +132,7 @@ class ViewModel{
 			  j++;
 			});
 		}
-		
+
 		this.model.addDimensionsToDataset(newDimsFromReduction,newDataFromReduction);
 	}
 	 
