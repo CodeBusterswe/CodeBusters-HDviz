@@ -1,4 +1,4 @@
-import {createContext, useContext} from 'react'
+import {createContext, useContext} from "react"
 import ViewModel from "./ViewModel";
 
 export const AppContext = createContext(ViewModel);

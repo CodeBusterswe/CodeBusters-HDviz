@@ -9,18 +9,18 @@ class AlgorithmInterface {
     matrix = null;
 
     constructor() {
-        if (this.constructor === AlgorithmInterface) {
-            throw new TypeError("Abstract classes can't be instantiated.");
-        }
+    	if (this.constructor === AlgorithmInterface) {
+    		throw new TypeError("Abstract classes can't be instantiated.");
+    	}
     }
 
     executeStrategy() {
-        throw new TypeError(
-            "Method 'executeStrategy()' must be implemented."
-        );
+    	throw new TypeError(
+    		"Method 'executeStrategy()' must be implemented."
+    	);
     }
 
-    //stessa cosa per altre funzioni
+	//stessa cosa per altre funzioni
 }
 
 export default AlgorithmInterface;

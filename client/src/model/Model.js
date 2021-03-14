@@ -1,61 +1,61 @@
 import { makeAutoObservable } from "mobx"
 
-import Dimension from './Dimension';
+import Dimension from "./Dimension";
 
 class Model {
     
-    constructor(){
-        this.dimensions = [];
-        this.originalData = [];
-        this.selectedData = [];
-        makeAutoObservable(this);
-    }
+	constructor(){
+		this.dimensions = [];
+		this.originalData = [];
+		this.selectedData = [];
+		makeAutoObservable(this);
+	}
 
-    getDimensions() {
-        return this.dimensions;
-    }
+	getDimensions() {
+		return this.dimensions;
+	}
 
-    getOriginalData() {
-        return this.originalData;
-    }
+	getOriginalData() {
+		return this.originalData;
+	}
 
-    getSelectedData() {
-        return this.selectedData;
-    }
+	getSelectedData() {
+		return this.selectedData;
+	}
     
-    getNumericDimensions() {
-        return this.dimensions.filter(dim => dim.getChecked() && dim.getNumeric() && dim.getToReduce());
-    }
+	getNumericDimensions() {
+		return this.dimensions.filter(dim => dim.getChecked() && dim.getNumeric() && dim.getToReduce());
+	}
     
-    getSelectedDimensions() {
-        return this.dimensions.filter(dim => dim.getChecked() && !dim.getIsReduced());
-    }
+	getSelectedDimensions() {
+		return this.dimensions.filter(dim => dim.getChecked() && !dim.getIsReduced());
+	}
     
-    loadData(dimensions, data) {
-        this.originalData = data;
-        this.dimensions = dimensions;
-        this.selectedData = data;
-    }
+	loadData(dimensions, data) {
+		this.originalData = data;
+		this.dimensions = dimensions;
+		this.selectedData = data;
+	}
 
-    addDimensionToDataset(dimension, data) {
-        this.dimensions.push(dimension);
-        this.selectedData.push(data);
-    }
+	addDimensionToDataset(dimension, data) {
+		this.dimensions.push(dimension);
+		this.selectedData.push(data);
+	}
 
-    //se non serve calncellare
-    removeDimensionToDataset(dimension) {
-        const pos = this.dimensions.indexOf(dimension);
-        if(pos > -1) {
-            this.dimensions.splice(pos,1);
-            this.selectedData.splice(pos,1);
-        }
-    }
+	//se non serve calncellare
+	removeDimensionToDataset(dimension) {
+		const pos = this.dimensions.indexOf(dimension);
+		if(pos > -1) {
+			this.dimensions.splice(pos,1);
+			this.selectedData.splice(pos,1);
+		}
+	}
 
-    reset() {
-        this.originalData = [];
-        this.dimensions = [];
-        this.selectedData = [];
-    }   
+	reset() {
+		this.originalData = [];
+		this.dimensions = [];
+		this.selectedData = [];
+	}   
 }
 
 export default Model

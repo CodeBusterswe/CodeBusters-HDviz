@@ -29,7 +29,34 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "complexity": ["error", 20],
+        "no-extra-parens": "error",
+        "no-extra-semi": "error",
+        "dot-location": ["error", "object"],
+        "dot-notation": "error",
+        "eqeqeq": "error",
+        "no-multi-spaces": "error",
+        "indent": ["error", "tab"],
+        "new-parens": "error",
+        "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
+        "quotes": ["error", "double"]
+    }
   },
   "browserslist": {
     "production": [
