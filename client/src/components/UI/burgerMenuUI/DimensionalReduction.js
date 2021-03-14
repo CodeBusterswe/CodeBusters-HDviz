@@ -11,7 +11,8 @@ const DimensionalReduction = props => {
 	const viewModel = useStore()
 	const {
 		dims,
-		handleChangeDims
+		handleChangeDims,
+		reduxDims
 	} = props
 
 	function changeNeighbours(e){
@@ -62,6 +63,7 @@ const DimensionalReduction = props => {
 			{
 				renderParams()
 			}
+			<button onClick={reduxDims}>Redux Dims</button>
 		</div>
 	)
 }
