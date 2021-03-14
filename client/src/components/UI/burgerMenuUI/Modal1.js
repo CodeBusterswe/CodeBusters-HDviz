@@ -4,8 +4,8 @@ import MyCSVReader from "./MyCSVReader"
 import DimList from "./DimList"
 import {Button} from "react-bootstrap"
 import { useStore } from "../../../ContextProvider"
-import {observable, toJS} from "mobx"
-import {observer} from "mobx-react-lite"
+import {toJS} from "mobx"
+import {observer, useLocalObservable} from "mobx-react-lite"
 
 const Modal1 = observer((props) => {
 	const {
@@ -21,11 +21,8 @@ const Modal1 = observer((props) => {
 			viewModel.loadDataAndDims(localData, localDimensions)//questo viene chiamato quando l'utente cambia il file
 		else	
 			viewModel.updateDims(localDimensions) //quessto viene chiamato quando l'utente aggiorna le dimensioni
-		
-		console.log("localData", localData);
-		console.log("localDims", localDimensions);
-		console.log(viewModel.getDimensions());
-		console.log(viewModel.getOriginalData());
+
+		closeModal1()
 	}
 	//funzione utilizzata da CSV Reader per salvare localmente dati e dimensioni
 	function setLocalStates(newData, newDims){
@@ -33,16 +30,21 @@ const Modal1 = observer((props) => {
 		setLocalDimensions(newDims);
 	}
 	function selectAllDimensions(event){
-		localDimensions.forEach(dimension => {
+		let temp = [...localDimensions]
+		temp.forEach(dimension => {
 			dimension._isChecked = event.target.checked
 		});
+		setLocalDimensions(temp)
 		console.log(localDimensions)
 	}
 	function selectDimension(event){
-		localDimensions.forEach(dimension =>{
+		let temp = [...localDimensions]
+		temp.forEach(dimension =>{
 			if(dimension.value === event.target.id)
 				dimension._isChecked = event.target.checked
 		})
+		setLocalDimensions(temp)
+		console.log(localDimensions)
 	}
 	function areAllSelected(){
 		return localDimensions.length === localDimensions.filter(d => d._isChecked).length

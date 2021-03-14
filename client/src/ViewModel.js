@@ -1,5 +1,6 @@
 import Dimension from "./model/Dimension";
 import Model from "./model/Model";
+import { toJS } from "mobx"
 import DimReductionStrategy from "./viewModel/DimReductionStrategy"
 import * as druid from "@saehrimnir/druidjs";
 class ViewModel{
@@ -43,12 +44,37 @@ class ViewModel{
 	}
 	loadDataAndDims(data, dims){
 		this.model.loadData(dims, data)
+		this.updateSelectedData()
 	}
 	updateDims(dims){
 		this.model.loadDimensions(dims);
-		//Aggiorno i dati prendendo solo i selezionati
-		const selectedData = null;
+		this.updateSelectedData()
+	}
+	haveNotANumberValue(dataset) {
+		//const notNumber = value => isNaN(value);
+		//dataset.some( row => Object.values(row).some(notNumber) );
+
+		let not_nan = true;
+		dataset.forEach(dim => {
+			if(isNaN(dataset[dim])){
+				not_nan = false;
+				//return; non c'è modo di fermare un forEach se non con una eccezione
+			}
+		}); 
+		return not_nan;
+	}  
+	updateSelectedData(){
+		const checkedDims = this.model.getSelectedDimensions()
+		//con filter tolgo i dati che hanno alcune dimensioni numeriche selezionate NaN; e con map prendo le dimensioni selezionate
+    	let selectedData = toJS(this.model.getOriginalData()).map(d => {
+        	return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]))
+     	})//.filter(this.haveNotANumberValue);
 		this.model.updateSelectedData(selectedData);
+		 //log di test
+		 console.log("original: ",toJS(this.model.getOriginalData()))
+		 console.log("selected: ",toJS(this.model.getSelectedData()))
+		 console.log(toJS(this.model.getDimensions()))
+
 	}
     
 	reduceDimensions(algorithm) {
@@ -63,20 +89,6 @@ class ViewModel{
 	}
 
 	//{sepal_length: 4.9, sepal_width: 3, petal_length: 1.4, petal_width: 0.2, species: "setosa"}
-	haveNotANumberValue(dataset) {
-        
-		const notNumber = value => isNaN(value);
-		dataset.some( row => Object.values(row).some(notNumber) );
-
-		let not_nan = true;
-		dataset.forEach(dim => {
-			if(isNaN(dataset[dim])){
-				not_nan = false;
-				//return; non c'è modo di fermare un forEach se non con una eccezione
-			}
-		}); 
-		return not_nan;
-	}   
-
+	 
 }
 export default ViewModel

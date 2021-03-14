@@ -17,6 +17,7 @@ const DimList = observer((props) => {
 						type="checkbox"
 						checked={allSelected}
 						key="checkAll"
+						value="checkAll"
 						id="checkAll"
 						label="Seleziona tutto"
 						onChange={selectAllDimensions}
@@ -28,6 +29,7 @@ const DimList = observer((props) => {
 					return <Form.Check
 						type="checkbox"
 						checked={dim._isChecked}
+						value={dim.value}
 						key={dim.value}
 						id={dim.value}
 						label={dim.value}

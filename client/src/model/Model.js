@@ -34,7 +34,6 @@ class Model {
 	loadData(dimensions, data) {
 		this.originalData = data;
 		this.dimensions = dimensions;
-		this.selectedData = data;
 	}
 	loadDimensions(dimensions){
 		this.dimensions = dimensions;
