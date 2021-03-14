@@ -11,32 +11,39 @@ const DimList = observer((props) => {
 	} = props
 	return (
 		<Form>
-			{
-				dimensions.length!==0 ?
-					<Form.Check 
-						type="checkbox"
-						checked={allSelected}
-						key="checkAll"
-						value="checkAll"
-						id="checkAll"
-						label="Seleziona tutto"
-						onChange={selectAllDimensions}
-					/> : null
-			}
-			{	
-				dimensions.filter(dim => !dim._isRedux).map((dim) =>
+			<Form.Row>
 				{
-					return <Form.Check
-						type="checkbox"
-						checked={dim._isChecked}
-						value={dim.value}
-						key={dim.value}
-						id={dim.value}
-						label={dim.value}
-						onChange={selectDimension}
-					/>
-				})
-			}
+					dimensions.length!==0 ?
+						<Form.Check 
+							custom
+							inline
+							type="checkbox"
+							checked={allSelected}
+							key="checkAll"
+							value="checkAll"
+							id="checkAll"
+							label="Seleziona tutto"
+							onChange={selectAllDimensions}
+						/> : null
+				}
+			</Form.Row><Form.Row>
+				{	
+					dimensions.filter(dim => !dim._isRedux).map((dim) =>
+					{
+						return <Form.Check
+							custom
+							inline
+							type="checkbox"
+							checked={dim._isChecked}
+							value={dim.value}
+							key={dim.value}
+							id={dim.value}
+							label={dim.value}
+							onChange={selectDimension}
+						/>
+					})
+				}
+			</Form.Row>
 		</Form>
 	)
 })

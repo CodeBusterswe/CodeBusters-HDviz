@@ -5,7 +5,7 @@ import DimList from "./DimList"
 import {Button} from "react-bootstrap"
 import { useStore } from "../../../ContextProvider"
 import {toJS} from "mobx"
-import {observer, useLocalObservable} from "mobx-react-lite"
+import {observer} from "mobx-react-lite"
 
 const Modal1 = observer((props) => {
 	const {
