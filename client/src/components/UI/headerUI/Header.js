@@ -1,10 +1,10 @@
-import logo from "./logo.svg";
+import logo from "./logo/logo.svg"
 import "./Header.css";
 
-const Header = () => {  
+const Header = () => {
 	return (
 		<header className="App-header">
-			<img src={logo} className="App-logo" alt="logo"/>
+			<img src={logo} className="App-logo" alt="logo" />
 			<h1>HDViz</h1>
 		</header>
 	)
