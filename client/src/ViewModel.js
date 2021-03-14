@@ -123,7 +123,7 @@ class ViewModel{
       		newDimsFromReduction.push(d);
     	}
 
-		let newDataFromReduction = this.model.getSelectedData();				
+		let newDataFromReduction = this.model.getSelectedData(); //sostituire con data??				
 		for(let i = 0; i<newDataFromReduction.length; i++){
 			let d = newDataFromReduction[i];
 			let j=0;
