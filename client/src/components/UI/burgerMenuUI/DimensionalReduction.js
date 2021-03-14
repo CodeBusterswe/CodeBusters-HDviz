@@ -1,35 +1,70 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import { useStore } from "../../../ContextProvider"
 import DimListRedux from "./DimListRedux"
 import SelectorDimension from "./SelectorDimension"
 
 const DimensionalReduction = props => {
+	const [drAlgo, setDrAlgo] = useState("FASTMAP");
+	const [newDimName, setNewDimName] = useState("FASTMAP");
+	const [neighbors, setNeighbors] = useState(30);
+	const [nNewDim, setNNewDim] = useState(2);
 	const viewModel = useStore()
 	const {
 		dims,
 		handleChangeDims,
-		drAlgo,
-		changeAlgo,
-		changeNewDimName,
-		newDimName,
-		changeNNewDim,
-		nNewDim,
-		renderParams
+		reduxDims
 	} = props
+
+	function changeNeighbours(e){
+		setNeighbors(e.target.value);
+	  }
+	  function changeAlgo(e){
+		setNewDimName(e.target.value)
+		setDrAlgo(e.target.value)
+	  }
+	  function changeNewDimName(e){
+		setNewDimName(e.target.value)
+	  }
+	  function changeNNewDim(e){
+		setNNewDim(e.target.value)
+	  }
+
+	function renderParams() {
+		switch (drAlgo) {
+		case "FASTMAP":
+			return <span>Nessun parametro configurabile</span>;
+		case "TSNE":
+			return <span>Nessun parametro configurabile</span>;
+		case "ISOMAP":
+			return <label><input name="k" type="range" min={10} max={300} value={neighbors} onChange={changeNeighbours} /> neighbors <i>k</i><p>{neighbors}</p></label>;
+		case "LLE":
+			return <label><input name="k" type="range" min={10} max={300} value={neighbors} onChange={changeNeighbours} /> neighbors <i>k</i><p>{neighbors}</p></label>;
+		default:
+			return <span>Nulla configurabile</span>;
+		}
+	}
 
 	return (
 
-		<div className="w-75 mx-auto d-flex justify-content-between align-items-center">
-			<DimListRedux dims={dims} updateDims={handleChangeDims}/>
-			<SelectorDimension/>
-			<div className="d-flex flex-column">
+		<div>
+			<DimListRedux dims={dims} updateDims={handleChangeDims} />
+			<select value={drAlgo} onChange={changeAlgo}>
+				<option value={"FASTMAP"}>FASTMAP</option>
+				<option value={"LLE"}>LLE</option>
+				<option value={"ISOMAP"}>ISOMAP</option>
+				<option value={"TSNE"}>TSNE</option>
+			</select>
+			<div>
 				<label forhtml="dimName">Nome della/e nuove dimensioni</label>
-				<input id="dimName" type="text" onChange={changeNewDimName} value={newDimName}></input>
+				<input type="text" onChange={changeNewDimName} value={newDimName}></input>
 				<label forhtml="nNewDim">Dimensioni di ritorno</label>
-				<input id="nNewDim" type="number" onChange={changeNNewDim} value={nNewDim}></input>
+				<input type="number" onChange={changeNNewDim} value={nNewDim}></input>
 			</div>
+			{
+				renderParams()
+			}
+			<button onClick={reduxDims}>Redux Dims</button>
 		</div>
-
 	)
 }
 

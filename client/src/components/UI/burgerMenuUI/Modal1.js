@@ -25,6 +25,9 @@ const Modal1 = props => {
 		>
 			<div>
 				<MyCSVReader />
+				<button onClick={() =>{console.log("Carica dati dal db")}}>Carica dati dal db</button>
+				<button onClick={() =>{console.log("Import Configurazione")}}>Import Configurazione</button>
+            	<button onClick={() =>{console.log("Export Configurazione")}}>Export Configurazione</button>
                 qui poi ci stanno le dimList
 				<DimList />
 				<button onClick={closeModal1}>Torna al menù</button>

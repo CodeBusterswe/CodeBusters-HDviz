@@ -1,6 +1,8 @@
 import React from "react";
 import Select from "react-select";
 
+//NON VENGO USATA!!
+
 const algoritmi = [
 
 	{ label: "FASTMAP", value: "FASTMAP" },
@@ -11,7 +13,6 @@ const algoritmi = [
 
 const SelectorDimension = props => {
 	const {
-
 	} = props
 
 	return (
