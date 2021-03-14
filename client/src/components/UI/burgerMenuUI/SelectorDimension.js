@@ -2,10 +2,11 @@ import React from "react";
 import Select from "react-select";
 
 const algoritmi = [
-	{ label: "FASTMAP", value: 1 },
-	{ label: "T-SNE", value: 2 },
-	{ label: "ISOMAP", value: 3 },
-	{ label: "LLE", value: 4 }
+
+  { label: "FASTMAP", value: "FASTMAP" },
+  { label: "LLE", value: "LLE" },
+  { label: "ISOMAP", value: "ISOMAP" },
+  { label: "T-SNE", value: "T-SNE" }
 ];
 
 const SelectorDimension = props => {

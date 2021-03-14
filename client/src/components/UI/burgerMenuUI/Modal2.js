@@ -1,5 +1,8 @@
-import React from "react"
-import Modal from "react-modal"
+
+import React from 'react'
+import Modal from 'react-modal'
+import DimensionalReduction from './DimensionalReduction'
+
 
 const Modal2 = props => {
 
@@ -21,9 +24,11 @@ const Modal2 = props => {
 			}}
 		>
 
-			<button onClick={closeModal2}>close</button>
-			<div>I am a modal</div>
-		</Modal>
+
+            <button onClick={closeModal2}>close</button>
+            <DimensionalReduction></DimensionalReduction>
+        </Modal>
+
 
 	)
 }
