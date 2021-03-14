@@ -3,10 +3,10 @@ import Select from "react-select";
 
 const algoritmi = [
 
-  { label: "FASTMAP", value: "FASTMAP" },
-  { label: "LLE", value: "LLE" },
-  { label: "ISOMAP", value: "ISOMAP" },
-  { label: "T-SNE", value: "T-SNE" }
+	{ label: "FASTMAP", value: "FASTMAP" },
+	{ label: "LLE", value: "LLE" },
+	{ label: "ISOMAP", value: "ISOMAP" },
+	{ label: "T-SNE", value: "T-SNE" }
 ];
 
 const SelectorDimension = props => {

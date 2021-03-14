@@ -1,8 +1,7 @@
 
-import React from 'react'
-import Modal from 'react-modal'
-import DimensionalReduction from './DimensionalReduction'
-
+import React from "react"
+import Modal from "react-modal"
+import DimensionalReduction from "./DimensionalReduction"
 
 const Modal2 = props => {
 
@@ -19,11 +18,9 @@ const Modal2 = props => {
 			ariaHideApp={false}
 		>
 
-
-            <button onClick={closeModal2}>close</button>
-            <DimensionalReduction></DimensionalReduction>
-        </Modal>
-
+			<button onClick={closeModal2}>close</button>
+			<DimensionalReduction></DimensionalReduction>
+		</Modal>
 
 	)
 }

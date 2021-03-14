@@ -2,7 +2,7 @@ import React from "react"
 import { CSVReader } from "react-papaparse"
 import { useStore } from "../../../ContextProvider";
 
-const MyCSVReader = props => {
+function MyCSVReader() {
 
 	const viewModel = useStore()
 
@@ -10,18 +10,15 @@ const MyCSVReader = props => {
 		viewModel.parseAndLoadCsvData(file);
 	}
 	function handleOnError(error){
-		console.log("errore")
+		console.log("errore:", error)
 	}
 	return (
 		<CSVReader
 			onDrop={handleOnDrop}
 			onError={handleOnError}
-			removeButtonColor='#ff0000'
-			onRemoveFile={viewModel}
 		>
 			<span>Drop CSV file here or click to upload.</span>
 		</CSVReader>
 	)
 }
-
 export default MyCSVReader
