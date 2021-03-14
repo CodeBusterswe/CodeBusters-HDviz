@@ -25,9 +25,10 @@ class Dimension{
 		this._toRedux = bool;
 	}
 
-	getValue(){
+	getValue() {
 		return this.value;
 	}
+	
 	getChecked() {
 		return this._isChecked;
 	}

@@ -11,17 +11,14 @@ quale algoritmo di riduzione dimensionale usare
 */
 
 class DimReductionStrategy {
-    strategy;
-    parameters;
-    data;
     
-    constructor() {
-    	this._strategy = null;
-    	this._parameters = null;
-    	this._data = null;
-    }
+	constructor() {
+    	this.strategy = null;
+    	this.parameters = null;
+    	this.data = null;
+	}
 
-    setStrategy(algorithm) {
+	setStrategy(algorithm) {
     	if(algorithm === AlgorithmType.IsoMap) {
     		this.strategy = new IsomapStrategy();
     	}
@@ -34,31 +31,31 @@ class DimReductionStrategy {
     	if(algorithm === AlgorithmType.tSNE) {
     		this.strategy = new TsneStrategy();
     	}
-    }
+	}
 
-    setParameters(parameters) {
-    	this._parameters = parameters;
-    }
+	setParameters(parameters) {
+    	this.parameters = parameters;
+	}
 
-    setData(data) {
-    	this._data = data;
-    }
+	setData(data) {
+    	this.data = data;
+	}
 
-    getStrategy() {
-    	return this._strategy;
-    }
+	getStrategy() {
+    	return this.strategy;
+	}
 
-    getParams() {
-    	return this._params;
-    }
+	getParams() {
+    	return this.parameters;
+	}
 
-    getData() {
-    	return this._data;
-    }
+	getData() {
+    	return this.data;
+	}
 
-    executeStrategy() {
-    	return this._strategy.dimRed(this._parameters, this._data);
-    }
+	executeStrategy() {
+    	return this.strategy.startDR(this.parameters, this.data);
+	}
 }
 
 export default DimReductionStrategy;

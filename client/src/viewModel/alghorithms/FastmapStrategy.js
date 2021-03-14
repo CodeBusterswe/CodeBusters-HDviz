@@ -1,4 +1,5 @@
 import AlgorithmInterface from "./../AlghorithmInterface"
+import * as dr from "@saehrimnir/druidjs";
 
 class FastmapStrategy extends AlgorithmInterface{
     
@@ -10,11 +11,10 @@ class FastmapStrategy extends AlgorithmInterface{
 		this.matrix = null;
 	}
 
-	executeStrategy(paramaters,data) {
-		//  const matrix = druid.Matrix.from(sendedData);
-		//  const DR = druid[drAlgo]; //questo andrà tolto
-		//  let redux = new DR(matrix, nNewDim, neighbors);
-		//  return redux.transform();
+	startDR(parameters,data) {
+		const matrix = dr.Matrix.from(data);
+		let alg = new dr.FASTMAP(matrix, parameters);
+		return alg.transform();
 	}
 }
 

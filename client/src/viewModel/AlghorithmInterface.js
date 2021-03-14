@@ -4,21 +4,21 @@ componente che processa i dati per un determinato algoritmo deve avere per esser
 */
 class AlgorithmInterface {
     
-    //campi dati
-    result = null;
-    matrix = null;
+	//campi dati
+	//result = null;
+	//matrix = null;
 
-    constructor() {
+	constructor() {
     	if (this.constructor === AlgorithmInterface) {
     		throw new TypeError("Abstract classes can't be instantiated.");
     	}
-    }
+	}
 
-    executeStrategy() {
+	executeStrategy() {
     	throw new TypeError(
     		"Method 'executeStrategy()' must be implemented."
     	);
-    }
+	}
 
 	//stessa cosa per altre funzioni
 }

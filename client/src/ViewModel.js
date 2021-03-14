@@ -2,7 +2,8 @@ import Dimension from "./model/Dimension";
 import Model from "./model/Model";
 import { toJS } from "mobx"
 import DimReductionStrategy from "./viewModel/DimReductionStrategy"
-import * as druid from "@saehrimnir/druidjs";
+import { AlgorithmType } from "./utils" // <--- LASCIARE PLS
+
 class ViewModel{
 
 	constructor(){
@@ -77,18 +78,46 @@ class ViewModel{
 
 	}
     
-	reduceDimensions(algorithm) {
-		//dimensioni o dati passati come parametro?
-		// const data = []; //dati ricavati dalle dimensioni interessate 
-
-		const dimRedStrategy = new DimReductionStrategy();
-        
-		// dimRedStrategy.setStrategy(algorithm);
-
-		// dimRedStrategy.executeStrategy(paramaters,data);
+	prepareDataForDR(data) {
+		//filter con dimensioni numeriche??
+		return data.map(obj => Object.values(obj));
 	}
 
-	//{sepal_length: 4.9, sepal_width: 3, petal_length: 1.4, petal_width: 0.2, species: "setosa"}
+	reduceDimensions(algorithm, paramaters, data) {
+
+		//spostare dove serve questo controllo
+		let nameAlreadyUsed = this.model.getSelectedDimensions().some(dim => dim.getValue().includes(algorithm));
+		if(nameAlreadyUsed)
+			throw "The name is already in use. Please choose a different one."
+		//*******************************************************************
+		const drStrategy = new DimReductionStrategy();
+		const newData = this.prepareDataForDR(data);
+
+		drStrategy.setStrategy(algorithm);
+		drStrategy.setData(newData);
+		drStrategy.setParameters(paramaters);
+
+		const reduction = drStrategy.executeStrategy();
+		
+		let newDimsFromReduction = [];
+    	for (let i = 1; i <= reduction._cols; i++) {
+			let d = new Dimension(algorithm+i); //set the name of the new reduced dimensions (alg1, alg2, ...)
+			d.isReduced(true);
+      		newDimsFromReduction.push(d);
+    	}
+
+		let newDataFromReduction = this.model.getSelectedData();				
+		for(let i = 0; i<newDataFromReduction.length; i++){
+			let d = newDataFromReduction[i];
+			let j=0;
+			newDimsFromReduction.forEach(dim => {
+			  d[dim.getValue()] = reduction.to2dArray[i][j];
+			  j++;
+			});
+		}
+		
+		this.model.addDimensionsToDataset(newDimsFromReduction,newDataFromReduction);
+	}
 	 
 }
 export default ViewModel
