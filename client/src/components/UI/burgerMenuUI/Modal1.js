@@ -16,12 +16,6 @@ const Modal1 = props => {
 			isOpen={modal1IsOpen}
 			onRequestClose={closeModal1}
 			ariaHideApp={false}
-			style={{
-				overlay: {
-					backgroundColor: "#373a47"
-				}
-
-			}}
 		>
 			<div>
 				<MyCSVReader />

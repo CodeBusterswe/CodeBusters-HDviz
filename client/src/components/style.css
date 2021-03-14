@@ -34,14 +34,17 @@ body {
   z-index: 0!important; /* burger icon hidden behind modal */
   position: fixed;
   width: 36px;
-  height: 30px;
+  height: 2em;
   left: 36px;
-  top: 36px;
+  top: 1.2em;
 }
 
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
-  background: #373a47;
+  background: white;
+}
+.bm-burger-bars:hover {
+  background: red;
 }
 
 /* General sidebar styles */

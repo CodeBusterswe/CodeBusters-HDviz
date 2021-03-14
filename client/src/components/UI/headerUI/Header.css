@@ -10,13 +10,14 @@
 }
 
 .App-header {
-  background-color: #811b12;
-  height: 4.4rem;
+  padding-left: 2em;
+  background-color: #282c34;
+  height: 3.3em;
   display: flex;
   flex-direction: row;
   align-items: center;
   font-size: 1.2rem;
-  color: rgb(0, 0, 0);
+  color: white;
 }
 
 .App-logo {
