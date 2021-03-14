@@ -7,7 +7,14 @@ class ViewModel{
 	constructor(){
 		this.model = new Model();
 	}
-   
+	
+	getDimensions(){
+		return this.model.getDimensions();
+	}
+	getOriginalData(){
+		return this.model.getOriginalData();
+	}
+
 	parseAndLoadCsvData(data) {
 		let columns = data.shift().data, 
 			parsedData = [],
@@ -32,7 +39,16 @@ class ViewModel{
 			return d;
 		});                                           
 
-		this.model.loadData(dimensions, parsedData);
+		return [parsedData, dimensions];
+	}
+	loadDataAndDims(data, dims){
+		this.model.loadData(dims, data)
+	}
+	updateDims(dims){
+		this.model.loadDimensions(dims);
+		//Aggiorno i dati prendendo solo i selezionati
+		const selectedData = null;
+		this.model.updateSelectedData(selectedData);
 	}
     
 	reduceDimensions(algorithm) {

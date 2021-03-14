@@ -1,35 +1,42 @@
 import React from "react"
-import CheckBox from "./CheckBox"
-import { useStore } from "../../../ContextProvider"
+import { observer } from "mobx-react-lite";
+import {Form} from "react-bootstrap"
 
-const DimList = props => {
-	const viewModel = useStore()
+const DimList = observer((props) => {
 	const {
-		dataLoaded,
-		allChecked,
-		handleAllChecked,
-		handleCheckChieldElement,
-		dims
+		dimensions,
+		selectAllDimensions,
+		selectDimension,
+		allSelected
 	} = props
-
 	return (
-		<div>
-			{dataLoaded ?
-				<li className="list-group-item text-secondary" key="checkall">
-					<input className="form-check-input" key="checkall" checked={allChecked} type="checkbox" value="checkedall" id="checkAll" onChange={handleAllChecked} /><label htmlFor="checkAll" className="h-6">Seleziona tutto</label>
-				</li> : null
+		<Form>
+			{
+				dimensions.length!==0 ?
+					<Form.Check 
+						type="checkbox"
+						checked={allSelected}
+						key="checkAll"
+						id="checkAll"
+						label="Seleziona tutto"
+						onChange={selectAllDimensions}
+					/> : null
 			}
-			<ul className="list-group list-group-horizontal d-inline-flex flex-wrap flex-fill">
+			{	
+				dimensions.filter(dim => !dim._isRedux).map((dim) =>
 				{
-					dims && dims.filter(dim => !dim.isRedux).map((dim) => {
-						return <CheckBox key={dim.value} handleCheckChieldElement={handleCheckChieldElement} {...dim} />
-					})
-				}
-
-			</ul>
-
-		</div>
+					return <Form.Check
+						type="checkbox"
+						checked={dim._isChecked}
+						key={dim.value}
+						id={dim.value}
+						label={dim.value}
+						onChange={selectDimension}
+					/>
+				})
+			}
+		</Form>
 	)
-}
+})
 
 export default DimList

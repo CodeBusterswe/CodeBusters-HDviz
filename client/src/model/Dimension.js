@@ -2,7 +2,7 @@
 
 class Dimension{
 	constructor(value = "dims", isChecked = true, isNumeric=true, isRedux = false, toRedux = true){
-		this._value = value;
+		this.value = value;
 		this._isChecked = isChecked;
 		this._isNumeric = isNumeric;
 		this._isRedux = isRedux;
@@ -25,6 +25,9 @@ class Dimension{
 		this._toRedux = bool;
 	}
 
+	getValue(){
+		return this.value;
+	}
 	getChecked() {
 		return this._isChecked;
 	}
