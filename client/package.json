@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.1.1",
+    "@saehrimnir/druidjs": "^0.3.7",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.3",
@@ -20,9 +22,9 @@
     "web-vitals": "^1.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -35,27 +37,45 @@
       "es2021": true
     },
     "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 12,
-        "sourceType": "module"
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 12,
+      "sourceType": "module"
     },
     "plugins": [
-        "react"
+      "react"
     ],
     "rules": {
-        "complexity": ["error", 20],
-        "no-extra-parens": "error",
-        "no-extra-semi": "error",
-        "dot-location": ["error", "object"],
-        "dot-notation": "error",
-        "eqeqeq": "error",
-        "no-multi-spaces": "error",
-        "indent": ["error", "tab"],
-        "new-parens": "error",
-        "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
-        "quotes": ["error", "double"]
+      "complexity": [
+        "error",
+        20
+      ],
+      "no-extra-parens": "error",
+      "no-extra-semi": "error",
+      "dot-location": [
+        "error",
+        "object"
+      ],
+      "dot-notation": "error",
+      "eqeqeq": "error",
+      "no-multi-spaces": "error",
+      "indent": [
+        "error",
+        "tab"
+      ],
+      "new-parens": "error",
+      "no-multiple-empty-lines": [
+        "error",
+        {
+          "max": 1,
+          "maxEOF": 0
+        }
+      ],
+      "quotes": [
+        "error",
+        "double"
+      ]
     }
   },
   "browserslist": {
@@ -69,5 +89,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.13.8"
   }
 }

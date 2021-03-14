@@ -1,6 +1,7 @@
 import Dimension from "./model/Dimension";
 import Model from "./model/Model";
 import DimReductionStrategy from "./viewModel/DimReductionStrategy"
+import * as druid from "@saehrimnir/druidjs";
 class ViewModel{
 
 	constructor(){
