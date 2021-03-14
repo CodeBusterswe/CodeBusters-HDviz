@@ -2,12 +2,15 @@ import React from "react"
 import { CSVReader } from "react-papaparse"
 import { useStore } from "../../../ContextProvider";
 
-function MyCSVReader() {
-
+function MyCSVReader(props) {
+	const {
+		setLocalStates 
+	} = props
 	const viewModel = useStore()
 
 	function handleOnDrop(file){
-		viewModel.parseAndLoadCsvData(file);
+		const [data, dimensions] = viewModel.parseAndLoadCsvData(file)
+		setLocalStates(data, dimensions);
 	}
 	function handleOnError(error){
 		console.log("errore:", error)

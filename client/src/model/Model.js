@@ -3,7 +3,7 @@ import { makeAutoObservable } from "mobx"
 import Dimension from "./Dimension";
 
 class Model {
-    
+	
 	constructor(){
 		this.dimensions = [];
 		this.originalData = [];
@@ -35,6 +35,12 @@ class Model {
 		this.originalData = data;
 		this.dimensions = dimensions;
 		this.selectedData = data;
+	}
+	loadDimensions(dimensions){
+		this.dimensions = dimensions;
+	}
+	updateSelectedData(selectedData){
+		this.selectedData=selectedData;
 	}
 
 	addDimensionToDataset(dimension, data) {
