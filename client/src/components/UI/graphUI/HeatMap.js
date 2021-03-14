@@ -1,12 +1,9 @@
 import React from "react";
 
-const styles = {
-	height: "100%",
-	backgroundColor: "red"
-};
-const HeatMap = ({dims})=>{
+const HeatMap = ()=>{
 	return (
-		<div style={styles}>hello~</div>
+		<div className="heatmap">Area del grafico
+		</div>
 	)
 };
 export default HeatMap;
