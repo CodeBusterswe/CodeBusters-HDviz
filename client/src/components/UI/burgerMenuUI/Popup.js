@@ -3,6 +3,7 @@ import Modal from "react-modal"
 import {Button} from "react-bootstrap"
 import DimensionalReduction from "./ModalContent/DimensionalReduction"
 import LoadCSV from "./ModalContent/LoadCSV"
+import "../../style.css"
 
 const Popup = props => {
 	const {
@@ -27,6 +28,13 @@ const Popup = props => {
 			isOpen={modalIsOpen}
 			onRequestClose={closeModal}
 			ariaHideApp={false}
+			style={
+				{
+					overlay: {
+						backgroundColor: "rgba(40, 44, 52, .9)"
+					}
+				}
+			}
 		>
   		{handleContent(index)}
 			<Button variant="danger" onClick={closeModal}>Torna al menù</Button>

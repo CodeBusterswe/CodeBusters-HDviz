@@ -21,11 +21,13 @@ function BurgerMenu(){
 	}
 
 	return (
-		<Menu width={"10%"} isOpen={menuIsOpen}>
+		<Menu width={"15%"} isOpen={menuIsOpen} noTransition>
 			<div>
-				{names.map((name, index) => {
-					return <Button className="mb-3" onClick={() => openModal(index)}>{name}</Button>
-				})}				
+				<div className="button-list">
+					{names.map((name, index) => {
+						return <Button className="mb-3 btn-lg btn-block" onClick={() => openModal(index)}>{name}</Button>
+					})}				
+				</div>
 				<Popup
 					modalIsOpen={modalIsOpen}
 					closeModal={closeModal}

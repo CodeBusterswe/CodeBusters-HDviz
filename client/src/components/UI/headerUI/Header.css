@@ -1,8 +1,3 @@
-.App-logo {
-  height: 4rem;
-  pointer-events: none;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -16,12 +11,15 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+	justify-content: center;
   font-size: 1.2rem;
   color: white;
 }
 
 .App-logo {
-  margin: 2rem .4rem 2rem 3rem;
+	height: 4rem;
+  pointer-events: none;
+  margin: 2rem .4rem 2rem;
 }
 
 @keyframes App-logo-spin {
