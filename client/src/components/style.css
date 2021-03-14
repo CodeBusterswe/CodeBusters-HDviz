@@ -52,3 +52,13 @@ body {
   height: 10%;
   width: 100%;
 }
+/* GRAFICO */
+
+.grafico {
+  display: grid;
+  height: 100vh;
+  grid: 50px 1fr 1fr 50px / 50px 1fr 1fr 50px;
+  font-size: calc(10px + 2vmin);
+}
+
+/* FINE GRAFICO */
