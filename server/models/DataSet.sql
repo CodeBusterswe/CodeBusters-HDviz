@@ -1,0 +1,6 @@
+
+
+CREATE TABLE DataSet (
+    id SERIAL PRIMARY KEY,
+    fileName VARCHAR(255) UNIQUE,
+);
