@@ -1,8 +1,10 @@
 import Dimension from "./model/Dimension";
+import DistanceMatrix from "./model/DistanceMatrix";
 import Model from "./model/Model";
 import { toJS } from "mobx"
 import DimReductionStrategy from "./viewModel/DimReductionStrategy"
 import { AlgorithmType } from "./utils" // <--- LASCIARE PLS
+import * as distCalc from "ml-distance";
 
 class ViewModel{
 
@@ -96,16 +98,51 @@ class ViewModel{
 		 console.log("original: ",toJS(this.model.getOriginalData()))
 		 console.log("selected: ",toJS(this.model.getSelectedData()))
 		 console.log("dimensions:", toJS(this.model.getDimensions()))
+		 
+		 //prova della riduzione tramite distanze
+		 //this.reduceDimensionsByDist("euclidean", originalData, "name");
 	}
     
 	prepareDataForDR(dimensionsToRedux) {
+		console.log(this.getOriginalData());
 		return this.getOriginalData().map(obj => dimensionsToRedux.map((dim) => obj[dim]));
 	}
 	beginDimensionalRedux(algorithm, dimensionsToRedux, paramaters){
 		const newData = this.prepareDataForDR(dimensionsToRedux);
 		this.reduceDimensions(algorithm, paramaters, newData);
 	}
+
+	reduceDimensionsByDist(distType, data, idDimension) {
+		//data = [ {}, {nome: "Paolo", peso: 50, altezza: 180}, ...., {} ]
+		//idDimension = "nome"
+		let matrix = new DistanceMatrix();
+		let onlyData = data;
+		/*
+			onlyData = [...data].map(point => {
+				delete point[idDimension]
+				return point;
+			});*/
+
+		for (let i = 0; i < onlyData.length - 1; i++) {
+			for (let j = i+1; j < onlyData.length - 1; j++) {
+				let pointA = Object.values(onlyData[i]),
+					pointB = Object.values(onlyData[j]);
+				pointA.shift();
+				pointB.shift();
+				let row = {
+					source: data[i][idDimension],
+					target: data[j][idDimension],
+					distance: distCalc.distance.euclidean(pointA, pointB)
+				}
+				matrix.pushRow(row);
+			}
+		}
+		console.log(matrix);
+		
+	}
+
 	reduceDimensions(algorithm, paramaters, data) {
+		
 		//spostare dove serve questo controllo
 		let nameAlreadyUsed = this.model.getSelectedDimensions().some(dim => dim.getValue().includes(algorithm));
 		if(nameAlreadyUsed)

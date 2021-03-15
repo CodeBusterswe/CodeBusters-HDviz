@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^12.8.3",
     "bootstrap": "^4.6.0",
     "d3": "^6.6.0",
+    "ml-distance": "^3.0.0",
     "mobx": "^6.1.8",
     "mobx-react-lite": "^3.2.0",
     "react": "^17.0.1",
