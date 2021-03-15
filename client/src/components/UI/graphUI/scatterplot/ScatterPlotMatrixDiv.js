@@ -5,13 +5,15 @@ import { useStore } from "../../../../ContextProvider"
 
 export default function ScatterPlotMatrixDiv (props) {
 	//const data = [{age: 18, weight: 90}, {age: 4, weight: 5}, {age: 4, weight: 66}]
-	//const dims = [{value: "age", isChecked: true, toRedux: true, isRedux: false, isNumeric: true},{value: "weight", isChecked: true, toRedux: true, isRedux: false, isNumeric: true}]
+	//const dims = [{value: "age", isChecked: false, toRedux: true, isRedux: false, isNumeric: true},{value: "weight", isChecked: true, toRedux: true, isRedux: false, isNumeric: true}]
 	const viewModel = useStore();
 	const data = viewModel.getOriginalData();
 	const dims = viewModel.getDimensions();
-	const keys = dims.filter(dim => dim.isChecked).map((d) => d.value);
-	const catKeys = dims.filter(dim => !dim.isNumeric && dim.isChecked).map((d) => d.value);
-    
+	const keys = dims.filter(dim => dim._isChecked).map((d) => d.value);
+	const catKeys = dims.filter(dim => !dim._isNumeric && dim._isChecked).map((d) => d.value);
+	console.log(dims)
+    	console.log(keys);
+	console.log(catKeys);
 	const [Dims, setDims] = useState(keys.slice(0, 4));
 	const [DimColore, setDimColore] = useState(catKeys[0] ? catKeys[0] : "-")
 	//Per l'aggiornamento delle dimensioni nelle label delle select quando cambia file
