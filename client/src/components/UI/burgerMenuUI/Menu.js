@@ -3,6 +3,8 @@ import React, { useState } from "react"
 import DimensionalReduction from "./ModalContent/DimensionalReduction"
 import LoadCSV from "./ModalContent/LoadCSV"
 import "../../style.css";
+import {observer} from "mobx-react-lite"
+import { toJS } from "mobx"
 import {AiOutlineArrowRight , AiOutlineDotChart} from "react-icons/ai";
 import {ImDatabase} from "react-icons/im";
 import {FaFileCsv} from "react-icons/fa";
@@ -43,6 +45,7 @@ const Menu = () => {
 			break;
 		}
 	}
+	console.log(toJS(viewModel.getOriginalData()));
 								
 	return (
 		<> 
@@ -57,7 +60,8 @@ const Menu = () => {
 					{names.map((name, index) => {
 						return(
 							<li className="nav-item" key={name}>
-								<button className="nav-link" onClick={() => openModal(index)}>	
+								<button className="nav-link" onClick={() => openModal(index)} 
+									disabled={(index === 3 || index === 4) && toJS(viewModel.getOriginalData()).length === 0}>	
 									{icons[index]}
 									<span className="link-text">{name}</span>
 								</button>
@@ -67,7 +71,7 @@ const Menu = () => {
 					<li className="nav-item">
 						<button className="nav-link" onClick={() => {viewModel.setShowSPM();closeModal()}}>
 							{icons[4]}
-										<span className="link-text">Scatter Plot Matrix</span></button>
+							<span className="link-text">Scatter Plot Matrix</span></button>
 					</li>
 				</ul> 
 			</nav> 
@@ -75,4 +79,5 @@ const Menu = () => {
 		</>
 	)
 }
+
 export default Menu

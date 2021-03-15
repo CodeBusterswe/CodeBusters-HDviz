@@ -49,6 +49,7 @@ const LoadCSV = observer(props => {
 	function areAllSelected(){
 		return localDimensions.length === localDimensions.filter(d => d._isChecked).length
 	}
+	
 	return(
 		<Modal
 			show={modalIsOpen}
