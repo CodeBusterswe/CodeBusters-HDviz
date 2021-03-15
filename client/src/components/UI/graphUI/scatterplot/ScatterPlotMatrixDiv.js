@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import ScatterPlotMatrix from "./SPM";
+import { useStore } from "../../../../ContextProvider"
 
 export default function ScatterPlotMatrixDiv (props) {
-	const data = [{age: 18, weight: 90}, {age: 4, weight: 5}, {age: 4, weight: 66}]
-	const dims = [{value: "age", isChecked: true, toRedux: true, isRedux: false, isNumeric: true},{value: "weight", isChecked: true, toRedux: true, isRedux: false, isNumeric: true}]
+	//const data = [{age: 18, weight: 90}, {age: 4, weight: 5}, {age: 4, weight: 66}]
+	//const dims = [{value: "age", isChecked: true, toRedux: true, isRedux: false, isNumeric: true},{value: "weight", isChecked: true, toRedux: true, isRedux: false, isNumeric: true}]
+	const viewModel = useStore();
+	const data = viewModel.getOriginalData();
+	const dims = viewModel.getDimensions();
 	const keys = dims.filter(dim => dim.isChecked).map((d) => d.value);
 	const catKeys = dims.filter(dim => !dim.isNumeric && dim.isChecked).map((d) => d.value);
     
