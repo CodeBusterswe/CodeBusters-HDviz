@@ -14,7 +14,7 @@ const View = observer(() => {
 		<div>
 			<Header />
 			<Menu />
-			{viewModel.getShowSPM() ?	<div><ScatterPlotMatrixDiv></ScatterPlotMatrixDiv></div> : null}
+			{viewModel.getShowSPM() ?	<div className="content"><ScatterPlotMatrixDiv></ScatterPlotMatrixDiv></div> : null}
 		</div>
 	)
 })
