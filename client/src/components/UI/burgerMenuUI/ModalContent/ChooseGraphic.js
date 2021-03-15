@@ -4,7 +4,6 @@ import {observer} from "mobx-react-lite"
 import { useStore } from "../../../../ContextProvider"
 import Modal from "react-bootstrap/Modal"
 import { ModalBody, ModalFooter } from "react-bootstrap"
-import ScatterPlotMatrixDiv from "../../graphUI/scatterplot/ScatterPlotMatrixDiv"
 
 const ChooseGraphic = observer(props => {
 	const viewModel = useStore();
@@ -24,7 +23,6 @@ const ChooseGraphic = observer(props => {
 
 			<ModalBody>
 				<Button onClick={() => viewModel.setShowSPM()}>Scatter Plot Matrix</Button>
-				{viewModel.getShowSPM() ?	<div><ScatterPlotMatrixDiv></ScatterPlotMatrixDiv></div> : null}
 			</ModalBody>
 			
 			<ModalFooter>
