@@ -23,9 +23,15 @@ class Model {
 	getDimensions() {
 		return this.dimensions;
 	}
+
 	getDimensionsChecked(){
-		
+		return this.dimensions.filter(dim => dim.getChecked());
 	}
+
+	getCategoricCheckedDimensions(){
+		return this.dimensions.filter(dim => dim.getChecked() && !dim.getNumeric());
+	}
+
 	getOriginalData() {
 		return this.originalData;
 	}

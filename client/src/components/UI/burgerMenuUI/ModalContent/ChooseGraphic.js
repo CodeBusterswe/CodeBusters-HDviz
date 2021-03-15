@@ -22,7 +22,7 @@ const ChooseGraphic = observer(props => {
 			</Modal.Header>
 
 			<ModalBody>
-				<Button onClick={() => viewModel.setShowSPM()}>Scatter Plot Matrix</Button>
+				<Button onClick={() => {viewModel.setShowSPM();closeModal()}}>Scatter Plot Matrix</Button>
 			</ModalBody>
 			
 			<ModalFooter>

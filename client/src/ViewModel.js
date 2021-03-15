@@ -22,11 +22,11 @@ class ViewModel{
 		return this.model.getDimensions();
 	}
 
-	getDimensionsChecked(){
+	getCheckedDimensions(){
 		return this.model.getDimensions().filter(dim => dim._isChecked).map((d) => d.value);
 	}
 
-	getNotNumericChecked(){
+	getCategoricCheckedDimensions(){
 		return this.model.getDimensions().filter(dim => !dim._isNumeric && dim._isChecked).map((d) => d.value);
 	}
 
