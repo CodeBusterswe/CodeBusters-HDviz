@@ -14,13 +14,6 @@ export default function ScatterPlotMatrix (props) {
 	const traits = props.dims;
 	const numberOfTraits = traits.length;
 
-	console.log("colore");
-	console.log(props.dimColor);
-	console.log("dati lollolo");
-	console.log(props.data);
-	console.log("dims lololol");
-	console.log(props.dims);
-
 	function cross(a, b) {
 		var c = [], n = a.length, m = b.length, i, j;
 		for (i = -1; ++i < n;) 

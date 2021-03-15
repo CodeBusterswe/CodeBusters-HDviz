@@ -81,12 +81,7 @@ class ViewModel{
 	}
 
 	haveNotANumberValue(datasetRow) {
-		let notNan = true;
-		for(const value of Object.values(datasetRow)) {
-			if(isNaN(value))
-				notNan = false;
-		}
-		return notNan;
+		return Object.values(datasetRow).some(value => isNaN(value));
 	}
 
 	updateSelectedData(){
@@ -95,7 +90,7 @@ class ViewModel{
 		//con filter tolgo i dati che hanno alcune dimensioni numeriche selezionate NaN; e con map prendo le dimensioni selezionate
     	let selectedData = originalData.map(d => {
         	return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]))
-     	})//.filter(this.haveNotANumberValue);
+     	})//.filter(row => Object.values(row).includes(NaN, "NaN", undefined));
 		this.model.updateSelectedData(selectedData);
 		 //log di test
 		 console.log("original: ",toJS(this.model.getOriginalData()))

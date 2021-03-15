@@ -37,9 +37,9 @@ const DimensionalReduction = props => {
 				{
 					Name: newDimensionsName,
 					DimensionsNumber: newDimensionsNumber,
-					Neighbors: 20,
-					Perplexity: 40,
-					Epsilon: 10
+					Neighbors: neighbors,
+					Perplexity: perplexity,
+					Epsilon: epsilon
 				});
 			e.preventDefault();
 			e.stopPropagation();

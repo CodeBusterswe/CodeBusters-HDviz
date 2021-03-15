@@ -56,7 +56,7 @@ const Menu = () => {
 					</li>
 					{names.map((name, index) => {
 						return(
-							<li className="nav-item">
+							<li className="nav-item" key={name}>
 								<button className="nav-link" onClick={() => openModal(index)}>	
 									{icons[index]}
 									<span className="link-text">{name}</span>
