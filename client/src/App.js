@@ -1,3 +1,4 @@
+import "./App.css";
 import React from "react"
 import ViewModel from "./ViewModel"
 import View from "./components/View";
