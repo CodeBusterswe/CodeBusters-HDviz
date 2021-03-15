@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { useState } from "react"
 import DimensionalReduction from "./ModalContent/DimensionalReduction"
 import LoadCSV from "./ModalContent/LoadCSV"
@@ -7,8 +8,10 @@ import {ImDatabase} from "react-icons/im";
 import {FaFileCsv} from "react-icons/fa";
 import {SiGraphcool , SiJson} from "react-icons/si";
 import ChooseGraphic from "./ModalContent/ChooseGraphic";
+import { useStore } from "../../../ContextProvider"
 
 const Menu = () => { 
+	const viewModel = useStore();
 	const [modalIsOpen, setIsOpen] = useState(false);
 	const [id, setId] = useState(0);
 	const names = ["Carica/Salva sessione", "Carica dati dal DB", 
@@ -61,6 +64,11 @@ const Menu = () => {
 							</li>
 						)
 					})} 
+					<li className="nav-item">
+						<button className="nav-link" onClick={() => {viewModel.setShowSPM();closeModal()}}>
+							{icons[4]}
+										<span className="link-text">Scatter Plot Matrix</span></button>
+					</li>
 				</ul> 
 			</nav> 
 			{handleContent(id)}
