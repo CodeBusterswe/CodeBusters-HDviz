@@ -10,7 +10,7 @@
 .navbar {
   position: fixed!important;
   display: block!important;
-  /*transition: width 500ms ease;*/
+  transition: width 500ms ease;
 	overflow: hidden;
 	background-color: var(--bg-primary);
   padding: 0%!important;
@@ -24,6 +24,10 @@
   flex-direction: column;
   align-items: center;
   height: 100%;
+}
+
+.navbar-nav:hover {
+align-items: left;
 }
 
 .nav-item{
@@ -41,9 +45,9 @@
 	cursor: pointer;
 	border: 0;
 	width: 100%;
-  display: flex;
+  display: flex!important;
   align-items: center;
-	margin-left:0;
+	margin: auto;
   height: 5em;
   color: var(--text-primary);
   text-decoration: none;
@@ -112,7 +116,7 @@
   }
 
   .navbar-nav {
-    flex-direction: row;
+    flex-direction: row!important;
   }
 
   .nav-link {
