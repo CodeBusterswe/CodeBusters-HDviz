@@ -6,6 +6,7 @@ import {AiOutlineArrowRight , AiOutlineDotChart} from "react-icons/ai";
 import {ImDatabase} from "react-icons/im";
 import {FaFileCsv} from "react-icons/fa";
 import {SiGraphcool , SiJson} from "react-icons/si";
+import ChooseGraphic from "./ModalContent/ChooseGraphic";
 
 const Menu = () => { 
 	const [modalIsOpen, setIsOpen] = useState(false);
@@ -33,7 +34,8 @@ const Menu = () => {
 			return <LoadCSV modalIsOpen={modalIsOpen} closeModal={closeModal}></LoadCSV>
 		case 3:
 			return <DimensionalReduction modalIsOpen={modalIsOpen} closeModal={closeModal}></DimensionalReduction>
-			//TODO: other cases
+		case 4:
+			return <ChooseGraphic modalIsOpen={modalIsOpen} closeModal={closeModal}></ChooseGraphic>
 		default:
 			break;
 		}

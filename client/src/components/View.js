@@ -13,10 +13,6 @@ const View = observer(() => {
 		<div>
 			<Header />
 			<Menu />
-			<div className="content">
-				<button className="mb-3 btn-lg btn-block" onClick={() => viewModel.setShowSPM()}>Prova MOSTRA grafico</button>
-				{viewModel.getShowSPM() ?	<div><ScatterPlotMatrixDiv></ScatterPlotMatrixDiv></div> : null}	
-			</div>
 		</div>
 	)
 })
