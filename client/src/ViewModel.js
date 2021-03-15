@@ -26,6 +26,12 @@ class ViewModel{
 		return this.model.getOriginalData();
 	}
 
+	getOptionsForReduxDimensionsList(){
+		return this.model.getNumericDimensions().map(d => {
+			return {value: d.value, label: d.value}
+		})
+	}
+
 	parseAndLoadCsvData(data) {
 		let columns = data.shift().data, 
 			parsedData = [],
@@ -56,18 +62,6 @@ class ViewModel{
 	loadDataAndDims(data, dims){
 		this.model.loadData(dims, data);
 		this.updateSelectedData();
-
-		//per provare riduzione dimensionale
-		/*
-		const paramaters = {
-			Name: "Prova",
-			DimensionsNumber: 2,
-			Neighbors: 20,
-			Perplexity: 40,
-			Epsilon: 10
-		}
-		this.reduceDimensions(AlgorithmType.tSNE, paramaters, data);
-		*/
 	}
 
 	updateDims(dims){
@@ -90,19 +84,21 @@ class ViewModel{
 		//con filter tolgo i dati che hanno alcune dimensioni numeriche selezionate NaN; e con map prendo le dimensioni selezionate
     	let selectedData = originalData.map(d => {
         	return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]))
-     	}).filter(this.haveNotANumberValue);
+     	})//.filter(this.haveNotANumberValue);
 		this.model.updateSelectedData(selectedData);
 		 //log di test
 		 console.log("original: ",toJS(this.model.getOriginalData()))
 		 console.log("selected: ",toJS(this.model.getSelectedData()))
-		 console.log(toJS(this.model.getDimensions()))
+		 console.log("dimensions:", toJS(this.model.getDimensions()))
 	}
     
-	prepareDataForDR(dataset) {
-		const numericDims = this.model.getNumericDimensions().map(dim => dim.getValue());
-		return dataset.map(obj => numericDims.map((dim) => obj[dim]));
+	prepareDataForDR(dimensionsToRedux) {
+		return this.getOriginalData().map(obj => dimensionsToRedux.map((dim) => obj[dim]));
 	}
-
+	beginDimensionalRedux(algorithm, dimensionsToRedux, paramaters){
+		const newData = this.prepareDataForDR(dimensionsToRedux);
+		this.reduceDimensions(algorithm, paramaters, newData);
+	}
 	reduceDimensions(algorithm, paramaters, data) {
 		//spostare dove serve questo controllo
 		let nameAlreadyUsed = this.model.getSelectedDimensions().some(dim => dim.getValue().includes(algorithm));
@@ -110,12 +106,9 @@ class ViewModel{
 			throw "The name is already in use. Please choose a different one."
 		//*******************************************************************
 		const drStrategy = new DimReductionStrategy();
-		const newData = this.prepareDataForDR(data);
-
-		console.log(newData);
 
 		drStrategy.setStrategy(algorithm);
-		drStrategy.setData(newData);
+		drStrategy.setData(data);
 		drStrategy.setParameters(paramaters);
 
 		const reduction = drStrategy.executeStrategy();
@@ -138,6 +131,7 @@ class ViewModel{
 		}
 
 		this.model.addDimensionsToDataset(newDimsFromReduction,newDataFromReduction);
+		console.log(this.model.getSelectedData);
 	}
 	 
 }

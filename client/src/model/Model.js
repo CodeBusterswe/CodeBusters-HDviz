@@ -33,7 +33,7 @@ class Model {
 	}
     
 	getNumericDimensions() {
-		return this.dimensions.filter(dim => dim.getChecked() && dim.getNumeric() && dim.getToReduce());
+		return this.dimensions.filter(dim => dim.getChecked() && dim.getNumeric());
 	}
     
 	getSelectedDimensions() {

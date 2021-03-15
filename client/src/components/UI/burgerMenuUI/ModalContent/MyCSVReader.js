@@ -26,7 +26,7 @@ function MyCSVReader(props) {
 			accept={".csv"}
 			config={ config }
 		>
-			<span>Drop CSV file here or click to upload.</span>
+			<span>Carica un file, o se ne hai giá caricato uno seleziona le dimensioni da utilizzare</span>
 		</CSVReader>
 	)
 }
