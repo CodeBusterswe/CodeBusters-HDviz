@@ -67,41 +67,35 @@ class ViewModel{
 		this.updateSelectedData()
 	}
 
-	haveNotANumberValue(dataset) {
-		//const notNumber = value => isNaN(value);
-		//dataset.some( row => Object.values(row).some(notNumber) );
-
-		let not_nan = true;
-		dataset.forEach(dim => {
-			if(isNaN(dataset[dim])){
-				not_nan = false;
-				//return; non c'è modo di fermare un forEach se non con una eccezione
-			}
-		}); 
-		return not_nan;
+	haveNotANumberValue(datasetRow) {
+		let notNan = true;
+		for(const value of Object.values(datasetRow)) {
+			if(isNaN(value))
+				notNan = false;
+		}
+		return notNan;
 	}
 
 	updateSelectedData(){
-		const checkedDims = this.model.getSelectedDimensions()
+		const checkedDims = this.model.getSelectedDimensions(),
+			originalData = toJS(this.model.getOriginalData());
 		//con filter tolgo i dati che hanno alcune dimensioni numeriche selezionate NaN; e con map prendo le dimensioni selezionate
-    	let selectedData = toJS(this.model.getOriginalData()).map(d => {
+    	let selectedData = originalData.map(d => {
         	return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]))
-     	})//.filter(this.haveNotANumberValue);
+     	}).filter(this.haveNotANumberValue);
 		this.model.updateSelectedData(selectedData);
 		 //log di test
 		 console.log("original: ",toJS(this.model.getOriginalData()))
 		 console.log("selected: ",toJS(this.model.getSelectedData()))
 		 console.log(toJS(this.model.getDimensions()))
-
 	}
     
-	prepareDataForDR(data) {
-		//filter con dimensioni numeriche??
-		return data.map(obj => Object.values(obj));
+	prepareDataForDR(dataset) {
+		const numericDims = this.model.getNumericDimensions().map(dim => dim.getValue());
+		return dataset.map(obj => numericDims.map((dim) => obj[dim]));
 	}
 
 	reduceDimensions(algorithm, paramaters, data) {
-
 		//spostare dove serve questo controllo
 		let nameAlreadyUsed = this.model.getSelectedDimensions().some(dim => dim.getValue().includes(algorithm));
 		if(nameAlreadyUsed)
@@ -109,6 +103,8 @@ class ViewModel{
 		//*******************************************************************
 		const drStrategy = new DimReductionStrategy();
 		const newData = this.prepareDataForDR(data);
+
+		console.log(newData);
 
 		drStrategy.setStrategy(algorithm);
 		drStrategy.setData(newData);
