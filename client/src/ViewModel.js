@@ -33,6 +33,9 @@ class ViewModel{
 	getOriginalData(){
 		return this.model.getOriginalData();
 	}
+	getSelectedData(){
+		return this.model.getSelectedData();
+	}
 
 	getOptionsForReduxDimensionsList(){
 		return this.model.getNumericDimensions().map(d => {
@@ -139,7 +142,8 @@ class ViewModel{
 		}
 
 		this.model.addDimensionsToDataset(newDimsFromReduction,newDataFromReduction);
-		console.log(this.model.getSelectedData);
+		console.log(newDataFromReduction)
+		console.log(this.model.getSelectedData());
 	}
 	 
 }

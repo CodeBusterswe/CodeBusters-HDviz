@@ -7,7 +7,7 @@ export default function ScatterPlotMatrixDiv (props) {
 	//const data = [{age: 18, weight: 90}, {age: 4, weight: 5}, {age: 4, weight: 66}]
 	//const dims = [{value: "age", isChecked: false, toRedux: true, isRedux: false, isNumeric: true},{value: "weight", isChecked: true, toRedux: true, isRedux: false, isNumeric: true}]
 	const viewModel = useStore();
-	const data = viewModel.getOriginalData();
+	const data = viewModel.getSelectedData();
 	const dims = viewModel.getDimensions();
 	const keys = viewModel.getCheckedDimensions();
 	const catKeys = viewModel.getCategoricCheckedDimensions();
