@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 
-import React, {useState} from "react"
+import React from "react"
 import { observer } from "mobx-react-lite"
 import Menu from "./UI/burgerMenuUI/Menu"
 import "./style.css"
@@ -14,7 +14,10 @@ const View = observer(() => {
 		<div>
 			<Header />
 			<Menu />
-			{viewModel.getShowSPM() ?	<div className="content"><ScatterPlotMatrixDiv></ScatterPlotMatrixDiv></div> : null}
+			<div className="content">
+				{viewModel.getShowSPM() ?	<div className="content"><ScatterPlotMatrixDiv></ScatterPlotMatrixDiv></div> : null}
+			</div>
+			
 		</div>
 	)
 })
