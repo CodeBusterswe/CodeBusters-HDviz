@@ -5,10 +5,19 @@ import Dimension from "./Dimension";
 class Model {
 	
 	constructor(){
+		this.showSPM = false;
 		this.dimensions = [];
 		this.originalData = [];
 		this.selectedData = [];
 		makeAutoObservable(this);
+	}
+
+	getShowSPM(){
+		return this.showSPM;
+	}
+
+	setShowSPM(){
+		this.showSPM = !this.showSPM;
 	}
 
 	getDimensions() {

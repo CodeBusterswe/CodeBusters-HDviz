@@ -10,6 +10,14 @@ class ViewModel{
 		this.model = new Model();
 	}
 	
+	getShowSPM(){
+		return this.model.getShowSPM();
+	}
+
+	setShowSPM(){
+		this.model.setShowSPM();
+	}
+
 	getDimensions(){
 		return this.model.getDimensions();
 	}
