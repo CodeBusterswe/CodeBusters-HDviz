@@ -1,19 +1,17 @@
 import React, { useState } from "react"
 import { useStore } from "../../../../ContextProvider"
-import DimListRedux from "./DimListRedux"
 import Modal from "react-bootstrap/Modal"
 import { Button, ModalBody, ModalFooter } from "react-bootstrap"
+import {AlgorithmType} from "../../../../utils"
 
 const DimensionalReduction = props => {
-	const [drAlgo, setDrAlgo] = useState("FASTMAP");
-	const [newDimName, setNewDimName] = useState("FASTMAP");
+	const [algorithmType, setAlgorithmType] = useState(AlgorithmType.FastMap);	
+	const [newDimensionsName, setNewDimensionsName] = useState(AlgorithmType.FastMap);
 	const [neighbors, setNeighbors] = useState(30);
-	const [nNewDim, setNNewDim] = useState(2);
+	const [newDimensionsNumber, setNewDimensionsNumber] = useState(2);
+	
 	const viewModel = useStore()
 	const {
-		dims,
-		handleChangeDims,
-		reduxDims,
 		modalIsOpen,
 		closeModal
 	} = props
@@ -21,26 +19,26 @@ const DimensionalReduction = props => {
 	function changeNeighbours(e){
 		setNeighbors(e.target.value);
 	}
-	function changeAlgo(e){
-		setNewDimName(e.target.value)
-		setDrAlgo(e.target.value)
+	function handleChangeAlgorithmType(e){
+		setNewDimensionsName(e.target.value)
+		setAlgorithmType(e.target.value)
 	}
-	function changeNewDimName(e){
-		setNewDimName(e.target.value)
+	function handleChangeNewDimensionsName(e){
+		setNewDimensionsName(e.target.value)
 	}
-	function changeNNewDim(e){
-		setNNewDim(e.target.value)
+	function handleChangeNewDimensionsNumber(e){
+		setNewDimensionsNumber(e.target.value)
 	}
 
 	function renderParams() {
-		switch (drAlgo) {
-		case "FASTMAP":
+		switch (algorithmType) {
+		case AlgorithmType.FastMap:
 			return <span>Nessun parametro configurabile</span>;
-		case "TSNE":
+		case AlgorithmType.tSNE:
 			return <span>Nessun parametro configurabile</span>;
-		case "ISOMAP":
+		case AlgorithmType.IsoMap:
 			return <label><input name="k" type="range" min={10} max={300} value={neighbors} onChange={changeNeighbours} /> neighbors <i>k</i><p>{neighbors}</p></label>;
-		case "LLE":
+		case AlgorithmType.LLE:
 			return <label><input name="k" type="range" min={10} max={300} value={neighbors} onChange={changeNeighbours} /> neighbors <i>k</i><p>{neighbors}</p></label>;
 		default:
 			return <span>Nulla configurabile</span>;
@@ -58,26 +56,25 @@ const DimensionalReduction = props => {
 			</Modal.Header>
 
 			<ModalBody>
-				<DimListRedux dims={dims} updateDims={handleChangeDims} />
-				<select value={drAlgo} onChange={changeAlgo}>
-					<option value={"FASTMAP"}>FASTMAP</option>
-					<option value={"LLE"}>LLE</option>
-					<option value={"ISOMAP"}>ISOMAP</option>
-					<option value={"TSNE"}>TSNE</option>
+				<select value={algorithmType} onChange={handleChangeAlgorithmType}>
+					<option value={AlgorithmType.FastMap}>FASTMAP</option>
+					<option value={AlgorithmType.LLE}>LLE</option>
+					<option value={AlgorithmType.IsoMap}>ISOMAP</option>
+					<option value={AlgorithmType.tSNE}>TSNE</option>
 				</select>
 				<div>
 					<label forhtml="dimName">Nome della/e nuove dimensioni</label>
-					<input type="text" onChange={changeNewDimName} value={newDimName}></input>
+					<input type="text" onChange={handleChangeNewDimensionsName} value={newDimensionsName}></input>
 					<label forhtml="nNewDim">Dimensioni di ritorno</label>
-					<input type="number" onChange={changeNNewDim} value={nNewDim}></input>
+					<input type="number" onChange={handleChangeNewDimensionsNumber} value={newDimensionsNumber}></input>
 				</div>
 				{
 					renderParams()
 				}
-				<button onClick={reduxDims}>Redux Dims</button>
 			</ModalBody>
 			
 			<ModalFooter>
+				<Button onClick={()=>console.log("Redux")}>Redux Dims</Button>
 				<Button variant="secondary" onClick={closeModal}>Torna al menù</Button>
 			</ModalFooter>
 		</Modal>

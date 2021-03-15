@@ -37,7 +37,6 @@ const LoadCSV = observer(props => {
 			dimension._isChecked = event.target.checked
 		});
 		setLocalDimensions(temp)
-		console.log(localDimensions)
 	}
 	function selectDimension(event){
 		let temp = [...localDimensions]
@@ -46,7 +45,6 @@ const LoadCSV = observer(props => {
 				dimension._isChecked = event.target.checked
 		})
 		setLocalDimensions(temp)
-		console.log(localDimensions)
 	}
 	function areAllSelected(){
 		return localDimensions.length === localDimensions.filter(d => d._isChecked).length

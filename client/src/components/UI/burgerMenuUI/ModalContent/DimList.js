@@ -1,8 +1,7 @@
 import React from "react"
-import { observer } from "mobx-react-lite";
 import {Form} from "react-bootstrap"
 
-const DimList = observer((props) => {
+const DimList = (props) => {
 	const {
 		dimensions,
 		selectAllDimensions,
@@ -16,7 +15,6 @@ const DimList = observer((props) => {
 					dimensions.length!==0 ?
 						<Form.Check 
 							custom
-							inline
 							type="checkbox"
 							checked={allSelected}
 							key="checkAll"
@@ -35,7 +33,6 @@ const DimList = observer((props) => {
 							inline
 							type="checkbox"
 							checked={dim._isChecked}
-							value={dim.value}
 							key={dim.value}
 							id={dim.value}
 							label={dim.value}
@@ -46,6 +43,6 @@ const DimList = observer((props) => {
 			</Form.Row>
 		</Form>
 	)
-})
+}
 
 export default DimList
