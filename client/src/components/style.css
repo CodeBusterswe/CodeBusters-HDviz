@@ -60,13 +60,13 @@ body {
   --text-secondary: #ececec;
   --bg-primary: #282c34;
   --bg-secondary: #141418;
-  --transition-speed: 600ms;
+  --transition-speed: 300ms;
 }
 
 .navbar {
   position: fixed!important;
   display: block!important;
-  transition: width 500ms ease;
+  transition: width 200ms ease;
 	overflow: hidden;
 	background-color: var(--bg-primary);
   padding: 0%!important;
@@ -119,9 +119,11 @@ align-items: left;
 }
 
 .link-text {
-  display: none;
   margin-left: 1em;
 	font-size: 16px;
+	visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity .4s ease-in;
 }
 
 .icon {
@@ -132,10 +134,12 @@ align-items: left;
 
 .arrow-icon{
 	color:white;
-	margin: 0 1.3em;
+	margin: 0 1.2em;
+	margin-top: .5em;
 }
 
 .logo-text {
+	margin-top: .2em;
 	background-color: none;
   font-weight: bold;
   text-align: center;
@@ -149,8 +153,7 @@ align-items: left;
   transition: var(--transition-speed);
 }
 
-.logo-text
-{
+.logo-text {
   display: inline;
   position: absolute;
   left: -999px;
@@ -197,16 +200,15 @@ align-items: left;
   }
 
   .navbar:hover .link-text {
-    display: inline;
+    visibility: visible;
+  	opacity: 1;
   }
 
-  .navbar:hover .logo svg
-  {
+  .navbar:hover .logo svg {
     margin-left: 11em;
   }
 
-  .navbar:hover .logo-text
-  {
+  .navbar:hover .logo-text {
     left: 0px;
   }
 }

@@ -51,7 +51,7 @@ const Menu = () => {
 					<li className="logo">
 						<p>
 							<span className="link-text logo-text">HDViz</span>
-							<AiOutlineArrowRight size={40} className="arrow-icon"/>
+							<AiOutlineArrowRight size={32} className="arrow-icon"/>
 						</p>
 					</li>
 					{names.map((name, index) => {
