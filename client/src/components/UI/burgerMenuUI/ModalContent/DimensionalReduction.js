@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { useStore } from "../../../ContextProvider"
+import { useStore } from "../../../../ContextProvider"
 import DimListRedux from "./DimListRedux"
 import SelectorDimension from "./SelectorDimension"
 
@@ -17,17 +17,17 @@ const DimensionalReduction = props => {
 
 	function changeNeighbours(e){
 		setNeighbors(e.target.value);
-	  }
-	  function changeAlgo(e){
+	}
+	function changeAlgo(e){
 		setNewDimName(e.target.value)
 		setDrAlgo(e.target.value)
-	  }
-	  function changeNewDimName(e){
+	}
+	function changeNewDimName(e){
 		setNewDimName(e.target.value)
-	  }
-	  function changeNNewDim(e){
+	}
+	function changeNNewDim(e){
 		setNNewDim(e.target.value)
-	  }
+	}
 
 	function renderParams() {
 		switch (drAlgo) {
@@ -45,7 +45,6 @@ const DimensionalReduction = props => {
 	}
 
 	return (
-
 		<div>
 			<DimListRedux dims={dims} updateDims={handleChangeDims} />
 			<select value={drAlgo} onChange={changeAlgo}>

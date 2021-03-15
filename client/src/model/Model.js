@@ -34,7 +34,6 @@ class Model {
 	loadData(dimensions, data) {
 		this.originalData = data;
 		this.dimensions = dimensions;
-		this.selectedData = data;
 	}
 	loadDimensions(dimensions){
 		this.dimensions = dimensions;
@@ -43,9 +42,9 @@ class Model {
 		this.selectedData=selectedData;
 	}
 
-	addDimensionToDataset(dimension, data) {
-		this.dimensions.push(dimension);
-		this.selectedData.push(data);
+	addDimensionsToDataset(dimensions, data) {
+		this.dimensions = this.dimensions.concat(dimensions);
+		this.selectedData = data;
 	}
 
 	//se non serve calncellare

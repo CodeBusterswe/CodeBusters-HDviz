@@ -1,4 +1,4 @@
-const VisualizationType = {
+export const VisualizationType = {
 	ScatterPlotMatrix: "scatterPlotMatrix",
 	HeatMap: "heatMap",
 	ForceField: "forceField",

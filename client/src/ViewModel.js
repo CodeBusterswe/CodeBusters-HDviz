@@ -1,7 +1,9 @@
 import Dimension from "./model/Dimension";
 import Model from "./model/Model";
+import { toJS } from "mobx"
 import DimReductionStrategy from "./viewModel/DimReductionStrategy"
-import * as druid from "@saehrimnir/druidjs";
+import { AlgorithmType } from "./utils" // <--- LASCIARE PLS
+
 class ViewModel{
 
 	constructor(){
@@ -11,6 +13,7 @@ class ViewModel{
 	getDimensions(){
 		return this.model.getDimensions();
 	}
+
 	getOriginalData(){
 		return this.model.getOriginalData();
 	}
@@ -37,36 +40,36 @@ class ViewModel{
 			let d = new Dimension(dimName);
 			d.isNumeric(+parsedData[0][dimName] ? true : false)
 			return d;
-		});                                           
+		});  
 
 		return [parsedData, dimensions];
 	}
+
 	loadDataAndDims(data, dims){
-		this.model.loadData(dims, data)
+		this.model.loadData(dims, data);
+		this.updateSelectedData();
+
+		//per provare riduzione dimensionale
+		/*
+		const paramaters = {
+			Name: "Prova",
+			DimensionsNumber: 2,
+			Neighbors: 20,
+			Perplexity: 40,
+			Epsilon: 10
+		}
+		this.reduceDimensions(AlgorithmType.tSNE, paramaters, data);
+		*/
 	}
+
 	updateDims(dims){
 		this.model.loadDimensions(dims);
-		//Aggiorno i dati prendendo solo i selezionati
-		const selectedData = null;
-		this.model.updateSelectedData(selectedData);
-	}
-    
-	reduceDimensions(algorithm) {
-		//dimensioni o dati passati come parametro?
-		// const data = []; //dati ricavati dalle dimensioni interessate 
-
-		const dimRedStrategy = new DimReductionStrategy();
-        
-		// dimRedStrategy.setStrategy(algorithm);
-
-		// dimRedStrategy.executeStrategy(paramaters,data);
+		this.updateSelectedData()
 	}
 
-	//{sepal_length: 4.9, sepal_width: 3, petal_length: 1.4, petal_width: 0.2, species: "setosa"}
 	haveNotANumberValue(dataset) {
-        
-		const notNumber = value => isNaN(value);
-		dataset.some( row => Object.values(row).some(notNumber) );
+		//const notNumber = value => isNaN(value);
+		//dataset.some( row => Object.values(row).some(notNumber) );
 
 		let not_nan = true;
 		dataset.forEach(dim => {
@@ -76,7 +79,62 @@ class ViewModel{
 			}
 		}); 
 		return not_nan;
-	}   
+	}
 
+	updateSelectedData(){
+		const checkedDims = this.model.getSelectedDimensions()
+		//con filter tolgo i dati che hanno alcune dimensioni numeriche selezionate NaN; e con map prendo le dimensioni selezionate
+    	let selectedData = toJS(this.model.getOriginalData()).map(d => {
+        	return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]))
+     	})//.filter(this.haveNotANumberValue);
+		this.model.updateSelectedData(selectedData);
+		 //log di test
+		 console.log("original: ",toJS(this.model.getOriginalData()))
+		 console.log("selected: ",toJS(this.model.getSelectedData()))
+		 console.log(toJS(this.model.getDimensions()))
+
+	}
+    
+	prepareDataForDR(data) {
+		//filter con dimensioni numeriche??
+		return data.map(obj => Object.values(obj));
+	}
+
+	reduceDimensions(algorithm, paramaters, data) {
+
+		//spostare dove serve questo controllo
+		let nameAlreadyUsed = this.model.getSelectedDimensions().some(dim => dim.getValue().includes(algorithm));
+		if(nameAlreadyUsed)
+			throw "The name is already in use. Please choose a different one."
+		//*******************************************************************
+		const drStrategy = new DimReductionStrategy();
+		const newData = this.prepareDataForDR(data);
+
+		drStrategy.setStrategy(algorithm);
+		drStrategy.setData(newData);
+		drStrategy.setParameters(paramaters);
+
+		const reduction = drStrategy.executeStrategy();
+		
+		let newDimsFromReduction = [];
+    	for (let i = 1; i <= reduction._cols; i++) {
+			let d = new Dimension(paramaters.Name+i);
+			d.isReduced(true);
+      		newDimsFromReduction.push(d);
+    	}
+
+		let newDataFromReduction = this.model.getSelectedData(); //sostituire con data??				
+		for(let i = 0; i<newDataFromReduction.length; i++){
+			let d = newDataFromReduction[i];
+			let j=0;
+			newDimsFromReduction.forEach(dim => {
+			  d[dim.getValue()] = reduction.to2dArray[i][j];
+			  j++;
+			});
+		}
+
+		this.model.addDimensionsToDataset(newDimsFromReduction,newDataFromReduction);
+	}
+	 
 }
 export default ViewModel

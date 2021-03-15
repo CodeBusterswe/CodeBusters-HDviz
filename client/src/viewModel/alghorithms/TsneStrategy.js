@@ -1,4 +1,5 @@
 import AlgorithmInterface from "./../AlghorithmInterface"
+import * as dr from "@saehrimnir/druidjs";
 
 class TsneStrategy extends AlgorithmInterface{
     
@@ -9,11 +10,10 @@ class TsneStrategy extends AlgorithmInterface{
 		this.matrix = null;
 	}
 
-	executeStrategy(paramaters,data) {/*
-        const matrix = druid.Matrix.from(sendedData);
-        const DR = druid[drAlgo]; //questo andrà tolto
-        let redux = new DR(matrix, nNewDim, neighbors);
-        return redux.transform();*/
+	startDR(parameters,data) {
+		const matrix = dr.Matrix.from(data);
+		let alg = new dr.TSNE(matrix, parameters.Perplexity, parameters.Epsilon, parameters.DimensionsNumber);
+		return alg.transform();
 	}
 }
 

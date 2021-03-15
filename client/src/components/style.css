@@ -33,17 +33,20 @@ body {
 .bm-burger-button {
   z-index: 0!important; /* burger icon hidden behind modal */
   position: fixed;
-  width: 36px;
+  width: 2.5em;
   height: 2em;
-  left: 36px;
-  top: 1.2em;
+  left: 1.5em;
+  top: 1em;
 }
 
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
+	border-radius: 0.5em;
   background: white;
 }
-.bm-burger-bars:hover {
+
+.bm-burger-bars-hover {
+	transform: scale(1.1);
   background: red;
 }
 
@@ -54,6 +57,13 @@ body {
   font-size: 1.15em;
   height: 10%;
   width: 100%;
+}
+
+.button-list {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 /* GRAFICO */
 
