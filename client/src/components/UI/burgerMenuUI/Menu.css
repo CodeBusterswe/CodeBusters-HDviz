@@ -8,10 +8,12 @@
 }
 
 .navbar {
-  position: fixed;
-  transition: width 500ms ease;
+  position: fixed!important;
+  display: block!important;
+  /*transition: width 500ms ease;*/
 	overflow: hidden;
 	background-color: var(--bg-primary);
+  padding: 0%!important;
 }
 
 .navbar-nav {
