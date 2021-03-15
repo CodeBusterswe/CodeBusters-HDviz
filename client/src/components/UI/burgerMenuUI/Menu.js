@@ -1,6 +1,7 @@
 import React, { useState } from "react"
-import "./Menu.css";
-import Popup from "./Popup"
+import DimensionalReduction from "./ModalContent/DimensionalReduction"
+import LoadCSV from "./ModalContent/LoadCSV"
+import "../../style.css";
 import {AiOutlineArrowRight , AiOutlineDotChart} from "react-icons/ai";
 import {ImDatabase} from "react-icons/im";
 import {FaFileCsv} from "react-icons/fa";
@@ -25,6 +26,18 @@ const Menu = () => {
 	function closeModal() {
 		setIsOpen(false);
 	}
+
+	function handleContent(index) {
+		switch (index) {
+		case 2:
+			return <LoadCSV modalIsOpen={modalIsOpen} closeModal={closeModal}></LoadCSV>
+		case 3:
+			return <DimensionalReduction modalIsOpen={modalIsOpen} closeModal={closeModal}></DimensionalReduction>
+			//TODO: other cases
+		default:
+			break;
+		}
+	}
 								
 	return (
 		<> 
@@ -48,11 +61,7 @@ const Menu = () => {
 					})} 
 				</ul> 
 			</nav> 
-			<Popup
-				modalIsOpen={modalIsOpen}
-				closeModal={closeModal}
-				index={id}
-			/>
+			{handleContent(id)}
 		</>
 	)
 }

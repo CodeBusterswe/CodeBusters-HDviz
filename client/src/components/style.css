@@ -49,3 +49,162 @@ body {
 }
 
 /* FINE GRAFICO */
+
+.content {
+	margin-left: 5em;
+}
+
+/* INIZIO MENU */
+:root {
+  --text-primary: #b6b6b6;
+  --text-secondary: #ececec;
+  --bg-primary: #282c34;
+  --bg-secondary: #141418;
+  --transition-speed: 600ms;
+}
+
+.navbar {
+  position: fixed!important;
+  display: block!important;
+  transition: width 500ms ease;
+	overflow: hidden;
+	background-color: var(--bg-primary);
+  padding: 0%!important;
+}
+
+.navbar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.navbar-nav:hover {
+align-items: left;
+}
+
+.nav-item{
+  width: 100%;
+	background-color: none;
+}
+
+.logo {
+	margin-top: .7em;
+	width: 100%;
+	height: 3.3em;
+} 
+
+.nav-link {
+	background: var(--bg-primary);
+	cursor: pointer;
+	border: 0;
+	width: 100%;
+  display: flex!important;
+  align-items: center;
+	margin: auto;
+  height: 5em;
+  color: var(--text-primary);
+  text-decoration: none;
+  filter:opacity(0.7);
+  transition: var(--transition-speed);
+}
+
+.nav-link:hover {
+  filter: opacity(1);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.link-text {
+  display: none;
+  margin-left: 1em;
+	font-size: 16px;
+}
+
+.icon {
+  width: 2em;
+  min-width: 2em;
+  margin: 0 1em;
+}
+
+.arrow-icon{
+	color:white;
+	margin: 0 1.3em;
+}
+
+.logo-text {
+	background-color: none;
+  font-weight: bold;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1.5em;
+  letter-spacing: 0.2ch;
+}
+
+.logo svg {
+  transform: rotate(0deg);
+  transition: var(--transition-speed);
+}
+
+.logo-text
+{
+  display: inline;
+  position: absolute;
+  left: -999px;
+  transition: var(--transition-speed);
+}
+
+.navbar:hover .logo svg {
+  transform: rotate(-180deg);
+}
+
+@media only screen and (max-width: 600px) {
+  .navbar {
+    bottom: 0;
+    width: 100vw;
+    height: 5em;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .navbar-nav {
+    flex-direction: row!important;
+  }
+
+  .nav-link {
+    justify-content: center;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .navbar {
+    top: 0;
+    width: 5em;
+    height: 100vh;
+  }
+
+  .navbar:hover {
+    width: 16em;
+  }
+
+  .navbar:hover .link-text {
+    display: inline;
+  }
+
+  .navbar:hover .logo svg
+  {
+    margin-left: 11em;
+  }
+
+  .navbar:hover .logo-text
+  {
+    left: 0px;
+  }
+}
+/* TODO: DA RIVEDERE */
+/* FINE MENU */
