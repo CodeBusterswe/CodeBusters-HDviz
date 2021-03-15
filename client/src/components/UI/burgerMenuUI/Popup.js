@@ -2,6 +2,7 @@ import React from "react"
 import DimensionalReduction from "./ModalContent/DimensionalReduction"
 import LoadCSV from "./ModalContent/LoadCSV"
 import "../../style.css"
+import ChooseGraphic from "./ModalContent/ChooseGraphic"
 
 const Popup = props => {
 	const {
@@ -13,10 +14,11 @@ const Popup = props => {
 	function handleContent(index) {
 		switch (index) {
 		case 2:
-			return <LoadCSV modalIsOpen={modalIsOpen} closeModal={closeModal}></LoadCSV>
+			return <LoadCSV modalIsOpen={modalIsOpen} closeModal={closeModal}/>
 		case 3:
-			return <DimensionalReduction modalIsOpen={modalIsOpen} closeModal={closeModal}></DimensionalReduction>
-			//TODO: other cases
+			return <DimensionalReduction modalIsOpen={modalIsOpen} closeModal={closeModal}/>
+		case 4:
+			return <ChooseGraphic modalIsOpen={modalIsOpen} closeModal={closeModal}/>
 		default:
 			break;
 		}
