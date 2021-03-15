@@ -9,8 +9,8 @@ export default function ScatterPlotMatrixDiv (props) {
 	const viewModel = useStore();
 	const data = viewModel.getOriginalData();
 	const dims = viewModel.getDimensions();
-	const keys = dims.filter(dim => dim._isChecked).map((d) => d.value);
-	const catKeys = dims.filter(dim => !dim._isNumeric && dim._isChecked).map((d) => d.value);
+	const keys = viewModel.getDimensionsChecked();
+	const catKeys = viewModel.getNotNumericChecked();
 	console.log(dims)
     	console.log(keys);
 	console.log(catKeys);

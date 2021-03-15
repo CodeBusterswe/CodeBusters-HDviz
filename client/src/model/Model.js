@@ -23,7 +23,9 @@ class Model {
 	getDimensions() {
 		return this.dimensions;
 	}
-
+	getDimensionsChecked(){
+		
+	}
 	getOriginalData() {
 		return this.originalData;
 	}

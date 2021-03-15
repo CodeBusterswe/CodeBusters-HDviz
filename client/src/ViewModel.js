@@ -22,6 +22,14 @@ class ViewModel{
 		return this.model.getDimensions();
 	}
 
+	getDimensionsChecked(){
+		return this.model.getDimensions().filter(dim => dim._isChecked).map((d) => d.value);
+	}
+
+	getNotNumericChecked(){
+		return this.model.getDimensions().filter(dim => !dim._isNumeric && dim._isChecked).map((d) => d.value);
+	}
+
 	getOriginalData(){
 		return this.model.getOriginalData();
 	}
