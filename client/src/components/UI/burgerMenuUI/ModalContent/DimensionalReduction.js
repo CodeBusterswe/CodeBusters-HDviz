@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import { useStore } from "../../../../ContextProvider"
 import DimListRedux from "./DimListRedux"
-import SelectorDimension from "./SelectorDimension"
+import Modal from "react-bootstrap/Modal"
+import { Button, ModalBody, ModalFooter } from "react-bootstrap"
 
 const DimensionalReduction = props => {
 	const [drAlgo, setDrAlgo] = useState("FASTMAP");
@@ -12,7 +13,9 @@ const DimensionalReduction = props => {
 	const {
 		dims,
 		handleChangeDims,
-		reduxDims
+		reduxDims,
+		modalIsOpen,
+		closeModal
 	} = props
 
 	function changeNeighbours(e){
@@ -45,25 +48,39 @@ const DimensionalReduction = props => {
 	}
 
 	return (
-		<div>
-			<DimListRedux dims={dims} updateDims={handleChangeDims} />
-			<select value={drAlgo} onChange={changeAlgo}>
-				<option value={"FASTMAP"}>FASTMAP</option>
-				<option value={"LLE"}>LLE</option>
-				<option value={"ISOMAP"}>ISOMAP</option>
-				<option value={"TSNE"}>TSNE</option>
-			</select>
-			<div>
-				<label forhtml="dimName">Nome della/e nuove dimensioni</label>
-				<input type="text" onChange={changeNewDimName} value={newDimName}></input>
-				<label forhtml="nNewDim">Dimensioni di ritorno</label>
-				<input type="number" onChange={changeNNewDim} value={nNewDim}></input>
-			</div>
-			{
-				renderParams()
-			}
-			<button onClick={reduxDims}>Redux Dims</button>
-		</div>
+		<Modal
+			show={modalIsOpen}
+			onHide={closeModal}
+		//ariaHideApp={false}
+		>
+			<Modal.Header closeButton>
+				<Modal.Title>Riduzione dimensionale</Modal.Title>
+			</Modal.Header>
+
+			<ModalBody>
+				<DimListRedux dims={dims} updateDims={handleChangeDims} />
+				<select value={drAlgo} onChange={changeAlgo}>
+					<option value={"FASTMAP"}>FASTMAP</option>
+					<option value={"LLE"}>LLE</option>
+					<option value={"ISOMAP"}>ISOMAP</option>
+					<option value={"TSNE"}>TSNE</option>
+				</select>
+				<div>
+					<label forhtml="dimName">Nome della/e nuove dimensioni</label>
+					<input type="text" onChange={changeNewDimName} value={newDimName}></input>
+					<label forhtml="nNewDim">Dimensioni di ritorno</label>
+					<input type="number" onChange={changeNNewDim} value={nNewDim}></input>
+				</div>
+				{
+					renderParams()
+				}
+				<button onClick={reduxDims}>Redux Dims</button>
+			</ModalBody>
+			
+			<ModalFooter>
+				<Button variant="secondary" onClick={closeModal}>Torna al menù</Button>
+			</ModalFooter>
+		</Modal>
 	)
 }
 

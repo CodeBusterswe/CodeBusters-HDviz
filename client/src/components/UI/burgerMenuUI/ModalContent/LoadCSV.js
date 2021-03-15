@@ -5,12 +5,15 @@ import MyCSVReader from "./MyCSVReader"
 import DimList from "./DimList"
 import { toJS } from "mobx"
 import { useStore } from "../../../../ContextProvider"
+import Modal from "react-bootstrap/Modal"
+import { ModalBody, ModalFooter } from "react-bootstrap"
 
 const LoadCSV = observer(props => {
 	const viewModel = useStore();
 	const [localDimensions, setLocalDimensions] = useState(toJS(viewModel.getDimensions()))
 	const [localData, setLocalData] = useState()
 	const {
+		modalIsOpen,
 		closeModal
 	} = props
 	
@@ -49,11 +52,26 @@ const LoadCSV = observer(props => {
 		return localDimensions.length === localDimensions.filter(d => d._isChecked).length
 	}
 	return(
-		<div>
-			<MyCSVReader setLocalStates={setLocalStates}/>
-			<DimList dimensions={localDimensions} selectAllDimensions={selectAllDimensions} selectDimension={selectDimension} allSelected={areAllSelected()}/>
-			<Button variant="success" onClick={loadDataAndDims}>Conferma selezione</Button>
-		</div>
+		<Modal
+			show={modalIsOpen}
+			onHide={closeModal}
+		>
+			<Modal.Header closeButton>
+				<Modal.Title>Carica i dati</Modal.Title>
+			</Modal.Header>
+
+			<ModalBody>
+				<div>
+					<MyCSVReader setLocalStates={setLocalStates}/>
+					<DimList dimensions={localDimensions} selectAllDimensions={selectAllDimensions} selectDimension={selectDimension} allSelected={areAllSelected()}/>
+				</div>
+			</ModalBody>
+			
+			<ModalFooter>
+				<Button variant="secondary" onClick={closeModal}>Torna al menù</Button>
+				<Button variant="primary" onClick={loadDataAndDims}>Conferma selezione</Button>
+			</ModalFooter>
+		</Modal>
 	)
 })
 

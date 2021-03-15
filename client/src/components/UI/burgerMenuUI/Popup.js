@@ -1,6 +1,4 @@
 import React from "react"
-import Modal from "react-bootstrap/Modal"
-import { Button, ModalBody, ModalFooter } from "react-bootstrap"
 import DimensionalReduction from "./ModalContent/DimensionalReduction"
 import LoadCSV from "./ModalContent/LoadCSV"
 import "../../style.css"
@@ -15,37 +13,18 @@ const Popup = props => {
 	function handleContent(index) {
 		switch (index) {
 		case 0:
-			return <LoadCSV closeModal={closeModal}></LoadCSV>
+			return <LoadCSV modalIsOpen={modalIsOpen} closeModal={closeModal}></LoadCSV>
 		case 1:
-			return <DimensionalReduction></DimensionalReduction>
+			return <DimensionalReduction modalIsOpen={modalIsOpen} closeModal={closeModal}></DimensionalReduction>
 			//TODO: other cases
 		default:
 			break;
 		}
 	}
 	return (
-		<Modal
-			show={modalIsOpen}
-			onHide={closeModal}
-		//ariaHideApp={false}
-		>
-			<Modal.Header closeButton>
-				<Modal.Title>Modal heading</Modal.Title>
-			</Modal.Header>
-			<ModalBody>
-				{handleContent(index)}
-				<Button variant="danger" onClick={closeModal}>Torna al menù</Button>
-			</ModalBody>
-			<ModalFooter>
-				<Button variant="secondary" onClick={closeModal}>
-            Close
-				</Button>
-				<Button variant="primary" onClick={closeModal}>
-            Save Changes
-				</Button>
-			</ModalFooter>
-		</Modal>
-
+		<div>
+			{handleContent(index)}
+		</div>
 	)
 }
 
