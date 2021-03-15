@@ -1,6 +1,4 @@
 import React from "react"
-import Modal from "react-modal"
-import {Button} from "react-bootstrap"
 import DimensionalReduction from "./ModalContent/DimensionalReduction"
 import LoadCSV from "./ModalContent/LoadCSV"
 import "../../style.css"
@@ -12,33 +10,21 @@ const Popup = props => {
 		index
 	} = props
 
-	function handleContent(index){
-		switch(index) {
+	function handleContent(index) {
+		switch (index) {
 		case 0:
-			return <LoadCSV closeModal={closeModal}></LoadCSV>
-		case 1: 
-			return <DimensionalReduction></DimensionalReduction>
+			return <LoadCSV modalIsOpen={modalIsOpen} closeModal={closeModal}></LoadCSV>
+		case 1:
+			return <DimensionalReduction modalIsOpen={modalIsOpen} closeModal={closeModal}></DimensionalReduction>
 			//TODO: other cases
-		default: 
+		default:
 			break;
 		}
 	}
 	return (
-		<Modal
-			isOpen={modalIsOpen}
-			onRequestClose={closeModal}
-			ariaHideApp={false}
-			style={
-				{
-					overlay: {
-						backgroundColor: "rgba(40, 44, 52, .9)"
-					}
-				}
-			}
-		>
-  		{handleContent(index)}
-			<Button variant="danger" onClick={closeModal}>Torna al menù</Button>
-		</Modal>           
+		<div>
+			{handleContent(index)}
+		</div>
 	)
 }
 
