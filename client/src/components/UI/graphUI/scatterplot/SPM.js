@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import * as d3 from "d3"
 import PropTypes from "prop-types";
-import { select} from "d3";
+import { select } from "d3";
 
 export default function ScatterPlotMatrix (props) {
     

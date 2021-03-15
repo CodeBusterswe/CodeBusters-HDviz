@@ -12,10 +12,10 @@ const View = observer(() => {
 	const viewModel = useStore()
 	return (
 		<div>
-			<BurgerMenu />
 			<Header />
-			<button className="mb-3 btn-lg btn-block" onClick={() => viewModel.setShowSPM()}>Prova MOSTRA grafico</button>
-			{viewModel.getShowSPM() ?	<div><ScatterPlotMatrixDiv></ScatterPlotMatrixDiv></div> : null}
+{/* 			<button className="mb-3 btn-lg btn-block" onClick={() => viewModel.setShowSPM()}>Prova MOSTRA grafico</button>
+			{viewModel.getShowSPM() ?	<div><ScatterPlotMatrixDiv></ScatterPlotMatrixDiv></div> : null} */}
+			<BurgerMenu />
 		</div>
 	)
 })
