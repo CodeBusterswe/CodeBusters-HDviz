@@ -102,12 +102,12 @@ class ViewModel{
      	}).filter(this.haveNotANumberValue);
 		this.model.updateSelectedData(selectedData);
 		 //log di test
-		 console.log("original: ",toJS(this.model.getOriginalData()))
-		 console.log("selected: ",toJS(this.model.getSelectedData()))
-		 console.log("dimensions:", toJS(this.model.getDimensions()))
+		 //console.log("original: ",toJS(this.model.getOriginalData()))
+		 //console.log("selected: ",toJS(this.model.getSelectedData()))
+		 //console.log("dimensions:", toJS(this.model.getDimensions()))
 		 
 		 //prova della riduzione tramite distanze
-		 //this.reduceDimensionsByDist("euclidean", originalData, "name");
+		 //this.reduceDimensionsByDist("euclidean", originalData, "name", "age");
 	}
     
 	prepareDataForDR(dimensionsToRedux) {
@@ -121,33 +121,33 @@ class ViewModel{
 		this.reduceDimensions(algorithm, paramaters, newData);
 	}
 
-	reduceDimensionsByDist(distType, data, idDimension) {
+	reduceDimensionsByDist(distType, data, idDimension, groupDimension) {
 		//data = [ {}, {nome: "Paolo", peso: 50, altezza: 180}, ...., {} ]
 		//idDimension = "nome"
 		let matrix = new DistanceMatrix();
-		let onlyData = data;
-		/*
-			onlyData = [...data].map(point => {
-				delete point[idDimension]
-				return point;
-			});*/
 
-		for (let i = 0; i < onlyData.length - 1; i++) {
-			for (let j = i+1; j < onlyData.length - 1; j++) {
-				let pointA = Object.values(onlyData[i]),
-					pointB = Object.values(onlyData[j]);
+		for (let i = 0; i < data.length - 1; i++) {
+			for (let j = i+1; j < data.length - 1; j++) {
+				let pointA = Object.values(data[i]),
+					pointB = Object.values(data[j]);
 				pointA.shift();
 				pointB.shift();
-				let row = {
+				let node = {
 					source: data[i][idDimension],
 					target: data[j][idDimension],
-					distance: distCalc.distance.euclidean(pointA, pointB)
+					value: distCalc.distance[distType](pointA, pointB)
 				}
-				matrix.pushRow(row);
+				matrix.pushNode(node);
 			}
+			let link = {
+				id: data[i][idDimension],
+				group: data[i][groupDimension]
+			}
+			matrix.pushLink(link);
 		}
-		console.log(matrix);
-		
+		//console.log(matrix.getLinks());
+		//console.log(matrix.getNodes());
+		this.model.pushDistanceMatrix(matrix);
 	}
 
 	reduceDimensions(algorithm, paramaters, data) {
@@ -182,8 +182,8 @@ class ViewModel{
 			});
 		}
 
-		this.model.addDimensionsToDataset(newDimsFromReduction,newDataFromReduction);
-		console.log(newDataFromReduction)
+		this.model.addDimensionsToDataset(newDimsFromReduction);
+		//console.log(newDataFromReduction)
 		console.log(this.model.getSelectedData());
 	}
 	 

@@ -5,21 +5,29 @@ class DistanceMatrix {
         target : "t1"
         distance : 15.3
     }
+    {
+        id : "id1"
+        group : "g1"
+    }
     */
-    data = [];
+    nodes = [];
+    links = [];
 
-    getData() {
-    	return this.data;
+    getNodes() {
+    	return this.nodes;
     }
 
-    setData(data) {
-    	this.data = data;
+    getLinks() {
+    	return this.links;
     }
 
-    pushRow(row) {
-    	this.data.push(row);
+    pushNode(node) {
+    	this.nodes.push(node);
     }
 
+    pushLink(link) {
+    	this.links.push(link);
+    }
 }
 
 export default DistanceMatrix;

@@ -59,9 +59,8 @@ class Model {
 		this.selectedData=selectedData;
 	}
 
-	addDimensionsToDataset(dimensions, data) {
+	addDimensionsToDataset(dimensions) {
 		this.dimensions = this.dimensions.concat(dimensions);
-		this.selectedData = data;
 	}
 
 	//se non serve calncellare
