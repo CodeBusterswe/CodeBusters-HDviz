@@ -3,7 +3,9 @@ import React, { useState } from "react"
 import DimensionalReduction from "./ModalContent/DimensionalReduction"
 import LoadCSV from "./ModalContent/LoadCSV"
 import "../../style.css";
-import {observer} from "mobx-react-lite"
+//import Tippy from "react-tippy"
+//import "react-tippy/dist/tippy.css"
+//import {observer} from "mobx-react-lite"
 import { toJS } from "mobx"
 import {AiOutlineArrowRight , AiOutlineDotChart} from "react-icons/ai";
 import {ImDatabase} from "react-icons/im";
@@ -45,8 +47,10 @@ const Menu = () => {
 			break;
 		}
 	}
-	console.log(toJS(viewModel.getOriginalData()));
-								
+	
+	function checkToDisabled(index){
+		return (index === 3 || index === 4) && toJS(viewModel.getOriginalData()).length === 0;
+	}
 	return (
 		<> 
  			<nav className="navbar">
@@ -61,18 +65,14 @@ const Menu = () => {
 						return(
 							<li className="nav-item" key={name}>
 								<button className="nav-link" onClick={() => openModal(index)} 
-									disabled={(index === 3 || index === 4) && toJS(viewModel.getOriginalData()).length === 0}>	
+									disabled={checkToDisabled(index)}>	
 									{icons[index]}
 									<span className="link-text">{name}</span>
 								</button>
+								{checkToDisabled(index) ? <span className="err-msg">Non ci sono dati caricati</span> : null} 
 							</li>
 						)
 					})} 
-					<li className="nav-item">
-						<button className="nav-link" onClick={() => {viewModel.setShowSPM();closeModal()}}>
-							{icons[4]}
-							<span className="link-text">Scatter Plot Matrix</span></button>
-					</li>
 				</ul> 
 			</nav> 
 			{handleContent(id)}

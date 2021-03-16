@@ -249,3 +249,19 @@ align-items: left;
   }
 }
 /* FINE HEADER */
+
+.err-msg{
+	margin-left: 1em;
+	color: red;
+	font-weight: bold;
+	display: none;
+	visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 4s ease-in;
+}
+
+.nav-link:hover ~ .err-msg {
+	display: inline;
+	visibility: visible;
+	opacity: 1;
+}

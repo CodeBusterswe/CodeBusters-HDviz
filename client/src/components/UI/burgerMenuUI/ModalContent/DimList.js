@@ -1,5 +1,7 @@
 import React from "react"
 import {Form} from "react-bootstrap"
+import { useStore } from "../../../../ContextProvider"
+import { toJS } from "mobx"
 
 const DimList = (props) => {
 	const {
@@ -8,8 +10,14 @@ const DimList = (props) => {
 		selectDimension,
 		allSelected
 	} = props
+	const viewModel = useStore()
 	return (
 		<Form>
+			{
+				toJS(viewModel.getOriginalData()).length !== 0 ? 
+					<Form.Label>Seleziona le dimensioni da utilizzare:</Form.Label> : 
+					null
+			}
 			<Form.Row>
 				{
 					dimensions.length!==0 ?

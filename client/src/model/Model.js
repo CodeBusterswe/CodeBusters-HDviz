@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx"
 
-import Dimension from "./Dimension";
+//import Dimension from "./Dimension";
 
 class Model {
 	
