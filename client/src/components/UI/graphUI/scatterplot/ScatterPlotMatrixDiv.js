@@ -8,12 +8,8 @@ export default function ScatterPlotMatrixDiv (props) {
 	//const dims = [{value: "age", isChecked: false, toRedux: true, isRedux: false, isNumeric: true},{value: "weight", isChecked: true, toRedux: true, isRedux: false, isNumeric: true}]
 	const viewModel = useStore();
 	const data = viewModel.getSelectedData();
-	const dims = viewModel.getDimensions();
 	const keys = viewModel.getCheckedDimensions();
 	const catKeys = viewModel.getCategoricCheckedDimensions();
-	console.log(dims)
-    	console.log(keys);
-	console.log(catKeys);
 	const [Dims, setDims] = useState(keys.slice(0, 4));
 	const [DimColore, setDimColore] = useState(catKeys[0] ? catKeys[0] : "-")
 	//Per l'aggiornamento delle dimensioni nelle label delle select quando cambia file
