@@ -14,7 +14,7 @@ const LoadCSV = props => {
 		modalIsOpen,
 		closeModal
 	} = props
-	
+
 	function loadDataAndDims(){
 		console.time("clickLoadData");
 		//devo anche aggiornare i selectedData con le nuove dimensioni selezionate
@@ -39,20 +39,20 @@ const LoadCSV = props => {
 	function selectAllDimensions(event){
 		let temp = [...localDimensions]
 		temp.forEach(dimension => {
-			dimension._isChecked = event.target.checked
+			dimension.isChecked(event.target.checked)
 		});
 		setLocalDimensions(temp)
 	}
 	function selectDimension(event){
 		let temp = [...localDimensions]
 		temp.forEach(dimension =>{
-			if(dimension.value === event.target.id)
-				dimension._isChecked = event.target.checked
+			if(dimension.getValue() === event.target.id)
+				dimension.isChecked(event.target.checked)
 		})
 		setLocalDimensions(temp)
 	}
 	function areAllSelected(){
-		return localDimensions.length === localDimensions.filter(d => d._isChecked).length
+		return localDimensions.length === localDimensions.filter(d => d.getChecked()).length
 	}
 	return(
 		<Modal
