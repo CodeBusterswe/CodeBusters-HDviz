@@ -2895,6 +2895,11 @@
   "resolved" "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.2.0.tgz"
   "version" "2.2.0"
 
+"binary-search@^1.3.5":
+  "integrity" "sha512-nbE1WxOTTrUWIfsfZ4aHGYu5DOuNkbxGokjV6Z2kxfJK3uaAb8zNK1muzOeipoLHZjInT4Br88BHpzevc681xA=="
+  "resolved" "https://registry.npmjs.org/binary-search/-/binary-search-1.3.6.tgz"
+  "version" "1.3.6"
+
 "bindings@^1.5.0":
   "integrity" "sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ=="
   "resolved" "https://registry.npmjs.org/bindings/-/bindings-1.5.0.tgz"
@@ -6307,6 +6312,11 @@
   dependencies:
     "kind-of" "^6.0.0"
 
+"is-any-array@^0.1.0":
+  "integrity" "sha512-qTiELO+kpTKqPgxPYbshMERlzaFu29JDnpB8s3bjg+JkxBpw29/qqSaOdKv2pCdaG92rLGeG/zG2GauX58hfoA=="
+  "resolved" "https://registry.npmjs.org/is-any-array/-/is-any-array-0.1.1.tgz"
+  "version" "0.1.1"
+
 "is-arguments@^1.0.4":
   "integrity" "sha512-1Ij4lOMPl/xB5kBDn7I+b2ttPMKa8szhEIrXDuXQD/oe3HJLTLhqhgGspwgyGd6MOywBUqVvYicF72lkgDnIHg=="
   "resolved" "https://registry.npmjs.org/is-arguments/-/is-arguments-1.1.0.tgz"
@@ -7839,6 +7849,42 @@
   "resolved" "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz"
   "version" "1.0.4"
 
+"ml-array-mean@^1.1.1":
+  "integrity" "sha512-xGpy4NanZAq2KcVD1Gf0UOjyNNLl1i7hoHqCHYIxxqI+o+KXa9rDAa5eJ9c82hlCx5hJe6AmyWp0e7a8VoK5uA=="
+  "resolved" "https://registry.npmjs.org/ml-array-mean/-/ml-array-mean-1.1.4.tgz"
+  "version" "1.1.4"
+  dependencies:
+    "ml-array-sum" "^1.1.4"
+
+"ml-array-sum@^1.1.4":
+  "integrity" "sha512-e8nve4dwfRWXXRY+/Qt+R3agTLoOwhJxZM51CGyLI2dy+EAOuJy28ed3UePyE4lqkkNBzpormQOShA5pYYhFxg=="
+  "resolved" "https://registry.npmjs.org/ml-array-sum/-/ml-array-sum-1.1.4.tgz"
+  "version" "1.1.4"
+  dependencies:
+    "is-any-array" "^0.1.0"
+
+"ml-distance-euclidean@^2.0.0":
+  "integrity" "sha512-yC9/2o8QF0A3m/0IXqCTXCzz2pNEzvmcE/9HFKOZGnTjatvBbsn4lWYJkxENkA4Ug2fnYl7PXQxnPi21sgMy/Q=="
+  "resolved" "https://registry.npmjs.org/ml-distance-euclidean/-/ml-distance-euclidean-2.0.0.tgz"
+  "version" "2.0.0"
+
+"ml-distance@^3.0.0":
+  "integrity" "sha512-sRDuFVgZp2jTRkI/Y3urDXNjFG+rkrZ70ic8gt8KxOp+eNHDaDJolM5AxPX9G2FQMuIk3AUBdlDU1yhhXcf4+A=="
+  "resolved" "https://registry.npmjs.org/ml-distance/-/ml-distance-3.0.0.tgz"
+  "version" "3.0.0"
+  dependencies:
+    "ml-array-mean" "^1.1.1"
+    "ml-distance-euclidean" "^2.0.0"
+    "ml-tree-similarity" "^1.0.0"
+
+"ml-tree-similarity@^1.0.0":
+  "integrity" "sha512-XJUyYqjSuUQkNQHMscr6tcjldsOoAekxADTplt40QKfwW6nd++1wHWV9AArl0Zvw/TIHgNaZZNvr8QGvE8wLRg=="
+  "resolved" "https://registry.npmjs.org/ml-tree-similarity/-/ml-tree-similarity-1.0.0.tgz"
+  "version" "1.0.0"
+  dependencies:
+    "binary-search" "^1.3.5"
+    "num-sort" "^2.0.0"
+
 "mobx-react-lite@^3.2.0":
   "integrity" "sha512-q5+UHIqYCOpBoFm/PElDuOhbcatvTllgRp3M1s+Hp5j0Z6XNgDbgqxawJ0ZAUEyKM8X1zs70PCuhAIzX1f4Q/g=="
   "resolved" "https://registry.npmjs.org/mobx-react-lite/-/mobx-react-lite-3.2.0.tgz"
@@ -8079,6 +8125,11 @@
   "version" "1.0.2"
   dependencies:
     "boolbase" "~1.0.0"
+
+"num-sort@^2.0.0":
+  "integrity" "sha512-1MQz1Ed8z2yckoBeSfkQHHO9K1yDRxxtotKSJ9yvcTUUxSvfvzEq5GwBrjjHEpMlq/k5gvXdmJ1SbYxWtpNoVg=="
+  "resolved" "https://registry.npmjs.org/num-sort/-/num-sort-2.1.0.tgz"
+  "version" "2.1.0"
 
 "num2fraction@^1.2.2":
   "integrity" "sha1-b2gragJ6Tp3fpFZM0lidHU5mnt4="
@@ -8607,6 +8658,11 @@
   "version" "1.6.4"
   dependencies:
     "ts-pnp" "^1.1.6"
+
+"popper.js@^1.11.1":
+  "integrity" "sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ=="
+  "resolved" "https://registry.npmjs.org/popper.js/-/popper.js-1.16.1.tgz"
+  "version" "1.16.1"
 
 "portfinder@^1.0.26":
   "integrity" "sha512-Se+2isanIcEqf2XMHjyUKskczxbPH7dQnlMjXX6+dybayyHvAf/TCgyMRlzf/B6QDhAEFOGes0pzRo3by4AbMA=="
@@ -9788,6 +9844,13 @@
     "prop-types" "^15.6.0"
     "react-input-autosize" "^3.0.0"
     "react-transition-group" "^4.3.0"
+
+"react-tippy@^1.4.0":
+  "integrity" "sha512-r/hM5XK9Ztr2ZY7IWKuRmISTlUPS/R6ddz6PO2EuxCgW+4JBcGZRPU06XcVPRDCOIiio8ryBQFrXMhFMhsuaHA=="
+  "resolved" "https://registry.npmjs.org/react-tippy/-/react-tippy-1.4.0.tgz"
+  "version" "1.4.0"
+  dependencies:
+    "popper.js" "^1.11.1"
 
 "react-transition-group@^4.3.0", "react-transition-group@^4.4.1":
   "integrity" "sha512-Djqr7OQ2aPUiYurhPalTrVy9ddmFCCzwhqQmtN+J3+3DzLO209Fdr70QrN8Z3DsglWql6iY1lDWAfpFiBtuKGw=="

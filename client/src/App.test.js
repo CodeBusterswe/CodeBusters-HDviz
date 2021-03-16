@@ -11,7 +11,6 @@ test("Open and close CSV modal", () => {
 	fireEvent.click(screen.getByRole('button',{name: /Carica dati da CSV/i }));
 	fireEvent.click(screen.getByRole('button', { name: /Torna al menù/i }));
 	waitFor(() => {expect(screen.getByRole('heading', { name: 'HDViz' })).toBeTruthy()});
-	//expect(screen.getByRole('heading', { name: 'HDViz' })).toBeTruthy();
 	screen.debug();
 });
 test("Open and close Riduci dimensioni", () => {
