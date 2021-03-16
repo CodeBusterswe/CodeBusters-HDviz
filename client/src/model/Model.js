@@ -9,7 +9,16 @@ class Model {
 		this.dimensions = [];
 		this.originalData = [];
 		this.selectedData = [];
+		this.distanceMatrices = [];
 		makeAutoObservable(this);
+	}
+
+	addDistanceMatrix(matrix) {
+		this.distanceMatrices.push(matrix);
+	}
+
+	getDistanceMatrices() {
+		return this.distanceMatrices;
 	}
 
 	getShowSPM(){

@@ -137,18 +137,18 @@ class ViewModel{
 					pointB = Object.values(data[j]);
 				pointA.shift();
 				pointB.shift();
-				let node = {
+				let link = {
 					source: data[i][idDimension],
 					target: data[j][idDimension],
 					value: distCalc.distance[distType](pointA, pointB)
 				}
-				matrix.pushNode(node);
+				matrix.pushLink(link);
 			}
-			let link = {
+			let node = {
 				id: data[i][idDimension],
 				group: data[i][groupDimension]
 			}
-			matrix.pushLink(link);
+			matrix.pushNode(node);
 		}
 		//console.log(matrix.getLinks());
 		//console.log(matrix.getNodes());
