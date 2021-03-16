@@ -26,11 +26,8 @@ const DimensionalReduction = props => {
 
 	function handleSubmit(e){
 		const form = e.currentTarget;
-		if (form.checkValidity() === false) {
-			e.preventDefault();
-			e.stopPropagation();
-		}else{
-			setValidated(true);
+		e.preventDefault();
+    	if (form.checkValidity() === true) {
 			viewModel.beginDimensionalRedux(
 				algorithmType, 
 				dimensionsToRedux.map(d => d.value),
@@ -41,10 +38,10 @@ const DimensionalReduction = props => {
 					Perplexity: perplexity,
 					Epsilon: epsilon
 				});
-			e.preventDefault();
-			e.stopPropagation();
 			closeModal()
+			alert("Riduzione eseguita con successo");
 		}
+		setValidated(true);
 	}
 	function handleChangeNeighbours(e){
 		setNeighbors(e.target.value);
@@ -58,6 +55,7 @@ const DimensionalReduction = props => {
 		setPerplexity(50)
 	}
 	function handleChangeNewDimensionsName(e){
+		e.preventDefault();
 		setNewDimensionsName(e.target.value)
 	}
 	function handleChangeNewDimensionsNumber(e){
@@ -92,6 +90,7 @@ const DimensionalReduction = props => {
 				<Form.Group>
 					<Form.Label>Perplexity</Form.Label>
 					<RangeSlider
+						tooltip="on"
 						value={perplexity}
 						onChange={handleChangePerplexity}
 						min={20}
@@ -99,6 +98,7 @@ const DimensionalReduction = props => {
 					/>
 					<Form.Label>Espilon</Form.Label>
 					<RangeSlider
+						tooltip="on"
 						value={epsilon}
 						onChange={handleChangeEspilon}
 						min={5}
@@ -113,6 +113,7 @@ const DimensionalReduction = props => {
 				<Form.Group>
 					<Form.Label>Neighbors</Form.Label>
 					<RangeSlider
+						tooltip="on"
 						value={neighbors}
 						onChange={handleChangeNeighbours}
 						min={20}
@@ -128,15 +129,15 @@ const DimensionalReduction = props => {
 		<Modal
 			show={modalIsOpen}
 			onHide={closeModal}
-		//ariaHideApp={false}
+			//ariaHideApp={false}
 		>
-			<Form noValidate validated={validated} onSubmit={handleSubmit}>
+			<Form onSubmit={handleSubmit} noValidate validated={validated}>
 				<Modal.Header closeButton>
 					<Modal.Title>Riduzione dimensionale</Modal.Title>
 				</Modal.Header>
 
 				<ModalBody>
-					<Form.Group>
+					<Form.Group controlId="dimensionsToReduxList">
 						<Form.Label>Select the dimensions to use</Form.Label>
 						<Select
 							value={dimensionsToRedux}
@@ -149,17 +150,21 @@ const DimensionalReduction = props => {
 							closeMenuOnSelect={false}
 							onChange={handleChangeDimensionsToRedux}
 						/>
+					</Form.Group>
+					<Form.Group controlId="algorithmType">	
 						<Form.Label>Select algorithm</Form.Label>
 						<Form.Control 
 							as="select" 
-							size="sm" 
 							custom 
+							value={algorithmType}
 							onChange={handleChangeAlgorithmType}>
 							<option value={AlgorithmType.FastMap}>FASTMAP</option>
 							<option value={AlgorithmType.LLE}>LLE</option>
 							<option value={AlgorithmType.IsoMap}>ISOMAP</option>
 							<option value={AlgorithmType.tSNE}>TSNE</option>
 						</Form.Control>
+					</Form.Group>
+					<Form.Group controlId="newDimensionsName">
 						<Form.Label>New dimensions name</Form.Label>
 						<Form.Control
 							required
@@ -170,8 +175,11 @@ const DimensionalReduction = props => {
 						<Form.Control.Feedback type="invalid">
               				Please choose a name.
             			</Form.Control.Feedback>
+					</Form.Group>
+					<Form.Group controlId="newDimensionsNumber">
 						<Form.Label>New dimensions number</Form.Label>
 						<RangeSlider
+							tooltip="on"
 							value={newDimensionsNumber}
 							onChange={handleChangeNewDimensionsNumber}
 							min={2}
@@ -184,8 +192,8 @@ const DimensionalReduction = props => {
 				</ModalBody>
 			
 				<ModalFooter>
-					<Button variant="secondary" onClick={closeModal}>Torna al menù</Button>
-					<Button type="submit">Applica riduzione</Button>
+					<Button variant="secondary" onClick={closeModal}>Back to menu</Button>
+					<Button type="submit">Start reduction</Button>
 				</ModalFooter>
 			</Form>
 		</Modal>

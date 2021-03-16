@@ -111,13 +111,10 @@ class ViewModel{
 	}
     
 	prepareDataForDR(dimensionsToRedux) {
-		console.log(this.getOriginalData());
 		return this.getSelectedData().map(obj => dimensionsToRedux.map((dim) => obj[dim]));
 	}
 	beginDimensionalRedux(algorithm, dimensionsToRedux, paramaters){
-		console.log(paramaters)
 		const newData = this.prepareDataForDR(dimensionsToRedux);
-		console.log(newData)
 		this.reduceDimensions(algorithm, paramaters, newData);
 	}
 
@@ -150,12 +147,16 @@ class ViewModel{
 		this.model.pushDistanceMatrix(matrix);
 	}
 
-	reduceDimensions(algorithm, paramaters, data) {
+	async reduceDimensions(algorithm, paramaters, data) {
 		
 		//spostare dove serve questo controllo
-		let nameAlreadyUsed = this.model.getSelectedDimensions().some(dim => dim.getValue().includes(algorithm));
-		if(nameAlreadyUsed)
-			throw "The name is already in use. Please choose a different one."
+		try{
+			let nameAlreadyUsed = this.model.getDimensions().some(dim => dim.getValue().includes(paramaters.Name));
+			if(nameAlreadyUsed)
+			  throw new Error("The name is already in use. Please choose a different one.")
+		  }catch(e){
+			console.log(e);
+		  }
 		//*******************************************************************
 		const drStrategy = new DimReductionStrategy();
 
