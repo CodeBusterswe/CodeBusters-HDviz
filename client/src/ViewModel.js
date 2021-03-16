@@ -54,10 +54,17 @@ class ViewModel{
 			let line = {};
 			if(val.data !== ""){ 
 				for (let i = 0; i < val.data.length; i++) { //for each value of the row
-					if(val.data[i] === "") //check empty values
-						line[columns[i]] = "undefined";     
-					else
-						line[columns[i]] = +val.data[i] ? +val.data[i] : val.data[i]; //numeric value or string 
+					switch(val.data[i]){
+					case "":	//stringa vuota per dimensioni categoriche
+						line[columns[i]] = undefined;
+						break;
+					case "NaN":	//NaN per dimensioni numeriche
+						line[columns[i]] = NaN;
+						break;
+					default:
+						line[columns[i]] = +val.data[i] ? +val.data[i] : val.data[i];
+						break;
+					}
 				}
 				parsedData.push(line);  
 			}
@@ -83,7 +90,7 @@ class ViewModel{
 	}
 
 	haveNotANumberValue(datasetRow) {
-		return Object.values(datasetRow).some(value => isNaN(value));
+		return !Object.values(datasetRow).some(value => Number.isNaN(value) || value === undefined)
 	}
 
 	updateSelectedData(){
@@ -92,7 +99,7 @@ class ViewModel{
 		//con filter tolgo i dati che hanno alcune dimensioni numeriche selezionate NaN; e con map prendo le dimensioni selezionate
     	let selectedData = originalData.map(d => {
         	return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]))
-     	})//.filter(row => Object.values(row).includes(NaN, "NaN", undefined));
+     	}).filter(this.haveNotANumberValue);
 		this.model.updateSelectedData(selectedData);
 		 //log di test
 		 console.log("original: ",toJS(this.model.getOriginalData()))
@@ -105,10 +112,12 @@ class ViewModel{
     
 	prepareDataForDR(dimensionsToRedux) {
 		console.log(this.getOriginalData());
-		return this.getOriginalData().map(obj => dimensionsToRedux.map((dim) => obj[dim]));
+		return this.getSelectedData().map(obj => dimensionsToRedux.map((dim) => obj[dim]));
 	}
 	beginDimensionalRedux(algorithm, dimensionsToRedux, paramaters){
+		console.log(paramaters)
 		const newData = this.prepareDataForDR(dimensionsToRedux);
+		console.log(newData)
 		this.reduceDimensions(algorithm, paramaters, newData);
 	}
 
