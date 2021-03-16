@@ -16,6 +16,9 @@ class Model {
 		return this.showSPM;
 	}
 
+	isDataLoaded(){
+		return this.dimensions.length === 0;
+	}
 	setShowSPM(){
 		this.showSPM = !this.showSPM;
 	}

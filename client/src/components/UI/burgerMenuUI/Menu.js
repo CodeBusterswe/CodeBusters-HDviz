@@ -15,7 +15,6 @@ import ChooseGraphic from "./ModalContent/ChooseGraphic";
 import { useStore } from "../../../ContextProvider"
 
 const Menu = () => { 
-	const viewModel = useStore();
 	const [modalIsOpen, setIsOpen] = useState(false);
 	const [id, setId] = useState(0);
 	const [visible, setVisible] = useState(false);
@@ -27,7 +26,7 @@ const Menu = () => {
 		<FaFileCsv size={32} className="icon"/>, 
 		<SiGraphcool size={32} className="icon"/>,
 		<AiOutlineDotChart size={32} className="icon"/>];
-
+	const viewModel = useStore();
 	function openModal(index) {
 		setIsOpen(true);
 		setId(index);
@@ -51,7 +50,7 @@ const Menu = () => {
 	}
 	
 	function checkToDisabled(index){
-		return (index === 3 || index === 4) && toJS(viewModel.getOriginalData()).length === 0;
+		return (index === 3 || index === 4) && viewModel.getCheckedDimensions().length === 0
 	}
 
 	function toggleTippy() {

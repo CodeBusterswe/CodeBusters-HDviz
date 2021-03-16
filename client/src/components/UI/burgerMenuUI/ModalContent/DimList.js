@@ -1,38 +1,29 @@
 import React from "react"
 import {Form} from "react-bootstrap"
-import { useStore } from "../../../../ContextProvider"
-import { toJS } from "mobx"
-
 const DimList = (props) => {
 	const {
 		dimensions,
 		selectAllDimensions,
 		selectDimension,
 		allSelected,
-		fileLoaded
 	} = props
-	console.log(fileLoaded);
-	const viewModel = useStore()
 	return (
 		<Form>
 			{
-				toJS(viewModel.getOriginalData()).length !== 0 || fileLoaded ? 
+				dimensions.length!==0 ? 
 					<>
 						<Form.Label className="mt-1">Seleziona le dimensioni da utilizzare:</Form.Label> 
 						<Form.Row>
-							{
-								dimensions.length!==0 ?
-									<Form.Check 
-										custom
-										type="checkbox"
-										checked={allSelected}
-										key="checkAll"
-										value="checkAll"
-										id="checkAll"
-										label="Seleziona tutto"
-										onChange={selectAllDimensions}
-									/> : null
-							}
+							<Form.Check 
+								custom
+								type="checkbox"
+								checked={allSelected}
+								key="checkAll"
+								value="checkAll"
+								id="checkAll"
+								label="Seleziona tutto"
+								onChange={selectAllDimensions}
+							/>
 						</Form.Row><Form.Row>
 							{	
 								dimensions.filter(dim => !dim._isRedux).map((dim) =>

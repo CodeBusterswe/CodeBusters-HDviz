@@ -31,7 +31,9 @@ class ViewModel{
 	getCategoricCheckedDimensions(){
 		return this.model.getDimensions().filter(dim => !dim._isNumeric && dim._isChecked).map((d) => d.value);
 	}
-
+	isDataLoaded(){
+		return this.model.isDataLoaded();
+	}
 	getOriginalData(){
 		return this.model.getOriginalData();
 	}
@@ -80,12 +82,16 @@ class ViewModel{
 	}
 
 	loadDataAndDims(data, dims){
+		console.time("model.loadData")
 		this.model.loadData(dims, data);
+		console.timeEnd("model.loadData")
 		this.updateSelectedData();
 	}
 
 	updateDims(dims){
+		console.time("model.loadDimensions");
 		this.model.loadDimensions(dims);
+		console.timeEnd("model.loadDimensions");
 		this.updateSelectedData()
 	}
 
@@ -100,7 +106,9 @@ class ViewModel{
     	let selectedData = originalData.map(d => {
         	return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]))
      	}).filter(this.haveNotANumberValue);
+		console.time("model.updateSelectedData")
 		this.model.updateSelectedData(selectedData);
+		console.timeEnd("model.updateSelectedData")
 		 //log di test
 		 //console.log("original: ",toJS(this.model.getOriginalData()))
 		 //console.log("selected: ",toJS(this.model.getSelectedData()))

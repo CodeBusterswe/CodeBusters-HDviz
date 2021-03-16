@@ -1,15 +1,10 @@
 import React from "react"
 import { CSVReader } from "react-papaparse"
 import { useStore } from "../../../../ContextProvider"
-import { toJS } from "mobx"
 
-function MyCSVReader(props) {
-	const config = {
-		delimiter : ","
-	}
+function MyCSVReader(props){
 	const {
 		setLocalStates,
-		isFileLoaded
 	} = props
 	const viewModel = useStore()
 
@@ -17,7 +12,6 @@ function MyCSVReader(props) {
 		console.log(file);
 		const [data, dimensions] = viewModel.parseAndLoadCsvData(file)
 		setLocalStates(data, dimensions);
-		isFileLoaded(true);
 	}
 
 	function handleOnError(error){
@@ -25,7 +19,7 @@ function MyCSVReader(props) {
 	}
 
 	function handleSpan() {
-		return toJS(viewModel.getOriginalData()).length === 0 ? 
+		return viewModel.isDataLoaded() ? 
 			<span>Carica un file CSV</span> : 
 			<span>Sostituisci il file CSV caricato</span>
 	}
@@ -35,7 +29,6 @@ function MyCSVReader(props) {
 			onDrop={handleOnDrop}
 			onError={handleOnError}
 			accept={".csv"}
-			config={ config }
 		>
 			{handleSpan()}
 		</CSVReader>

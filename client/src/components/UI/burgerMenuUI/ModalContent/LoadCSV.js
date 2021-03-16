@@ -1,29 +1,34 @@
 import React, {useState} from "react";
 import {Button} from "react-bootstrap"
-import {observer} from "mobx-react-lite"
 import MyCSVReader from "./MyCSVReader"
 import DimList from "./DimList"
-import { toJS } from "mobx"
 import { useStore } from "../../../../ContextProvider"
 import Modal from "react-bootstrap/Modal"
 import { ModalBody, ModalFooter } from "react-bootstrap"
 
-const LoadCSV = observer(props => {
+const LoadCSV = props => {
 	const viewModel = useStore();
-	const [localDimensions, setLocalDimensions] = useState(toJS(viewModel.getDimensions()))
-	const [localData, setLocalData] = useState()
+	const [localDimensions, setLocalDimensions] = useState(viewModel.getDimensions());
+	const [localData, setLocalData] = useState();
 	const {
 		modalIsOpen,
 		closeModal
 	} = props
 	
 	function loadDataAndDims(){
+		console.time("clickLoadData");
 		//devo anche aggiornare i selectedData con le nuove dimensioni selezionate
 		if(localData)
 			viewModel.loadDataAndDims(localData, localDimensions)//questo viene chiamato quando l'utente cambia il file
 		else	
 			viewModel.updateDims(localDimensions) //quessto viene chiamato quando l'utente aggiorna le dimensioni
 		//funzione utilizzata da CSV Reader per salvare localmente dati e dimensioni
+		resetAndClose();
+		console.timeEnd("clickLoadData");
+	}
+
+	function resetAndClose(){
+		setLocalData();
 		closeModal()
 	}
 	//funzione utilizzata da CSV Reader per salvare localmente dati e dimensioni
@@ -49,13 +54,10 @@ const LoadCSV = observer(props => {
 	function areAllSelected(){
 		return localDimensions.length === localDimensions.filter(d => d._isChecked).length
 	}
-	
-	const [fileLoaded, isFileLoaded] = useState(false);
-	
 	return(
 		<Modal
 			show={modalIsOpen}
-			onHide={() => {closeModal();isFileLoaded(false);}}
+			onHide={closeModal}
 		>
 			<Modal.Header closeButton>
 				<Modal.Title>Carica i dati</Modal.Title>
@@ -63,18 +65,18 @@ const LoadCSV = observer(props => {
 
 			<ModalBody>
 				<div>
-					<MyCSVReader setLocalStates={setLocalStates} isFileLoaded={isFileLoaded}/>
+					<MyCSVReader setLocalStates={setLocalStates}/>
 					<DimList dimensions={localDimensions} selectAllDimensions={selectAllDimensions} 
-						selectDimension={selectDimension} allSelected={areAllSelected()} fileLoaded={fileLoaded}/>
+						selectDimension={selectDimension} allSelected={areAllSelected()}/>
 				</div>
 			</ModalBody>
 			
 			<ModalFooter>
-				<Button variant="secondary" onClick={() => {closeModal();isFileLoaded(false);}}>Torna al menù</Button>
+				<Button variant="secondary" onClick={resetAndClose}>Torna al menù</Button>
 				<Button variant="primary" onClick={loadDataAndDims}>Conferma selezione</Button>
 			</ModalFooter>
 		</Modal>
 	)
-})
+}
 
 export default LoadCSV
