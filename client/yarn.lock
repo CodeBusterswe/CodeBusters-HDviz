@@ -7150,7 +7150,11 @@
     "merge-stream" "^2.0.0"
     "supports-color" "^7.0.0"
 
+<<<<<<< HEAD
 "jest@^26.0.0", "jest@26.6.0":
+=======
+"jest@^26.6.0", "jest@26.6.0":
+>>>>>>> af7036616f0a8c3db4f26af3fdcb6583499917c4
   "integrity" "sha512-jxTmrvuecVISvKFFhOkjsWRZV7sFqdSUAd1ajOKY+/QE/aLBVstsJ/dX8GczLzwiT6ZEwwmZqtCUHLHHQVzcfA=="
   "resolved" "https://registry.npmjs.org/jest/-/jest-26.6.0.tgz"
   "version" "26.6.0"
@@ -8679,7 +8683,11 @@
   dependencies:
     "ts-pnp" "^1.1.6"
 
+<<<<<<< HEAD
 "popper.js@^1.11.1", "popper.js@^1.16.1":
+=======
+"popper.js@^1.11.1":
+>>>>>>> af7036616f0a8c3db4f26af3fdcb6583499917c4
   "integrity" "sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ=="
   "resolved" "https://registry.npmjs.org/popper.js/-/popper.js-1.16.1.tgz"
   "version" "1.16.1"
