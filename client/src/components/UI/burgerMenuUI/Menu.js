@@ -3,19 +3,17 @@ import React, { useState } from "react"
 import DimensionalReduction from "./ModalContent/DimensionalReduction"
 import LoadCSV from "./ModalContent/LoadCSV"
 import "../../style.css";
-import Tippy from "@tippyjs/react"
-import "tippy.js/dist/tippy.css"
+import {OverlayTrigger , Popover} from "react-bootstrap";
 import {AiOutlineArrowRight , AiOutlineDotChart} from "react-icons/ai";
 import {ImDatabase} from "react-icons/im";
 import {FaFileCsv} from "react-icons/fa";
 import {SiGraphcool , SiJson} from "react-icons/si";
 import ChooseGraphic from "./ModalContent/ChooseGraphic";
-import { useStore } from "../../../ContextProvider"
+import { useStore } from "../../../ContextProvider";
 
 const Menu = () => { 
 	const [modalIsOpen, setIsOpen] = useState(false);
 	const [id, setId] = useState(0);
-	const [visible, setVisible] = useState(false);
 
 	const names = ["Carica/Salva sessione", "Carica dati dal DB", 
 		"Carica dati da CSV", "Riduci dimensioni", "Scegli il grafico"]; 
@@ -51,9 +49,13 @@ const Menu = () => {
 		return (index === 3 || index === 4) && viewModel.getCheckedDimensions().length === 0
 	}
 
-	function toggleTippy() {
-		setVisible(!visible);
-	}
+	const popover = 
+		<Popover id="popover-basic">
+			<Popover.Title as="h3">Voce disabilitata</Popover.Title>
+			<Popover.Content>
+					Prima devi aver caricato i dati
+			</Popover.Content>
+		</Popover>
 
 	return (
 		<> 
@@ -67,28 +69,26 @@ const Menu = () => {
 					</li>
 					{names.map((name, index) => {
 						return(
-							<>
-								{checkToDisabled(index) ?								 
-								<Tippy content="Carica i dati Gregorio!!"
-									interactive={true}
-									offset={[100,5]}
-									placement={"bottom"}
-									duration={100}
-									delay={[200, 0]}>
-										<li className="nav-item" key={name}>
-											<button className="nav-link" onClick={() => openModal(index)} disabled>	
-												{icons[index]}
-												<span className="link-text">{name}</span>
-											</button>	
-									</li> 
-								</Tippy> : 
-								<li className="nav-item" key={name}>
+							<li className="nav-item" key={name}>
+								{checkToDisabled(index) ?		
+									<OverlayTrigger 
+										overlay={popover} 
+										placement="right" 
+										delay={{ show: 200, hide: 0 }}>
+										<span className="d-inline-block" style={{ width: "100%" }} > 
+										<button className="nav-link" onClick={() => openModal(index)} disabled aria-disabled="true" style={{ pointerEvents: "none"}}>	
+											{icons[index]}
+											<span className="link-text">{name}</span>
+										</button>	
+										</span>
+									</OverlayTrigger>
+									 : 
 									<button className="nav-link" onClick={() => openModal(index)}>	
 										{icons[index]}
 										<span className="link-text">{name}</span>
 									</button>
-								</li> }	
-							</>
+								}	
+							</li> 
 						)
 					})} 
 				</ul> 
