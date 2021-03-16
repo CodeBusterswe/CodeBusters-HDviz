@@ -1,19 +1,21 @@
 /* eslint-disable indent */
 import React, { useState } from "react"
+import { useStore } from "../../../ContextProvider";
 import DimensionalReduction from "./ModalContent/DimensionalReduction"
 import LoadCSV from "./ModalContent/LoadCSV"
+import ChooseGraphic from "./ModalContent/ChooseGraphic";
 import "../../style.css";
 import {OverlayTrigger , Popover} from "react-bootstrap";
 import {AiOutlineArrowRight , AiOutlineDotChart} from "react-icons/ai";
 import {ImDatabase} from "react-icons/im";
 import {FaFileCsv} from "react-icons/fa";
 import {SiGraphcool , SiJson} from "react-icons/si";
-import ChooseGraphic from "./ModalContent/ChooseGraphic";
-import { useStore } from "../../../ContextProvider";
+//import useWindowWidth from "./WindowWidth"
 
 const Menu = () => { 
 	const [modalIsOpen, setIsOpen] = useState(false);
 	const [id, setId] = useState(0);
+	//const {width} = useWindowWidth();
 
 	const names = ["Carica/Salva sessione", "Carica dati dal DB", 
 		"Carica dati da CSV", "Riduci dimensioni", "Scegli il grafico"]; 
@@ -57,6 +59,10 @@ const Menu = () => {
 			</Popover.Content>
 		</Popover>
 
+	//? CON QUESTA IL POPOVER CAMBIA POSIZIONE A TOP SOLO IN UNA NUOVA SESSIONE
+	//? RICEVE LA WIDTH SOLO APPENA INIZIATA LA SESSIONE (quindi non cambia il valore se si ridimensiona la pagina)
+	const { innerWidth: width } = window;
+
 	return (
 		<> 
  			<nav className="navbar">
@@ -73,7 +79,7 @@ const Menu = () => {
 								{checkToDisabled(index) ?		
 									<OverlayTrigger 
 										overlay={popover} 
-										placement="right" 
+										placement={width > 600 ? "right" : "top"} 
 										delay={{ show: 200, hide: 0 }}>
 										<span className="d-inline-block" style={{ width: "100%" }} > 
 										<button className="nav-link" onClick={() => openModal(index)} disabled aria-disabled="true" style={{ pointerEvents: "none"}}>	
@@ -81,8 +87,7 @@ const Menu = () => {
 											<span className="link-text">{name}</span>
 										</button>	
 										</span>
-									</OverlayTrigger>
-									 : 
+									</OverlayTrigger> : 
 									<button className="nav-link" onClick={() => openModal(index)}>	
 										{icons[index]}
 										<span className="link-text">{name}</span>

@@ -187,12 +187,15 @@ body {
     flex-direction: row!important;
   }
 
-  .nav-link {
-    justify-content: center;
+  .nav-link {	
+		width: 5em;
   }
 
 	.content {
 		margin-left: 0;
+	}
+	.icon {
+		margin-left: 1em;
 	}
 }
 
