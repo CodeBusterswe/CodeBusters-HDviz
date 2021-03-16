@@ -60,13 +60,13 @@ body {
   --text-secondary: #ececec;
   --bg-primary: #282c34;
   --bg-secondary: #141418;
-  --transition-speed: 600ms;
+  --transition-speed: 300ms;
 }
 
 .navbar {
   position: fixed!important;
   display: block!important;
-  transition: width 500ms ease;
+  transition: width 200ms ease;
 	overflow: hidden;
 	background-color: var(--bg-primary);
   padding: 0%!important;
@@ -119,9 +119,11 @@ align-items: left;
 }
 
 .link-text {
-  display: none;
   margin-left: 1em;
 	font-size: 16px;
+	visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity .4s ease-in;
 }
 
 .icon {
@@ -132,10 +134,12 @@ align-items: left;
 
 .arrow-icon{
 	color:white;
-	margin: 0 1.3em;
+	margin: 0 1.2em;
+	margin-top: .5em;
 }
 
 .logo-text {
+	margin-top: .2em;
 	background-color: none;
   font-weight: bold;
   text-align: center;
@@ -149,8 +153,7 @@ align-items: left;
   transition: var(--transition-speed);
 }
 
-.logo-text
-{
+.logo-text {
   display: inline;
   position: absolute;
   left: -999px;
@@ -197,18 +200,68 @@ align-items: left;
   }
 
   .navbar:hover .link-text {
-    display: inline;
+    visibility: visible;
+  	opacity: 1;
   }
 
-  .navbar:hover .logo svg
-  {
+  .navbar:hover .logo svg {
     margin-left: 11em;
   }
 
-  .navbar:hover .logo-text
-  {
+  .navbar:hover .logo-text {
     left: 0px;
   }
 }
 /* TODO: DA RIVEDERE */
 /* FINE MENU */
+
+/* INIZIO HEADER */
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  padding-left: 2em;
+  background-color: #282c34;
+  height: 3.3em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+	justify-content: center;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.App-logo {
+	height: 4rem;
+  pointer-events: none;
+  margin: 2rem .4rem 2rem;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* FINE HEADER */
+
+.err-msg{
+	margin-left: 1em;
+	color: red;
+	font-weight: bold;
+	display: none;
+	visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 4s ease-in;
+}
+
+.nav-link:hover ~ .err-msg {
+	display: inline;
+	visibility: visible;
+	opacity: 1;
+}

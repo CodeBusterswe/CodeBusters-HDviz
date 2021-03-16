@@ -1,8 +1,10 @@
 import Dimension from "./model/Dimension";
+import DistanceMatrix from "./model/DistanceMatrix";
 import Model from "./model/Model";
 import { toJS } from "mobx"
 import DimReductionStrategy from "./viewModel/DimReductionStrategy"
 import { AlgorithmType } from "./utils" // <--- LASCIARE PLS
+import * as distCalc from "ml-distance";
 
 class ViewModel{
 
@@ -52,10 +54,17 @@ class ViewModel{
 			let line = {};
 			if(val.data !== ""){ 
 				for (let i = 0; i < val.data.length; i++) { //for each value of the row
-					if(val.data[i] === "") //check empty values
-						line[columns[i]] = "undefined";     
-					else
-						line[columns[i]] = +val.data[i] ? +val.data[i] : val.data[i]; //numeric value or string 
+					switch(val.data[i]){
+					case "":	//stringa vuota per dimensioni categoriche
+						line[columns[i]] = undefined;
+						break;
+					case "NaN":	//NaN per dimensioni numeriche
+						line[columns[i]] = NaN;
+						break;
+					default:
+						line[columns[i]] = +val.data[i] ? +val.data[i] : val.data[i];
+						break;
+					}
 				}
 				parsedData.push(line);  
 			}
@@ -81,7 +90,7 @@ class ViewModel{
 	}
 
 	haveNotANumberValue(datasetRow) {
-		return Object.values(datasetRow).some(value => isNaN(value));
+		return !Object.values(datasetRow).some(value => Number.isNaN(value) || value === undefined)
 	}
 
 	updateSelectedData(){
@@ -90,26 +99,64 @@ class ViewModel{
 		//con filter tolgo i dati che hanno alcune dimensioni numeriche selezionate NaN; e con map prendo le dimensioni selezionate
     	let selectedData = originalData.map(d => {
         	return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]))
-     	})//.filter(row => Object.values(row).includes(NaN, "NaN", undefined));
+     	}).filter(this.haveNotANumberValue);
 		this.model.updateSelectedData(selectedData);
 		 //log di test
-		 console.log("original: ",toJS(this.model.getOriginalData()))
-		 console.log("selected: ",toJS(this.model.getSelectedData()))
-		 console.log("dimensions:", toJS(this.model.getDimensions()))
+		 //console.log("original: ",toJS(this.model.getOriginalData()))
+		 //console.log("selected: ",toJS(this.model.getSelectedData()))
+		 //console.log("dimensions:", toJS(this.model.getDimensions()))
+		 
+		 //prova della riduzione tramite distanze
+		 //this.reduceDimensionsByDist("euclidean", originalData, "name", "age");
 	}
     
 	prepareDataForDR(dimensionsToRedux) {
-		return this.getOriginalData().map(obj => dimensionsToRedux.map((dim) => obj[dim]));
+		return this.getSelectedData().map(obj => dimensionsToRedux.map((dim) => obj[dim]));
 	}
 	beginDimensionalRedux(algorithm, dimensionsToRedux, paramaters){
 		const newData = this.prepareDataForDR(dimensionsToRedux);
 		this.reduceDimensions(algorithm, paramaters, newData);
 	}
-	reduceDimensions(algorithm, paramaters, data) {
+
+	reduceDimensionsByDist(distType, data, idDimension, groupDimension) {
+		//data = [ {}, {nome: "Paolo", peso: 50, altezza: 180}, ...., {} ]
+		//idDimension = "nome"
+		let matrix = new DistanceMatrix();
+
+		for (let i = 0; i < data.length - 1; i++) {
+			for (let j = i+1; j < data.length - 1; j++) {
+				let pointA = Object.values(data[i]),
+					pointB = Object.values(data[j]);
+				pointA.shift();
+				pointB.shift();
+				let node = {
+					source: data[i][idDimension],
+					target: data[j][idDimension],
+					value: distCalc.distance[distType](pointA, pointB)
+				}
+				matrix.pushNode(node);
+			}
+			let link = {
+				id: data[i][idDimension],
+				group: data[i][groupDimension]
+			}
+			matrix.pushLink(link);
+		}
+		//console.log(matrix.getLinks());
+		//console.log(matrix.getNodes());
+		this.model.pushDistanceMatrix(matrix);
+	}
+
+	async reduceDimensions(algorithm, paramaters, data) {
+		
 		//spostare dove serve questo controllo
-		let nameAlreadyUsed = this.model.getSelectedDimensions().some(dim => dim.getValue().includes(algorithm));
-		if(nameAlreadyUsed)
-			throw "The name is already in use. Please choose a different one."
+		try{
+			let nameAlreadyUsed = this.model.getDimensions().some(dim => dim.getValue().includes(paramaters.Name));
+			if(nameAlreadyUsed)
+			  throw new Error("The name is already in use. Please choose a different one.")
+		  }catch(e){
+			console.log(e);
+		  }
 		//*******************************************************************
 		const drStrategy = new DimReductionStrategy();
 
@@ -136,8 +183,8 @@ class ViewModel{
 			});
 		}
 
-		this.model.addDimensionsToDataset(newDimsFromReduction,newDataFromReduction);
-		console.log(newDataFromReduction)
+		this.model.addDimensionsToDataset(newDimsFromReduction);
+		//console.log(newDataFromReduction)
 		console.log(this.model.getSelectedData());
 	}
 	 

@@ -49,10 +49,13 @@ const LoadCSV = observer(props => {
 	function areAllSelected(){
 		return localDimensions.length === localDimensions.filter(d => d._isChecked).length
 	}
+	
+	const [fileLoaded, isFileLoaded] = useState(false);
+	
 	return(
 		<Modal
 			show={modalIsOpen}
-			onHide={closeModal}
+			onHide={() => {closeModal();isFileLoaded(false);}}
 		>
 			<Modal.Header closeButton>
 				<Modal.Title>Carica i dati</Modal.Title>
@@ -60,13 +63,14 @@ const LoadCSV = observer(props => {
 
 			<ModalBody>
 				<div>
-					<MyCSVReader setLocalStates={setLocalStates}/>
-					<DimList dimensions={localDimensions} selectAllDimensions={selectAllDimensions} selectDimension={selectDimension} allSelected={areAllSelected()}/>
+					<MyCSVReader setLocalStates={setLocalStates} isFileLoaded={isFileLoaded}/>
+					<DimList dimensions={localDimensions} selectAllDimensions={selectAllDimensions} 
+						selectDimension={selectDimension} allSelected={areAllSelected()} fileLoaded={fileLoaded}/>
 				</div>
 			</ModalBody>
 			
 			<ModalFooter>
-				<Button variant="secondary" onClick={closeModal}>Torna al menù</Button>
+				<Button variant="secondary" onClick={() => {closeModal();isFileLoaded(false);}}>Torna al menù</Button>
 				<Button variant="primary" onClick={loadDataAndDims}>Conferma selezione</Button>
 			</ModalFooter>
 		</Modal>
