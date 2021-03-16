@@ -8,7 +8,8 @@ function MyCSVReader(props) {
 		delimiter : ","
 	}
 	const {
-		setLocalStates 
+		setLocalStates,
+		isFileLoaded
 	} = props
 	const viewModel = useStore()
 
@@ -16,6 +17,7 @@ function MyCSVReader(props) {
 		console.log(file);
 		const [data, dimensions] = viewModel.parseAndLoadCsvData(file)
 		setLocalStates(data, dimensions);
+		isFileLoaded(true);
 	}
 
 	function handleOnError(error){
