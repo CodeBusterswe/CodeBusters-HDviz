@@ -5,8 +5,6 @@ import LoadCSV from "./ModalContent/LoadCSV"
 import "../../style.css";
 import Tippy from "@tippyjs/react"
 import "tippy.js/dist/tippy.css"
-//import {observer} from "mobx-react-lite"
-import { toJS } from "mobx"
 import {AiOutlineArrowRight , AiOutlineDotChart} from "react-icons/ai";
 import {ImDatabase} from "react-icons/im";
 import {FaFileCsv} from "react-icons/fa";
