@@ -3,8 +3,8 @@ import React, { useState } from "react"
 import DimensionalReduction from "./ModalContent/DimensionalReduction"
 import LoadCSV from "./ModalContent/LoadCSV"
 import "../../style.css";
-//import Tippy from "react-tippy"
-//import "react-tippy/dist/tippy.css"
+import Tippy from "@tippyjs/react"
+import "tippy.js/dist/tippy.css"
 //import {observer} from "mobx-react-lite"
 import { toJS } from "mobx"
 import {AiOutlineArrowRight , AiOutlineDotChart} from "react-icons/ai";
@@ -18,6 +18,8 @@ const Menu = () => {
 	const viewModel = useStore();
 	const [modalIsOpen, setIsOpen] = useState(false);
 	const [id, setId] = useState(0);
+	const [visible, setVisible] = useState(false);
+
 	const names = ["Carica/Salva sessione", "Carica dati dal DB", 
 		"Carica dati da CSV", "Riduci dimensioni", "Scegli il grafico"]; 
 	const icons = [<SiJson size={32} className="icon"/>, 
@@ -51,6 +53,11 @@ const Menu = () => {
 	function checkToDisabled(index){
 		return (index === 3 || index === 4) && toJS(viewModel.getOriginalData()).length === 0;
 	}
+
+	function toggleTippy() {
+		setVisible(!visible);
+	}
+
 	return (
 		<> 
  			<nav className="navbar">
@@ -63,14 +70,28 @@ const Menu = () => {
 					</li>
 					{names.map((name, index) => {
 						return(
-							<li className="nav-item" key={name}>
-								<button className="nav-link" onClick={() => openModal(index)} 
-									disabled={checkToDisabled(index)}>	
-									{icons[index]}
-									<span className="link-text">{name}</span>
-								</button>
-								{checkToDisabled(index) ? <span className="err-msg">Non ci sono dati caricati</span> : null} 
-							</li>
+							<>
+								{checkToDisabled(index) ?								 
+								<Tippy content="Carica i dati Gregorio!!"
+									interactive={true}
+									offset={[100,5]}
+									placement={"bottom"}
+									duration={100}
+									delay={[200, 0]}>
+										<li className="nav-item" key={name}>
+											<button className="nav-link" onClick={() => openModal(index)} disabled>	
+												{icons[index]}
+												<span className="link-text">{name}</span>
+											</button>	
+									</li> 
+								</Tippy> : 
+								<li className="nav-item" key={name}>
+									<button className="nav-link" onClick={() => openModal(index)}>	
+										{icons[index]}
+										<span className="link-text">{name}</span>
+									</button>
+								</li> }	
+							</>
 						)
 					})} 
 				</ul> 

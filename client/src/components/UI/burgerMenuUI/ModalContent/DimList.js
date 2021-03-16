@@ -16,9 +16,9 @@ const DimList = (props) => {
 	return (
 		<Form>
 			{
-				toJS(viewModel.getOriginalData()).length !== 0 || fileLoaded? 
+				toJS(viewModel.getOriginalData()).length !== 0 || fileLoaded ? 
 					<>
-						<Form.Label>Seleziona le dimensioni da utilizzare:</Form.Label> 
+						<Form.Label className="mt-1">Seleziona le dimensioni da utilizzare:</Form.Label> 
 						<Form.Row>
 							{
 								dimensions.length!==0 ?
