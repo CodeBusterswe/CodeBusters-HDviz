@@ -5,7 +5,7 @@ const DimList = (props) => {
 		dimensions,
 		selectAllDimensions,
 		selectDimension,
-		allSelected,
+		allSelected
 	} = props
 	return (
 		<Form>

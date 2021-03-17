@@ -5,7 +5,7 @@ import { toJS } from "mobx"
 import DimReductionStrategy from "./viewModel/DimReductionStrategy"
 import { AlgorithmType } from "./utils" // <--- LASCIARE PLS
 import * as distCalc from "ml-distance";
-import {getDataset} from "./model/services"  
+import {getDataset, getTables} from "./model/services"  
 
 class ViewModel{
 
@@ -13,14 +13,20 @@ class ViewModel{
 		this.model = new Model();
 	}
 	
-	//get all data set from csv table
+	//get all dataset from csv table
 	async getAllDataset(){
 		const dataset = await getDataset();
-		console.log("dataset:",dataset);
+		//console.log("dataset:",dataset);
 		return dataset;
 	}
 	getChartToShow(){
 		return this.model.getChartToShow();
+	}
+	//get all tables from DB
+	async getAllTables(){
+	     const table = await getTables();
+		 console.log("tables:",table);
+		 return table;
 	}
 
 	setChartToShow(chartName){

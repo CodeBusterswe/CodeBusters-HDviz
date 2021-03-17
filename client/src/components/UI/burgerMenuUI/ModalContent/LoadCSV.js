@@ -1,15 +1,18 @@
-import React, {useState} from "react";
+import React, {useState , useEffect} from "react";
 import {Button} from "react-bootstrap"
 import MyCSVReader from "./MyCSVReader"
 import DimList from "./DimList"
 import { useStore } from "../../../../ContextProvider"
 import Modal from "react-bootstrap/Modal"
-import { ModalBody, ModalFooter } from "react-bootstrap"
+import { ModalBody, ModalFooter ,Alert } from "react-bootstrap"
+import "../../../style.css"
 
 const LoadCSV = props => {
 	const viewModel = useStore();
 	const [localDimensions, setLocalDimensions] = useState(viewModel.getDimensions());
 	const [localData, setLocalData] = useState();
+	const [showSuccess, setShowSuccess] = useState(false);
+	const [showDanger, setShowDanger] = useState(false);
 	const {
 		modalIsOpen,
 		closeModal
@@ -54,28 +57,65 @@ const LoadCSV = props => {
 	function areAllSelected(){
 		return localDimensions.length === localDimensions.filter(d => d.getChecked()).length
 	}
-	return(
-		<Modal
-			show={modalIsOpen}
-			onHide={closeModal}
-		>
-			<Modal.Header closeButton>
-				<Modal.Title>Carica i dati</Modal.Title>
-			</Modal.Header>
+	
+	function openAlertSuccess() {
+		return viewModel.getCheckedDimensions().length !== 0 ?
+			setShowSuccess(true) :
+			setShowDanger(true)
+	}
+	
+	useEffect(() => {
+		const time = 5000
+		let timer = setTimeout(() => setShowSuccess(false), time)
+		return () => clearTimeout(timer)
+	},[showSuccess])
 
-			<ModalBody>
-				<div>
-					<MyCSVReader setLocalStates={setLocalStates}/>
-					<DimList dimensions={localDimensions} selectAllDimensions={selectAllDimensions} 
-						selectDimension={selectDimension} allSelected={areAllSelected()}/>
-				</div>
-			</ModalBody>
-			
-			<ModalFooter>
-				<Button variant="secondary" onClick={resetAndClose}>Torna al menù</Button>
-				<Button variant="primary" onClick={loadDataAndDims}>Conferma selezione</Button>
-			</ModalFooter>
-		</Modal>
+	function openAlertDanger() {
+		setShowDanger(true)
+	}
+	
+	useEffect(() => {
+		const time = 5000
+		let timer = setTimeout(() => setShowDanger(false), time)
+		return () => clearTimeout(timer)
+	},[showDanger])
+
+	return(
+		<>
+			<Modal
+				show={modalIsOpen}
+				onHide={() => {closeModal();openAlertDanger();}}
+			>
+				<Modal.Header closeButton>
+					<Modal.Title>Carica i dati</Modal.Title>
+				</Modal.Header>
+
+				<ModalBody>
+					<div>
+						<MyCSVReader setLocalStates={setLocalStates}/>
+						<DimList dimensions={localDimensions} selectAllDimensions={selectAllDimensions} 
+							selectDimension={selectDimension} allSelected={areAllSelected()}/>
+					</div>
+				</ModalBody>
+				
+				<ModalFooter>
+					<Button variant="secondary" onClick={() => {resetAndClose();openAlertDanger();}}>Torna al menù</Button>
+					<Button variant="primary" onClick={()=>{loadDataAndDims();openAlertSuccess();}}>Conferma selezione</Button>
+				</ModalFooter>
+			</Modal>
+			<Alert show={showSuccess} variant="success" className="alert" dismissible onClose={() => setShowSuccess(false)}>
+				<Alert.Heading>Dati inseriti correttamente</Alert.Heading>
+				<p>
+					Ora puoi applicare una riduzione dimensionale ai tuoi dati o scegliere subito la visualizzazione che più preferisci
+				</p>
+			</Alert>
+			<Alert show={showDanger} variant="danger" className="alert" dismissible onClose={() => setShowDanger(false)}>
+				<Alert.Heading>Avviso</Alert.Heading>
+				<p>
+					Nessun dato è stato caricato. Assicurati di aver inserito il file e premuto il tasto "<strong>Conforma selezione</strong>"
+				</p>
+			</Alert> 
+		</>
 	)
 }
 

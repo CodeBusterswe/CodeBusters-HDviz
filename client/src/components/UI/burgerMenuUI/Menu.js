@@ -3,13 +3,13 @@ import React, { useState } from "react"
 import { useStore } from "../../../ContextProvider";
 import DimensionalReduction from "./ModalContent/DimensionalReduction"
 import LoadCSV from "./ModalContent/LoadCSV"
-import ChooseGraphic from "./ModalContent/ChooseGraphic";
 import "../../style.css";
 import {OverlayTrigger , Popover} from "react-bootstrap";
 import {AiOutlineArrowRight , AiOutlineDotChart} from "react-icons/ai";
 import {ImDatabase} from "react-icons/im";
 import {FaFileCsv} from "react-icons/fa";
 import {SiGraphcool , SiJson} from "react-icons/si";
+import LoadDataFromDB from "./ModalContent/LoadDataFromDB"
 //import useWindowWidth from "./WindowWidth"
 
 const Menu = () => { 
@@ -18,11 +18,15 @@ const Menu = () => {
 	//const {width} = useWindowWidth();
 
 	const names = ["Carica/Salva sessione", "Carica dati dal DB", 
-		"Carica dati da CSV", "Riduci dimensioni", "Scegli il grafico"]; 
+		"Carica dati da CSV", "Riduci dimensioni", "Scatterplot Matrix",
+		"HeatMap","Force Field","PLMA"]; 
 	const icons = [<SiJson size={32} className="icon"/>, 
 		<ImDatabase size={32} className="icon"/>,
 		<FaFileCsv size={32} className="icon"/>, 
 		<SiGraphcool size={32} className="icon"/>,
+		<AiOutlineDotChart size={32} className="icon"/>,
+		<AiOutlineDotChart size={32} className="icon"/>,
+		<AiOutlineDotChart size={32} className="icon"/>,
 		<AiOutlineDotChart size={32} className="icon"/>];
 	const viewModel = useStore();
 	function openModal(index) {
@@ -34,21 +38,32 @@ const Menu = () => {
 		setIsOpen(false);
 	}
 
+	function openGraph(index) {
+		switch(index) {
+			case 4:
+				viewModel.setShowSPM()
+				break;
+				//TODO: altri casi per gli altri grafici
+				//TODO: togliere che se il bottone è cliccato più volte il grafico compare e scompare (toggle)
+			default: break;
+		}
+	}
+
 	function handleContent(index) {
 		switch (index) {
+		case 1: 
+		    return <LoadDataFromDB modalIsOpen={modalIsOpen} closeModal={closeModal}/>
 		case 2:
 			return <LoadCSV modalIsOpen={modalIsOpen} closeModal={closeModal}></LoadCSV>
 		case 3:
 			return <DimensionalReduction modalIsOpen={modalIsOpen} closeModal={closeModal}></DimensionalReduction>
-		case 4:
-			return <ChooseGraphic modalIsOpen={modalIsOpen} closeModal={closeModal}></ChooseGraphic>
 		default:
 			break;
 		}
 	}
 	
 	function checkToDisabled(index){
-		return (index === 3 || index === 4) && viewModel.getCheckedDimensions().length === 0
+		return index >= 3 && viewModel.getCheckedDimensions().length === 0
 	}
 
 	const popover = 
@@ -82,13 +97,13 @@ const Menu = () => {
 										placement={width > 600 ? "right" : "top"} 
 										delay={{ show: 200, hide: 0 }}>
 										<span className="d-inline-block" style={{ width: "100%" }} > 
-										<button className="nav-link" onClick={() => openModal(index)} disabled aria-disabled="true" style={{ pointerEvents: "none"}}>	
+										<button className="nav-link" disabled aria-disabled="true" style={{ pointerEvents: "none"}}>	
 											{icons[index]}
 											<span className="link-text">{name}</span>
 										</button>	
 										</span>
 									</OverlayTrigger> : 
-									<button className="nav-link" onClick={() => openModal(index)}>	
+									<button className="nav-link" onClick={index < 4 ? () => openModal(index) : () => openGraph(index)}>	
 										{icons[index]}
 										<span className="link-text">{name}</span>
 									</button>
