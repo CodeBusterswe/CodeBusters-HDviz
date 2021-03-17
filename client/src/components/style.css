@@ -137,12 +137,12 @@ body {
 .icon {
   width: 2em;
   min-width: 2em;
-  margin: 0 1em;
+  margin: 0 1.4em;
 }
 
 .arrow-icon{
 	color:white;
-	margin: 0 1.2em;
+	margin: 0 1.4em;
 	margin-top: .5em;
 }
 
