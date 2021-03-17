@@ -4,6 +4,7 @@ import {observer} from "mobx-react-lite"
 import { useStore } from "../../../../ContextProvider"
 import Modal from "react-bootstrap/Modal"
 import { ModalBody, ModalFooter } from "react-bootstrap"
+import {VisualizationType} from "../../../../utils"
 
 const ChooseGraphic = observer(props => {
 	const viewModel = useStore();
@@ -22,7 +23,7 @@ const ChooseGraphic = observer(props => {
 			</Modal.Header>
 
 			<ModalBody>
-				<Button onClick={() => {viewModel.setShowSPM();closeModal()}}>Scatter Plot Matrix</Button>
+				<Button onClick={() => {viewModel.setChartToShow(VisualizationType.ScatterPlotMatrix);closeModal()}}>Scatter Plot Matrix</Button>
 			</ModalBody>
 			
 			<ModalFooter>

@@ -2,6 +2,7 @@ export const VisualizationType = {
 	ScatterPlotMatrix: "scatterPlotMatrix",
 	HeatMap: "heatMap",
 	ForceField: "forceField",
+	AdjacencyMatrix: "adjacencyMatrix",
 	PLMA: "plma"
 };
   

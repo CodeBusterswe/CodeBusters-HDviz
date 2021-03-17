@@ -1,22 +1,15 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import ScatterPlotMatrix from "./SPM";
 import { useStore } from "../../../../ContextProvider"
+import { observer } from "mobx-react-lite";
 
-export default function ScatterPlotMatrixDiv (props) {
-	//const data = [{age: 18, weight: 90}, {age: 4, weight: 5}, {age: 4, weight: 66}]
-	//const dims = [{value: "age", isChecked: false, toRedux: true, isRedux: false, isNumeric: true},{value: "weight", isChecked: true, toRedux: true, isRedux: false, isNumeric: true}]
+const ScatterPlotMatrixDiv = observer(() => {
 	const viewModel = useStore();
 	const data = viewModel.getSelectedData();
 	const keys = viewModel.getCheckedDimensions();
 	const catKeys = viewModel.getCategoricCheckedDimensions();
 	const [Dims, setDims] = useState(keys.slice(0, 4));
 	const [DimColore, setDimColore] = useState(catKeys[0] ? catKeys[0] : "-")
-	//Per l'aggiornamento delle dimensioni nelle label delle select quando cambia file
-	useEffect(() => {
-		setDims(keys.slice(0, 4));
-		setDimColore(catKeys[0] ? catKeys[0] : "-");
-	}, [data])
 
 	//Funzione che non permette di selezionare più volte la stessa dimensione
 	function handeSelectChange(e){
@@ -93,9 +86,6 @@ export default function ScatterPlotMatrixDiv (props) {
 			/>
 		</div>
 	)
-}
+})
 
-ScatterPlotMatrixDiv.propTypes = {
-	data : PropTypes.array,
-	dims: PropTypes.array
-}
+export default ScatterPlotMatrixDiv;

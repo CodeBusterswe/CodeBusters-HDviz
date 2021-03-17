@@ -17,7 +17,6 @@ function MyCSVReader(props){
 	console.log("inCsvReader:", getDataset())
 
 	function handleOnDrop(file){
-		console.log(file);
 		const [data, dimensions] = viewModel.parseAndLoadCsvData(file)
 		setLocalStates(data, dimensions);
 	}

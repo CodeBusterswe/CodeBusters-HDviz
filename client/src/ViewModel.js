@@ -19,12 +19,12 @@ class ViewModel{
 		console.log("dataset:",dataset);
 		return dataset;
 	}
-	getShowSPM(){
-		return this.model.getShowSPM();
+	getChartToShow(){
+		return this.model.getChartToShow();
 	}
 
-	setShowSPM(){
-		this.model.setShowSPM();
+	setChartToShow(chartName){
+		this.model.setChartToShow(chartName);
 	}
 
 	getDimensions(){
@@ -60,8 +60,8 @@ class ViewModel{
 			dimensions;
 		
 		data.forEach(val =>{ //for each row
-			let line = {};
 			if(val.data !== ""){ 
+				let line = {};
 				for (let i = 0; i < val.data.length; i++) { //for each value of the row
 					switch(val.data[i]){
 					case "":	//stringa vuota per dimensioni categoriche
@@ -78,7 +78,7 @@ class ViewModel{
 				parsedData.push(line);  
 			}
 		});
-		
+        
 		dimensions = columns.map(dimName => {
 			let d = new Dimension(dimName);
 			d.isNumeric(+parsedData[0][dimName] ? true : false)
@@ -90,8 +90,9 @@ class ViewModel{
 
 	loadDataAndDims(data, dims){
 		console.time("model.loadData")
-		this.model.loadData(dims, data);
+		this.model.loadData(data);
 		console.timeEnd("model.loadData")
+		this.model.loadDimensions(dims);
 		this.updateSelectedData();
 	}
 
