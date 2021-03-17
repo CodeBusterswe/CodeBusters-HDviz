@@ -1,6 +1,7 @@
 import axios from "axios";
+const url="http://localhost:5000/api/data"
 export const api=axios.create({
-	baseURL:process.env.NODE_ENV==="production"?"remote_api_URL":"/api/data",
+	baseURL:url,
 	headers:{
 		"Content-Type": "application/json"
 	}

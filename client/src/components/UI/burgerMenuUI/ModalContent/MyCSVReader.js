@@ -8,6 +8,14 @@ function MyCSVReader(props){
 	} = props
 	const viewModel = useStore()
 
+	//get all dataset from csv table
+	async function getDataset(){
+		const dataset = await viewModel.getAllDataset();
+		console.log("dataset:",dataset);
+		return dataset;
+	}
+	console.log("inCsvReader:", getDataset())
+
 	function handleOnDrop(file){
 		console.log(file);
 		const [data, dimensions] = viewModel.parseAndLoadCsvData(file)

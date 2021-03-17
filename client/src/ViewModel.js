@@ -5,6 +5,7 @@ import { toJS } from "mobx"
 import DimReductionStrategy from "./viewModel/DimReductionStrategy"
 import { AlgorithmType } from "./utils" // <--- LASCIARE PLS
 import * as distCalc from "ml-distance";
+import {getDataset} from "./model/services"  
 
 class ViewModel{
 
@@ -12,6 +13,12 @@ class ViewModel{
 		this.model = new Model();
 	}
 	
+	//get all data set from csv table
+	async getAllDataset(){
+		const dataset = await getDataset();
+		console.log("dataset:",dataset);
+		return dataset;
+	}
 	getShowSPM(){
 		return this.model.getShowSPM();
 	}
@@ -51,7 +58,7 @@ class ViewModel{
 		let columns = data.shift().data, 
 			parsedData = [],
 			dimensions;
-        
+		
 		data.forEach(val =>{ //for each row
 			let line = {};
 			if(val.data !== ""){ 
@@ -71,7 +78,7 @@ class ViewModel{
 				parsedData.push(line);  
 			}
 		});
-        
+		
 		dimensions = columns.map(dimName => {
 			let d = new Dimension(dimName);
 			d.isNumeric(+parsedData[0][dimName] ? true : false)
@@ -103,9 +110,9 @@ class ViewModel{
 		const checkedDims = this.model.getSelectedDimensions(),
 			originalData = toJS(this.model.getOriginalData());
 		//con filter tolgo i dati che hanno alcune dimensioni numeriche selezionate NaN; e con map prendo le dimensioni selezionate
-    	let selectedData = originalData.map(d => {
-        	return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]))
-     	}).filter(this.haveNotANumberValue);
+		let selectedData = originalData.map(d => {
+			return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]))
+	 	}).filter(this.haveNotANumberValue);
 		console.time("model.updateSelectedData")
 		this.model.updateSelectedData(selectedData);
 		console.timeEnd("model.updateSelectedData")
@@ -117,7 +124,7 @@ class ViewModel{
 		 //prova della riduzione tramite distanze
 		 //this.reduceDimensionsByDist("euclidean", originalData, "name", "age");
 	}
-    
+	
 	prepareDataForDR(dimensionsToRedux) {
 		return this.getSelectedData().map(obj => dimensionsToRedux.map((dim) => obj[dim]));
 	}
@@ -175,11 +182,11 @@ class ViewModel{
 		const reduction = drStrategy.executeStrategy();
 		
 		let newDimsFromReduction = [];
-    	for (let i = 1; i <= reduction._cols; i++) {
+		for (let i = 1; i <= reduction._cols; i++) {
 			let d = new Dimension(paramaters.Name+i);
 			d.isReduced(true);
-      		newDimsFromReduction.push(d);
-    	}
+	  		newDimsFromReduction.push(d);
+		}
 
 		let newDataFromReduction = this.model.getSelectedData(); //sostituire con data??				
 		for(let i = 0; i<newDataFromReduction.length; i++){
