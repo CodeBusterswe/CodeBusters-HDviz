@@ -20,7 +20,8 @@ class ViewModel{
 		return dataset;
 	}
 	getChartToShow(){
-		return this.model.getChartToShow();
+		let preferences = this.model.getPreferences();
+		return preferences.chart;
 	}
 	//get all tables from DB
 	async getAllTables(){
@@ -30,9 +31,25 @@ class ViewModel{
 	}
 
 	setChartToShow(chartName){
-		this.model.setChartToShow(chartName);
+		let preferences = this.model.getPreferences();
+		preferences.chart = chartName;
 	}
-
+	getSpmPreferences(){
+		let preferences = this.model.getPreferences();
+		return preferences.SpmPreferences
+	}
+	getSpmAxis(){
+		let preferences = this.model.getPreferences();
+		return preferences.SpmAxes.filter(axis => axis); //controlla se esiste o é a null
+	}
+	getSpmColor(){
+		let preferences = this.model.getPreferences();
+		return preferences.SpmColor
+	}
+	setSpmAxis(identifier, value){
+		let preferences = this.model.getPreferences();
+		preferences.setSPMAxis(identifier, value);
+	}
 	getDimensions(){
 		return this.model.getDimensions();
 	}
@@ -114,8 +131,10 @@ class ViewModel{
 	}
 
 	updateSelectedData(){
+		//da fixare se si vuole che al cambiamento si aggiornino solo quelle ridotte
 		const checkedDims = this.model.getSelectedDimensions(),
 			originalData = toJS(this.model.getOriginalData());
+		console.log(checkedDims)
 		//con filter tolgo i dati che hanno alcune dimensioni numeriche selezionate NaN; e con map prendo le dimensioni selezionate
 		let selectedData = originalData.map(d => {
 			return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]))
@@ -206,8 +225,6 @@ class ViewModel{
 		}
 
 		this.model.addDimensionsToDataset(newDimsFromReduction);
-		//console.log(newDataFromReduction)
-		console.log(this.model.getSelectedData());
 	}
 	 
 }

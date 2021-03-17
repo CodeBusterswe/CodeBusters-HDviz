@@ -1,37 +1,6 @@
-import { makeAutoObservable, makeObservable, observable, computed, action } from "mobx"
-import {VisualizationType} from "../utils"
+import {makeObservable, observable, computed, action } from "mobx"
+import Preferences from "./Preferences"
 //import Dimension from "./Dimension";
-class Preferences{
-	constructor(){
-		this._chart = {
-			[VisualizationType.ScatterPlotMatrix]: false,
-			[VisualizationType.ForceField]: false,
-			[VisualizationType.HeatMap]: false,
-			[VisualizationType.AdjacencyMatrix]: false,
-			[VisualizationType.PLMA]: false,
-		}
-		makeAutoObservable(this)
-	}
-	get chart(){
-		return Object.keys(this._chart).filter(key => this._chart[key])[0]
-	}
-
-	set chart(chart_name){
-		if(this._chart[chart_name])
-			this._chart[chart_name] = false
-		else{
-			this.resetGraph();
-			this._chart[chart_name] = true
-		}
-	}
-	resetGraph(){
-		this._chart[VisualizationType.ScatterPlotMatrix] = false;
-		this._chart[VisualizationType.ForceField] = false;
-		this._chart[VisualizationType.HeatMap] = false;
-		this._chart[VisualizationType.AdjacencyMatrix] = false;
-		this._chart[VisualizationType.PLMA] = false;
-	}
-}
 class Model {
 	constructor(){
 		this.preferences = new Preferences();
@@ -39,13 +8,27 @@ class Model {
 		this.originalData = [];
 		this.selectedData = [];
 		this.distanceMatrices = [];
+		//tutti i metodi get dovrebbero essere computed e non action, ma per essere computed devono essere trasformati in getter
+		//il vantaggio dei computed é che tengono in cache il valore, senza ricalcolarlo ogni volta, fino a quando la variabile observable non cambia
 		makeObservable(this, {
 			dimensions : observable,
 			preferences: observable,
+			chartToShow: computed,
+			setChartToShow: action,
+			getDimensions: action,
+			getDimensionsChecked: action,
+			getCategoricCheckedDimensions: action,
+			getNumericDimensions: action,
+			getSelectedDimensions: action,
+			loadDimensions: action,
+			addDimensionsToDataset: action,
+			reset: action
 		})
 		
 	}
-
+	getPreferences(){
+		return this.preferences
+	}
 	addDistanceMatrix(matrix) {
 		this.distanceMatrices.push(matrix);
 	}
@@ -54,15 +37,15 @@ class Model {
 		return this.distanceMatrices;
 	}
 
-	getChartToShow(){
+	get chartToShow(){
 		return this.preferences.chart;
+	}
+	setChartToShow(chartName){
+		this.preferences.chart = chartName
 	}
 
 	isDataLoaded(){
 		return this.dimensions.length === 0;
-	}
-	setChartToShow(chartName){
-		this.preferences.chart = chartName
 	}
 
 	getDimensions() {
@@ -88,7 +71,7 @@ class Model {
 	getNumericDimensions() {
 		return this.dimensions.filter(dim => dim.getChecked() && dim.getNumeric());
 	}
-    
+	//da fixare se si vuole che al cambiamento delle dimensioni restano quelle ridotte
 	getSelectedDimensions() {
 		return this.dimensions.filter(dim => dim.getChecked() && !dim.getIsReduced());
 	}
@@ -98,14 +81,15 @@ class Model {
 		console.log(this.originalData)
 	}
 	loadDimensions(dimensions){
-		this.dimensions = dimensions;
+		this.dimensions.replace(dimensions);	//metodo di mobx per array observable
 	}
 	updateSelectedData(selectedData){
 		this.selectedData=selectedData;
 	}
 
 	addDimensionsToDataset(dimensions) {
-		this.dimensions = this.dimensions.concat(dimensions);
+		//this.dimensions.push(dimensions);
+		this.dimensions.replace(this.dimensions.concat(dimensions));
 	}
 
 	//se non serve calncellare
@@ -119,7 +103,7 @@ class Model {
 
 	reset() {
 		this.originalData = [];
-		this.dimensions = [];
+		this.dimensions.clear();	//metodo di mobx per array observable
 		this.selectedData = [];
 	}   
 }

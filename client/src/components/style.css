@@ -38,6 +38,16 @@ body {
   font-size: calc(10px + 2vmin);
   padding: 5em 2em 2em 5em;
 }
+.chartPreferences{
+  float:right;
+  width: 15%;
+  padding: 1em;
+  border: 1px solid black;
+}
+.scatterPlotMatrix{
+  width: 80%;
+  height: 1000px;
+}
 
 .heatmap {
     height: 100%;
@@ -52,6 +62,8 @@ body {
 
 .content {
 	text-align: center;
+  margin: 1em;
+  margin-left: 6em;
 }
 
 /* INIZIO MENU */
