@@ -10,6 +10,7 @@ import {ImDatabase} from "react-icons/im";
 import {FaFileCsv} from "react-icons/fa";
 import {SiGraphcool , SiJson} from "react-icons/si";
 import LoadDataFromDB from "./ModalContent/LoadDataFromDB"
+import { VisualizationType } from "../../../utils";
 //import useWindowWidth from "./WindowWidth"
 
 const Menu = () => { 
@@ -41,7 +42,7 @@ const Menu = () => {
 	function openGraph(index) {
 		switch(index) {
 			case 4:
-				viewModel.setShowSPM()
+				viewModel.setChartToShow(VisualizationType.ScatterPlotMatrix)
 				break;
 				//TODO: altri casi per gli altri grafici
 				//TODO: togliere che se il bottone è cliccato più volte il grafico compare e scompare (toggle)
