@@ -188,7 +188,7 @@ body {
   }
 
   .nav-link {	
-		width: 5em;
+		width: 3.5em;
   }
 
 	.content {
@@ -260,3 +260,11 @@ body {
   }
 }
 /* FINE HEADER */
+
+/* INIZIO ALERT */
+.alert{
+	max-width: 30%;
+	position:absolute!important;
+	right:0!important;
+}
+/* FINE ALERT */
