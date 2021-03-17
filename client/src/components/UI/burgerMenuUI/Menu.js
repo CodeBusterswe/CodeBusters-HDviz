@@ -10,6 +10,7 @@ import {AiOutlineArrowRight , AiOutlineDotChart} from "react-icons/ai";
 import {ImDatabase} from "react-icons/im";
 import {FaFileCsv} from "react-icons/fa";
 import {SiGraphcool , SiJson} from "react-icons/si";
+import LoadDataFromDB from "./ModalContent/LoadDataFromDB"
 //import useWindowWidth from "./WindowWidth"
 
 const Menu = () => { 
@@ -36,6 +37,8 @@ const Menu = () => {
 
 	function handleContent(index) {
 		switch (index) {
+		case 1: 
+		    return <LoadDataFromDB modalIsOpen={modalIsOpen} closeModal={closeModal}/>
 		case 2:
 			return <LoadCSV modalIsOpen={modalIsOpen} closeModal={closeModal}></LoadCSV>
 		case 3:

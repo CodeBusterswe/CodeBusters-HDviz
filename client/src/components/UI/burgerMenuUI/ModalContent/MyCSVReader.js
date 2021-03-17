@@ -1,8 +1,9 @@
-import React from "react"
+import React,{useState} from "react"
 import { CSVReader } from "react-papaparse"
 import { useStore } from "../../../../ContextProvider"
 
 function MyCSVReader(props){
+	const [data, setdata] = useState(null)
 	const {
 		setLocalStates,
 	} = props
@@ -11,10 +12,11 @@ function MyCSVReader(props){
 	//get all dataset from csv table
 	async function getDataset(){
 		const dataset = await viewModel.getAllDataset();
-		console.log("dataset:",dataset);
+		//console.log("dataset:",dataset);
+		setdata(dataset);
 		return dataset;
 	}
-	console.log("inCsvReader:", getDataset())
+	//console.log("inCsvReader:", getDataset(), "data:",data)
 
 	function handleOnDrop(file){
 		console.log(file);
