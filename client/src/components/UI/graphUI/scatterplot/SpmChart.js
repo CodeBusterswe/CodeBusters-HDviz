@@ -10,7 +10,7 @@ const ScatterPlotMatrix = () => {
 	const [axes, color] = viewModel.getSpmPreferences();
 	const traits = axes.filter(axis => axis)
 	let domainByTrait={}, yScales={}, xScales={}, palette, ctx;
-	const size = 250, padding = 20, legendRectSize = 18, legendSpacing = 4, numberOfTraits = traits.length, pointRadius = 2;
+	const size = 200, padding = 20, legendRectSize = 18, legendSpacing = 4, numberOfTraits = traits.length, pointRadius = 2;
 	let svg = select("#spm-svg").attr("width", size * numberOfTraits + 4*padding + 200).
 		attr("height", size * numberOfTraits + 4*padding).
 		select("g").attr("transform", "translate("+4*padding+","+padding/2+")");
@@ -55,9 +55,10 @@ const ScatterPlotMatrix = () => {
 		//aggiunge label alle cell centrali
 		cell.filter(function(d) { return d.i === d.j; }). 
 			append("text").
-			attr("x", padding).
-			attr("y", padding).
-			attr("dy", ".71em").
+			attr("x", 25).
+			attr("y", size/2).
+			style("fill", "#992600").
+			//attr("dy", size/2).
 			text(function(d) { return d.x; });
 	}
 	function draw(p) {
@@ -123,7 +124,7 @@ const ScatterPlotMatrix = () => {
 				let x_axis = d3.axisBottom(xScales[d]).
 					ticks(6).
 					tickSize(size * numberOfTraits);
-				console.log(x_axis);
+				//console.log(x_axis);
 				select(this).call(x_axis); 
 			});
 
