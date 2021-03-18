@@ -23,7 +23,7 @@ const Menu = () => {
 
 	const names = ["Carica/Salva sessione", "Carica dati dal DB", 
 		"Carica dati da CSV", "Riduci dimensioni", "Calcola distanza", "Scatterplot Matrix",
-		"Adjacency Matrix","Heat Map","Force Field","PLMA"]; 
+		"Adjacency Matrix","Heat Map","Force Field","Linear Projection"]; 
 	const icons = [<SiJson size={32} className="icon"/>, 
 		<ImDatabase size={32} className="icon"/>,
 		<FaFileCsv size={32} className="icon"/>, 
