@@ -6,11 +6,13 @@ import DimReductionStrategy from "./viewModel/DimReductionStrategy"
 import { AlgorithmType } from "./utils" // <--- LASCIARE PLS
 import * as distCalc from "ml-distance";
 import {getDataset, getTables} from "./model/services" 
+import Preferences from "./model/Preferences";
 
 class ViewModel{
 
 	constructor(){
 		this.model = new Model();
+		this.preferences = new Preferences();
 	}
 	
 	//get all dataset from csv table
@@ -20,8 +22,7 @@ class ViewModel{
 		return dataset;
 	}
 	getChartToShow(){
-		let preferences = this.model.getPreferences();
-		return preferences.chart;
+		return this.preferences.chart;
 	}
 	//get all tables from DB
 	async getAllTables(){
@@ -31,24 +32,20 @@ class ViewModel{
 	}
 
 	setChartToShow(chartName){
-		let preferences = this.model.getPreferences();
-		preferences.chart = chartName;
+		this.preferences.chart = chartName;
 	}
 	getSpmPreferences(){
-		let preferences = this.model.getPreferences();
-		return [preferences.SpmAxes, preferences.SpmColor]
+		return [this.preferences.SpmAxes, this.preferences.SpmColor]
 	}
 	
 	getSpmColor(){
-		let preferences = this.model.getPreferences();
-		return preferences.SpmColor
+		return this.preferences.SpmColor
 	}
 	setSpmAxis(identifier, value){
-		let preferences = this.model.getPreferences();
 		if(identifier !== "color")
-			preferences.setSPMAxis(identifier, value);
+			this.preferences.setSPMAxis(identifier, value);
 		else
-			preferences.SpmColor = value
+			this.preferences.SpmColor = value
 	}
 	getDimensions(){
 		return this.model.getDimensions();
@@ -112,17 +109,15 @@ class ViewModel{
 	}
 
 	loadDataAndDims(data, dims){
-		console.time("model.loadData")
 		this.model.loadData(data);
-		console.timeEnd("model.loadData")
 		this.model.loadDimensions(dims);
+		this.preferences.reset();	//resetto le preferenze per il grafico
 		this.updateSelectedData();
 	}
 
 	updateDims(dims){
-		console.time("model.loadDimensions");
 		this.model.loadDimensions(dims);
-		console.timeEnd("model.loadDimensions");
+		this.preferences.reset();	//resetto le preferenze per il grafico
 		this.updateSelectedData()
 	}
 

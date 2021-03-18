@@ -1,9 +1,7 @@
 import {makeObservable, observable, computed, action } from "mobx"
-import Preferences from "./Preferences"
 //import Dimension from "./Dimension";
 class Model {
 	constructor(){
-		this.preferences = new Preferences();
 		this.dimensions = [];
 		this.originalData = [];
 		this.selectedData = [];
@@ -12,9 +10,6 @@ class Model {
 		//il vantaggio dei computed é che tengono in cache il valore, senza ricalcolarlo ogni volta, fino a quando la variabile observable non cambia
 		makeObservable(this, {
 			dimensions : observable,
-			preferences: observable,
-			chartToShow: computed,
-			setChartToShow: action,
 			getDimensions: action,
 			getDimensionsChecked: action,
 			getCategoricCheckedDimensions: action,
@@ -26,22 +21,12 @@ class Model {
 		})
 		
 	}
-	getPreferences(){
-		return this.preferences
-	}
 	addDistanceMatrix(matrix) {
 		this.distanceMatrices.push(matrix);
 	}
 
 	getDistanceMatrices() {
 		return this.distanceMatrices;
-	}
-
-	get chartToShow(){
-		return this.preferences.chart;
-	}
-	setChartToShow(chartName){
-		this.preferences.chart = chartName
 	}
 
 	isDataLoaded(){
@@ -82,7 +67,6 @@ class Model {
 	}
 	loadDimensions(dimensions){
 		this.dimensions.replace(dimensions);	//metodo di mobx per array observable
-		this.preferences.reset();	//resetto le preferenze per il grafico
 	}
 	updateSelectedData(selectedData){
 		this.selectedData=selectedData;
