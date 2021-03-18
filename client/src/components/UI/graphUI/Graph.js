@@ -18,13 +18,13 @@ function Graph(){
 	const viewModel = useStore()
 	return(
 		<div className="content">
-			<input type="button" value="MOSTRA STATO MODELLO" onClick={ () => {
+			{/*<input type="button" value="MOSTRA STATO MODELLO" onClick={ () => {
 				console.log("OriginalData:", viewModel.getOriginalData());
 				console.log("SelectedData:", viewModel.getSelectedData());
 				console.log("Dimensions:", viewModel.getDimensions());
 				console.log("Chart:", viewModel.getChartToShow());
 			}}/>
-			<hr></hr>
+			<hr></hr>*/}
 			{renderCharts()}
 		</div>
 	)

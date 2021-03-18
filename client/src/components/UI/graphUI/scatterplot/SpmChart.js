@@ -7,12 +7,11 @@ import { observer } from "mobx-react-lite";
 const ScatterPlotMatrix = () => {
 	const viewModel = useStore();
 	const data = viewModel.getSelectedData();
-	const color = viewModel.getSpmColor();
+	const [axes, color] = viewModel.getSpmPreferences();
+	const traits = axes.filter(axis => axis)
 	let svg = select(".scatterPlotMatrix")
 	let xAxis, yAxis, domainByTrait={}, yScales={}, xScales={}, palette;
-	const size = 400, padding = 20, legendRectSize = 18, legendSpacing = 4;
-	const traits = viewModel.getSpmAxis();
-	const numberOfTraits = traits.length;
+	const size = 250, padding = 20, legendRectSize = 18, legendSpacing = 4, numberOfTraits = traits.length;
 
 	function cross(a, b) {
 		var c = [], n = a.length, m = b.length, i, j;
@@ -26,7 +25,7 @@ const ScatterPlotMatrix = () => {
 	}
     
 	function plot(p) {
-		var cell = d3.select(this);
+		let cell = d3.select(this);
 		cell.append("rect").
 			attr("class", "frame").
 			attr("x", padding / 2).
@@ -40,27 +39,32 @@ const ScatterPlotMatrix = () => {
 			transition().duration(500).
 			attr("cx", function(d) { return xScales[p.x](d[p.x]); }).
 			attr("cy", function(d) { return yScales[p.y](d[p.y]); }).
-			attr("r", 4).
-			style("fill", function(d) { return palette(d[color]); });
+			attr("r", 4)
 	}
-	useEffect(() => {
-		//svg = select(".scatterPlotMatrix")
-		//svg.attr("width", size * numberOfTraits + padding + legendRectSize + 125)
-		//svg.attr("height", size * numberOfTraits + padding)
+	useEffect(()=> {
 		svg.attr("viewBox", "0 0 " + (size * numberOfTraits + padding + legendRectSize + 125) + " " + (size * numberOfTraits + padding))
-		update();
-	})
-	function updateScales(){
-		//update color
+		console.log("change axes", axes)
+		console.log("clear traits", traits)
+		updateScales();
+		updateAxis();
+		updatePoints();
+	}, [axes])
+	useEffect(()=> {
+		console.log("change color", color)
+		updateColor();
+		updateLegend()
+	}, [color])
+
+	function updateColor(){
 		let colorDomain = d3.extent(data, function(d) {return +d[color]; });
-		console.log(colorDomain)
 		if(colorDomain[0])
 			palette = d3.scaleLinear().domain(colorDomain).range(["yellow", "blue"]);//
 		else{
-			console.log("else")
 			palette = d3.scaleOrdinal(d3.schemeCategory10);
 		}
-		//
+		svg.selectAll(".cell").selectAll("circle").style("fill", (d) => {return palette(d[color]); });
+	}
+	function updateScales(){
 		traits.forEach(trait => {
 			domainByTrait[trait] = d3.extent(data, function(d) {return +d[trait]; });
 			let xScale, yScale;
@@ -162,14 +166,10 @@ const ScatterPlotMatrix = () => {
 			});
 
 	}
-	function update(){
-		updateScales();
-		updateAxis();
-		updatePoints();
-		updateLegend();
-	}
 	return (
-		<svg className="scatterPlotMatrix"></svg>
+		<div className="chartDiv">
+			<svg className="scatterPlotMatrix"></svg>
+		</div>
 	)
 }
 export default observer(ScatterPlotMatrix)

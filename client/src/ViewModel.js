@@ -5,7 +5,7 @@ import { toJS } from "mobx"
 import DimReductionStrategy from "./viewModel/DimReductionStrategy"
 import { AlgorithmType } from "./utils" // <--- LASCIARE PLS
 import * as distCalc from "ml-distance";
-import {getDataset, getTables} from "./model/services"  
+import {getDataset, getTables} from "./model/services" 
 
 class ViewModel{
 
@@ -36,19 +36,19 @@ class ViewModel{
 	}
 	getSpmPreferences(){
 		let preferences = this.model.getPreferences();
-		return preferences.SpmPreferences
+		return [preferences.SpmAxes, preferences.SpmColor]
 	}
-	getSpmAxis(){
-		let preferences = this.model.getPreferences();
-		return preferences.SpmAxes.filter(axis => axis); //controlla se esiste o é a null
-	}
+	
 	getSpmColor(){
 		let preferences = this.model.getPreferences();
 		return preferences.SpmColor
 	}
 	setSpmAxis(identifier, value){
 		let preferences = this.model.getPreferences();
-		preferences.setSPMAxis(identifier, value);
+		if(identifier !== "color")
+			preferences.setSPMAxis(identifier, value);
+		else
+			preferences.SpmColor = value
 	}
 	getDimensions(){
 		return this.model.getDimensions();
