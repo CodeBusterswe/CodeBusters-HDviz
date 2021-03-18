@@ -71,6 +71,7 @@ class Preferences{
 	}
 
 	set chart(chart_name){
+		this.resetSpmPreferences();
 		if(this._chart[chart_name])
 			this._chart[chart_name] = false
 		else{

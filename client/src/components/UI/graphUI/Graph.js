@@ -9,8 +9,7 @@ function Graph(){
 	function renderCharts(){
 		switch(viewModel.getChartToShow()){
 		case VisualizationType.ScatterPlotMatrix:
-			return <><ScatterPlotMatrixPreferences/><ScatterPlotMatrix/> </>
-			
+			return <><ScatterPlotMatrixPreferences/><ScatterPlotMatrix/></>
 		default:
 			return null;
 		}

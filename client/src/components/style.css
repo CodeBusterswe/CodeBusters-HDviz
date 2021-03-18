@@ -48,6 +48,11 @@ body {
   width: 80%;
 }
 
+/*posizione canvas sopra a svg per SPM*/
+.plot {position: absolute;}
+#spm-canvas {z-index: -1;}
+#spm-svg {z-index: -2;}
+
 .heatmap {
     height: 100%;
     width: 100%;
@@ -60,7 +65,7 @@ body {
 /* FINE GRAFICO */
 
 .content {
-	text-align: center;
+	/*text-align: center;*/
   margin: 1em;
   margin-left: 6em;
 }
