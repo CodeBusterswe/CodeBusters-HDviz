@@ -1,18 +1,34 @@
-import { makeAutoObservable } from "mobx"
-
+import {makeObservable, observable, computed, action } from "mobx"
+import Preferences from "./Preferences"
 //import Dimension from "./Dimension";
-
 class Model {
-	
 	constructor(){
-		this.showSPM = false;
+		this.preferences = new Preferences();
 		this.dimensions = [];
 		this.originalData = [];
 		this.selectedData = [];
 		this.distanceMatrices = [];
-		makeAutoObservable(this);
+		//tutti i metodi get dovrebbero essere computed e non action, ma per essere computed devono essere trasformati in getter
+		//il vantaggio dei computed é che tengono in cache il valore, senza ricalcolarlo ogni volta, fino a quando la variabile observable non cambia
+		makeObservable(this, {
+			dimensions : observable,
+			preferences: observable,
+			chartToShow: computed,
+			setChartToShow: action,
+			getDimensions: action,
+			getDimensionsChecked: action,
+			getCategoricCheckedDimensions: action,
+			getNumericDimensions: action,
+			getSelectedDimensions: action,
+			loadDimensions: action,
+			addDimensionsToDataset: action,
+			reset: action
+		})
+		
 	}
-
+	getPreferences(){
+		return this.preferences
+	}
 	addDistanceMatrix(matrix) {
 		this.distanceMatrices.push(matrix);
 	}
@@ -21,15 +37,15 @@ class Model {
 		return this.distanceMatrices;
 	}
 
-	getShowSPM(){
-		return this.showSPM;
+	get chartToShow(){
+		return this.preferences.chart;
+	}
+	setChartToShow(chartName){
+		this.preferences.chart = chartName
 	}
 
 	isDataLoaded(){
 		return this.dimensions.length === 0;
-	}
-	setShowSPM(){
-		this.showSPM = !this.showSPM;
 	}
 
 	getDimensions() {
@@ -55,24 +71,25 @@ class Model {
 	getNumericDimensions() {
 		return this.dimensions.filter(dim => dim.getChecked() && dim.getNumeric());
 	}
-    
+	//da fixare se si vuole che al cambiamento delle dimensioni restano quelle ridotte
 	getSelectedDimensions() {
 		return this.dimensions.filter(dim => dim.getChecked() && !dim.getIsReduced());
 	}
     
-	loadData(dimensions, data) {
-		this.originalData = data;
-		this.dimensions = dimensions;
+	loadData(data) {
+		this.originalData = [...data];
+		console.log(this.originalData)
 	}
 	loadDimensions(dimensions){
-		this.dimensions = dimensions;
+		this.dimensions.replace(dimensions);	//metodo di mobx per array observable
 	}
 	updateSelectedData(selectedData){
 		this.selectedData=selectedData;
 	}
 
 	addDimensionsToDataset(dimensions) {
-		this.dimensions = this.dimensions.concat(dimensions);
+		//this.dimensions.push(dimensions);
+		this.dimensions.replace(this.dimensions.concat(dimensions));
 	}
 
 	//se non serve calncellare
@@ -86,7 +103,7 @@ class Model {
 
 	reset() {
 		this.originalData = [];
-		this.dimensions = [];
+		this.dimensions.clear();	//metodo di mobx per array observable
 		this.selectedData = [];
 	}   
 }

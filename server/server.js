@@ -5,20 +5,22 @@ const {pg,Client}=require('pg')
 const bodyParser =require('body-parser')
 const path =require('path')
 const conDB=require('./config/pgDb')
+const cors = require('cors')
 
 
 const app=express();
-
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const cors = require('cors')
+
+/*
 const corsOptions = {
   origin: 'http://localhost:5400',
   optionsSuccessStatus: 200
 }
 app.use(cors(corsOptions));
-
+*/
 
 /*
 const connectionString ='postgres://demoDB:admin@localhost:5400/demoDatabase';

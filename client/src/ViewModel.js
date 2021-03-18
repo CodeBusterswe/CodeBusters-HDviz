@@ -5,6 +5,7 @@ import { toJS } from "mobx"
 import DimReductionStrategy from "./viewModel/DimReductionStrategy"
 import { AlgorithmType } from "./utils" // <--- LASCIARE PLS
 import * as distCalc from "ml-distance";
+import {getDataset, getTables} from "./model/services"  
 
 class ViewModel{
 
@@ -12,14 +13,43 @@ class ViewModel{
 		this.model = new Model();
 	}
 	
-	getShowSPM(){
-		return this.model.getShowSPM();
+	//get all dataset from csv table
+	async getAllDataset(){
+		const dataset = await getDataset();
+		//console.log("dataset:",dataset);
+		return dataset;
+	}
+	getChartToShow(){
+		let preferences = this.model.getPreferences();
+		return preferences.chart;
+	}
+	//get all tables from DB
+	async getAllTables(){
+	     const table = await getTables();
+		 console.log("tables:",table);
+		 return table;
 	}
 
-	setShowSPM(){
-		this.model.setShowSPM();
+	setChartToShow(chartName){
+		let preferences = this.model.getPreferences();
+		preferences.chart = chartName;
 	}
-
+	getSpmPreferences(){
+		let preferences = this.model.getPreferences();
+		return preferences.SpmPreferences
+	}
+	getSpmAxis(){
+		let preferences = this.model.getPreferences();
+		return preferences.SpmAxes.filter(axis => axis); //controlla se esiste o é a null
+	}
+	getSpmColor(){
+		let preferences = this.model.getPreferences();
+		return preferences.SpmColor
+	}
+	setSpmAxis(identifier, value){
+		let preferences = this.model.getPreferences();
+		preferences.setSPMAxis(identifier, value);
+	}
 	getDimensions(){
 		return this.model.getDimensions();
 	}
@@ -51,10 +81,10 @@ class ViewModel{
 		let columns = data.shift().data, 
 			parsedData = [],
 			dimensions;
-        
+		
 		data.forEach(val =>{ //for each row
-			let line = {};
 			if(val.data !== ""){ 
+				let line = {};
 				for (let i = 0; i < val.data.length; i++) { //for each value of the row
 					switch(val.data[i]){
 					case "":	//stringa vuota per dimensioni categoriche
@@ -83,8 +113,9 @@ class ViewModel{
 
 	loadDataAndDims(data, dims){
 		console.time("model.loadData")
-		this.model.loadData(dims, data);
+		this.model.loadData(data);
 		console.timeEnd("model.loadData")
+		this.model.loadDimensions(dims);
 		this.updateSelectedData();
 	}
 
@@ -100,12 +131,14 @@ class ViewModel{
 	}
 
 	updateSelectedData(){
+		//da fixare se si vuole che al cambiamento si aggiornino solo quelle ridotte
 		const checkedDims = this.model.getSelectedDimensions(),
 			originalData = toJS(this.model.getOriginalData());
+		console.log(checkedDims)
 		//con filter tolgo i dati che hanno alcune dimensioni numeriche selezionate NaN; e con map prendo le dimensioni selezionate
-    	let selectedData = originalData.map(d => {
-        	return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]))
-     	}).filter(this.haveNotANumberValue);
+		let selectedData = originalData.map(d => {
+			return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]))
+	 	}).filter(this.haveNotANumberValue);
 		console.time("model.updateSelectedData")
 		this.model.updateSelectedData(selectedData);
 		console.timeEnd("model.updateSelectedData")
@@ -117,7 +150,7 @@ class ViewModel{
 		 //prova della riduzione tramite distanze
 		 //this.reduceDimensionsByDist("euclidean", originalData, "name", "age");
 	}
-    
+	
 	prepareDataForDR(dimensionsToRedux) {
 		return this.getSelectedData().map(obj => dimensionsToRedux.map((dim) => obj[dim]));
 	}
@@ -175,11 +208,11 @@ class ViewModel{
 		const reduction = drStrategy.executeStrategy();
 		
 		let newDimsFromReduction = [];
-    	for (let i = 1; i <= reduction._cols; i++) {
+		for (let i = 1; i <= reduction._cols; i++) {
 			let d = new Dimension(paramaters.Name+i);
 			d.isReduced(true);
-      		newDimsFromReduction.push(d);
-    	}
+	  		newDimsFromReduction.push(d);
+		}
 
 		let newDataFromReduction = this.model.getSelectedData(); //sostituire con data??				
 		for(let i = 0; i<newDataFromReduction.length; i++){
@@ -192,8 +225,6 @@ class ViewModel{
 		}
 
 		this.model.addDimensionsToDataset(newDimsFromReduction);
-		//console.log(newDataFromReduction)
-		console.log(this.model.getSelectedData());
 	}
 	 
 }

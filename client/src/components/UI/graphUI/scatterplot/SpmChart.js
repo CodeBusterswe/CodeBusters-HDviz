@@ -1,17 +1,17 @@
 import React, {useEffect} from "react";
-import * as d3 from "d3"
-import PropTypes from "prop-types";
+import * as d3 from "d3";
+import { useStore } from "../../../../ContextProvider";
 import { select } from "d3";
+import { observer } from "mobx-react-lite";
 
-export default function ScatterPlotMatrix (props) {
-    
-	//Sono i riferimenti ai g che ho costruito nel return.
-	let refSvg, svg;
-	let xAxis, yAxis, domainByTrait={}, yScales={}, xScales={};
-	const size = props.size, padding = props.padding, legendRectSize = 18, legendSpacing = 4;
-	const data = props.data;
-	const color = d3.scaleOrdinal(d3.schemeCategory10);
-	const traits = props.dims;
+const ScatterPlotMatrix = () => {
+	const viewModel = useStore();
+	const data = viewModel.getSelectedData();
+	const color = viewModel.getSpmColor();
+	let svg = select(".scatterPlotMatrix")
+	let xAxis, yAxis, domainByTrait={}, yScales={}, xScales={}, palette;
+	const size = 400, padding = 20, legendRectSize = 18, legendSpacing = 4;
+	const traits = viewModel.getSpmAxis();
 	const numberOfTraits = traits.length;
 
 	function cross(a, b) {
@@ -41,24 +41,34 @@ export default function ScatterPlotMatrix (props) {
 			attr("cx", function(d) { return xScales[p.x](d[p.x]); }).
 			attr("cy", function(d) { return yScales[p.y](d[p.y]); }).
 			attr("r", 4).
-			style("fill", function(d) { return color(d[props.dimColor]); });
+			style("fill", function(d) { return palette(d[color]); });
 	}
 	useEffect(() => {
-		svg = select(refSvg);
-		svg.attr("width", size * numberOfTraits + padding + legendRectSize + 125)
-		svg.attr("height", size * numberOfTraits + padding)
+		//svg = select(".scatterPlotMatrix")
+		//svg.attr("width", size * numberOfTraits + padding + legendRectSize + 125)
+		//svg.attr("height", size * numberOfTraits + padding)
 		//svg.attr("viewBox", "0 0 " + (size * numberOfTraits + padding + legendRectSize + 125) + " " + (size * numberOfTraits + padding))
 		update();
 	})
 	function updateScales(){
-		traits.forEach(function(trait) {
+		//update color
+		let colorDomain = d3.extent(data, function(d) {return +d[color]; });
+		console.log(colorDomain)
+		if(colorDomain[0])
+			palette = d3.scaleLinear().domain(colorDomain).range(["yellow", "blue"]);//
+		else{
+			console.log("else")
+			palette = d3.scaleOrdinal(d3.schemeCategory10);
+		}
+		//
+		traits.forEach(trait => {
 			domainByTrait[trait] = d3.extent(data, function(d) {return +d[trait]; });
 			let xScale, yScale;
 			if(domainByTrait[trait][0] || domainByTrait[trait][0]===0){//controllo se il minore è un numero
 				xScale=d3.scaleLinear().domain(domainByTrait[trait])
 				yScale=d3.scaleLinear().domain(domainByTrait[trait])
 			}else{
-				let domain = props.data.map(l => l[trait]);
+				let domain = data.map(l => l[trait]);
 				xScale=d3.scalePoint().domain([...new Set(domain)])
 				yScale=d3.scalePoint().domain([...new Set(domain)])
 			}
@@ -109,7 +119,7 @@ export default function ScatterPlotMatrix (props) {
 		//quindi abbiamo tutte le possibili coppie tra le varie dimensioni selezionate
 			enter().append("g"). //aggiungo un oggetto per ogni coppia
 			attr("class", "cell").
-			attr("transform", function(d) { 
+			attr("transform", function(d) {
 				return "translate(" + (d.i * size +20) + "," + d.j * size + ")"; }).
 		//creo il grafico in due dimensioni per ogni oggetto
 			each(plot);
@@ -127,7 +137,7 @@ export default function ScatterPlotMatrix (props) {
 	function updateLegend(){
 		svg.selectAll(".legend").remove();
 		var legend = svg.selectAll(".legend").
-			data(color.domain()).
+			data(palette.domain()).
 			enter().
 			append("g").
 			attr("class", "legend").
@@ -141,8 +151,8 @@ export default function ScatterPlotMatrix (props) {
 		legend.append("rect").
 			attr("width", legendRectSize).
 			attr("height", legendRectSize).
-			style("fill", color).
-			style("stroke", color);
+			style("fill", palette).
+			style("stroke", palette);
      
 		legend.append("text").
 			attr("x", legendRectSize + legendSpacing).
@@ -159,42 +169,7 @@ export default function ScatterPlotMatrix (props) {
 		updateLegend();
 	}
 	return (
-		<div className="p-4">
-			<svg ref={(node) => { refSvg = node; }} >
-			</svg>
-		</div>
+		<svg className="scatterPlotMatrix"></svg>
 	)
 }
-ScatterPlotMatrix.propTypes = {
-	data : PropTypes.array,
-	dims: PropTypes.array,
-	padding: PropTypes.number,
-	size: PropTypes.number,
-	radius: PropTypes.number,
-	color: PropTypes.string,
-	margin: PropTypes.object,
-	dim1Title: PropTypes.string,
-	dim2Title: PropTypes.string,
-	dim3Title: PropTypes.string,
-	dim4Title: PropTypes.string,
-	dimColor: PropTypes.string,
-	title: PropTypes.string
-}
-ScatterPlotMatrix.defaultProps = {
-	data: [{ x: 10, y: 20, z: 10, h: 20 }, { x: 15, y: 35, z: 15, h: 26 }],
-	padding: 20,
-	size: 180,
-	radius: 5,
-	color: "blue",
-	margin: {
-		left: 50,
-		right: 10,
-		top: 20,
-		bottom: 50
-	},
-	dim1Title: "Dim 1 Title",
-	dim2Title: "Dim 2 Title",
-	dim3Title: "Dim 3 Title",
-	dim4Title: "Dim 4 Title",
-	title: "Prova"
-};
+export default observer(ScatterPlotMatrix)

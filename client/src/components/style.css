@@ -38,6 +38,16 @@ body {
   font-size: calc(10px + 2vmin);
   padding: 5em 2em 2em 5em;
 }
+.chartPreferences{
+  float:right;
+  width: 15%;
+  padding: 1em;
+  border: 1px solid black;
+}
+.scatterPlotMatrix{
+  width: 80%;
+  height: 1000px;
+}
 
 .heatmap {
     height: 100%;
@@ -51,7 +61,9 @@ body {
 /* FINE GRAFICO */
 
 .content {
-	margin-left: 5em;
+	text-align: center;
+  margin: 1em;
+  margin-left: 6em;
 }
 
 /* INIZIO MENU */
@@ -188,7 +200,7 @@ body {
   }
 
   .nav-link {	
-		width: 5em;
+		width: 3.5em;
   }
 
 	.content {
@@ -260,3 +272,11 @@ body {
   }
 }
 /* FINE HEADER */
+
+/* INIZIO ALERT */
+.alert{
+	max-width: 30%;
+	position:absolute!important;
+	right:0!important;
+}
+/* FINE ALERT */
