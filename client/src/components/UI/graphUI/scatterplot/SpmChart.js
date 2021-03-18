@@ -47,7 +47,7 @@ const ScatterPlotMatrix = () => {
 		//svg = select(".scatterPlotMatrix")
 		//svg.attr("width", size * numberOfTraits + padding + legendRectSize + 125)
 		//svg.attr("height", size * numberOfTraits + padding)
-		//svg.attr("viewBox", "0 0 " + (size * numberOfTraits + padding + legendRectSize + 125) + " " + (size * numberOfTraits + padding))
+		svg.attr("viewBox", "0 0 " + (size * numberOfTraits + padding + legendRectSize + 125) + " " + (size * numberOfTraits + padding))
 		update();
 	})
 	function updateScales(){
