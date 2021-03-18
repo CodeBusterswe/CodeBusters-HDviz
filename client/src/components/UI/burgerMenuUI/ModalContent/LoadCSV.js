@@ -65,7 +65,7 @@ const LoadCSV = props => {
 	}
 	
 	useEffect(() => {
-		const time = 5000
+		const time = 3000
 		let timer = setTimeout(() => setShowSuccess(false), time)
 		return () => clearTimeout(timer)
 	},[showSuccess])
@@ -75,7 +75,7 @@ const LoadCSV = props => {
 	}
 	
 	useEffect(() => {
-		const time = 5000
+		const time = 3000
 		let timer = setTimeout(() => setShowDanger(false), time)
 		return () => clearTimeout(timer)
 	},[showDanger])

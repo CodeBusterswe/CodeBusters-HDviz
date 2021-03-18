@@ -11,20 +11,21 @@ import {FaFileCsv} from "react-icons/fa";
 import {SiGraphcool , SiJson} from "react-icons/si";
 import LoadDataFromDB from "./ModalContent/LoadDataFromDB"
 import { VisualizationType } from "../../../utils";
-//import useWindowWidth from "./WindowWidth"
+import useWindowWidth from "./WindowWidth"
 
 const Menu = () => { 
 	const [modalIsOpen, setIsOpen] = useState(false);
 	const [id, setId] = useState(0);
-	//const {width} = useWindowWidth();
+	const {width} = useWindowWidth();
 
 	const names = ["Carica/Salva sessione", "Carica dati dal DB", 
 		"Carica dati da CSV", "Riduci dimensioni", "Scatterplot Matrix",
-		"HeatMap","Force Field","PLMA"]; 
+		"Adjacency Matrix","Heat Map","Force Field","PLMA"]; 
 	const icons = [<SiJson size={32} className="icon"/>, 
 		<ImDatabase size={32} className="icon"/>,
 		<FaFileCsv size={32} className="icon"/>, 
 		<SiGraphcool size={32} className="icon"/>,
+		<AiOutlineDotChart size={32} className="icon"/>,
 		<AiOutlineDotChart size={32} className="icon"/>,
 		<AiOutlineDotChart size={32} className="icon"/>,
 		<AiOutlineDotChart size={32} className="icon"/>,
@@ -77,7 +78,7 @@ const Menu = () => {
 
 	//? CON QUESTA IL POPOVER CAMBIA POSIZIONE A TOP SOLO IN UNA NUOVA SESSIONE
 	//? RICEVE LA WIDTH SOLO APPENA INIZIATA LA SESSIONE (quindi non cambia il valore se si ridimensiona la pagina)
-	const { innerWidth: width } = window;
+	//const { innerWidth: width } = window;
 
 	return (
 		<> 

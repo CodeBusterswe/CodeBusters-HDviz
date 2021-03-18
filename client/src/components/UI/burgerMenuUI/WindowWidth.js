@@ -1,7 +1,6 @@
 //? CON QUESTA IL POPOVER CAMBIA POSIZIONE A TOP ANCHE SE LA DIMENSIONE DELLA SCHERMATA CAMBIA NELLA STESSA SESSIONE
 //? TIENE TRACCIA COSTANTEMENTE DELLA WIDTH (quindi cambia il valore se si ridimensiona la pagina)
-
-/* import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export function getWindowWidth() {
 	const { innerWidth: width } = window;
@@ -25,4 +24,4 @@ export default function useWindowWidth() {
 	}, []);
 
 	return windowWidth;
-} */
+} 
