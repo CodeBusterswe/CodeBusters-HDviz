@@ -3,7 +3,6 @@ import DistanceMatrix from "./model/DistanceMatrix";
 import Model from "./model/Model";
 import { toJS } from "mobx"
 import DimReductionStrategy from "./viewModel/DimReductionStrategy"
-import { AlgorithmType } from "./utils" // <--- LASCIARE PLS
 import * as distCalc from "ml-distance";
 import {getDataset, getTables} from "./model/services" 
 import Preferences from "./model/Preferences";
@@ -149,43 +148,39 @@ class ViewModel{
 	prepareDataForDR(dimensionsToRedux) {
 		return this.getSelectedData().map(obj => dimensionsToRedux.map((dim) => obj[dim]));
 	}
+
 	beginDimensionalRedux(algorithm, dimensionsToRedux, paramaters){
 		const newData = this.prepareDataForDR(dimensionsToRedux);
 		this.reduceDimensions(algorithm, paramaters, newData);
 	}
-	beginReduceDimensionsByDist(distType, dimensionsToRedux, datasetName){
-		console.log(distType, dimensionsToRedux, datasetName);
-		//QUI COLLEGHI IL TUO METODO, EVENTUALMENTE TI PREPARI I DATI
-		//COME FATTO IN beginDimensionalRedux (metodo qui sopra)
 
+	beginReduceDimensionsByDist(distType, dimensionsToRedux, matrixName){
+		//console.log(distType, dimensionsToRedux, matrixName);
+
+		const newData = this.prepareDataForDR(dimensionsToRedux);
+		this.reduceDimensionsByDist(distType, newData, matrixName);
 	}
-	reduceDimensionsByDist(distType, data, idDimension, groupDimension) {
-		//data = [ {}, {nome: "Paolo", peso: 50, altezza: 180}, ...., {} ]
-		//idDimension = "nome"
+
+	reduceDimensionsByDist(distType, data, matrixName) {
+		//data = [ [5.1, 3.5], [4.9, 3], [4.7, 3.2] ]
+		console.log(this.getSelectedData())
 		let matrix = new DistanceMatrix();
 
-		for (let i = 0; i < data.length - 1; i++) {
-			for (let j = i+1; j < data.length - 1; j++) {
-				let pointA = Object.values(data[i]),
-					pointB = Object.values(data[j]);
-				pointA.shift();
-				pointB.shift();
+		for (let i = 0; i < data.length; i++) {
+			for (let j = i+1; j < data.length; j++) {
 				let link = {
-					source: data[i][idDimension],
-					target: data[j][idDimension],
-					value: distCalc.distance[distType](pointA, pointB)
-				}
+					source : `node${i}`,
+					target : `node${j}`,
+					value: distCalc.distance[distType](data[i], data[j])
+				};
 				matrix.pushLink(link);
 			}
-			let node = {
-				id: data[i][idDimension],
-				group: data[i][groupDimension]
-			}
+			let node = this.getSelectedData()[i];
 			matrix.pushNode(node);
 		}
-		//console.log(matrix.getLinks());
-		//console.log(matrix.getNodes());
-		this.model.pushDistanceMatrix(matrix);
+		console.log(matrix.getLinks());
+		console.log(matrix.getNodes());
+		this.model.addDistanceMatrix(matrix,matrixName);
 	}
 
 	async reduceDimensions(algorithm, paramaters, data) {

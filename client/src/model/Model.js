@@ -5,7 +5,7 @@ class Model {
 		this.dimensions = [];
 		this.originalData = [];
 		this.selectedData = [];
-		this.distanceMatrices = [];
+		this.distanceMatrices = {};
 		//tutti i metodi get dovrebbero essere computed e non action, ma per essere computed devono essere trasformati in getter
 		//il vantaggio dei computed é che tengono in cache il valore, senza ricalcolarlo ogni volta, fino a quando la variabile observable non cambia
 		makeObservable(this, {
@@ -21,8 +21,8 @@ class Model {
 		})
 		
 	}
-	addDistanceMatrix(matrix) {
-		this.distanceMatrices.push(matrix);
+	addDistanceMatrix(matrix, matrixName) {
+		this.distanceMatrices[matrixName] = matrix;
 	}
 
 	getDistanceMatrices() {
