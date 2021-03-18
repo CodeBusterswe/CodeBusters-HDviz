@@ -153,7 +153,12 @@ class ViewModel{
 		const newData = this.prepareDataForDR(dimensionsToRedux);
 		this.reduceDimensions(algorithm, paramaters, newData);
 	}
+	beginReduceDimensionsByDist(distType, dimensionsToRedux, datasetName){
+		console.log(distType, dimensionsToRedux, datasetName);
+		//QUI COLLEGHI IL TUO METODO, EVENTUALMENTE TI PREPARI I DATI
+		//COME FATTO IN beginDimensionalRedux (metodo qui sopra)
 
+	}
 	reduceDimensionsByDist(distType, data, idDimension, groupDimension) {
 		//data = [ {}, {nome: "Paolo", peso: 50, altezza: 180}, ...., {} ]
 		//idDimension = "nome"

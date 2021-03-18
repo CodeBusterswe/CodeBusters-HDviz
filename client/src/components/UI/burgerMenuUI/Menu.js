@@ -2,6 +2,7 @@
 import React, { useState } from "react"
 import { useStore } from "../../../ContextProvider";
 import DimensionalReduction from "./ModalContent/DimensionalReduction"
+import DistanceCalculation from "./ModalContent/DistanceCalculation"
 import LoadCSV from "./ModalContent/LoadCSV"
 import "../../style.css";
 import {OverlayTrigger , Popover} from "react-bootstrap";
@@ -21,11 +22,12 @@ const Menu = () => {
 	const {width} = useWindowWidth();
 
 	const names = ["Carica/Salva sessione", "Carica dati dal DB", 
-		"Carica dati da CSV", "Riduci dimensioni", "Scatter Plot Matrix",
-		"Adjacency Matrix","Heat Map","Force Field","Linear Projection"]; 
+		"Carica dati da CSV", "Riduci dimensioni", "Calcola distanza", "Scatterplot Matrix",
+		"Adjacency Matrix","Heat Map","Force Field","PLMA"]; 
 	const icons = [<SiJson size={32} className="icon"/>, 
 		<ImDatabase size={32} className="icon"/>,
 		<FaFileCsv size={32} className="icon"/>, 
+		<SiGraphcool size={32} className="icon"/>,
 		<SiGraphcool size={32} className="icon"/>,
 		<AiOutlineDotChart size={32} className="icon"/>,
 		<IoGrid size={32} className="icon"/>,
@@ -44,7 +46,7 @@ const Menu = () => {
 
 	function openGraph(index) {
 		switch(index) {
-			case 4:
+			case 5:
 				viewModel.setChartToShow(VisualizationType.ScatterPlotMatrix)
 				break;
 				//TODO: altri casi per gli altri grafici
@@ -61,6 +63,8 @@ const Menu = () => {
 			return <LoadCSV modalIsOpen={modalIsOpen} closeModal={closeModal}></LoadCSV>
 		case 3:
 			return <DimensionalReduction modalIsOpen={modalIsOpen} closeModal={closeModal}></DimensionalReduction>
+		case 4:
+			return <DistanceCalculation modalIsOpen={modalIsOpen} closeModal={closeModal}></DistanceCalculation>
 		default:
 			break;
 		}
@@ -107,7 +111,7 @@ const Menu = () => {
 										</button>	
 										</span>
 									</OverlayTrigger> : 
-									<button className="nav-link" onClick={index < 4 ? () => openModal(index) : () => openGraph(index)}>	
+									<button className="nav-link" onClick={index < 5 ? () => openModal(index) : () => openGraph(index)}>	
 										{icons[index]}
 										<span className="link-text">{name}</span>
 									</button>
