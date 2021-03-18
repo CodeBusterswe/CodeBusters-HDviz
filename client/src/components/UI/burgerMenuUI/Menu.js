@@ -8,6 +8,8 @@ import {OverlayTrigger , Popover} from "react-bootstrap";
 import {AiOutlineArrowRight , AiOutlineDotChart} from "react-icons/ai";
 import {ImDatabase} from "react-icons/im";
 import {FaFileCsv} from "react-icons/fa";
+import { RiMistFill } from "react-icons/ri";
+import { IoGrid, IoShareSocialOutline, IoMoveSharp } from "react-icons/io5";
 import {SiGraphcool , SiJson} from "react-icons/si";
 import LoadDataFromDB from "./ModalContent/LoadDataFromDB"
 import { VisualizationType } from "../../../utils";
@@ -19,17 +21,17 @@ const Menu = () => {
 	const {width} = useWindowWidth();
 
 	const names = ["Carica/Salva sessione", "Carica dati dal DB", 
-		"Carica dati da CSV", "Riduci dimensioni", "Scatterplot Matrix",
-		"Adjacency Matrix","Heat Map","Force Field","PLMA"]; 
+		"Carica dati da CSV", "Riduci dimensioni", "Scatter Plot Matrix",
+		"Adjacency Matrix","Heat Map","Force Field","Linear Projection"]; 
 	const icons = [<SiJson size={32} className="icon"/>, 
 		<ImDatabase size={32} className="icon"/>,
 		<FaFileCsv size={32} className="icon"/>, 
 		<SiGraphcool size={32} className="icon"/>,
 		<AiOutlineDotChart size={32} className="icon"/>,
-		<AiOutlineDotChart size={32} className="icon"/>,
-		<AiOutlineDotChart size={32} className="icon"/>,
-		<AiOutlineDotChart size={32} className="icon"/>,
-		<AiOutlineDotChart size={32} className="icon"/>];
+		<IoGrid size={32} className="icon"/>,
+		<RiMistFill size={32} className="icon"/>,
+		<IoShareSocialOutline size={32} className="icon"/>,
+		<IoMoveSharp size={32} className="icon"/>];
 	const viewModel = useStore();
 	function openModal(index) {
 		setIsOpen(true);
