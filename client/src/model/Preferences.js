@@ -15,12 +15,10 @@ class Preferences{
 			axis3: null,
 			axis4: null,
 			axis5: null,
-			color: null,
+			//color: null,
 		}
+		this._SPMColor = null
 		makeAutoObservable(this)
-	}
-	get SpmPreferences(){
-		return this._SPMPreferences
 	}
 
 	get SpmAxes(){
@@ -47,7 +45,7 @@ class Preferences{
 		return this._SPMPreferences.axis5
 	}
 	get SpmColor(){
-		return this._SPMPreferences.color
+		return this._SPMColor
 	}
 	set SpmAxis1(dimensionsValue){
 		this._SPMPreferences.axis1 = dimensionsValue
@@ -65,7 +63,7 @@ class Preferences{
 		this._SPMPreferences.axis5 = dimensionsValue
 	}
 	set SpmColor(dimensionsValue){
-		this._SPMPreferences.color = dimensionsValue
+		this._SPMColor = dimensionsValue
 	}
 
 	get chart(){
@@ -86,5 +84,17 @@ class Preferences{
 		this._chart[VisualizationType.HeatMap] = false;
 		this._chart[VisualizationType.AdjacencyMatrix] = false;
 		this._chart[VisualizationType.PLMA] = false;
+	}
+	resetSpmPreferences(){
+		this.SpmAxis1 = null;
+		this.SpmAxis2 = null;
+		this.SpmAxis3 = null;
+		this.SpmAxis4 = null;
+		this.SpmAxis5 = null;
+		this.SpmColor = null;
+	}
+	reset(){
+		this.resetCharts();
+		this.resetSpmPreferences();
 	}
 } export default Preferences

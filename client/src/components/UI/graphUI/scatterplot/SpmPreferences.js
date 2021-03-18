@@ -6,10 +6,10 @@ import Form from "react-bootstrap/Form";
 
 const ScatterPlotMatrixPreferences = () => {
 	const viewModel = useStore();
-	const axis = viewModel.getSpmPreferences();
+	const [axis, color] = viewModel.getSpmPreferences();
 	const keys = viewModel.getCheckedDimensions();
-	const labels = ["Axis one", "Axis two", "Axis Three", "Axis Four", "Axis Five", "Color"];
-	const identifiers = ["axis1", "axis2", "axis3", "axis4", "axis5", "color"];
+	const labels = ["Axis one", "Axis two", "Axis Three", "Axis Four", "Axis Five"];
+	const identifiers = ["axis1", "axis2", "axis3", "axis4", "axis5"];
 
 	//Funzione che non permette di selezionare più volte la stessa dimensione
 	function handleSelectChange(e){
@@ -42,6 +42,20 @@ const ScatterPlotMatrixPreferences = () => {
 					)
 				})
 			}
+			<Form.Group controlId="color">
+				<Form.Label>Color</Form.Label>
+				<Form.Control
+					custom
+					as="select"
+					value={color}
+					onChange={handleSelectChange}
+				>
+					<option value={"null"} >No dimension</option>
+					{keys.map((d) => {
+						return <option value={d}>{d}</option>
+					})}
+				</Form.Control>
+			</Form.Group>
 		</Form>
 	)
 }

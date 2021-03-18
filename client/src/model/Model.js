@@ -82,6 +82,7 @@ class Model {
 	}
 	loadDimensions(dimensions){
 		this.dimensions.replace(dimensions);	//metodo di mobx per array observable
+		this.preferences.reset();	//resetto le preferenze per il grafico
 	}
 	updateSelectedData(selectedData){
 		this.selectedData=selectedData;
