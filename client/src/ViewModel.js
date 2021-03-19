@@ -25,7 +25,7 @@ class ViewModel{
 		//console.log("dataset:",dataset);
 		return dataset;
 	}
-	
+
 	//get all dataset from csv table
 	async getColumnsWithName(table_name){
 		//console.log("model col:",table_name);
@@ -33,6 +33,11 @@ class ViewModel{
 		//console.log("dataset:",dataset);
 		return dataset;
 	}
+
+	getDistanceMatrices(){
+		return this.model.getDistanceMatrices();
+	}
+
 	async getColumnList(table_name){
 		const dataset = await getColumnByName(table_name)
 		console.log("dataset:",dataset);
@@ -178,9 +183,9 @@ class ViewModel{
 		let selectedData = originalData.map(d => {
 			return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]))
 	 	}).filter(this.haveNotANumberValue);
-		console.time("model.updateSelectedData")
+		//console.time("model.updateSelectedData")
 		this.model.updateSelectedData(selectedData);
-		console.timeEnd("model.updateSelectedData")
+		//console.timeEnd("model.updateSelectedData")
 		 //log di test
 		 //console.log("original: ",toJS(this.model.getOriginalData()))
 		 //console.log("selected: ",toJS(this.model.getSelectedData()))
@@ -208,7 +213,7 @@ class ViewModel{
 
 	reduceDimensionsByDist(distType, data, matrixName) {
 		//data = [ [5.1, 3.5], [4.9, 3], [4.7, 3.2] ]
-		console.log(this.getSelectedData())
+		//console.log(this.getSelectedData())
 		let matrix = new DistanceMatrix();
 
 		for (let i = 0; i < data.length; i++) {
@@ -223,8 +228,8 @@ class ViewModel{
 			let node = this.getSelectedData()[i];
 			matrix.pushNode(node);
 		}
-		console.log(matrix.getLinks());
-		console.log(matrix.getNodes());
+		//console.log(matrix.getLinks());
+		//console.log(matrix.getNodes());
 		this.model.addDistanceMatrix(matrix,matrixName);
 	}
 
@@ -268,4 +273,4 @@ class ViewModel{
 	}
 	 
 }
-export default ViewModel
+export default ViewModel;
