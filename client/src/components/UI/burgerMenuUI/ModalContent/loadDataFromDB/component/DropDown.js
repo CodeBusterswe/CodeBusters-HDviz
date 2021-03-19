@@ -65,31 +65,13 @@ export const DropDown = props => {
 						)}
 					</div>
 				</Col>
+			</Row>
+			<Dropdown.Divider/>
+			<Row>
 				<Col>
-					<OptionList	options={columnOption} selectValue={columnSelected} table={table}/>			
-				</Col>
+					<OptionList	options={columnOption} selectValue={columnSelected} table={table}/>
+				</Col>	
 			</Row>
-			{/**
-			 <Row>
-				<Form.Group controlId="columnOptionList">
-				   
-					<Form.Label>Select the dimensions to use</Form.Label>
-					<Select
-						value={columnSelected}
-						options={columnOption}
-						isMulti
-						name="columnSelected"
-						className="basic-multi-select"
-						classNamePrefix="select"
-						components={makeAnimated()}
-						closeMenuOnSelect={false}
-						onChange={handleColumnSelected}
-						placeholder={columnSelected?"select value":"select dataset"}
-					/>
-					
-				</Form.Group>
-			</Row>
-			 */}
 		</Container>
 	);
 };
