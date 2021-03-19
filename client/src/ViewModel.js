@@ -63,6 +63,24 @@ class ViewModel{
 	getSpmPreferences(){
 		return [this.preferences.SpmAxes, this.preferences.SpmColor]
 	}
+	getHmPreferences(){
+		return Object.values(this.preferences.hmPreferences);
+	}
+	setHmPreferences(identifier, value){
+		switch(identifier){
+		case "xAxis":
+			this.preferences.hmXaxis = value
+			break;
+		case "yAxis":
+			this.preferences.hmYaxis = value
+			break;
+		case "heat":
+			this.preferences.hmFill = value
+			break;
+		default:
+			break;
+		}
+	}
 	
 	getSpmColor(){
 		return this.preferences.SpmColor

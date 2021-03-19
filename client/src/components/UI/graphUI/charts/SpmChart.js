@@ -92,7 +92,6 @@ const ScatterPlotMatrix = () => {
 		else{
 			palette = d3.scaleOrdinal(d3.schemeCategory10);
 		}
-		console.log(palette);
 	}
 	function updateScales(){
 		traits.forEach(t => {

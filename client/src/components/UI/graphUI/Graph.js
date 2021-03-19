@@ -19,7 +19,7 @@ function Graph(){
 		case VisualizationType.PLMA:
 			return <><PlmaPreferences/><Plma/></>
 		default:
-			return null;
+			return <p>Seleziona un grafico dalla colonna a sinistra</p>;
 		}
 	}
 	const viewModel = useStore()
