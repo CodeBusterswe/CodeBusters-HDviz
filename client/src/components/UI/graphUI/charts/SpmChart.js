@@ -10,7 +10,8 @@ const ScatterPlotMatrix = () => {
 	const [axes, color] = viewModel.getSpmPreferences();
 	const traits = axes.filter(axis => axis)
 	let domainByTrait={}, yScales={}, xScales={}, palette, ctx;
-	const size = 200, padding = 20, legendRectSize = 18, legendSpacing = 4, numberOfTraits = traits.length, pointRadius = 2;
+	const TotalSize = 800;
+	const numberOfTraits = traits.length, size = TotalSize / numberOfTraits, padding = 20, legendRectSize = 18, legendSpacing = 4, pointRadius = 2;
 	let svg = select("#spm-svg").attr("width", size * numberOfTraits + 4*padding + 200).
 		attr("height", size * numberOfTraits + 4*padding).
 		select("g").attr("transform", "translate("+4*padding+","+padding/2+")");
