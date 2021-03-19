@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import React, { useState } from "react"
 import { useStore } from "../../../ContextProvider";
 import DimensionalReduction from "./ModalContent/DimensionalReduction"
@@ -46,12 +45,23 @@ const Menu = () => {
 
 	function openGraph(index) {
 		switch(index) {
-			case 5:
-				viewModel.setChartToShow(VisualizationType.ScatterPlotMatrix)
-				break;
-				//TODO: altri casi per gli altri grafici
-				//TODO: togliere che se il bottone è cliccato più volte il grafico compare e scompare (toggle)
-			default: break;
+		case 5:
+			viewModel.setChartToShow(VisualizationType.ScatterPlotMatrix)
+			break;
+		case 6:
+			viewModel.setChartToShow(VisualizationType.AdjacencyMatrix)
+			break;
+		case 7:
+			viewModel.setChartToShow(VisualizationType.HeatMap)
+			break;
+		case 8:
+			viewModel.setChartToShow(VisualizationType.ForceField)
+			break;
+		case 9:
+			viewModel.setChartToShow(VisualizationType.PLMA)
+			break;
+			//TODO: togliere che se il bottone è cliccato più volte il grafico compare e scompare (toggle)
+		default: break;
 		}
 	}
 
@@ -105,10 +115,10 @@ const Menu = () => {
 										placement={width > 600 ? "right" : "top"} 
 										delay={{ show: 200, hide: 0 }}>
 										<span className="d-inline-block" style={{ width: "100%" }} > 
-										<button className="nav-link" disabled aria-disabled="true" style={{ pointerEvents: "none"}}>	
-											{icons[index]}
-											<span className="link-text">{name}</span>
-										</button>	
+											<button className="nav-link" disabled aria-disabled="true" style={{ pointerEvents: "none"}}>	
+												{icons[index]}
+												<span className="link-text">{name}</span>
+											</button>	
 										</span>
 									</OverlayTrigger> : 
 									<button className="nav-link" onClick={index < 5 ? () => openModal(index) : () => openGraph(index)}>	

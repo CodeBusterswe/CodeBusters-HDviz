@@ -15,7 +15,6 @@ class Preferences{
 			axis3: null,
 			axis4: null,
 			axis5: null,
-			//color: null,
 		}
 		this._SPMColor = null
 		makeAutoObservable(this)

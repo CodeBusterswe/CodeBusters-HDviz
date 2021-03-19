@@ -2,7 +2,7 @@ const {Client}=require('pg');
 
 
 
-const connectionString = 'postgress://postgres:admin@localhost:5400/demoDatabase';
+const connectionString = 'postgress://postgres:admin@localhost:5000/database';
 const conDB = new Client({
     connectionString: connectionString
 });

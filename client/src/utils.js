@@ -10,7 +10,7 @@ export const DistanceType = {
 	Euclidean: "euclidean",
 	Manhattan: "manhattan",
 	Canberra: "canberra",
-	Chebychev: "chebychev"
+	Chebyshev: "chebyshev"
 };
 
 export const AlgorithmType = {
