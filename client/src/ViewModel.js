@@ -52,9 +52,7 @@ class ViewModel{
 		//console.log("dataset:",dataset);
 		return dataset.data;
 	}
-	getChartToShow(){
-		return this.preferences.chart;
-	}
+	
 	//get all tables from DB
 	async getAllTables(){
 		const table = await getTables();
@@ -62,14 +60,30 @@ class ViewModel{
 		return table;
 	}
 
-	setChartToShow(chartName){
-		this.preferences.chart = chartName;
+	getChartToShow(){
+		return this.preferences.chart;
 	}
 	getSpmPreferences(){
 		return [this.preferences.SpmAxes, this.preferences.SpmColor]
 	}
+	getSpmColor(){
+		return this.preferences.SpmColor
+	}
 	getHmPreferences(){
 		return Object.values(this.preferences.hmPreferences);
+	}
+	getAmPreferences(){
+		return Object.values(this.preferences.amPreferences);
+	}
+
+	setChartToShow(chartName){
+		this.preferences.chart = chartName;
+	}
+	setSpmAxis(identifier, value){
+		if(identifier !== "color")
+			this.preferences.setSPMAxis(identifier, value);
+		else
+			this.preferences.SpmColor = value
 	}
 	setHmPreferences(identifier, value){
 		switch(identifier){
@@ -86,16 +100,22 @@ class ViewModel{
 			break;
 		}
 	}
+	setAmPreferences(identifier, value){
+		switch(identifier){
+		case "distanceMatrix":
+			this.preferences.amDistanceMatrix = value
+			break;
+		case "orderBy":
+			this.preferences.amOrderBy = value
+			break;
+		case "label":
+			this.preferences.amLabel = value;
+			break;
+		default:
+			break;
+		}
+	}
 	
-	getSpmColor(){
-		return this.preferences.SpmColor
-	}
-	setSpmAxis(identifier, value){
-		if(identifier !== "color")
-			this.preferences.setSPMAxis(identifier, value);
-		else
-			this.preferences.SpmColor = value
-	}
 	getDimensions(){
 		return this.model.getDimensions();
 	}
@@ -121,6 +141,9 @@ class ViewModel{
 		return this.model.getNumericDimensions().map(d => {
 			return {value: d.value, label: d.value}
 		})
+	}
+	getDistanceMatricesNames(){
+		return this.model.getDistanceMatricesNames();
 	}
 
 	parseAndLoadCsvData(data) {
@@ -186,7 +209,7 @@ class ViewModel{
 		//console.time("model.updateSelectedData")
 		this.model.updateSelectedData(selectedData);
 		//console.timeEnd("model.updateSelectedData")
-		 //log di test
+		 /*log di test
 		 console.log("original: ",toJS(this.model.getOriginalData()))
 		 console.log("selected: ",toJS(this.model.getSelectedData()))
 		 console.log("dimensions:", toJS(this.model.getDimensions()))
@@ -202,9 +225,9 @@ class ViewModel{
 			  string = string.concat(temp, "},");
 			 })
 		console.log(string);
-		 
-		 //prova della riduzione tramite distanze
-		 //this.reduceDimensionsByDist("euclidean", originalData, "name", "age");
+		*/ 
+		//prova della riduzione tramite distanze
+		//this.reduceDimensionsByDist("euclidean", originalData, "name", "age");
 	}
 	
 	prepareDataForDR(dimensionsToRedux) {

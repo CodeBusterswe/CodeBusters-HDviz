@@ -1,26 +1,39 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import * as d3 from "d3";
 import { useStore } from "../../../../ContextProvider";
 import { select } from "d3";
 import { observer } from "mobx-react-lite";
 
 const AdjacencyMatrix = () => {
-
-	const viewModel = useStore();
-	const distanceMatrix = viewModel.getDistanceMatrices();
+	const viewModel = useStore(),
+		distanceMatrix = viewModel.getDistanceMatrices(),
+		[matrixName, orderBy, dimLabels]=viewModel.getAmPreferences(),
+		margin = {top: 30, right: 30, bottom: 100, left: 100},
+		width = 850 - margin.left - margin.right,
+		height = 850 - margin.top - margin.bottom;
 	
 	useEffect(() => {
-
-		let svg = select(".adjacencyMatrix").attr("height",3000).attr("width",3000),
-			matrixName = "euclidean", //nome dinamico
-			dimLabels = "species"
-		const colors = d3.scaleLinear(d3.schemeTableau10);
-		
-		let dm = distanceMatrix[matrixName];
-		
-		let	nodes = dm.nodes,
+		d3.select(".adjacencyMatrix").selectAll("svg").remove();
+		const svg = select(".adjacencyMatrix").
+			append("svg").
+			attr("width", width + margin.left + margin.right).
+			attr("height", height + margin.top + margin.bottom);
+		//const colors = d3.scaleLinear(d3.schemeTableau10);
+		let dm = {}, nodes = [], links= [];
+		if(matrixName){
+			dm = distanceMatrix[matrixName];
+			nodes = dm.nodes; 
 			links = dm.links;
+		}
+		const colors = d3.scaleSequential().
+			interpolator(d3.interpolateBlues).
+			domain(d3.extent(links.map(l => l.value)));
+		nodes.sort(function(x, y){
+			return d3.ascending(x[orderBy], y[orderBy]);
+			 })
+		console.log(nodes);
 		/*
+		
 		let nodes = `id,group,salary
 Paolo,A,800
 Michele,A,1500
@@ -68,6 +81,7 @@ AlePirolo,Hossain,2.23606797749979`
 
 		nodes.forEach((source, a) => {
 			nodes[a].id = a;
+			console.log(a);
 			nodes.forEach((target, b) => {
 				var grid = {id: "node"+ a + "-node"+ b, x: b, y: a, value: 0}; //id: Paolo-Michele /Michele-Paolo
 				if(linkHash[grid.id]){ //esiste
@@ -82,8 +96,13 @@ AlePirolo,Hossain,2.23606797749979`
 				matrix.push(grid)
 			})
 		})
+		console.log(nodes)
+		console.log(links)
+		console.log(matrix)
 
-		const scale = d3.scaleBand().domain(nodes.map(d => d.id)).range([ 0, 900])
+		const scale = d3.scaleBand().
+			domain(nodes.map(d => d.id)).
+			range([ 0, width]);
     
 		//console.log(matrix)
 		svg.append("g").
@@ -99,7 +118,10 @@ AlePirolo,Hossain,2.23606797749979`
 			attr("x", d=> d.x*scale.bandwidth()).
 			attr("y", d=> d.y*scale.bandwidth()).
 			style("fill", d => colors(d.value)).
-			style("fill-opacity", d=> d.value * .2)
+			//style("fill-opacity", d=> d.value * .2).
+			style("stroke-width", 4).
+			style("stroke", "none").
+			style("opacity", 0.8);
     
 		svg.
 			append("g").
@@ -132,8 +154,7 @@ AlePirolo,Hossain,2.23606797749979`
 	});
 
 	return (
-		<div className="chartDiv">
-			<svg className="adjacencyMatrix"></svg>
+		<div className="adjacencyMatrix">
 		</div>
 	)
 }

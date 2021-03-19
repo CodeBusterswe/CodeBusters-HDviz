@@ -19,7 +19,8 @@ class Preferences{
 		this._SPMColor = null
 		this._AMpreferences = {
 			distanceMatrix: null,
-			orderBy: null
+			orderBy: null,
+			label: null
 		}
 		this._HMpreferences = {
 			xAxis: null,
@@ -44,6 +45,9 @@ class Preferences{
 			this._chart[chart_name] = true
 		}
 	}
+	get amLabel(){
+		return this._AMpreferences.label
+	}
 
 	get amDistanceMatrix(){
 		return this._AMpreferences.distanceMatrix;
@@ -53,6 +57,10 @@ class Preferences{
 		return this._AMpreferences.orderBy;
 	}
 
+	set amLabel(label){
+		this._AMpreferences.label = label;
+	}
+	
 	set amDistanceMatrix(matrix){
 		this._AMpreferences.distanceMatrix = matrix;
 	}

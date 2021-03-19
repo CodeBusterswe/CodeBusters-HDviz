@@ -43,6 +43,9 @@ class Model {
 	getDistanceMatrices() {
 		return this.distanceMatrices;
 	}
+	getDistanceMatricesNames(){
+		return Object.keys(this.distanceMatrices);
+	}
 
 	isDataLoaded(){
 		return this.dimensions.length === 0;

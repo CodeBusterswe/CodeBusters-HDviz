@@ -72,6 +72,7 @@ const HeatMap = () => {
 			select(".domain").remove()
   
 		// create a tooltip
+		d3.select(".heatmap").select("div").remove();
 		const tooltip = d3.select(".heatmap").
 			append("div").
 			style("opacity", 0).
