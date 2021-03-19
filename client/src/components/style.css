@@ -38,6 +38,20 @@ body {
   font-size: calc(10px + 2vmin);
   padding: 5em 2em 2em 5em;
 }
+.chartPreferences{
+  float:right;
+  width: 15%;
+  padding: 1em;
+  border: 1px solid black;
+}
+.chartDiv{
+  width: 80%;
+}
+
+/*posizione canvas sopra a svg per SPM*/
+.plot {position: absolute;}
+#spm-canvas {z-index: -1;}
+#spm-svg {z-index: -2;}
 
 .heatmap {
     height: 100%;
@@ -51,7 +65,9 @@ body {
 /* FINE GRAFICO */
 
 .content {
-	text-align: center;
+	/*text-align: center;*/
+  margin: 1em;
+  margin-left: 6em;
 }
 
 /* INIZIO MENU */

@@ -19,5 +19,4 @@ export const AlgorithmType = {
 	LLE: "lle",
 	tSNE: "t-sne"
 };
-
 export default AlgorithmType;
