@@ -2,7 +2,6 @@ import React from "react";
 import { useStore } from "../../../../ContextProvider";
 import { observer } from "mobx-react-lite";
 import Form from "react-bootstrap/Form";
-//import {SpmAxisType} from "../../../../utils"
 
 const ScatterPlotMatrixPreferences = () => {
 	const viewModel = useStore();
@@ -30,7 +29,7 @@ const ScatterPlotMatrixPreferences = () => {
 							<Form.Control
 								custom
 								as="select"
-								value={axis[identifiers]}
+								value={axis[index]}
 								onChange={handleSelectChange}
 							>
 								<option value={"null"} >No dimension</option>

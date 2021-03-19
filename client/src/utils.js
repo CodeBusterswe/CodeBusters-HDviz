@@ -10,7 +10,7 @@ export const DistanceType = {
 	Euclidean: "euclidean",
 	Manhattan: "manhattan",
 	Canberra: "canberra",
-	Chebychev: "chebychev"
+	Chebyshev: "chebyshev"
 };
 
 export const AlgorithmType = {
@@ -18,14 +18,5 @@ export const AlgorithmType = {
 	FastMap: "fastMap",
 	LLE: "lle",
 	tSNE: "t-sne"
-};
-
-export const SpmAxisType = {
-	AxisOne: "axis1",
-	AxisTwo: "axis2",
-	AxisThree: "axis3",
-	AxisFour: "axis4",
-	AxisFive: "axis5",
-	Color: "color"
 };
 export default AlgorithmType;

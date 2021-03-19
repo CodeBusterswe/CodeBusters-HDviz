@@ -3,14 +3,15 @@ import DistanceMatrix from "./model/DistanceMatrix";
 import Model from "./model/Model";
 import { toJS } from "mobx"
 import DimReductionStrategy from "./viewModel/DimReductionStrategy"
-import { AlgorithmType } from "./utils" // <--- LASCIARE PLS
 import * as distCalc from "ml-distance";
-import {getDataset, getTables} from "./model/services" 
+import {getDataset, getTables,getDatasetByName,getColumnByName,getDatasetWithParams} from "./model/services"  
+import Preferences from "./model/Preferences";
 
 class ViewModel{
 
 	constructor(){
-		this.model = new Model();
+		this.model = new Model(true);
+		this.preferences = new Preferences();
 	}
 	
 	//get all dataset from csv table
@@ -18,37 +19,82 @@ class ViewModel{
 		const dataset = await getDataset();
 		//console.log("dataset:",dataset);
 		return dataset;
+	}	
+	async getDatasetByParams(columnSelected,table){
+		const dataset = await getDatasetWithParams(columnSelected,table);
+		//console.log("dataset:",dataset);
+		return dataset;
+	}
+
+	//get all dataset from csv table
+	async getColumnsWithName(table_name){
+		//console.log("model col:",table_name);
+		const dataset = await getColumnByName(table_name);
+		//console.log("dataset:",dataset);
+		return dataset;
+	}
+
+	getDistanceMatrices(){
+		return this.model.getDistanceMatrices();
+	}
+
+	async getColumnList(table_name){
+		const dataset = await getColumnByName(table_name)
+		console.log("dataset:",dataset);
+		return dataset[0].map(d => {
+			return {value: d.column_name, label: d.column_name}
+		})
+	}
+	//get all dataset from csv table
+	async getTableWithName(table_name){
+		this.getColumnsWithName(table_name)
+		const dataset = await getDatasetByName(table_name);
+		//console.log("dataset:",dataset);
+		return dataset.data;
 	}
 	getChartToShow(){
-		let preferences = this.model.getPreferences();
-		return preferences.chart;
+		return this.preferences.chart;
 	}
 	//get all tables from DB
 	async getAllTables(){
-	     const table = await getTables();
-		 console.log("tables:",table);
-		 return table;
+		const table = await getTables();
+		console.log("tables:",table.data);
+		return table;
 	}
 
 	setChartToShow(chartName){
-		let preferences = this.model.getPreferences();
-		preferences.chart = chartName;
+		this.preferences.chart = chartName;
 	}
 	getSpmPreferences(){
-		let preferences = this.model.getPreferences();
-		return [preferences.SpmAxes, preferences.SpmColor]
+		return [this.preferences.SpmAxes, this.preferences.SpmColor]
+	}
+	getHmPreferences(){
+		return Object.values(this.preferences.hmPreferences);
+	}
+	setHmPreferences(identifier, value){
+		switch(identifier){
+		case "xAxis":
+			this.preferences.hmXaxis = value
+			break;
+		case "yAxis":
+			this.preferences.hmYaxis = value
+			break;
+		case "heat":
+			this.preferences.hmFill = value
+			break;
+		default:
+			break;
+		}
 	}
 	
 	getSpmColor(){
-		let preferences = this.model.getPreferences();
-		return preferences.SpmColor
+		return this.preferences.SpmColor
 	}
 	setSpmAxis(identifier, value){
-		let preferences = this.model.getPreferences();
 		if(identifier !== "color")
-			preferences.setSPMAxis(identifier, value);
+			this.preferences.setSPMAxis(identifier, value);
 		else
-			preferences.SpmColor = value
+			this.preferences.SpmColor = value
 	}
 	getDimensions(){
 		return this.model.getDimensions();
@@ -94,7 +140,7 @@ class ViewModel{
 						line[columns[i]] = NaN;
 						break;
 					default:
-						line[columns[i]] = +val.data[i] ? +val.data[i] : val.data[i];
+						line[columns[i]] = +val.data[i] || val.data[i]==="0" ? +val.data[i] : val.data[i];
 						break;
 					}
 				}
@@ -104,7 +150,7 @@ class ViewModel{
         
 		dimensions = columns.map(dimName => {
 			let d = new Dimension(dimName);
-			d.isNumeric(+parsedData[0][dimName] ? true : false)
+			d.isNumeric(+parsedData[0][dimName] || parsedData[0][dimName]===0 ? true : false)
 			return d;
 		});  
 
@@ -112,17 +158,15 @@ class ViewModel{
 	}
 
 	loadDataAndDims(data, dims){
-		console.time("model.loadData")
 		this.model.loadData(data);
-		console.timeEnd("model.loadData")
 		this.model.loadDimensions(dims);
+		this.preferences.reset();	//resetto le preferenze per il grafico
 		this.updateSelectedData();
 	}
 
 	updateDims(dims){
-		console.time("model.loadDimensions");
 		this.model.loadDimensions(dims);
-		console.timeEnd("model.loadDimensions");
+		this.preferences.reset();	//resetto le preferenze per il grafico
 		this.updateSelectedData()
 	}
 
@@ -139,13 +183,25 @@ class ViewModel{
 		let selectedData = originalData.map(d => {
 			return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]))
 	 	}).filter(this.haveNotANumberValue);
-		console.time("model.updateSelectedData")
+		//console.time("model.updateSelectedData")
 		this.model.updateSelectedData(selectedData);
-		console.timeEnd("model.updateSelectedData")
+		//console.timeEnd("model.updateSelectedData")
 		 //log di test
-		 //console.log("original: ",toJS(this.model.getOriginalData()))
-		 //console.log("selected: ",toJS(this.model.getSelectedData()))
-		 //console.log("dimensions:", toJS(this.model.getDimensions()))
+		 console.log("original: ",toJS(this.model.getOriginalData()))
+		 console.log("selected: ",toJS(this.model.getSelectedData()))
+		 console.log("dimensions:", toJS(this.model.getDimensions()))
+		 let string = ""; 
+		 this.model.getOriginalData().forEach(line => {
+			 let temp = "{"
+			 for (const [key, value] of Object.entries(line)) {
+				if(key !== "species")
+					temp = temp.concat(key+ " : " + value+", ");
+				else
+					temp = temp.concat(key+ " : " + "\""+value+"\"");
+			  }
+			  string = string.concat(temp, "},");
+			 })
+		console.log(string);
 		 
 		 //prova della riduzione tramite distanze
 		 //this.reduceDimensionsByDist("euclidean", originalData, "name", "age");
@@ -154,38 +210,39 @@ class ViewModel{
 	prepareDataForDR(dimensionsToRedux) {
 		return this.getSelectedData().map(obj => dimensionsToRedux.map((dim) => obj[dim]));
 	}
+
 	beginDimensionalRedux(algorithm, dimensionsToRedux, paramaters){
 		const newData = this.prepareDataForDR(dimensionsToRedux);
 		this.reduceDimensions(algorithm, paramaters, newData);
 	}
 
-	reduceDimensionsByDist(distType, data, idDimension, groupDimension) {
-		//data = [ {}, {nome: "Paolo", peso: 50, altezza: 180}, ...., {} ]
-		//idDimension = "nome"
+	beginReduceDimensionsByDist(distType, dimensionsToRedux, matrixName){
+		//console.log(distType, dimensionsToRedux, matrixName);
+
+		const newData = this.prepareDataForDR(dimensionsToRedux);
+		this.reduceDimensionsByDist(distType, newData, matrixName);
+	}
+
+	reduceDimensionsByDist(distType, data, matrixName) {
+		//data = [ [5.1, 3.5], [4.9, 3], [4.7, 3.2] ]
+		//console.log(this.getSelectedData())
 		let matrix = new DistanceMatrix();
 
-		for (let i = 0; i < data.length - 1; i++) {
-			for (let j = i+1; j < data.length - 1; j++) {
-				let pointA = Object.values(data[i]),
-					pointB = Object.values(data[j]);
-				pointA.shift();
-				pointB.shift();
+		for (let i = 0; i < data.length; i++) {
+			for (let j = i+1; j < data.length; j++) {
 				let link = {
-					source: data[i][idDimension],
-					target: data[j][idDimension],
-					value: distCalc.distance[distType](pointA, pointB)
-				}
+					source : `node${i}`,
+					target : `node${j}`,
+					value: distCalc.distance[distType](data[i], data[j])
+				};
 				matrix.pushLink(link);
 			}
-			let node = {
-				id: data[i][idDimension],
-				group: data[i][groupDimension]
-			}
+			let node = this.getSelectedData()[i];
 			matrix.pushNode(node);
 		}
 		//console.log(matrix.getLinks());
 		//console.log(matrix.getNodes());
-		this.model.pushDistanceMatrix(matrix);
+		this.model.addDistanceMatrix(matrix,matrixName);
 	}
 
 	async reduceDimensions(algorithm, paramaters, data) {
@@ -228,4 +285,4 @@ class ViewModel{
 	}
 	 
 }
-export default ViewModel
+export default ViewModel;
