@@ -10,7 +10,7 @@ import Preferences from "./model/Preferences";
 class ViewModel{
 
 	constructor(){
-		this.model = new Model();
+		this.model = new Model(true);
 		this.preferences = new Preferences();
 	}
 	
@@ -187,9 +187,21 @@ class ViewModel{
 		this.model.updateSelectedData(selectedData);
 		//console.timeEnd("model.updateSelectedData")
 		 //log di test
-		 //console.log("original: ",toJS(this.model.getOriginalData()))
-		 //console.log("selected: ",toJS(this.model.getSelectedData()))
-		 //console.log("dimensions:", toJS(this.model.getDimensions()))
+		 console.log("original: ",toJS(this.model.getOriginalData()))
+		 console.log("selected: ",toJS(this.model.getSelectedData()))
+		 console.log("dimensions:", toJS(this.model.getDimensions()))
+		 let string = ""; 
+		 this.model.getOriginalData().forEach(line => {
+			 let temp = "{"
+			 for (const [key, value] of Object.entries(line)) {
+				if(key !== "species")
+					temp = temp.concat(key+ " : " + value+", ");
+				else
+					temp = temp.concat(key+ " : " + "\""+value+"\"");
+			  }
+			  string = string.concat(temp, "},");
+			 })
+		console.log(string);
 		 
 		 //prova della riduzione tramite distanze
 		 //this.reduceDimensionsByDist("euclidean", originalData, "name", "age");
