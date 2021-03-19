@@ -29,7 +29,7 @@ const ScatterPlotMatrixPreferences = () => {
 							<Form.Control
 								custom
 								as="select"
-								value={axis[identifiers]}
+								value={axis[index]}
 								onChange={handleSelectChange}
 							>
 								<option value={"null"} >No dimension</option>

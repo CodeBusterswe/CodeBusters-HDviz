@@ -14,7 +14,6 @@ const HeatMapPreferences = () => {
 		const value = e.target.value !== "null" ? e.target.value : null, 
 			identifier = e.target.id;
 		viewModel.setHmPreferences(identifier, value);
-		console.log(identifier, value);
 	}
 	return(
 		<Form className="chartPreferences">

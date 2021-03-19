@@ -9,15 +9,9 @@ const ScatterPlotMatrix = () => {
 	const data = viewModel.getSelectedData();
 	const [axes, color] = viewModel.getSpmPreferences();
 	const traits = axes.filter(axis => axis)
-	let domainByTrait={}, yScales={}, xScales={}, palette, ctx;
+	let domainByTrait={}, yScales={}, xScales={}, palette, canvas, ctx;
 	const TotalSize = 800;
 	const numberOfTraits = traits.length, size = TotalSize / numberOfTraits, padding = 20, legendRectSize = 18, legendSpacing = 4, pointRadius = 2;
-	let svg = select("#spm-svg").attr("width", size * numberOfTraits + 4*padding + 200).
-		attr("height", size * numberOfTraits + 4*padding).
-		select("g").attr("transform", "translate("+4*padding+","+padding/2+")");
-	let canvas = select("#spm-canvas").attr("width", size*numberOfTraits+4*padding).
-		attr("height", size*numberOfTraits+4*padding).
-		style("transform", "translate("+4*padding+","+padding/2+")");
 
 	//prodotto cartesiano delle dimensioni
 	function cross(a, b) {
@@ -32,18 +26,36 @@ const ScatterPlotMatrix = () => {
 	}
     
 	useEffect(()=> {
+		select(".scatterplotmatrix").
+			selectAll("svg").remove();
+		select(".scatterplotmatrix").
+			selectAll("canvas").remove();
+		const svg = select(".scatterplotmatrix").
+			append("svg").
+			attr("class", "plot").
+			attr("id", "spm-svg").
+			attr("width", size * numberOfTraits + 4*padding + 200).
+			attr("height", size * numberOfTraits + 4*padding).
+			append("g").
+			attr("transform", "translate("+4*padding+","+padding/2+")");
+		
+		canvas = select(".scatterplotmatrix").
+			append("canvas").
+			attr("class", "plot").
+			attr("id", "spm-canvas").
+			attr("width", size*numberOfTraits+4*padding).
+			attr("height", size*numberOfTraits+4*padding).
+			style("transform", "translate("+4*padding+","+padding/2+")");
+
 		updateScales();
-		updateAxis();
+		updateAxis(svg);
 		updateColor();
-		if(canvas.node()){	//non é la prima esecuzione
-			ctx = canvas.node().getContext("2d");
-			updatePointsCanvas();
-		}
+		updatePointsCanvas(svg);
 		if(color)
-			updateLegend();
-	}, [axes, color])
+			updateLegend(svg);
+	},)
 	
-	function updatePointsCanvas(){
+	function updatePointsCanvas(svg){
 		svg.selectAll(".cell").remove();
 		let cell = svg.selectAll(".cell").
 			data(cross(traits, traits)).
@@ -70,7 +82,7 @@ const ScatterPlotMatrix = () => {
 			attr("y", padding / 2).
 			attr("width", size - padding).
 			attr("height", size - padding);
-
+		ctx = canvas.node().getContext("2d");
 		ctx.resetTransform();
 		ctx.transform(1, 0, 0, 1, p.i*size+4*padding, p.j*size+padding/2);
 
@@ -97,7 +109,6 @@ const ScatterPlotMatrix = () => {
 	function updateScales(){
 		traits.forEach(t => {
 			domainByTrait[t] = d3.extent(data, function(d) { return +d[t]; });
-			//
 			let xScale, yScale;
 			if(domainByTrait[t][0] || domainByTrait[t][0]===0){//controllo se il minore è un numero
 				xScale=d3.scaleLinear().domain(domainByTrait[t])
@@ -113,7 +124,7 @@ const ScatterPlotMatrix = () => {
 			yScales[t]=yScale;
 		  });
 	}
-	function updateAxis(){
+	function updateAxis(svg){
 		svg.selectAll(".x.axis").remove()
 		svg.selectAll(".x.axis").
 			data(traits).
@@ -142,7 +153,7 @@ const ScatterPlotMatrix = () => {
 			});
 	}
 	
-	function updateLegend(){
+	function updateLegend(svg){
 		svg.selectAll(".legend").remove();
 		let legend = svg.selectAll(".legend").
 			data(palette.domain()).
@@ -172,11 +183,7 @@ const ScatterPlotMatrix = () => {
 	}
 	return (
 		<>
-			<div className="chartDiv">
-				<svg id="spm-svg" className="plot">
-					<g></g>{/*serve per traslare il grafico a dx per vedere la legenda a sx*/}
-				</svg>
-				<canvas id="spm-canvas" class="plot"></canvas>
+			<div className="scatterplotmatrix">
 			</div>
 		</>
 	)
