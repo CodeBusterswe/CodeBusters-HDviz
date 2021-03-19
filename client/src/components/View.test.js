@@ -1,5 +1,4 @@
 import { createEvent, fireEvent, getByRole, getByText, render, screen, waitFor } from "@testing-library/react";
-import { Modal } from "react-bootstrap";
 import App from "../App";
 
 test("Open web app", () => {
