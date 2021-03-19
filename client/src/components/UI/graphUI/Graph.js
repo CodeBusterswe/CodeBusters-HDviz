@@ -1,7 +1,7 @@
 import React from "react"
 import { useStore } from "../../../ContextProvider"
-import ScatterPlotMatrixPreferences from "./scatterplot/SpmPreferences"
-import ScatterPlotMatrix from "./scatterplot/SpmChart"
+import { ScatterPlotMatrix, ForceField, AdjacencyMatrix, HeatMap, Plma } from "./charts"
+import { ScatterPlotMatrixPreferences, ForceFieldPreferences, AdjacencyMatrixPreferences, HeatMapPreferences, PlmaPreferences } from "./preferences"
 import {observer} from "mobx-react-lite"
 import {VisualizationType} from "../../../utils"
 
@@ -10,6 +10,14 @@ function Graph(){
 		switch(viewModel.getChartToShow()){
 		case VisualizationType.ScatterPlotMatrix:
 			return <><ScatterPlotMatrixPreferences/><ScatterPlotMatrix/></>
+		case VisualizationType.AdjacencyMatrix:
+			return <><AdjacencyMatrixPreferences/><AdjacencyMatrix/></>
+		case VisualizationType.ForceField:
+			return <><ForceFieldPreferences/><ForceField/></>
+		case VisualizationType.HeatMap:
+			return <><HeatMapPreferences/><HeatMap/></>
+		case VisualizationType.PLMA:
+			return <><PlmaPreferences/><Plma/></>
 		default:
 			return null;
 		}
