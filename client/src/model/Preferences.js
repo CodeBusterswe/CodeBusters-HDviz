@@ -45,6 +45,14 @@ class Preferences{
 		}
 	}
 
+	get amDistanceMatrix(){
+		return this._AMpreferences.distanceMatrix;
+	}	
+
+	get amOrderBy(){
+		return this._AMpreferences.orderBy;
+	}
+
 	set amDistanceMatrix(matrix){
 		this._AMpreferences.distanceMatrix = matrix;
 	}
@@ -65,6 +73,18 @@ class Preferences{
 		this._HMpreferences.heat = heat;
 	}
 
+	get hmXaxis(){
+		return this._HMpreferences.xAxis;
+	}
+
+	get hmYaxis(){
+		return this._HMpreferences.yAxis;
+	}
+
+	get hmFill(){
+		return this._HMpreferences.heat;
+	}
+
 	set ffDistanceMatrix(matrix){
 		this._FFpreferences.distanceMatrix = matrix;
 	}
@@ -75,6 +95,18 @@ class Preferences{
 
 	set ffForceType(force){
 		this._FFpreferences.forceType = force;
+	}
+
+	get ffDistanceMatrix(){
+		return this._FFpreferences.distanceMatrix;
+	}
+
+	get ffOrderBy(){
+		return this._FFpreferences.orderBy;
+	}
+
+	get ffForceType(){
+		return this._FFpreferences.forceType;
 	}
 
 	set SpmAxis1(dimensionsValue){
