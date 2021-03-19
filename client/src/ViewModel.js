@@ -4,12 +4,8 @@ import Model from "./model/Model";
 import { toJS } from "mobx"
 import DimReductionStrategy from "./viewModel/DimReductionStrategy"
 import * as distCalc from "ml-distance";
-<<<<<<< HEAD
 import {getDataset, getTables,getDatasetByName,getColumnByName,getDatasetWithParams} from "./model/services"  
-=======
-import {getDataset, getTables} from "./model/services" 
 import Preferences from "./model/Preferences";
->>>>>>> 22b583ad97c28ea59d99430f35764e7f67e78291
 
 class ViewModel{
 
@@ -29,7 +25,6 @@ class ViewModel{
 		//console.log("dataset:",dataset);
 		return dataset;
 	}
-<<<<<<< HEAD
 	
 	//get all dataset from csv table
 	async getColumnsWithName(table_name){
@@ -51,20 +46,15 @@ class ViewModel{
 		const dataset = await getDatasetByName(table_name);
 		//console.log("dataset:",dataset);
 		return dataset.data;
-=======
+	}
 	getChartToShow(){
 		return this.preferences.chart;
->>>>>>> 22b583ad97c28ea59d99430f35764e7f67e78291
 	}
 	//get all tables from DB
 	async getAllTables(){
 		const table = await getTables();
 		console.log("tables:",table.data);
 		return table;
-	}
-
-	getChartToShow(){
-		return this.model.getChartToShow();
 	}
 
 	setChartToShow(chartName){
