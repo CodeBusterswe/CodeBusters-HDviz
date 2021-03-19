@@ -11,7 +11,7 @@ const conDB = require('../../config/pgDb');
 
 
 //get all data
-router.post('/get-all-data', async (req, res, next)=>{//'SELECT * FROM DataSet'
+router.post('/get-tabel-byName', async (req, res, next)=>{//'SELECT * FROM DataSet'
 const {queryField,queryType,table}=req.body;
     console.log('API get All data:',req.body)
 
@@ -36,21 +36,32 @@ const {queryField,queryType,table}=req.body;
     }
 });
 
-router.get('/get-data', async (req, res, next)=>{//'SELECT * FROM DataSet'
-const {queryField,queryType,table}=req.body;
-   // console.log('API get data query:',req.body)
+router.post('/get-data', async (req, res, next)=>{//'SELECT * FROM DataSet'
+const {queryField}=req.body;
+     const queryType='sepal_length';
+     const table='dataset';
+    console.log('API get_data query:',req.body.query)
+    const {selectField,table_name}=req.body
+    var dataQuery = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+    var values = [];
+    var setvs =vs=>vs.map(v=>v).join();
+
+ 
+    //console.log ("setvs:",setvs(dataQuery))
+
 
     try{
-        if(!table){
+        if(!table_name){
             return res.status(400).send({msg:'Pleas select table name!!'});
         }
-       
-        const query=`SELECT  ${queryField} FROM ${table}  WHERE ${queryField}=${queryType}`;
+         //WHERE ${queryField}=${queryType}
+        const query=`SELECT ${setvs(selectField)} FROM ${table_name}`;
         conDB.query(query, function (err, result) {
             if (err) {
                 console.log(err.message);
                 res.status(400).send(err);
             }
+            console.log ("result.rows:",result.rows)
             res.status(200).send(result.rows);
            //res.json(result.rows)
             //conDB.end();

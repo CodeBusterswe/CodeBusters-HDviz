@@ -5,7 +5,7 @@ import { toJS } from "mobx"
 import DimReductionStrategy from "./viewModel/DimReductionStrategy"
 import { AlgorithmType } from "./utils" // <--- LASCIARE PLS
 import * as distCalc from "ml-distance";
-import {getDataset, getTables} from "./model/services"  
+import {getDataset, getTables,getDatasetByName,getColumnByName,getDatasetWithParams} from "./model/services"  
 
 class ViewModel{
 
@@ -18,15 +18,43 @@ class ViewModel{
 		const dataset = await getDataset();
 		//console.log("dataset:",dataset);
 		return dataset;
+	}	
+	async getDatasetByParams(columnSelected,table){
+		const dataset = await getDatasetWithParams(columnSelected,table);
+		//console.log("dataset:",dataset);
+		return dataset;
 	}
-	getChartToShow(){
-		return this.model.getChartToShow();
+	
+	//get all dataset from csv table
+	async getColumnsWithName(table_name){
+		//console.log("model col:",table_name);
+		const dataset = await getColumnByName(table_name);
+		//console.log("dataset:",dataset);
+		return dataset;
+	}
+	async getColumnList(table_name){
+		const dataset = await getColumnByName(table_name)
+		console.log("dataset:",dataset);
+		return dataset[0].map(d => {
+			return {value: d.column_name, label: d.column_name}
+		})
+	}
+	//get all dataset from csv table
+	async getTableWithName(table_name){
+		this.getColumnsWithName(table_name)
+		const dataset = await getDatasetByName(table_name);
+		//console.log("dataset:",dataset);
+		return dataset.data;
 	}
 	//get all tables from DB
 	async getAllTables(){
-	     const table = await getTables();
-		 console.log("tables:",table);
-		 return table;
+		const table = await getTables();
+		console.log("tables:",table.data);
+		return table;
+	}
+
+	getChartToShow(){
+		return this.model.getChartToShow();
 	}
 
 	setChartToShow(chartName){

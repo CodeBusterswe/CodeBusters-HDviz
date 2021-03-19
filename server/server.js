@@ -52,7 +52,7 @@ app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }));
 app.use('/api/data', require('./routes/api/DataSet'));
 
 const query = `
-CREATE TABLE DataSet (
+CREATE TABLE Iris (
     sepal_length VARCHAR(255),
     sepal_width VARCHAR(255),
     petal_length VARCHAR(255),
@@ -78,7 +78,7 @@ app.get('/c', function (req, res, next) {
             return;
         }
         console.log('Table is successfully created');
-        conDB.end();
+        //conDB.end();
     });
 });
 

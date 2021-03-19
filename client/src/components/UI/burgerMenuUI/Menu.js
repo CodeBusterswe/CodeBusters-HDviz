@@ -9,7 +9,7 @@ import {AiOutlineArrowRight , AiOutlineDotChart} from "react-icons/ai";
 import {ImDatabase} from "react-icons/im";
 import {FaFileCsv} from "react-icons/fa";
 import {SiGraphcool , SiJson} from "react-icons/si";
-import LoadDataFromDB from "./ModalContent/LoadDataFromDB"
+import LoadDataFromDB from "./ModalContent/loadDataFromDB/LoadDataFromDB"
 import { VisualizationType } from "../../../utils";
 //import useWindowWidth from "./WindowWidth"
 
