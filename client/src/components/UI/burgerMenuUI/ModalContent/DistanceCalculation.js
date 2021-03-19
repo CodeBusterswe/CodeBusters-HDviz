@@ -89,7 +89,7 @@ const DistanceCalculation = props => {
 							onChange={handleChangeDistanceType}>
 							<option value={DistanceType.Euclidean}>EUCLIDEAN</option>
 							<option value={DistanceType.Canberra}>CANBERRA</option>
-							<option value={DistanceType.Chebychev}>CHEBYCHEV</option>
+							<option value={DistanceType.Chebyshev}>CHEBYSHEV</option>
 							<option value={DistanceType.Manhattan}>MANHATTAN</option>
 						</Form.Control>
 					</Form.Group>
