@@ -140,7 +140,7 @@ class ViewModel{
 						line[columns[i]] = NaN;
 						break;
 					default:
-						line[columns[i]] = +val.data[i] ? +val.data[i] : val.data[i];
+						line[columns[i]] = +val.data[i] || val.data[i]==="0" ? +val.data[i] : val.data[i];
 						break;
 					}
 				}
@@ -150,7 +150,7 @@ class ViewModel{
         
 		dimensions = columns.map(dimName => {
 			let d = new Dimension(dimName);
-			d.isNumeric(+parsedData[0][dimName] ? true : false)
+			d.isNumeric(+parsedData[0][dimName] || parsedData[0][dimName]===0 ? true : false)
 			return d;
 		});  
 
