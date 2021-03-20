@@ -56,19 +56,3 @@ test("Calcola distanza", async() => {
 	})
 	screen.debug();
 });
-test("Calcola distanza", async() => {
-	render(<App />);
-	fireEvent.click(screen.getByRole('button',{name: 'Calcola distanza' }));
-	await waitFor(() => {
-		(
-			expect(screen.getByRole('button',{name: 'Start reduction' })).toBeInTheDocument()
-		)
-	})
-	fireEvent.click(screen.getByRole('button', { name: 'Start reduction' }));
-	await waitFor(() => {
-		(
-			expect(screen.getByRole('heading',{name: 'HDViz' })).toBeInTheDocument()
-		)
-	})
-	screen.debug();
-});
