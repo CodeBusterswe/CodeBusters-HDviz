@@ -29,8 +29,7 @@ class Preferences{
 		}
 		this._FFpreferences = {
 			distanceMatrix: undefined,
-			color: undefined,
-			forceType: undefined
+			color: undefined
 		}
 		this._PLMApreferences = {}
 

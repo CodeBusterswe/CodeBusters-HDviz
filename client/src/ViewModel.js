@@ -126,9 +126,6 @@ class ViewModel{
 		case "color":
 			this.preferences.ffColor = value
 			break;
-		case "forceType":
-			this.preferences.ffForceType = value;
-			break;
 		default:
 			break;
 		}

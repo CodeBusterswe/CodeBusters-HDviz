@@ -6,7 +6,7 @@ import { observer } from "mobx-react-lite";
 const ForceField = () => {
 	const viewModel = useStore(),
 		distanceMatrix = viewModel.getDistanceMatrices(),
-		[matrixName, color, forceType]=viewModel.getFfPreferences(),
+		[matrixName, color]=viewModel.getFfPreferences(),
 		margin = {top: 30, right: 30, bottom: 100, left: 100},
 		width = 850 - margin.left - margin.right,
 		height = 850 - margin.top - margin.bottom;
@@ -26,8 +26,6 @@ const ForceField = () => {
 			links = data.links.filter(link => link.value<20).map(link => {
 				return {...link};
 			});
-			console.log(links.length);
-			console.log(data.links.length);
 			context = canvas.getContext("2d");
 			simulation = d3.forceSimulation(nodes).
 				force("link", d3.forceLink(links).
