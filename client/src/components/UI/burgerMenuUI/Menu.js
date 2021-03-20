@@ -68,7 +68,7 @@ const Menu = () => {
 	function handleContent(index) {
 		switch (index) {
 		case 1: 
-		    return <LoadDataFromDB modalIsOpen={modalIsOpen} closeModal={closeModal}/>
+		  return <LoadDataFromDB modalIsOpen={modalIsOpen} closeModal={closeModal}/>
 		case 2:
 			return <LoadCSV modalIsOpen={modalIsOpen} closeModal={closeModal}></LoadCSV>
 		case 3:
