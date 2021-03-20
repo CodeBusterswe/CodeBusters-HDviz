@@ -75,6 +75,9 @@ class ViewModel{
 	getAmPreferences(){
 		return Object.values(this.preferences.amPreferences);
 	}
+	getFfPreferences(){
+		return Object.values(this.preferences.ffPreferences);
+	}
 
 	setChartToShow(chartName){
 		this.preferences.chart = chartName;
@@ -110,6 +113,21 @@ class ViewModel{
 			break;
 		case "label":
 			this.preferences.amLabel = value;
+			break;
+		default:
+			break;
+		}
+	}
+	setFfPreferences(identifier, value){
+		switch(identifier){
+		case "distanceMatrix":
+			this.preferences.ffDistanceMatrix = value
+			break;
+		case "color":
+			this.preferences.ffColor = value
+			break;
+		case "forceType":
+			this.preferences.ffForceType = value;
 			break;
 		default:
 			break;
@@ -261,6 +279,7 @@ class ViewModel{
 				matrix.pushLink(link);
 			}
 			let node = this.getSelectedData()[i];
+			node.id="node".concat(i);
 			matrix.pushNode(node);
 		}
 		//console.log(matrix.getLinks());

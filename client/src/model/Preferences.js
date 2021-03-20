@@ -29,7 +29,7 @@ class Preferences{
 		}
 		this._FFpreferences = {
 			distanceMatrix: null,
-			orderBy: null,
+			color: null,
 			forceType: null
 		}
 		this._PLMApreferences = {}
@@ -97,8 +97,8 @@ class Preferences{
 		this._FFpreferences.distanceMatrix = matrix;
 	}
 
-	set ffOrderBy(group){
-		this._FFpreferences.orderBy = group;
+	set ffColor(group){
+		this._FFpreferences.color = group;
 	}
 
 	set ffForceType(force){
@@ -109,8 +109,8 @@ class Preferences{
 		return this._FFpreferences.distanceMatrix;
 	}
 
-	get ffOrderBy(){
-		return this._FFpreferences.orderBy;
+	get ffColor(){
+		return this._FFpreferences.color;
 	}
 
 	get ffForceType(){
@@ -203,7 +203,7 @@ class Preferences{
 	resetFfPreferences(){
 		this._FFpreferences.distanceMatrix = null;
 		this._FFpreferences.forceType = null;
-		this._FFpreferences.orderBy = null;
+		this._FFpreferences.color = null;
 	}
 
 	resetAmPreferences(){
@@ -213,13 +213,16 @@ class Preferences{
 
 	resetHmPreferences(){
 		this._HMpreferences.xAxis = null;
-		this._MMpreferences.yAxis = null;
-		this._MMpreferences.heat = null;
+		this._HMpreferences.yAxis = null;
+		this._HMpreferences.heat = null;
 	}
 
 	reset(){
 		this.resetCharts();
 		this.resetSpmPreferences();
+		this.resetHmPreferences();
+		this.resetFfPreferences();
+		this.resetAmPreferences();
 	}
 } 
 

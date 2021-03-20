@@ -68,7 +68,7 @@ const AdjacencyMatrixPreferences = () => {
 					value={values[2]}
 					onChange={handleSelectLabelChange}
 				>
-					<option value={"null"} >No order</option>
+					<option value={"null"} >No label</option>
 					{sorts.map((d) => {
 						return <option value={d}>{d}</option>
 					})}

@@ -25,66 +25,24 @@ const AdjacencyMatrix = () => {
 			nodes = dm.nodes; 
 			links = dm.links;
 		}
-		const colors = d3.scaleSequential().
-			interpolator(d3.interpolateBlues).
-			domain(d3.extent(links.map(l => l.value)));
-			/*
+		
 		nodes.sort(function(x, y){
 			return d3.ascending(x[orderBy], y[orderBy]);
 			 })
-		console.log(nodes);*/
-		/*
-		
-		let nodes = `id,group,salary
-Paolo,A,800
-Michele,A,1500
-AleRago,A,2560
-AlePirolo,A,900
-Marco,A,1000
-Giacomo,A,3000
-Hossain,A,4568`
-
-		let links = `source,target,value
-Paolo,Michele,2
-Paolo,Giacomo,2.23606797749979
-Paolo,Marco,3.1622776601683795
-Paolo,AleRago,0
-Paolo,AlePirolo,5.0990195135927845
-Paolo,Hossain,6.082762530298219
-Michele,Giacomo,22.02271554554524
-Michele,Marco,0
-Michele,AleRago,24.020824298928627
-Michele,AlePirolo,25.019992006393608
-Michele,Hossain,26.019223662515376
-Giacomo,Marco,2.23606797749979
-Giacomo,AleRago,2
-Giacomo,AlePirolo,3
-Giacomo,Hossain,4.47213595499958
-Marco,AleRago,2.23606797749979
-Marco,AlePirolo,2.8284271247461903
-Marco,Hossain,3
-AleRago,AlePirolo,1
-AleRago,Hossain,2.8284271247461903
-AlePirolo,Hossain,2.23606797749979`
-
-		links = d3.csvParse(links);
-		nodes = d3.csvParse(nodes);
-*/
+		const colors = d3.scaleSequential().
+			interpolator(d3.interpolateBlues).
+			domain(d3.extent(links.map(l => l.value)));
 		
 		let linkHash = {};
 		links.forEach(edge =>{
 			let id = edge.source + "-" + edge.target
 			linkHash[id] = edge
 		})
-		//console.log(nodes)
 
 		var matrix = []
-
-		nodes.forEach((source, a) => {
-			nodes[a].id = a;
-			console.log(a);
-			nodes.forEach((target, b) => {
-				var grid = {id: "node"+ a + "-node"+ b, x: b, y: a, value: 0}; //id: Paolo-Michele /Michele-Paolo
+		for (let i = 0; i < nodes.length; i++) {
+			for (let j = 0; j < nodes.length; j++) {
+				let grid = {id: nodes[i].id+"-"+nodes[j].id, x: i, y: j, value: 0}
 				if(linkHash[grid.id]){ //esiste
 					grid.value = linkHash[grid.id].value; //value=2
 				}else{
@@ -95,12 +53,8 @@ AlePirolo,Hossain,2.23606797749979`
 					}
 				}
 				matrix.push(grid)
-			})
-		})
-		console.log(nodes)
-		console.log(links)
-		console.log(matrix)
-
+			}
+		}
 		const scale = d3.scaleBand().
 			domain(nodes.map(d => d.id)).
 			range([ 0, width]);
