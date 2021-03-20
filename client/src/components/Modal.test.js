@@ -7,10 +7,10 @@ test("Carica un csv", async() => {
 	fireEvent.click(screen.getByRole('button',{name: 'Carica dati da CSV' }));
 	await waitFor(() => {
 			(
-				expect(screen.getByText('Carica un file CSV')).toBeInTheDocument()
+				expect(screen.getByText('Sostituisci il file CSV caricato')).toBeInTheDocument()
 			)
 	})
-	const inputEl=screen.getByText('Carica un file CSV');
+	const inputEl=screen.getByText('Sostituisci il file CSV caricato');
 	fireEvent.drop(inputEl, {
 		dataTransfer: {
 		  files: [new File(['(id,group\n14,24)'], 'penguins.csv')],
@@ -18,46 +18,57 @@ test("Carica un csv", async() => {
 	  });
 	fireEvent.click(screen.getByRole('button',{name: 'Conferma selezione' }));
 	await waitFor(() => {
-			(
-				expect(screen.getByRole('button',{name: 'Riduci dimensioni' })).toBeInTheDocument()
-			)
+		(
+			expect(screen.getByRole('heading',{name: 'HDViz' })).toBeInTheDocument()
+		)
 	})
+	screen.debug();
+});
+test("Open and redux dimension", async () => {
+	render(<App />);
 	fireEvent.click(screen.getByRole('button',{name: 'Riduci dimensioni' }));
 	await waitFor(() => {
 			(
-				expect(screen.getByRole('button',{name: 'lezione' })).toBeInTheDocument()
+				expect(screen.getByRole('button',{name: 'Start reduction' })).toBeInTheDocument()
 			)
 	})
-	//expect(screen.getByRole('button',{name: 'lezione' })).toBeInTheDocument();	
+	fireEvent.click(screen.getByRole('button', { name: 'Start reduction' }));
+	await waitFor(() => {
+		(
+			expect(screen.getByRole('heading',{name: 'HDViz' })).toBeInTheDocument()
+		)
+	})
 	screen.debug();
 });
-/*test("Open and close Riduci dimensioni", () => {
+test("Calcola distanza", async() => {
 	render(<App />);
-	fireEvent.click(screen.getByRole('button',{name: 'Riduci dimensioni' }));
-	const event=jest.fn(
-		waitFor(() => {
-			(
-				screen.getByRole('button', { name: 'Torna al menù' })
-			).toBeTruthy()
-		})
-	);
-	expect(event).toBeTruthy();
-	//fireEvent.click(event());
-	fireEvent.click(screen.getByRole('button', { name: 'Torna al menù' }));
-	const event2=jest.fn(
-		waitFor(() => {
-			(
-				screen.getByRole('heading', { name: 'HDViz' })
-			).toBeTruthy()
-		})
-	);
-	expect(event2).toBeTruthy();
+	fireEvent.click(screen.getByRole('button',{name: 'Calcola distanza' }));
+	await waitFor(() => {
+		(
+			expect(screen.getByRole('button',{name: 'Start reduction' })).toBeInTheDocument()
+		)
+	})
+	fireEvent.click(screen.getByRole('button', { name: 'Start reduction' }));
+	await waitFor(() => {
+		(
+			expect(screen.getByRole('heading',{name: 'HDViz' })).toBeInTheDocument()
+		)
+	})
 	screen.debug();
 });
-test("Scegli il grafico", () => {
+test("Calcola distanza", async() => {
 	render(<App />);
-	fireEvent.click(screen.getByRole('button',{name: 'Scegli il grafico' }));
-	fireEvent.click(screen.getByRole('button', { name: 'Torna al menù' }));
-	//waitFor(() => {expect(screen.getByRole('heading', { name: 'HDViz' })).toBeTruthy()});
+	fireEvent.click(screen.getByRole('button',{name: 'Calcola distanza' }));
+	await waitFor(() => {
+		(
+			expect(screen.getByRole('button',{name: 'Start reduction' })).toBeInTheDocument()
+		)
+	})
+	fireEvent.click(screen.getByRole('button', { name: 'Start reduction' }));
+	await waitFor(() => {
+		(
+			expect(screen.getByRole('heading',{name: 'HDViz' })).toBeInTheDocument()
+		)
+	})
 	screen.debug();
-});*/
+});
