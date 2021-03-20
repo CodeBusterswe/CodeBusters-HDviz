@@ -10,27 +10,27 @@ class Preferences{
 			[VisualizationType.PLMA]: false,
 		}
 		this._SPMPreferences = {
-			axis1: null,
-			axis2: null,
-			axis3: null,
-			axis4: null,
-			axis5: null,
+			axis1: undefined,
+			axis2: undefined,
+			axis3: undefined,
+			axis4: undefined,
+			axis5: undefined,
 		}
-		this._SPMColor = null
+		this._SPMColor = undefined
 		this._AMpreferences = {
-			distanceMatrix: null,
-			orderBy: null,
-			label: null
+			distanceMatrix: undefined,
+			orderBy: undefined,
+			label: undefined
 		}
 		this._HMpreferences = {
-			xAxis: null,
-			yAxis: null,
-			heat: null
+			xAxis: undefined,
+			yAxis: undefined,
+			heat: undefined
 		}
 		this._FFpreferences = {
-			distanceMatrix: null,
-			color: null,
-			forceType: null
+			distanceMatrix: undefined,
+			color: undefined,
+			forceType: undefined
 		}
 		this._PLMApreferences = {}
 
@@ -192,29 +192,29 @@ class Preferences{
 	}
 
 	resetSpmPreferences(){
-		this.SpmAxis1 = null;
-		this.SpmAxis2 = null;
-		this.SpmAxis3 = null;
-		this.SpmAxis4 = null;
-		this.SpmAxis5 = null;
-		this.SpmColor = null;
+		this.SpmAxis1 = undefined;
+		this.SpmAxis2 = undefined;
+		this.SpmAxis3 = undefined;
+		this.SpmAxis4 = undefined;
+		this.SpmAxis5 = undefined;
+		this.SpmColor = undefined;
 	}
 
 	resetFfPreferences(){
-		this._FFpreferences.distanceMatrix = null;
-		this._FFpreferences.forceType = null;
-		this._FFpreferences.color = null;
+		this._FFpreferences.distanceMatrix = undefined;
+		this._FFpreferences.forceType = undefined;
+		this._FFpreferences.color = undefined;
 	}
 
 	resetAmPreferences(){
-		this._AMpreferences.distanceMatrix = null;
-		this._AMpreferences.orderBy = null;
+		this._AMpreferences.distanceMatrix = undefined;
+		this._AMpreferences.orderBy = undefined;
 	}
 
 	resetHmPreferences(){
-		this._HMpreferences.xAxis = null;
-		this._HMpreferences.yAxis = null;
-		this._HMpreferences.heat = null;
+		this._HMpreferences.xAxis = undefined;
+		this._HMpreferences.yAxis = undefined;
+		this._HMpreferences.heat = undefined;
 	}
 
 	reset(){

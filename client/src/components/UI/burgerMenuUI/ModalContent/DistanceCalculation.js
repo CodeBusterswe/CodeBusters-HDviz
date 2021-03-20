@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import { useStore } from "../../../../ContextProvider"
 import Modal from "react-bootstrap/Modal"
 import { Button, ModalBody, ModalFooter } from "react-bootstrap"
-import RangeSlider from "react-bootstrap-range-slider";
 import Select from "react-select"
 import makeAnimated from "react-select/animated";
 import {DistanceType} from "../../../../utils"

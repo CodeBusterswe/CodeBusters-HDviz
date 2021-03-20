@@ -7,15 +7,15 @@ const AdjacencyMatrixPreferences = () => {
 	const viewModel = useStore();
 	const sorts = viewModel.getCheckedDimensions();
 	const matrices = viewModel.getDistanceMatricesNames();
-	const values = viewModel.getAmPreferences();
+	const [matrixName, order, label] = viewModel.getAmPreferences();
 
 	function handleSelectMatrixChange(e){
-		const value = e.target.value !== "null" ? e.target.value : null,
+		const value = e.target.value==="undefined" ? undefined : e.target.value,
 			identifier = e.target.id;
 		viewModel.setAmPreferences(identifier, value);
 	}
 	function handleSelectOrderChange(e){
-		const value = e.target.value !== "null" ? e.target.value : null,
+		const value = e.target.value==="undefined" ? undefined : e.target.value,
 			identifier = e.target.id;
 		if(value === "cluster"){
 			console.log("sort by cluster")
@@ -25,7 +25,7 @@ const AdjacencyMatrixPreferences = () => {
 		}
 	}
 	function handleSelectLabelChange(e){
-		const value = e.target.value !== "null" ? e.target.value : null,
+		const value = e.target.value==="undefined" ? undefined : e.target.value,
 			identifier = e.target.id;
 		viewModel.setAmPreferences(identifier, value);
 	}
@@ -36,12 +36,12 @@ const AdjacencyMatrixPreferences = () => {
 				<Form.Control
 					custom
 					as="select"
-					value={values[0]}
+					value={matrixName}
 					onChange={handleSelectMatrixChange}
 				>
-					<option value={"null"} >No distance matrix</option>
+					<option value={"undefined"} key={"noDistancematrix"}>No distance matrix</option>
 					{matrices.map((d) => {
-						return <option value={d}>{d}</option>
+						return <option value={d} key={d}>{d}</option>
 					})}
 				</Form.Control>
 			</Form.Group>
@@ -50,13 +50,13 @@ const AdjacencyMatrixPreferences = () => {
 				<Form.Control
 					custom
 					as="select"
-					value={values[1]}
+					value={order}
 					onChange={handleSelectOrderChange}
 				>
-					<option value={"null"} >No order</option>
-					<option value={"cluster"} >Cluster</option>
+					<option value={"undefined"} key={"noOrder"}>No order</option>
+					<option value={"cluster"} key={"cluster"}>Cluster</option>
 					{sorts.map((d) => {
-						return <option value={d}>{d}</option>
+						return <option value={d} key={d}>{d}</option>
 					})}
 				</Form.Control>
 			</Form.Group>
@@ -65,12 +65,12 @@ const AdjacencyMatrixPreferences = () => {
 				<Form.Control
 					custom
 					as="select"
-					value={values[2]}
+					value={label}
 					onChange={handleSelectLabelChange}
 				>
-					<option value={"null"} >No label</option>
+					<option value={undefined} key={"noLabel"} >No label</option>
 					{sorts.map((d) => {
-						return <option value={d}>{d}</option>
+						return <option value={d} key={d}>{d}</option>
 					})}
 				</Form.Control>
 			</Form.Group>

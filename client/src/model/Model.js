@@ -21,10 +21,13 @@ class Model {
 			this.selectedData = [];
 		}
 		this.distanceMatrices = {};
+		this.distanceMatricesNames = [];
 		//tutti i metodi get dovrebbero essere computed e non action, ma per essere computed devono essere trasformati in getter
 		//il vantaggio dei computed é che tengono in cache il valore, senza ricalcolarlo ogni volta, fino a quando la variabile observable non cambia
 		makeObservable(this, {
 			dimensions : observable,
+			distanceMatricesNames: observable,
+			addDistanceMatrix: action,
 			getDimensions: action,
 			getDimensionsChecked: action,
 			getCategoricCheckedDimensions: action,
@@ -38,13 +41,14 @@ class Model {
 	}
 	addDistanceMatrix(matrix, matrixName) {
 		this.distanceMatrices[matrixName] = matrix;
+		this.distanceMatricesNames.push(matrixName);
 	}
 
 	getDistanceMatrices() {
 		return this.distanceMatrices;
 	}
 	getDistanceMatricesNames(){
-		return Object.keys(this.distanceMatrices);
+		return this.distanceMatricesNames;
 	}
 
 	isDataLoaded(){
@@ -108,6 +112,8 @@ class Model {
 		this.originalData = [];
 		this.dimensions.clear();	//metodo di mobx per array observable
 		this.selectedData = [];
+		this.distanceMatrices = {};
+		this.distanceMatricesNames.clear();
 	}   
 }
 

@@ -8,10 +8,10 @@ const ForceFieldPreferences = () => {
 	const viewModel = useStore();
 	const keys = viewModel.getCheckedDimensions();
 	const matrices = viewModel.getDistanceMatricesNames();
-	const values = viewModel.getFfPreferences();
+	const [matrixName, color] = viewModel.getFfPreferences();
 
 	function handleSelectChange(e){
-		const value = e.target.value !== "null" ? e.target.value : null,
+		const value = e.target.value==="undefined" ? undefined : e.target.value,
 			identifier = e.target.id;
 		viewModel.setFfPreferences(identifier, value);
 	}
@@ -22,12 +22,12 @@ const ForceFieldPreferences = () => {
 				<Form.Control
 					custom
 					as="select"
-					value={values[0]}
+					value={matrixName}
 					onChange={handleSelectChange}
 				>
-					<option value={"null"} >No distance matrix</option>
+					<option value={"undefined"} key={"noDistancematrix"}>No distance matrix</option>
 					{matrices.map((d) => {
-						return <option value={d}>{d}</option>
+						return <option value={d} key={d}>{d}</option>
 					})}
 				</Form.Control>
 			</Form.Group>
@@ -36,24 +36,13 @@ const ForceFieldPreferences = () => {
 				<Form.Control
 					custom
 					as="select"
-					value={values[1]}
+					value={color}
 					onChange={handleSelectChange}
 				>
-					<option value={"null"} >No color</option>
+					<option value={"undefined"} key={"noColor"}>No color</option>
 					{keys.map((d) => {
-						return <option value={d}>{d}</option>
+						return <option value={d} key={d}>{d}</option>
 					})}
-				</Form.Control>
-			</Form.Group>
-			<Form.Group controlId="forceType">
-				<Form.Label>Force type</Form.Label>
-				<Form.Control
-					custom
-					as="select"
-					value={values[2]}
-					onChange={handleSelectChange}
-				>
-					<option value={"null"} >Default</option>
 				</Form.Control>
 			</Form.Group>
 		</Form>

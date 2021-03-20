@@ -14,7 +14,7 @@ const AdjacencyMatrix = () => {
 
 	let dm = {}, nodes = [], links= [];
 	
-	if(matrixName){
+	if(matrixName!==undefined){
 		dm = distanceMatrix[matrixName];
 		nodes = dm.nodes; 
 		links = dm.links;

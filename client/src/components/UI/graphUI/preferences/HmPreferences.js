@@ -11,7 +11,7 @@ const HeatMapPreferences = () => {
 	const identifiers = ["xAxis", "yAxis", "heat"];
 
 	function handleSelectChange(e){
-		const value = e.target.value !== "null" ? e.target.value : null, 
+		const value = e.target.value==="undefined" ? undefined : e.target.value,
 			identifier = e.target.id;
 		viewModel.setHmPreferences(identifier, value);
 	}
@@ -20,7 +20,7 @@ const HeatMapPreferences = () => {
 			{
 				identifiers.map((identifiers, index) => {
 					return (
-						<Form.Group controlId={identifiers}>
+						<Form.Group controlId={identifiers} key={identifiers}>
 							<Form.Label>{labels[index]}</Form.Label>
 							<Form.Control
 								custom
@@ -28,9 +28,9 @@ const HeatMapPreferences = () => {
 								value={values[index]}
 								onChange={handleSelectChange}
 							>
-								<option value={"null"} >No dimension</option>
+								<option value={"undefined"} key={"noDimensions"+identifiers}>No dimension</option>
 								{keys.map((d) => {
-									return <option value={d}>{d}</option>
+									return <option value={d} key={d+identifiers}>{d}</option>
 								})}
 							</Form.Control>
 						</Form.Group>

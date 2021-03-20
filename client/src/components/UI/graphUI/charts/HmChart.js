@@ -54,7 +54,6 @@ const HeatMap = () => {
 			range([ 0, width ]).
 			domain(columns).
 			padding(0.05);
-		console.log(columns);
 		svg.append("g").
 			style("font-size", 15).
 			attr("transform", "translate(0," + height + ")").

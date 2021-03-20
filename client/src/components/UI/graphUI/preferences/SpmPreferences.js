@@ -12,11 +12,9 @@ const ScatterPlotMatrixPreferences = () => {
 
 	//Funzione che non permette di selezionare più volte la stessa dimensione
 	function handleSelectChange(e){
-		const identifier = e.target.id, value = e.target.value;
-		if(value === "null")
-			viewModel.setSpmAxis(identifier, null)
-		else
-			viewModel.setSpmAxis(identifier, value)
+		const identifier = e.target.id;
+		const value = e.target.value==="undefined" ? undefined : e.target.value;
+		viewModel.setSpmAxis(identifier, value)
 	}
 
 	return (
@@ -24,7 +22,7 @@ const ScatterPlotMatrixPreferences = () => {
 			{
 				identifiers.map((identifiers, index) => {
 					return (
-						<Form.Group controlId={identifiers}>
+						<Form.Group controlId={identifiers} key={identifiers}>
 							<Form.Label className="labels">{labels[index]}</Form.Label>
 							<Form.Control
 								custom
@@ -32,16 +30,16 @@ const ScatterPlotMatrixPreferences = () => {
 								value={axis[index]}
 								onChange={handleSelectChange}
 							>
-								<option value={"null"} >No dimension</option>
+								<option value={"undefined"} key={"noDimensions"+identifiers}>No dimension</option>
 								{keys.map((d) => {
-									return <option value={d}>{d}</option>
+									return <option value={d} key={d+identifiers}>{d}</option>
 								})}
 							</Form.Control>
 						</Form.Group>
 					)
 				})
 			}
-			<Form.Group controlId="color">
+			<Form.Group controlId="color" key={"color"}>
 				<Form.Label className="labels">Color</Form.Label>
 				<Form.Control
 					custom
@@ -49,9 +47,9 @@ const ScatterPlotMatrixPreferences = () => {
 					value={color}
 					onChange={handleSelectChange}
 				>
-					<option value={"null"} >No dimension</option>
+					<option value={"undefined"} key={"noDimensionsColor"}>No dimension</option>
 					{keys.map((d) => {
-						return <option value={d}>{d}</option>
+						return <option value={d} key={d+"Color"}>{d}</option>
 					})}
 				</Form.Control>
 			</Form.Group>

@@ -199,6 +199,7 @@ class ViewModel{
 	}
 
 	loadDataAndDims(data, dims){
+		this.model.reset();
 		this.model.loadData(data);
 		this.model.loadDimensions(dims);
 		this.preferences.reset();	//resetto le preferenze per il grafico
@@ -219,14 +220,12 @@ class ViewModel{
 		//da fixare se si vuole che al cambiamento si aggiornino solo quelle ridotte
 		const checkedDims = this.model.getSelectedDimensions(),
 			originalData = toJS(this.model.getOriginalData());
-		console.log(checkedDims)
 		//con filter tolgo i dati che hanno alcune dimensioni numeriche selezionate NaN; e con map prendo le dimensioni selezionate
 		let selectedData = originalData.map(d => {
 			return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]))
 	 	}).filter(this.haveNotANumberValue);
-		//console.time("model.updateSelectedData")
+		this.model.loadDimensions(checkedDims);//le aggiorno perché rimuovo le dimensioni ridotte create precedentemente
 		this.model.updateSelectedData(selectedData);
-		//console.timeEnd("model.updateSelectedData")
 		 /*log di test
 		 console.log("original: ",toJS(this.model.getOriginalData()))
 		 console.log("selected: ",toJS(this.model.getSelectedData()))

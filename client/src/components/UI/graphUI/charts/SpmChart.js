@@ -8,10 +8,12 @@ const ScatterPlotMatrix = () => {
 	const viewModel = useStore();
 	const data = viewModel.getSelectedData();
 	const [axes, color] = viewModel.getSpmPreferences();
-	const traits = axes.filter(axis => axis)
+	const traits = axes.filter(axis => axis!==undefined)
 	let domainByTrait={}, yScales={}, xScales={}, palette, canvas, ctx;
 	const TotalSize = 800;
-	const numberOfTraits = traits.length, size = TotalSize / numberOfTraits, padding = 20, legendRectSize = 18, legendSpacing = 4, pointRadius = 2;
+	const numberOfTraits = traits.length,
+	 	size = numberOfTraits ? TotalSize / numberOfTraits : TotalSize,
+		padding = 20, legendRectSize = 18, legendSpacing = 4, pointRadius = 2;
 
 	//prodotto cartesiano delle dimensioni
 	function cross(a, b) {
@@ -44,9 +46,7 @@ const ScatterPlotMatrix = () => {
 			attr("class", "plot").
 			attr("id", "spm-canvas").
 			attr("width", size*numberOfTraits+4*padding).
-			attr("height", size*numberOfTraits+4*padding).
-			style("transform", "translate("+4*padding+","+padding/2+")");
-
+			attr("height", size*numberOfTraits+4*padding);
 		updateScales();
 		updateAxis(svg);
 		updateColor();
@@ -182,10 +182,7 @@ const ScatterPlotMatrix = () => {
 
 	}
 	return (
-		<>
-			<div className="scatterplotmatrix">
-			</div>
-		</>
+		<div className="scatterplotmatrix"></div>
 	)
 }
 export default observer(ScatterPlotMatrix)
