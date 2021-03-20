@@ -28,10 +28,11 @@ const AdjacencyMatrix = () => {
 		const colors = d3.scaleSequential().
 			interpolator(d3.interpolateBlues).
 			domain(d3.extent(links.map(l => l.value)));
+			/*
 		nodes.sort(function(x, y){
 			return d3.ascending(x[orderBy], y[orderBy]);
 			 })
-		console.log(nodes);
+		console.log(nodes);*/
 		/*
 		
 		let nodes = `id,group,salary
@@ -146,7 +147,7 @@ AlePirolo,Hossain,2.23606797749979`
 			style("text-anchor","end").
 			style("font-size","10px")
 
-		d3.selectAll("rect.grid").on("mouseover", gridOver); 
+		d3.selectAll("rect").on("mouseover", gridOver); 
 
 		function gridOver(event,d) {
 			d3.selectAll("rect").style("stroke-width", function(p) { return p.x === d.x || p.y === d.y ? "3px" : "1px"});
