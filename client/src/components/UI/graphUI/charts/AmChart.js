@@ -13,13 +13,19 @@ const AdjacencyMatrix = () => {
 		height = 850 - margin.top - margin.bottom;
 	
 	useEffect(() => {
-		d3.select(".adjacencyMatrix").selectAll("svg").remove();
+		//remove previous chart
+		select(".adjacencyMatrix").selectAll("svg").remove();
+		select(".adjacencyMatrix").selectAll("canvas").remove();
+		
 		const svg = select(".adjacencyMatrix").
 			append("svg").
+			attr("id","am-svg").
+			attr("class","plot").
 			attr("width", width + margin.left + margin.right).
 			attr("height", height + margin.top + margin.bottom);
-		//const colors = d3.scaleLinear(d3.schemeTableau10);
+
 		let dm = {}, nodes = [], links= [];
+		
 		if(matrixName){
 			dm = distanceMatrix[matrixName];
 			nodes = dm.nodes; 
@@ -28,7 +34,8 @@ const AdjacencyMatrix = () => {
 		
 		nodes.sort(function(x, y){
 			return d3.ascending(x[orderBy], y[orderBy]);
-			 })
+		});
+
 		const colors = d3.scaleSequential().
 			interpolator(d3.interpolateBlues).
 			domain(d3.extent(links.map(l => l.value)));
@@ -55,29 +62,29 @@ const AdjacencyMatrix = () => {
 				matrix.push(grid)
 			}
 		}
+		console.log(matrix)
 		const scale = d3.scaleBand().
 			domain(nodes.map(d => d.id)).
 			range([ 0, width]);
-    
-		//console.log(matrix)
-		svg.append("g").
-			attr("transform","translate(50,50)").
-			attr("id","adjacencyG").
-			selectAll("rect").
-			data(matrix).
-			enter().
-			append("rect").
-			attr("class","grid").
-			attr("width", scale.bandwidth()).
-			attr("height",scale.bandwidth()).
-			attr("x", d=> d.x*scale.bandwidth()).
-			attr("y", d=> d.y*scale.bandwidth()).
-			style("fill", d => colors(d.value)).
-			//style("fill-opacity", d=> d.value * .2).
-			style("stroke-width", 4).
-			style("stroke", "none").
-			style("opacity", 0.8);
-    
+
+		let canvas = select(".adjacencyMatrix").
+			append("canvas").
+			attr("class", "plot").
+			attr("id", "am-canvas").
+			attr("width", width + margin.left + margin.right).
+			attr("height", height + margin.top + margin.bottom);
+
+		let ctx = canvas.node().getContext("2d")
+		ctx.translate(50, 50);
+
+		matrix.forEach(d => {
+			ctx.beginPath();
+			ctx.rect(d.x*scale.bandwidth(), d.y*scale.bandwidth(), scale.bandwidth(),scale.bandwidth());
+			ctx.closePath();
+			ctx.fillStyle = colors(d.value);
+			ctx.fill();
+		});
+
 		svg.
 			append("g").
 			attr("transform","translate(50,45)"). 
@@ -100,12 +107,6 @@ const AdjacencyMatrix = () => {
 			text(d => d[dimLabels]).
 			style("text-anchor","end").
 			style("font-size","10px")
-
-		d3.selectAll("rect").on("mouseover", gridOver); 
-
-		function gridOver(event,d) {
-			d3.selectAll("rect").style("stroke-width", function(p) { return p.x === d.x || p.y === d.y ? "3px" : "1px"});
-		}
 	});
 
 	return (
