@@ -11,7 +11,22 @@ const AdjacencyMatrix = () => {
 		margin = {top: 30, right: 30, bottom: 100, left: 100},
 		width = 850 - margin.left - margin.right,
 		height = 850 - margin.top - margin.bottom;
+
+	let dm = {}, nodes = [], links= [];
 	
+	if(matrixName){
+		dm = distanceMatrix[matrixName];
+		nodes = dm.nodes; 
+		links = dm.links;
+	}
+	
+	const scale = d3.scaleBand().
+			domain(nodes.map(d => d.id)).
+			range([ 0, width]),
+		colors = d3.scaleSequential().
+			interpolator(d3.interpolateBlues).
+			domain(d3.extent(links.map(l => l.value)));
+
 	useEffect(() => {
 		//remove previous chart
 		select(".adjacencyMatrix").selectAll("svg").remove();
@@ -23,22 +38,10 @@ const AdjacencyMatrix = () => {
 			attr("class","plot").
 			attr("width", width + margin.left + margin.right).
 			attr("height", height + margin.top + margin.bottom);
-
-		let dm = {}, nodes = [], links= [];
-		
-		if(matrixName){
-			dm = distanceMatrix[matrixName];
-			nodes = dm.nodes; 
-			links = dm.links;
-		}
 		
 		nodes.sort(function(x, y){
 			return d3.ascending(x[orderBy], y[orderBy]);
 		});
-
-		const colors = d3.scaleSequential().
-			interpolator(d3.interpolateBlues).
-			domain(d3.extent(links.map(l => l.value)));
 		
 		let linkHash = {};
 		links.forEach(edge =>{
@@ -62,11 +65,7 @@ const AdjacencyMatrix = () => {
 				matrix.push(grid)
 			}
 		}
-		console.log(matrix)
-		const scale = d3.scaleBand().
-			domain(nodes.map(d => d.id)).
-			range([ 0, width]);
-
+		
 		let canvas = select(".adjacencyMatrix").
 			append("canvas").
 			attr("class", "plot").
@@ -74,7 +73,7 @@ const AdjacencyMatrix = () => {
 			attr("width", width + margin.left + margin.right).
 			attr("height", height + margin.top + margin.bottom);
 
-		let ctx = canvas.node().getContext("2d")
+		let ctx = canvas.node().getContext("2d");
 		ctx.translate(50, 50);
 
 		matrix.forEach(d => {
