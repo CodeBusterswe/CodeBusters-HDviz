@@ -5,7 +5,7 @@ import DistanceCalculation from "./ModalContent/DistanceCalculation"
 import LoadCSV from "./ModalContent/LoadCSV"
 import "../../style.css";
 import {OverlayTrigger , Popover} from "react-bootstrap";
-import {AiOutlineArrowRight , AiOutlineDotChart} from "react-icons/ai";
+import {AiOutlineArrowRight , AiOutlineDotChart , AiOutlineFunction} from "react-icons/ai";
 import {ImDatabase} from "react-icons/im";
 import {FaFileCsv} from "react-icons/fa";
 import { RiMistFill } from "react-icons/ri";
@@ -27,7 +27,7 @@ const Menu = () => {
 		<ImDatabase size={32} className="icon"/>,
 		<FaFileCsv size={32} className="icon"/>, 
 		<SiGraphcool size={32} className="icon"/>,
-		<SiGraphcool size={32} className="icon"/>,
+		<AiOutlineFunction size={32} className="icon"/>,
 		<AiOutlineDotChart size={32} className="icon"/>,
 		<IoGrid size={32} className="icon"/>,
 		<RiMistFill size={32} className="icon"/>,

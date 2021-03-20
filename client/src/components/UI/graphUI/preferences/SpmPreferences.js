@@ -25,7 +25,7 @@ const ScatterPlotMatrixPreferences = () => {
 				identifiers.map((identifiers, index) => {
 					return (
 						<Form.Group controlId={identifiers}>
-							<Form.Label>{labels[index]}</Form.Label>
+							<Form.Label className="labels">{labels[index]}</Form.Label>
 							<Form.Control
 								custom
 								as="select"
@@ -42,7 +42,7 @@ const ScatterPlotMatrixPreferences = () => {
 				})
 			}
 			<Form.Group controlId="color">
-				<Form.Label>Color</Form.Label>
+				<Form.Label className="labels">Color</Form.Label>
 				<Form.Control
 					custom
 					as="select"

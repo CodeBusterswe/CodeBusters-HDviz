@@ -1,3 +1,11 @@
+:root {
+  --text-primary: #b6b6b6;
+  --text-secondary: #ececec;
+  --bg-primary: #282c34;
+  --bg-secondary: #141418;
+  --transition-speed: 300ms;
+}
+
 html,
 body {
   margin: 0;
@@ -29,15 +37,75 @@ body {
   transition-duration: 1s;
 }
 
-/* GRAFICO */
-.chartPreferences{
-  float:right;
-  width: 15%;
-  padding: 1em;
-  border: 1px solid black;
+.content {
+  margin: 1em;
+  margin-left: 6em;
 }
+
+/* GRAFICO */
+.grafico {
+  display: grid;
+  height: 100vh;
+  grid: 50px 1fr 1fr 50px / 50px 1fr 1fr 50px;
+  font-size: calc(10px + 2vmin);
+  padding: 5em 2em 2em 5em;
+}
+
+.container-pref{
+	float: right;
+	display:flex;
+	flex-direction: column;
+	margin-right: 2em;
+	margin-top: 2em;
+	width: 18em;
+}
+
+.chartPreferences{
+	float: right;
+	margin-top: 2em;
+  width: 100%;
+  padding: 1em;
+  border: 2px solid var(--bg-primary);
+	box-shadow: 2px 3px var(--bg-primary);
+	border-radius: 5px;
+}
+
+.show-pref {
+	visibility: visible;
+  opacity: 1;
+	-moz-transition:all .3s ease-in; 
+	-webkit-transition: all .3s ease-in;
+	-o-transition:all .3s ease-in;
+	transition: all .3s ease-in;
+}
+
+.hide-pref {
+	opacity: 0;
+ 	-moz-transition:all .3s ease-out; 
+	-webkit-transition: all .3s ease-out;
+	-o-transition:all .3s ease-out;
+	transition: all .3s ease-out;
+	visibility: hidden;
+}
+
+.btn-pref{
+	margin: auto;
+	width: 60%;
+}
+
+.center-graph {
+	width: 70em;
+	margin: auto;
+}
+
 .chartDiv{
   width: 80%;
+}
+
+.labels{
+	width:100%;
+	text-align: center;
+	margin-bottom: 2px;
 }
 
 /*posizione canvas sopra a svg per SPM*/
@@ -48,21 +116,7 @@ body {
 
 /* FINE GRAFICO */
 
-.content {
-	/*text-align: center;*/
-  margin: 1em;
-  margin-left: 6em;
-}
-
 /* INIZIO MENU */
-:root {
-  --text-primary: #b6b6b6;
-  --text-secondary: #ececec;
-  --bg-primary: #282c34;
-  --bg-secondary: #141418;
-  --transition-speed: 300ms;
-}
-
 .navbar {
   position: fixed!important;
   display: block!important;
@@ -194,7 +248,7 @@ body {
   .navbar {
     bottom: 0;
     width: 100vw;
-    height: 5em;
+    height: 4em;
   }
 
   .logo {
@@ -206,7 +260,8 @@ body {
   }
 
   .nav-link {	
-		width: 3.5em;
+		margin-left:0;
+		width: 3em;
   }
 
 	.content {
@@ -276,6 +331,22 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+.first{
+	margin-right: auto;
+  visibility: hidden;
+}
+
+.last{
+	margin-left: auto;
+  background: #ddd;
+	margin-right:1em;
+}
+
+#modal{
+	width: 50em;
+	max-width: 100%;
 }
 /* FINE HEADER */
 

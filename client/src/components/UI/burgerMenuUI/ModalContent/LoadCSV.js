@@ -3,8 +3,7 @@ import {Button} from "react-bootstrap"
 import MyCSVReader from "./MyCSVReader"
 import DimList from "./DimList"
 import { useStore } from "../../../../ContextProvider"
-import Modal from "react-bootstrap/Modal"
-import { ModalBody, ModalFooter ,Alert } from "react-bootstrap"
+import { ModalBody, ModalFooter ,Alert , Modal } from "react-bootstrap"
 import "../../../style.css"
 
 const LoadCSV = props => {
