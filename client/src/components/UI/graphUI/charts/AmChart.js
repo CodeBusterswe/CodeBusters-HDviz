@@ -23,10 +23,11 @@ const AdjacencyMatrix = () => {
 	const scale = d3.scaleBand().
 			domain(nodes.map(d => d.id)).
 			range([ 0, width]),
-		colors = d3.scaleSequential().
-			interpolator(d3.interpolateBlues).
-			domain(d3.extent(links.map(l => l.value)));
-
+		colors = d3.scaleOrdinal(d3.schemeCategory10),
+		opacity = d3.scaleLinear().
+			domain(d3.extent(links.map(obj => obj.value))).
+			range([1, 0.25]).
+			clamp(true);
 	useEffect(() => {
 		//remove previous chart
 		select(".adjacencyMatrix").selectAll("svg").remove();
@@ -52,7 +53,7 @@ const AdjacencyMatrix = () => {
 		var matrix = []
 		for (let i = 0; i < nodes.length; i++) {
 			for (let j = 0; j < nodes.length; j++) {
-				let grid = {id: nodes[i].id+"-"+nodes[j].id, x: i, y: j, value: 0}
+				let grid = {id: nodes[i].id+"-"+nodes[j].id, x:i, y: j, source: nodes[i], target: nodes[j], value: 0}
 				if(linkHash[grid.id]){ //esiste
 					grid.value = linkHash[grid.id].value; //value=2
 				}else{
@@ -80,7 +81,21 @@ const AdjacencyMatrix = () => {
 			ctx.beginPath();
 			ctx.rect(d.x*scale.bandwidth(), d.y*scale.bandwidth(), scale.bandwidth(),scale.bandwidth());
 			ctx.closePath();
-			ctx.fillStyle = colors(d.value);
+			function hex2rgba(hexa, op){
+				let r = parseInt(hexa.slice(1,3), 16),
+					g = parseInt(hexa.slice(3,5), 16),
+					b = parseInt(hexa.slice(5,7), 16);
+				return "rgba("+r+", "+g+", "+b+", "+op+")";
+			  }
+			let c, op=opacity(d.value);
+			if (d.value >= 0 && d.source.group === d.target.group) {
+				c = colors(d.source.group);
+			} else if (d.value > 0) {
+				c = "#000000";
+			} else {
+				c = "#ffffff";//diagonale
+			}
+			ctx.fillStyle = hex2rgba(c, op);
 			ctx.fill();
 		});
 

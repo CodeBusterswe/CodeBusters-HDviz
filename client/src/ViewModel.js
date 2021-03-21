@@ -6,6 +6,7 @@ import DimReductionStrategy from "./viewModel/DimReductionStrategy"
 import * as distCalc from "ml-distance";
 import {getDataset, getTables,getDatasetByName,getColumnByName,getDatasetWithParams} from "./model/services"  
 import Preferences from "./model/Preferences";
+import kmeans from "ml-kmeans";
 
 class ViewModel{
 
@@ -124,6 +125,12 @@ class ViewModel{
 			break;
 		case "color":
 			this.preferences.ffColor = value
+			break;
+		case "distMax":
+			this.preferences.ffDistMax = value
+			break;
+		case "distMin":
+			this.preferences.ffDistMin = value
 			break;
 		default:
 			break;
@@ -262,7 +269,12 @@ class ViewModel{
 	reduceDimensionsByDist(distType, data, matrixName) {
 		//data = [ [5.1, 3.5], [4.9, 3], [4.7, 3.2] ]
 		//console.log(this.getSelectedData())
+		let numericDims = this.model.getNumericDimensions(),
+			numericData = this.model.getSelectedData().map(row => Array.from(numericDims.map(dim => row[dim.getValue()])));
+		
+		let prodotto = kmeans(numericData, 3, {distanceFunction: distCalc.distance[distType]});
 		let matrix = new DistanceMatrix();
+		console.log(prodotto);
 
 		for (let i = 0; i < data.length; i++) {
 			for (let j = i+1; j < data.length; j++) {
@@ -275,10 +287,9 @@ class ViewModel{
 			}
 			let node = this.getSelectedData()[i];
 			node.id="node".concat(i);
+			node.group = prodotto.clusters[i];
 			matrix.pushNode(node);
 		}
-		//console.log(matrix.getLinks());
-		//console.log(matrix.getNodes());
 		this.model.addDistanceMatrix(matrix,matrixName);
 	}
 

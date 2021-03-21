@@ -8,8 +8,10 @@ const ForceFieldPreferences = () => {
 	const viewModel = useStore();
 	const keys = viewModel.getCheckedDimensions();
 	const matrices = viewModel.getDistanceMatricesNames();
-	const [matrixName, color] = viewModel.getFfPreferences();
-
+	const [matrixName, color, distMax, distMin] = viewModel.getFfPreferences();
+	const matrix = viewModel.getDistanceMatrices()[matrixName];
+	const min = matrix ? Math.min.apply(Math, matrix.getLinks().map(link =>link.value)) : undefined;
+	const max = matrix ? Math.max.apply(Math,matrix.getLinks().map(link =>link.value)) : undefined;
 	function handleSelectChange(e){
 		const value = e.target.value==="undefined" ? undefined : e.target.value,
 			identifier = e.target.id;
@@ -40,9 +42,32 @@ const ForceFieldPreferences = () => {
 					onChange={handleSelectChange}
 				>
 					<option value={"undefined"} key={"noColor"}>No color</option>
+					<option value={"group"} key={"group"}>Group</option>
 					{keys.map((d) => {
 						return <option value={d} key={d}>{d}</option>
 					})}
+				</Form.Control>
+			</Form.Group>
+			<Form.Group controlId="distMax">
+				<Form.Label>Max Distance:{max}</Form.Label>
+				<Form.Control
+					custom
+					as="input"
+					value={distMax}
+					defaultValue={1000}
+					onChange={handleSelectChange}
+				>
+				</Form.Control>
+			</Form.Group>
+			<Form.Group controlId="distMin">
+				<Form.Label>MinDistance:{min}</Form.Label>
+				<Form.Control
+					custom
+					as="input"
+					value={distMin}
+					defaultValue={0}
+					onChange={handleSelectChange}
+				>
 				</Form.Control>
 			</Form.Group>
 		</Form>
