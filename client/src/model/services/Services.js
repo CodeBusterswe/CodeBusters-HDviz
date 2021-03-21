@@ -1,14 +1,13 @@
 import {api} from "./ApiURL"
 
 export const getDatasetWithParams=async(columnSelected,table_name)=>{
-	console.log("columnSelected1 api: ",columnSelected,"table_name:",table_name)
-	const Data=[];
+	//console.log("columnSelected1 api: ",columnSelected,"table_name:",table_name)
 	function getData(){
 		return columnSelected.map((item, i) => {
 			return item.value;
 		});
 	}
-	const data=columnSelected;
+	/* 	const data=columnSelected;
 	var getFormDefinition = function(arr) {
 		function getSchemaObj(arr) {
 			return arr.map(item => ({
@@ -39,19 +38,20 @@ export const getDatasetWithParams=async(columnSelected,table_name)=>{
 	function getSlicedData(){
 		return sliceData.slice().map((data, i) => {
 			return data;
-		  });
-	  }
-	console.log("columnSelected api: ",getData(),"getSlicedData:",getSlicedData())
+		});
+	} */
+	//console.log("columnSelected api: ",getData(),"getSlicedData:",getSlicedData())
 	try{
 		const selectField=getData();
 		const dataSet= await api.post("/get-data",{selectField,table_name});
-		//console.log("dataSet api: ", dataSet.data)
-		Data.push(dataSet.data);
+		console.log("columnSelected api: ", dataSet.data)
+		return dataSet.data
+		//Data.push(dataSet.data);
 	}catch(err){
 		console.error(err.message);    
 	 }
 	 //console.log("Data api: ", Data)
-	 return {data:Data};
+	 //return A;
 }
 
 export const getDataset=async()=>{
@@ -65,7 +65,7 @@ export const getDataset=async()=>{
 	}catch(err){
 		console.error(err.message);    
 	 }
-	 //console.log("Data api: ", Data)
+	 
 	 return {data:Data};
 }
 

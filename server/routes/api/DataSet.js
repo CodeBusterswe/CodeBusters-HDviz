@@ -34,9 +34,10 @@ const {queryField,queryType,table}=req.body;
 
 router.post('/get-data', async (req, res, next)=>{
         const {queryField}=req.body;
-       // console.log('API get_data query:',req.body.query)
+        
         const {selectField,table_name}=req.body
         var prepareQuery =q=>q.map(item=>item).join();
+        console.log('API get_data query:',selectField)
 
         try{
             if(!table_name){
@@ -49,7 +50,7 @@ router.post('/get-data', async (req, res, next)=>{
                     console.log(err.message);
                     res.status(400).send(err);
                 }
-                console.log ("result.rows:",result.rows)
+                //console.log ("result.rows:",result.rows)
                 res.status(200).send(result.rows);
             });
         }catch(err){

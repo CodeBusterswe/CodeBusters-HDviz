@@ -5,16 +5,31 @@ import { Form } from "react-bootstrap"
 import { useStore } from "../../../../../../ContextProvider"
 
 const OptionList = props => {
-	const {options,selectValue,table} =props;
+	const {options,table,hanldeAllOptions} =props;
 	const viewModel = useStore();
-	//const [table_name, setTable_name] = useState(table);
+	const [dataSelected, setDataSelected] = useState();
 	const [columnSelected, setcolumnSelected] = useState(null);
-	function handleColumnSelected(col){
+	//console.log("dataSelected:",dataSelected);
+	async function handleColumnSelected(col){
 		setcolumnSelected(col)
-		//setQuery(columnSelected)
-		//console.log("options:",options,"col:",col, "table_name:",table);
-		viewModel.getDatasetByParams(col,table)
+		const parsedData= await viewModel.getDatasetByParams(col,table)
+		//var myJsonString = JSON.stringify(parsedData);
+		console.log("parsedData:",parsedData);
+
+		setDataSelected(parsedData)
+		if(dataSelected){
+			function prepareData(){
+				return parsedData.map(data=> {
+					return {data:Object.values(data)}
+				})
+			}
+			const toParseData=prepareData();
+			const [data, dimensions] = viewModel.parseAndLoadCsvData(toParseData)
+			hanldeAllOptions(data, dimensions)
+			//console.log("parsedData:",data, "dimensions:",dimensions);
+		}
 	}
+
 	return (
 		<div>
 			<Form.Group controlId="columnOptionList">

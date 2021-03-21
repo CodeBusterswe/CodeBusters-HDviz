@@ -1,17 +1,13 @@
 import React,{useState,useEffect} from "react";
-import { ModalBody,Form, ModalFooter,Dropdown,DropdownButton,ButtonGroup,Container,Row,Col } from "react-bootstrap"
+import { Dropdown,DropdownButton,ButtonGroup,Container,Row,Col } from "react-bootstrap"
 import { useStore } from "../../../../../../ContextProvider"
-import Select from "react-select"
-import makeAnimated from "react-select/animated";
 import {OptionList} from "./"
 export const DropDown = props => {
-	const {Dataset,Columns}=props;
+	const {Dataset,Columns,getAllOptions}=props;
 	const viewModel = useStore();
 	const [getColumns,setColumns] = useState(null)
 	const [columnOption, setcolumnOption] = useState(null);
-	const [columnSelected, setcolumnSelected] = useState(null);
 	const [table, setTable] = useState(null);
-	const [query, setQuery] = useState(null);
 	
 	useEffect(async() => {
 		//const col =await viewModel.getColumnsWithName();
@@ -31,13 +27,16 @@ export const DropDown = props => {
 		//viewModel.getTableWithName(table_name)	
 	}
 
-	const A=[{name:"hoss",id:1},{name:"hoss",id:2},{name:"hoss",id:3}]
 	//handle column selected
-	function handleColumnSelected(col){
+	/* 	function handleColumnSelected(col){
 		setcolumnSelected(col)
 		setQuery(columnSelected)
 		console.log("Query:", A.map(i=>i));
 		viewModel.getDatasetByParams(A,table)
+	} */
+	function hanldeAllOptions(newData,dims){
+		getAllOptions(newData,dims)
+		console.log("hanldeAllOptions:",newData, "dims:",dims);
 	}
 	return (
 		<Container >
@@ -69,15 +68,10 @@ export const DropDown = props => {
 			<Dropdown.Divider/>
 			<Row>
 				<Col>
-					<OptionList	options={columnOption} selectValue={columnSelected} table={table}/>
+					<OptionList	options={columnOption} table={table} hanldeAllOptions={hanldeAllOptions}/>
 				</Col>	
 			</Row>
 		</Container>
 	);
 };
-
-DropDown.propTypes = {
-	
-};
-
 export default DropDown;

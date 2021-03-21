@@ -22,7 +22,7 @@ class ViewModel{
 	}	
 	async getDatasetByParams(columnSelected,table){
 		const dataset = await getDatasetWithParams(columnSelected,table);
-		//console.log("dataset:",dataset);
+		//console.log("ViewModel dataset:",dataset);
 		return dataset;
 	}
 
@@ -40,7 +40,7 @@ class ViewModel{
 
 	async getColumnList(table_name){
 		const dataset = await getColumnByName(table_name)
-		console.log("dataset:",dataset);
+		//console.log("dataset:",dataset);
 		return dataset[0].map(d => {
 			return {value: d.column_name, label: d.column_name}
 		})
@@ -56,7 +56,6 @@ class ViewModel{
 	//get all tables from DB
 	async getAllTables(){
 		const table = await getTables();
-		console.log("tables:",table.data);
 		return table;
 	}
 

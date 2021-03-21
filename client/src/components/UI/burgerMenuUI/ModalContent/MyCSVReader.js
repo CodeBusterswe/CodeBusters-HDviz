@@ -9,6 +9,7 @@ function MyCSVReader(props){
 	const viewModel = useStore()
 	function handleOnDrop(file){
 		const [data, dimensions] = viewModel.parseAndLoadCsvData(file)
+		console.log("CSV reader:", data, "dimensions:",dimensions)
 		setLocalStates(data, dimensions);
 	}
 
