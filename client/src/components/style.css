@@ -94,7 +94,7 @@ body {
 }
 
 .center-graph {
-	width: 70em;
+	width: 60em;
 	margin: auto;
 }
 
@@ -352,8 +352,10 @@ body {
 
 /* INIZIO ALERT */
 .alert{
-	max-width: 30%;
+	width: 40em;
+	max-width: 50%;
 	position:absolute!important;
-	right:0!important;
+	right:0;
+	bottom: -1em;
 }
 /* FINE ALERT */

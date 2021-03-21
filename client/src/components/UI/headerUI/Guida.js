@@ -86,9 +86,14 @@ function Guida(props) {
 						<p style={{marginTop: "1em", marginLeft: "1em"}}>Carica dati da CSV</p>
 					</div>
 					<p>
-						Tutte e tre aprono un modal per compiere le operazoni indicate.
-					 	.....
-					</p>
+						Tutte e tre aprono un modal per compiere le operazoni indicate. In particolare:
+					</p>	
+					<ul>
+						<li>Il modal per il caricamento dei dati dal DB permette di scegliere uno dei dataset presenti nel DB 
+							ed effettuare immediatamente una selezione delle dimensioni da caricare;</li>	
+						<li>Il modal per il caricamento dei dati da file CSV permette anche la selezione delle dimensioni che si desidera
+						utilizzare (<em>di default vengono utilizzate tutte quelle caricate</em>).</li>	
+					</ul>	
 					<p>
 						<strong>Una volta caricati i dati</strong> è possibile selezionare anche tutte le altre voci del menu.
 						Per la preparzione dei dati sono presenti le seguenti voci:
@@ -102,9 +107,17 @@ function Guida(props) {
 						<p style={{marginTop: "1em", marginLeft: "1em"}}>Calcola distanza</p>
 					</div>
 					<p>
-						Anche in questo caso le voci apriranno un modal per compiere le operazioni indicate. 
-						....
+						Anche in questo caso le voci apriranno un modal per compiere le operazioni indicate. In particolare:
 					</p>
+					<ul>
+						<li>Il modal per la riduzione dimensionale permette di scegliere inizialmente quali dimensioni utilizzare 
+							per la riduzione, poi quale algoritmo (<em>tra Fastmap, LLE, Isomap e TSNE</em>) e, in base a questa
+							ultima scelta una serie di parametri per eseguire la riduzione come più si preferisce;</li>
+						<li>Il modal per il calcolo della distanza permette di scegliere inizialmente
+							quali dimensioni utilizzare per effettuare il calcolo, poi quale funzione di distanza (<em>tra Euclidea, Camberra, Chebyshev e Manhattan</em>)
+							e il nome da dare alla nuova matrice delle distanze creata.
+						</li>
+					</ul>
 					<p>
 						In ogni caso l'applicazione di algoritmi di riduzione dimensionale o funzioni per il calcolo della
 						distanza non sono obbligatori per la visualizzazione dei dati. È infatti possibile, subito dopo aver 
@@ -133,10 +146,11 @@ function Guida(props) {
 					<p>
 						Una volta selezionata una di queste si aprirà una form sulla destra
 						attraverso la quale sarà possibile modificare la visualizzazione del grafico, in termini di 
-						dimensioni da applicare agli assi, dimensione per l'applicazione del colore sui punti ecc. <br/>
-						<em>Queste form si presentano vuote inizialmente</em> e, seppur variano da grafico a grafico, 
-						la struttura base è più o meno sempre simile alla seguente (<strong>Scatterplot Matrix</strong>): 
-						(img)... non ho più voglia
+						dimensioni da applicare agli assi, dimensione per l'applicazione del colore sui punti o,
+						per le visualizzazioni che ne fanno uso, è possibile scegliere la amtrice delle distanze da utilizzare tra quelle calcolate 
+						precedentemente. <em>Da notare come inizialmente tutti i campi siano settati a "No dimension".</em><br/>
+						Tale form è accompagnata da un bottone per nasconderla e centralizzare il grafico nello schermo
+						per concentrarsi solamente sull'analisi del grafico.
 					</p>
 					<h5>Conclusioni</h5>
 					<p>
