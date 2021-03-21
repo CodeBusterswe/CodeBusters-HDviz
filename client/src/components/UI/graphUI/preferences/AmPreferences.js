@@ -17,12 +17,7 @@ const AdjacencyMatrixPreferences = () => {
 	function handleSelectOrderChange(e){
 		const value = e.target.value==="undefined" ? undefined : e.target.value,
 			identifier = e.target.id;
-		if(value === "cluster"){
-			console.log("sort by cluster")
-			//CI penseremo
-		}else{
-			viewModel.setAmPreferences(identifier, value);
-		}
+		viewModel.setAmPreferences(identifier, value);
 	}
 	function handleSelectLabelChange(e){
 		const value = e.target.value==="undefined" ? undefined : e.target.value,
@@ -54,7 +49,7 @@ const AdjacencyMatrixPreferences = () => {
 					onChange={handleSelectOrderChange}
 				>
 					<option value={"undefined"} key={"noOrder"}>No order</option>
-					<option value={"cluster"} key={"cluster"}>Cluster</option>
+					<option value={"group"} key={"group"}>Group</option>
 					{sorts.map((d) => {
 						return <option value={d} key={d}>{d}</option>
 					})}
@@ -68,7 +63,8 @@ const AdjacencyMatrixPreferences = () => {
 					value={label}
 					onChange={handleSelectLabelChange}
 				>
-					<option value={undefined} key={"noLabel"} >No label</option>
+					<option value={"undefined"} key={"noLabel"} >No label</option>
+					<option value={"group"} key={"group"}>Group</option>
 					{sorts.map((d) => {
 						return <option value={d} key={d}>{d}</option>
 					})}

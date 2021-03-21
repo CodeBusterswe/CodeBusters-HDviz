@@ -29,7 +29,9 @@ class Preferences{
 		}
 		this._FFpreferences = {
 			distanceMatrix: undefined,
-			color: undefined
+			color: undefined,
+			distMax: Infinity,
+			distMin: 0,
 		}
 		this._PLMApreferences = {}
 
@@ -100,8 +102,12 @@ class Preferences{
 		this._FFpreferences.color = group;
 	}
 
-	set ffForceType(force){
-		this._FFpreferences.forceType = force;
+	set ffDistMin(dist){
+		this._FFpreferences.distMin = dist;
+	}
+
+	set ffDistMax(dist){
+		this._FFpreferences.distMax = dist;
 	}
 
 	get ffDistanceMatrix(){
@@ -111,9 +117,12 @@ class Preferences{
 	get ffColor(){
 		return this._FFpreferences.color;
 	}
+	get ffDistMin(){
+		return this._FFpreferences.distMin;
+	}
 
-	get ffForceType(){
-		return this._FFpreferences.forceType;
+	get ffDistMax(){
+		return this._FFpreferences.distMax;
 	}
 
 	set SpmAxis1(dimensionsValue){

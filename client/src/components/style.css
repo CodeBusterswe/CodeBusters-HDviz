@@ -110,7 +110,7 @@ body {
 
 /*posizione canvas sopra a svg per SPM*/
 .plot {position: absolute;}
-#spm-canvas, #am-canvas {z-index: -1;}
+#spm-canvas, #am-canvas, #ff-canvas {z-index: -1;}
 #spm-svg, #am-svg {z-index: -2;}
 
 

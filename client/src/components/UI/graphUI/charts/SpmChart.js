@@ -100,7 +100,7 @@ const ScatterPlotMatrix = () => {
 	}
 	function updateColor(){
 		let colorDomain = d3.extent(data, function(d) {return +d[color]; });
-		if(colorDomain[0])
+		if(colorDomain[0] || colorDomain[0] === 0)
 			palette = d3.scaleLinear().domain(colorDomain).range(["yellow", "blue"]);//
 		else{
 			palette = d3.scaleOrdinal(d3.schemeCategory10);

@@ -6,10 +6,11 @@ import { observer } from "mobx-react-lite";
 const ForceField = () => {
 	const viewModel = useStore(),
 		distanceMatrix = viewModel.getDistanceMatrices(),
-		[matrixName, color]=viewModel.getFfPreferences(),
+		[matrixName, color, distMax, distMin]=viewModel.getFfPreferences(),
 		margin = {top: 30, right: 30, bottom: 100, left: 100},
-		width = 850 - margin.left - margin.right,
-		height = 850 - margin.top - margin.bottom;
+		width = 1500 - margin.left - margin.right,
+		height = 850 - margin.top - margin.bottom,
+		radius = 4;
 	const canvasRef = useRef(null);
 	var myColor = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -23,7 +24,7 @@ const ForceField = () => {
 			nodes = data.nodes.map(node => {
 				return {...node};
 			}); 
-			links = data.links.filter(link => link.value<20).map(link => {
+			links = data.links.filter(link => link.value<distMax && link.value>distMin).map(link => {
 				return {...link};
 			});
 			context = canvas.getContext("2d");
@@ -89,8 +90,10 @@ const ForceField = () => {
 
 		function drawNode(d) {
 			context.beginPath();
+			d.x = Math.max(radius, Math.min(width - radius, d.x))
+			d.y =Math.max(radius, Math.min(height - radius, d.y))
 			context.moveTo(d.x + 3, d.y);
-			context.arc(d.x, d.y, 4, 0, 2 * Math.PI);
+			context.arc(d.x, d.y, radius, 0, 2 * Math.PI);
 			context.fillStyle = myColor(d[color]);
 			context.strokeStyle = myColor(d[color]);
 			context.fill();
@@ -98,7 +101,7 @@ const ForceField = () => {
 		}
 	},)
 	return(
-		<canvas ref={canvasRef}></canvas>
+		<canvas ref={canvasRef} className="plot" id="ff-canvas"></canvas>
 	)
 }
 export default observer(ForceField);
