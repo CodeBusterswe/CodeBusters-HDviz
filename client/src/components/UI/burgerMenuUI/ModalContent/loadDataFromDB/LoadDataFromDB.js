@@ -48,28 +48,9 @@ const LoadDataFromDB = props => {
 		closeModal()
 	}
 	//funzione utilizzata da CSV Reader per salvare localmente dati e dimensioni
-	function setLocalStates(newData, newDims){
+	/* 	function setLocalStates(newData, newDims){
 		setLocalData(newData);
 		setLocalDimensions(newDims);
-	}
-	/* 	function selectAllDimensions(event){
-		let temp = [...localDimensions]
-		temp.forEach(dimension => {
-			dimension.isChecked(event.target.checked)
-		});
-		setLocalDimensions(temp)
-	}
-	function selectDimension(event){
-		let temp = [...localDimensions]
-		temp.forEach(dimension =>{
-			if(dimension.getValue() === event.target.id)
-				dimension.isChecked(event.target.checked)
-		})
-		setLocalDimensions(temp)
-	} */
-	/* 	function handleData(table_name){
-		console.log("selected:",table_name)
-		viewModel.getTableWithName(table_name)	
 	} */
 
 	function openAlertSuccess() {

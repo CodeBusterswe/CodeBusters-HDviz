@@ -7,40 +7,6 @@ export const getDatasetWithParams=async(columnSelected,table_name)=>{
 			return item.value;
 		});
 	}
-	/* 	const data=columnSelected;
-	var getFormDefinition = function(arr) {
-		function getSchemaObj(arr) {
-			return arr.map(item => ({
-				[item.value]:item.value
-				
-			})).reduce((a, b) => ({ ...a, ...b }))
-		}
-
-		var schemaObj = getSchemaObj(arr)
-
-		arr.push = function(...item) {
-			Object.assign(schemaObj, getSchemaObj(item))
-
-			return Array.prototype.push.call(arr, ...item)
-		}
-		return schemaObj;
-	}
-
-	//var typeArray = ["name", "strret", "car", "type"];
-	var result = getFormDefinition(data)
-	console.log("result:",result)
-
-	//data.push("nitish")
-	console.log(result)
-
-	const sliceData=[]
-	sliceData.push(result);
-	function getSlicedData(){
-		return sliceData.slice().map((data, i) => {
-			return data;
-		});
-	} */
-	//console.log("columnSelected api: ",getData(),"getSlicedData:",getSlicedData())
 	try{
 		const selectField=getData();
 		const dataSet= await api.post("/get-data",{selectField,table_name});
