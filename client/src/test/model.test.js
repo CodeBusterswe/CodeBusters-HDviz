@@ -17,7 +17,7 @@ beforeEach(() => {
 });
 
 test("model should set and return the original data/dimensions", () => {
-	model.loadData(dimension,dataset);
+	model.loadData(dataset);
 	model.loadDimensions([dimension]);
 	model.updateSelectedData(dataset);
 	expect(model.getOriginalData()).toStrictEqual(dataset);
@@ -26,9 +26,9 @@ test("model should set and return the original data/dimensions", () => {
 });
 
 test("model should add new distance matrices and return them", () => {
-	distanceMatrix = new DistanceMatrix();
+	distanceMatrix = model.distanceMatrices;
 	model.addDistanceMatrix(distanceMatrix);
-	expect(model.getDistanceMatrices()).toStrictEqual([distanceMatrix]);
+	expect(model.getDistanceMatrices()).toStrictEqual(distanceMatrix);
 });
 
 test("model should add new dimensions from dimensionality reduction process", () => {
