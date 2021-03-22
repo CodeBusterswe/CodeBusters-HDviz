@@ -29,7 +29,7 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - name: Run the tests
-      run: cd "client" npm test
+      run: npm test
       working-directory: ${{ env.working-directory }}
 
     - name: Run the tests and generate coverage report
