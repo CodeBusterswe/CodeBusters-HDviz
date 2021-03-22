@@ -23,7 +23,7 @@ test("Carica un csv", async() => {
 		)
 	})
 	screen.debug();
-});
+},30000);
 test("Open and redux dimension", async () => {
 	render(<App />);
 	fireEvent.click(screen.getByRole('button',{name: 'Riduci dimensioni' }));
@@ -39,7 +39,7 @@ test("Open and redux dimension", async () => {
 		)
 	})
 	screen.debug();
-});
+},30000);
 test("Calcola distanza", async() => {
 	render(<App />);
 	fireEvent.click(screen.getByRole('button',{name: 'Calcola distanza' }));
@@ -55,4 +55,4 @@ test("Calcola distanza", async() => {
 		)
 	})
 	screen.debug();
-});
+},30000);
