@@ -4,11 +4,9 @@ import App from "../../App";
 test("Scatterplot matrix", async() => {
 	render(<App />);
 	fireEvent.click(screen.getByRole("button",{name: "Scatterplot Matrix" }));
-	await waitFor(() => {
 		
-		expect(screen.getByRole("combobox",{name: "Axis one" })).toBeInTheDocument()
-		
-	})
+	expect(screen.getByRole("combobox",{name: "Axis one" })).toBeInTheDocument()
+	
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis one" }),{key: "sepal_length"});
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis two" }),{key: "sepal_width"});
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis Three" }),{key: "petal_length"});
@@ -20,23 +18,17 @@ test("Adjacency matrix", async() => {
 	
 	render(<App />);
 	fireEvent.click(screen.getByRole("button",{name: "Calcola distanza" }));
-	await waitFor(() => {
 		
-		expect(screen.getByRole("button",{name: "Start reduction" })).toBeInTheDocument()
-		
-	})
+	expect(screen.getByRole("button",{name: "Start reduction" })).toBeInTheDocument()
+	
 	fireEvent.click(screen.getByRole("button", { name: "Start reduction" }));
-	await waitFor(() => {
-		
+	await waitFor(()=>{	
 		expect(screen.getByRole("button",{name: "Adjacency Matrix" })).toBeInTheDocument()
-		
 	})
 	fireEvent.click(screen.getByRole("button",{name: "Adjacency Matrix" }));
-	await waitFor(() => {
 		
-		expect(screen.getByRole("combobox",{name: "Distance Matrix" })).toBeInTheDocument()
-		
-	})
+	expect(screen.getByRole("combobox",{name: "Distance Matrix" })).toBeInTheDocument()
+	
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Distance Matrix" }),{key: "euclidean"});
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Order by" }),{key: "petal_length"});
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Labels" }),{key: "petal_width"});
@@ -45,11 +37,9 @@ test("Adjacency matrix", async() => {
 test("Heat map", async() => {
 	render(<App />);
 	fireEvent.click(screen.getByRole("button",{name: "Heat Map" }));
-	await waitFor(() => {
 		
-		expect(screen.getByRole("combobox",{name: "Axis X" })).toBeInTheDocument()
-		
-	})
+	expect(screen.getByRole("combobox",{name: "Axis X" })).toBeInTheDocument()
+	
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis X" }),{key: "sepal_length"});
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis Y" }),{key: "sepal_width"});
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Heat" }),{key: "petal_length"});
@@ -58,23 +48,17 @@ test("Heat map", async() => {
 test("Force field", async() => {
 	render(<App />);
 	fireEvent.click(screen.getByRole("button",{name: "Calcola distanza" }));
-	await waitFor(() => {
 		
-		expect(screen.getByRole("button",{name: "Start reduction" })).toBeInTheDocument()
-		
-	})
+	expect(screen.getByRole("button",{name: "Start reduction" })).toBeInTheDocument()
+	
 	fireEvent.click(screen.getByRole("button", { name: "Start reduction" }));
-	await waitFor(() => {
-		
+	await waitFor(()=>{
 		expect(screen.getByRole("button",{name: "Force Field" })).toBeInTheDocument()
-		
 	})
 	fireEvent.click(screen.getByRole("button",{name: "Force Field" }));
-	await waitFor(() => {
 		
-		expect(screen.getByRole("combobox",{name: "Distance Matrix" })).toBeInTheDocument()
-		
-	})
+	expect(screen.getByRole("combobox",{name: "Distance Matrix" })).toBeInTheDocument()
+	
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Distance Matrix" }),{key: "euclidean"});
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Color" }),{key: "Group"});
 },30000);
