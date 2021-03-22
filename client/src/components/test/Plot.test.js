@@ -1,6 +1,5 @@
 import { createEvent, fireEvent, getByRole, getByText, render, screen, waitFor } from "@testing-library/react";
-import App from "../App";
-
+import App from "../../App";
 
 test("Scatterplot matrix", async() => {
 	render(<App />);
@@ -20,17 +19,17 @@ test("Scatterplot matrix", async() => {
 test("Adjacency matrix", async() => {
 	
 	render(<App />);
-	fireEvent.click(screen.getByRole('button',{name: 'Calcola distanza' }));
+	fireEvent.click(screen.getByRole("button",{name: "Calcola distanza" }));
 	await waitFor(() => {
-		(
-			expect(screen.getByRole('button',{name: 'Start reduction' })).toBeInTheDocument()
-		)
+		
+		expect(screen.getByRole("button",{name: "Start reduction" })).toBeInTheDocument()
+		
 	})
-	fireEvent.click(screen.getByRole('button', { name: 'Start reduction' }));
+	fireEvent.click(screen.getByRole("button", { name: "Start reduction" }));
 	await waitFor(() => {
-		(
-			expect(screen.getByRole("button",{name: "Adjacency Matrix" })).toBeInTheDocument()
-		)
+		
+		expect(screen.getByRole("button",{name: "Adjacency Matrix" })).toBeInTheDocument()
+		
 	})
 	fireEvent.click(screen.getByRole("button",{name: "Adjacency Matrix" }));
 	await waitFor(() => {
@@ -39,8 +38,8 @@ test("Adjacency matrix", async() => {
 		
 	})
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Distance Matrix" }),{key: "euclidean"});
-	//fireEvent.keyDown(screen.getByRole("combobox",{name: "Order by" }),{key: "petal_length"});
-	//fireEvent.keyDown(screen.getByRole("combobox",{name: "Labels" }),{key: "petal_width"});
+	fireEvent.keyDown(screen.getByRole("combobox",{name: "Order by" }),{key: "petal_length"});
+	fireEvent.keyDown(screen.getByRole("combobox",{name: "Labels" }),{key: "petal_width"});
 },30000);
 
 test("Heat map", async() => {
@@ -54,21 +53,21 @@ test("Heat map", async() => {
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis X" }),{key: "sepal_length"});
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis Y" }),{key: "sepal_width"});
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Heat" }),{key: "petal_length"});
-});
+},30000);
 
 test("Force field", async() => {
 	render(<App />);
-	fireEvent.click(screen.getByRole('button',{name: 'Calcola distanza' }));
+	fireEvent.click(screen.getByRole("button",{name: "Calcola distanza" }));
 	await waitFor(() => {
-		(
-			expect(screen.getByRole('button',{name: 'Start reduction' })).toBeInTheDocument()
-		)
+		
+		expect(screen.getByRole("button",{name: "Start reduction" })).toBeInTheDocument()
+		
 	})
-	fireEvent.click(screen.getByRole('button', { name: 'Start reduction' }));
+	fireEvent.click(screen.getByRole("button", { name: "Start reduction" }));
 	await waitFor(() => {
-		(
-			expect(screen.getByRole("button",{name: "Force Field" })).toBeInTheDocument()
-		)
+		
+		expect(screen.getByRole("button",{name: "Force Field" })).toBeInTheDocument()
+		
 	})
 	fireEvent.click(screen.getByRole("button",{name: "Force Field" }));
 	await waitFor(() => {
