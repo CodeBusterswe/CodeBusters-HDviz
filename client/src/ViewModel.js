@@ -78,6 +78,9 @@ class ViewModel{
 	getFfPreferences(){
 		return Object.values(this.preferences.ffPreferences);
 	}
+	getPlmaPreferences(){
+		return Object.values(this.preferences.plmaPreferences);
+	}
 
 	setChartToShow(chartName){
 		this.preferences.chart = chartName;
@@ -131,6 +134,18 @@ class ViewModel{
 			break;
 		case "distMin":
 			this.preferences.ffDistMin = value;
+			break;
+		default:
+			break;
+		}
+	}
+	setPlmaPreferences(identifier, value){
+		switch(identifier){
+		case "dimensions":
+			this.preferences.plmaDimensions = value;
+			break;
+		case "color":
+			this.preferences.plmaColor = value;
 			break;
 		default:
 			break;

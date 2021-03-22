@@ -33,7 +33,10 @@ class Preferences{
 			distMax: Infinity,
 			distMin: 0,
 		};
-		this._PLMApreferences = {};
+		this._PLMApreferences = {
+			dimensions: [],
+			color: undefined,
+		};
 
 		makeAutoObservable(this);
 	}
@@ -45,6 +48,18 @@ class Preferences{
 			this.resetCharts();
 			this._chart[chart_name] = true;
 		}
+	}
+	get plmaDimensions(){
+		return this._PLMApreferences.dimensions;
+	}
+	get plmaColor(){
+		return this._PLMApreferences.plmaColor;
+	}
+	set plmaDimensions(dimensions){
+		this._PLMApreferences.dimensions = dimensions ;
+	}
+	set plmaColor(color){
+		this._PLMApreferences.color = color;
 	}
 	get amLabel(){
 		return this._AMpreferences.label;
@@ -224,6 +239,10 @@ class Preferences{
 		this._HMpreferences.yAxis = undefined;
 		this._HMpreferences.heat = undefined;
 	}
+	resetPlmaPreferences(){
+		this._PLMApreferences.dimensions.clear();
+		this._PLMApreferences.color = undefined;
+	}
 
 	reset(){
 		this.resetCharts();
@@ -231,6 +250,7 @@ class Preferences{
 		this.resetHmPreferences();
 		this.resetFfPreferences();
 		this.resetAmPreferences();
+		this.resetPlmaPreferences();
 	}
 } 
 
