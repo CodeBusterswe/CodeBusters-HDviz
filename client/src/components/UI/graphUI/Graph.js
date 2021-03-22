@@ -1,10 +1,10 @@
-import React , {useState} from "react"
-import { useStore } from "../../../ContextProvider"
-import { ScatterPlotMatrix, ForceField, AdjacencyMatrix, HeatMap, Plma } from "./charts"
-import { ScatterPlotMatrixPreferences, ForceFieldPreferences, AdjacencyMatrixPreferences, HeatMapPreferences, PlmaPreferences } from "./preferences"
-import {observer} from "mobx-react-lite"
-import {VisualizationType} from "../../../utils"
-import {Button} from "react-bootstrap"
+import React , {useState} from "react";
+import { useStore } from "../../../ContextProvider";
+import { ScatterPlotMatrix, ForceField, AdjacencyMatrix, HeatMap, Plma } from "./charts";
+import { ScatterPlotMatrixPreferences, ForceFieldPreferences, AdjacencyMatrixPreferences, HeatMapPreferences, PlmaPreferences } from "./preferences";
+import {observer} from "mobx-react-lite";
+import {VisualizationType} from "../../../utils";
+import {Button} from "react-bootstrap";
 
 function Graph(){
 	const [show, setShow] = useState(true);
@@ -27,7 +27,7 @@ function Graph(){
 						<ScatterPlotMatrixPreferences/>
 					</div>	
 				</>
-			)
+			);
 			
 		case VisualizationType.AdjacencyMatrix:
 			return (
@@ -37,7 +37,7 @@ function Graph(){
 						<AdjacencyMatrixPreferences/>
 					</div>	
 				</>
-			)
+			);
 		case VisualizationType.ForceField:
 			return (
 				<>
@@ -46,7 +46,7 @@ function Graph(){
 						<ForceFieldPreferences/>
 					</div>	
 				</>
-			)
+			);
 		case VisualizationType.HeatMap:
 			return (
 				<>
@@ -55,7 +55,7 @@ function Graph(){
 						<HeatMapPreferences/>
 					</div>	
 				</>
-			)
+			);
 		case VisualizationType.PLMA:
 			return (
 				<>
@@ -64,7 +64,7 @@ function Graph(){
 						<PlmaPreferences/>
 					</div>	
 				</>
-			)
+			);
 		default: break;
 		}
 	}
@@ -72,21 +72,21 @@ function Graph(){
 	function renderCharts(){
 		switch(viewModel.getChartToShow()){
 		case VisualizationType.ScatterPlotMatrix:
-			return <ScatterPlotMatrix/>
+			return <ScatterPlotMatrix/>;
 		case VisualizationType.AdjacencyMatrix:
-			return <AdjacencyMatrix/>
+			return <AdjacencyMatrix/>;
 		case VisualizationType.ForceField:
-			return <ForceField/>
+			return <ForceField/>;
 		case VisualizationType.HeatMap:
-			return <HeatMap/>
+			return <HeatMap/>;
 		case VisualizationType.PLMA:
-			return <Plma/>
+			return <Plma/>;
 		default:
 			return <p>Seleziona un grafico dalla colonna a sinistra</p>;
 		}
 	}
 
-	const viewModel = useStore()
+	const viewModel = useStore();
 	return(
 		<div className="content">
 			{/*<input type="button" value="MOSTRA STATO MODELLO" onClick={ () => {
@@ -103,6 +103,6 @@ function Graph(){
 				{renderCharts()}
 			</div>
 		</div>
-	)
+	);
 }
-export default observer(Graph)
+export default observer(Graph);

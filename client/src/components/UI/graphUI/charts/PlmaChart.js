@@ -7,6 +7,6 @@ const Plma = () => {
 
 	return(
 		<p>chart plma</p>
-	)
-}
+	);
+};
 export default observer(Plma);

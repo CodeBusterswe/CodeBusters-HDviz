@@ -1,8 +1,8 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import { useStore } from "../../../ContextProvider";
-import DimensionalReduction from "./ModalContent/DimensionalReduction"
-import DistanceCalculation from "./ModalContent/DistanceCalculation"
-import LoadCSV from "./ModalContent/LoadCSV"
+import DimensionalReduction from "./ModalContent/DimensionalReduction";
+import DistanceCalculation from "./ModalContent/DistanceCalculation";
+import LoadCSV from "./ModalContent/LoadCSV";
 import "../../style.css";
 import {OverlayTrigger , Popover} from "react-bootstrap";
 import {AiOutlineArrowRight , AiOutlineDotChart , AiOutlineFunction} from "react-icons/ai";
@@ -11,9 +11,9 @@ import {FaFileCsv} from "react-icons/fa";
 import { RiMistFill } from "react-icons/ri";
 import { IoGrid, IoShareSocialOutline, IoMoveSharp } from "react-icons/io5";
 import {SiGraphcool , SiJson} from "react-icons/si";
-import LoadDataFromDB from "./ModalContent/loadDataFromDB/LoadDataFromDB"
+import LoadDataFromDB from "./ModalContent/loadDataFromDB/LoadDataFromDB";
 import { VisualizationType } from "../../../utils";
-import useWindowWidth from "./WindowWidth"
+import useWindowWidth from "./WindowWidth";
 
 const Menu = () => { 
 	const [modalIsOpen, setIsOpen] = useState(false);
@@ -46,19 +46,19 @@ const Menu = () => {
 	function openGraph(index) {
 		switch(index) {
 		case 5:
-			viewModel.setChartToShow(VisualizationType.ScatterPlotMatrix)
+			viewModel.setChartToShow(VisualizationType.ScatterPlotMatrix);
 			break;
 		case 6:
-			viewModel.setChartToShow(VisualizationType.AdjacencyMatrix)
+			viewModel.setChartToShow(VisualizationType.AdjacencyMatrix);
 			break;
 		case 7:
-			viewModel.setChartToShow(VisualizationType.HeatMap)
+			viewModel.setChartToShow(VisualizationType.HeatMap);
 			break;
 		case 8:
-			viewModel.setChartToShow(VisualizationType.ForceField)
+			viewModel.setChartToShow(VisualizationType.ForceField);
 			break;
 		case 9:
-			viewModel.setChartToShow(VisualizationType.PLMA)
+			viewModel.setChartToShow(VisualizationType.PLMA);
 			break;
 			//TODO: togliere che se il bottone è cliccato più volte il grafico compare e scompare (toggle)
 		default: break;
@@ -68,20 +68,20 @@ const Menu = () => {
 	function handleContent(index) {
 		switch (index) {
 		case 1: 
-		  return <LoadDataFromDB modalIsOpen={modalIsOpen} closeModal={closeModal}/>
+		  return <LoadDataFromDB modalIsOpen={modalIsOpen} closeModal={closeModal}/>;
 		case 2:
-			return <LoadCSV modalIsOpen={modalIsOpen} closeModal={closeModal}></LoadCSV>
+			return <LoadCSV modalIsOpen={modalIsOpen} closeModal={closeModal}></LoadCSV>;
 		case 3:
-			return <DimensionalReduction modalIsOpen={modalIsOpen} closeModal={closeModal}></DimensionalReduction>
+			return <DimensionalReduction modalIsOpen={modalIsOpen} closeModal={closeModal}></DimensionalReduction>;
 		case 4:
-			return <DistanceCalculation modalIsOpen={modalIsOpen} closeModal={closeModal}></DistanceCalculation>
+			return <DistanceCalculation modalIsOpen={modalIsOpen} closeModal={closeModal}></DistanceCalculation>;
 		default:
 			break;
 		}
 	}
 	
 	function checkToDisabled(index){
-		return index >= 3 && viewModel.getCheckedDimensions().length === 0
+		return index >= 3 && viewModel.getCheckedDimensions().length === 0;
 	}
 
 	const popover = 
@@ -90,7 +90,7 @@ const Menu = () => {
 			<Popover.Content>
 					Prima devi aver caricato i dati
 			</Popover.Content>
-		</Popover>
+		</Popover>;
 
 	//? CON QUESTA IL POPOVER CAMBIA POSIZIONE A TOP SOLO IN UNA NUOVA SESSIONE
 	//? RICEVE LA WIDTH SOLO APPENA INIZIATA LA SESSIONE (quindi non cambia il valore se si ridimensiona la pagina)
@@ -127,13 +127,13 @@ const Menu = () => {
 									</button>
 								}	
 							</li> 
-						)
+						);
 					})} 
 				</ul> 
 			</nav> 
 			{handleContent(id)}
 		</>
-	)
-}
+	);
+};
 
-export default Menu
+export default Menu;

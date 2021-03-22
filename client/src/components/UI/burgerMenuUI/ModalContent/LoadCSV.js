@@ -1,10 +1,10 @@
 import React, {useState , useEffect} from "react";
-import {Button} from "react-bootstrap"
-import MyCSVReader from "./MyCSVReader"
-import DimList from "./DimList"
-import { useStore } from "../../../../ContextProvider"
-import { ModalBody, ModalFooter ,Alert , Modal } from "react-bootstrap"
-import "../../../style.css"
+import {Button} from "react-bootstrap";
+import MyCSVReader from "./MyCSVReader";
+import DimList from "./DimList";
+import { useStore } from "../../../../ContextProvider";
+import { ModalBody, ModalFooter ,Alert , Modal } from "react-bootstrap";
+import "../../../style.css";
 
 const LoadCSV = props => {
 	const viewModel = useStore();
@@ -15,15 +15,15 @@ const LoadCSV = props => {
 	const {
 		modalIsOpen,
 		closeModal
-	} = props
+	} = props;
 
 	function loadDataAndDims(){
 		console.time("clickLoadData");
 		//devo anche aggiornare i selectedData con le nuove dimensioni selezionate
 		if(localData)
-			viewModel.loadDataAndDims(localData, localDimensions)//questo viene chiamato quando l'utente cambia il file
+			viewModel.loadDataAndDims(localData, localDimensions);//questo viene chiamato quando l'utente cambia il file
 		else	
-			viewModel.updateDims(localDimensions) //quessto viene chiamato quando l'utente aggiorna le dimensioni
+			viewModel.updateDims(localDimensions); //quessto viene chiamato quando l'utente aggiorna le dimensioni
 		//funzione utilizzata da CSV Reader per salvare localmente dati e dimensioni
 		resetAndClose();
 		console.timeEnd("clickLoadData");
@@ -31,7 +31,7 @@ const LoadCSV = props => {
 
 	function resetAndClose(){
 		setLocalData();
-		closeModal()
+		closeModal();
 	}
 	//funzione utilizzata da CSV Reader per salvare localmente dati e dimensioni
 	function setLocalStates(newData, newDims){
@@ -39,45 +39,45 @@ const LoadCSV = props => {
 		setLocalDimensions(newDims);
 	}
 	function selectAllDimensions(event){
-		let temp = [...localDimensions]
+		let temp = [...localDimensions];
 		temp.forEach(dimension => {
-			dimension.isChecked(event.target.checked)
+			dimension.isChecked(event.target.checked);
 		});
-		setLocalDimensions(temp)
+		setLocalDimensions(temp);
 	}
 	function selectDimension(event){
-		let temp = [...localDimensions]
+		let temp = [...localDimensions];
 		temp.forEach(dimension =>{
 			if(dimension.getValue() === event.target.id)
-				dimension.isChecked(event.target.checked)
-		})
-		setLocalDimensions(temp)
+				dimension.isChecked(event.target.checked);
+		});
+		setLocalDimensions(temp);
 	}
 	function areAllSelected(){
-		return localDimensions.length === localDimensions.filter(d => d.getChecked()).length
+		return localDimensions.length === localDimensions.filter(d => d.getChecked()).length;
 	}
 	
 	function openAlertSuccess() {
 		return viewModel.getCheckedDimensions().length !== 0 ?
 			setShowSuccess(true) :
-			setShowDanger(true)
+			setShowDanger(true);
 	}
 	
 	useEffect(() => {
-		const time = 4000
-		let timer = setTimeout(() => setShowSuccess(false), time)
-		return () => clearTimeout(timer)
-	},[showSuccess])
+		const time = 4000;
+		let timer = setTimeout(() => setShowSuccess(false), time);
+		return () => clearTimeout(timer);
+	},[showSuccess]);
 
 	function openAlertDanger() {
-		setShowDanger(true)
+		setShowDanger(true);
 	}
 	
 	useEffect(() => {
-		const time = 4000
-		let timer = setTimeout(() => setShowDanger(false), time)
-		return () => clearTimeout(timer)
-	},[showDanger])
+		const time = 4000;
+		let timer = setTimeout(() => setShowDanger(false), time);
+		return () => clearTimeout(timer);
+	},[showDanger]);
 
 	return(
 		<>
@@ -115,7 +115,7 @@ const LoadCSV = props => {
 				</p>
 			</Alert> 
 		</>
-	)
-}
+	);
+};
 
-export default LoadCSV
+export default LoadCSV;

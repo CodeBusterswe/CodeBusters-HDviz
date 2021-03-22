@@ -36,7 +36,7 @@ const AdjacencyMatrixPreferences = () => {
 				>
 					<option value={"undefined"} key={"noDistancematrix"}>No distance matrix</option>
 					{matrices.map((d) => {
-						return <option value={d} key={d}>{d}</option>
+						return <option value={d} key={d}>{d}</option>;
 					})}
 				</Form.Control>
 			</Form.Group>
@@ -51,7 +51,7 @@ const AdjacencyMatrixPreferences = () => {
 					<option value={"undefined"} key={"noOrder"}>No order</option>
 					<option value={"group"} key={"group"}>Group</option>
 					{sorts.map((d) => {
-						return <option value={d} key={d}>{d}</option>
+						return <option value={d} key={d}>{d}</option>;
 					})}
 				</Form.Control>
 			</Form.Group>
@@ -66,11 +66,11 @@ const AdjacencyMatrixPreferences = () => {
 					<option value={"undefined"} key={"noLabel"} >No label</option>
 					<option value={"group"} key={"group"}>Group</option>
 					{sorts.map((d) => {
-						return <option value={d} key={d}>{d}</option>
+						return <option value={d} key={d}>{d}</option>;
 					})}
 				</Form.Control>
 			</Form.Group>
 		</Form>
-	)
-}
+	);
+};
 export default observer(AdjacencyMatrixPreferences);

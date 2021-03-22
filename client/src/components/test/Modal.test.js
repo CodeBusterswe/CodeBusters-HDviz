@@ -17,9 +17,9 @@ test("Carica un csv", async() => {
 	fireEvent.click(screen.getByRole("button",{name: "Conferma selezione" }));
 	await waitFor(() => {
 		
-		expect(screen.getByRole("heading",{name: "HDViz" })).toBeInTheDocument()
+		expect(screen.getByRole("heading",{name: "HDViz" })).toBeInTheDocument();
 		
-	})
+	});
 },30000);
 test("Open and redux dimension", async () => {
 	render(<App />);
@@ -30,9 +30,9 @@ test("Open and redux dimension", async () => {
 	fireEvent.click(screen.getByRole("button", { name: "Start reduction" }));
 	await waitFor(() => {
 		
-		expect(screen.getByRole("heading",{name: "HDViz" })).toBeInTheDocument()
+		expect(screen.getByRole("heading",{name: "HDViz" })).toBeInTheDocument();
 		
-	})
+	});
 },30000);
 test("Calcola distanza", async() => {
 	render(<App />);
@@ -43,7 +43,7 @@ test("Calcola distanza", async() => {
 	fireEvent.click(screen.getByRole("button", { name: "Start reduction" }));
 	await waitFor(() => {
 		
-		expect(screen.getByRole("heading",{name: "HDViz" })).toBeInTheDocument()
+		expect(screen.getByRole("heading",{name: "HDViz" })).toBeInTheDocument();
 		
-	})
+	});
 },30000);

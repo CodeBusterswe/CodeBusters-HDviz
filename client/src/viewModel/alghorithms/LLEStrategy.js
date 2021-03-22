@@ -1,4 +1,4 @@
-import AlgorithmInterface from "./../AlghorithmInterface"
+import AlgorithmInterface from "./../AlghorithmInterface";
 import * as dr from "@saehrimnir/druidjs";
 
 class LLEStrategy extends AlgorithmInterface{

@@ -1,14 +1,14 @@
-import React, { useState } from "react"
-import { useStore } from "../../../../ContextProvider"
-import Modal from "react-bootstrap/Modal"
-import { Button, ModalBody, ModalFooter } from "react-bootstrap"
-import Select from "react-select"
+import React, { useState } from "react";
+import { useStore } from "../../../../ContextProvider";
+import Modal from "react-bootstrap/Modal";
+import { Button, ModalBody, ModalFooter } from "react-bootstrap";
+import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import {DistanceType} from "../../../../utils"
-import Form from "react-bootstrap/Form"
+import {DistanceType} from "../../../../utils";
+import Form from "react-bootstrap/Form";
 
 const DistanceCalculation = props => {
-	const viewModel = useStore()
+	const viewModel = useStore();
 	const [dimensionsToRedux, setDimensionsToRedux] = useState(viewModel.getOptionsForReduxDimensionsList().slice(0,2));
 	const [distanceType, setDistanceType] = useState(DistanceType.Euclidean);	
 	const [newDistanceMatrixName, setNewDistanceMatrixName] = useState(DistanceType.Euclidean);
@@ -17,37 +17,37 @@ const DistanceCalculation = props => {
 	const {
 		modalIsOpen,
 		closeModal
-	} = props
+	} = props;
 
 	function handleSubmit(e){
 		const form = e.currentTarget;
 		e.preventDefault();
     	if (form.checkValidity() === true) {
-			viewModel.beginReduceDimensionsByDist(distanceType, dimensionsToRedux.map(d => d.value), newDistanceMatrixName)
-			closeModal()
+			viewModel.beginReduceDimensionsByDist(distanceType, dimensionsToRedux.map(d => d.value), newDistanceMatrixName);
+			closeModal();
 			//alert("Distanza calcolata con successo");
 		}
 		setValidated(true);
 	}
 	function handleChangeDistanceType(e){
-		setNewDistanceMatrixName(e.target.value)
-		setDistanceType(e.target.value)
+		setNewDistanceMatrixName(e.target.value);
+		setDistanceType(e.target.value);
 	}
 	function handleChangeNewDistanceMatrixName(e){
-		setNewDistanceMatrixName(e.target.value)
+		setNewDistanceMatrixName(e.target.value);
 	}
 
 	function handleChangeDimensionsToRedux (value, handler){
 		switch(handler.action){
 		case "select-option":
-			setDimensionsToRedux(value)
+			setDimensionsToRedux(value);
 			return;
 		case "remove-value":
 			if(value.length >= 2)
-				setDimensionsToRedux(value)
+				setDimensionsToRedux(value);
 			return;
 		case "clear":
-			setDimensionsToRedux(dimensionsToRedux.slice(0,2))
+			setDimensionsToRedux(dimensionsToRedux.slice(0,2));
 			return;
 		default:
 			return;
@@ -112,7 +112,7 @@ const DistanceCalculation = props => {
 				</ModalFooter>
 			</Form>
 		</Modal>
-	)
-}
+	);
+};
 
-export default DistanceCalculation
+export default DistanceCalculation;

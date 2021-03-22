@@ -34,7 +34,7 @@ const ForceField = () => {
 						return d.id;
 					}).
 					distance(function(d) {
-						return d.value})).
+						return d.value;})).
 				force("charge", d3.forceManyBody()).
 				force("center", d3.forceCenter(width / 2, height / 2));
 
@@ -90,8 +90,8 @@ const ForceField = () => {
 
 		function drawNode(d) {
 			context.beginPath();
-			d.x = Math.max(radius, Math.min(width - radius, d.x))
-			d.y =Math.max(radius, Math.min(height - radius, d.y))
+			d.x = Math.max(radius, Math.min(width - radius, d.x));
+			d.y =Math.max(radius, Math.min(height - radius, d.y));
 			context.moveTo(d.x + 3, d.y);
 			context.arc(d.x, d.y, radius, 0, 2 * Math.PI);
 			context.fillStyle = myColor(d[color]);
@@ -99,9 +99,9 @@ const ForceField = () => {
 			context.fill();
 			context.stroke();
 		}
-	},)
+	},);
 	return(
 		<canvas ref={canvasRef} className="plot" id="ff-canvas"></canvas>
-	)
-}
+	);
+};
 export default observer(ForceField);

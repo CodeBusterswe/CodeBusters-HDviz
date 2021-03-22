@@ -1,5 +1,5 @@
-import { makeAutoObservable} from "mobx"
-import {VisualizationType} from "../utils"
+import { makeAutoObservable} from "mobx";
+import {VisualizationType} from "../utils";
 class Preferences{
 	constructor(){
 		this._chart = {
@@ -8,46 +8,46 @@ class Preferences{
 			[VisualizationType.HeatMap]: false,
 			[VisualizationType.AdjacencyMatrix]: false,
 			[VisualizationType.PLMA]: false,
-		}
+		};
 		this._SPMPreferences = {
 			axis1: undefined,
 			axis2: undefined,
 			axis3: undefined,
 			axis4: undefined,
 			axis5: undefined,
-		}
-		this._SPMColor = undefined
+		};
+		this._SPMColor = undefined;
 		this._AMpreferences = {
 			distanceMatrix: undefined,
 			orderBy: undefined,
 			label: undefined
-		}
+		};
 		this._HMpreferences = {
 			xAxis: undefined,
 			yAxis: undefined,
 			heat: undefined
-		}
+		};
 		this._FFpreferences = {
 			distanceMatrix: undefined,
 			color: undefined,
 			distMax: Infinity,
 			distMin: 0,
-		}
-		this._PLMApreferences = {}
+		};
+		this._PLMApreferences = {};
 
 		makeAutoObservable(this);
 	}
 
 	set chart(chart_name){
 		if(this._chart[chart_name])
-			this._chart[chart_name] = false
+			this._chart[chart_name] = false;
 		else{
 			this.resetCharts();
-			this._chart[chart_name] = true
+			this._chart[chart_name] = true;
 		}
 	}
 	get amLabel(){
-		return this._AMpreferences.label
+		return this._AMpreferences.label;
 	}
 
 	get amDistanceMatrix(){
@@ -126,22 +126,22 @@ class Preferences{
 	}
 
 	set SpmAxis1(dimensionsValue){
-		this._SPMPreferences.axis1 = dimensionsValue
+		this._SPMPreferences.axis1 = dimensionsValue;
 	}
 	set SpmAxis2(dimensionsValue){
-		this._SPMPreferences.axis2 = dimensionsValue
+		this._SPMPreferences.axis2 = dimensionsValue;
 	}
 	set SpmAxis3(dimensionsValue){
-		this._SPMPreferences.axis3 = dimensionsValue
+		this._SPMPreferences.axis3 = dimensionsValue;
 	}
 	set SpmAxis4(dimensionsValue){
-		this._SPMPreferences.axis4 = dimensionsValue
+		this._SPMPreferences.axis4 = dimensionsValue;
 	}
 	set SpmAxis5(dimensionsValue){
-		this._SPMPreferences.axis5 = dimensionsValue
+		this._SPMPreferences.axis5 = dimensionsValue;
 	}
 	set SpmColor(dimensionsValue){
-		this._SPMColor = dimensionsValue
+		this._SPMColor = dimensionsValue;
 	}
 
 	get amPreferences(){
@@ -161,7 +161,7 @@ class Preferences{
 	}
 
 	get SpmAxes(){
-		return [this.SpmAxis1, this.SpmAxis2, this.SpmAxis3, this.SpmAxis4, this.SpmAxis5]
+		return [this.SpmAxis1, this.SpmAxis2, this.SpmAxis3, this.SpmAxis4, this.SpmAxis5];
 	}
 
 	setSPMAxis(identifier, value){
@@ -169,26 +169,26 @@ class Preferences{
 	}
 
 	get SpmAxis1(){
-		return this._SPMPreferences.axis1
+		return this._SPMPreferences.axis1;
 	}
 	get SpmAxis2(){
-		return this._SPMPreferences.axis2
+		return this._SPMPreferences.axis2;
 	}
 	get SpmAxis3(){
-		return this._SPMPreferences.axis3
+		return this._SPMPreferences.axis3;
 	}
 	get SpmAxis4(){
-		return this._SPMPreferences.axis4
+		return this._SPMPreferences.axis4;
 	}
 	get SpmAxis5(){
-		return this._SPMPreferences.axis5
+		return this._SPMPreferences.axis5;
 	}
 	get SpmColor(){
-		return this._SPMColor
+		return this._SPMColor;
 	}
 
 	get chart(){
-		return Object.keys(this._chart).filter(key => this._chart[key])[0]
+		return Object.keys(this._chart).filter(key => this._chart[key])[0];
 	}
 
 	resetCharts(){

@@ -9,12 +9,12 @@ test("Open and close CSV modal", async() => {
 	render(<App />);
 	fireEvent.click(screen.getByRole("button",{name: "Carica dati da CSV" }));
 	await waitFor(() => {			
-		expect(screen.getByRole("button", { name: "Torna al menù" })).toBeInTheDocument()
-	})
+		expect(screen.getByRole("button", { name: "Torna al menù" })).toBeInTheDocument();
+	});
 	fireEvent.click(screen.getByRole("button", { name: "Torna al menù" }));
 	
 	await waitFor(() => {	
-		expect(screen.getByRole("button", { name: "Torna al menù" })).toBeInTheDocument()
-	})
+		expect(screen.getByRole("button", { name: "Torna al menù" })).toBeInTheDocument();
+	});
 	
 });

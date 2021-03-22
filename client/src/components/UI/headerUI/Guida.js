@@ -1,6 +1,6 @@
-import React from "react"
-import {Modal ,Button, ModalBody, ModalFooter} from "react-bootstrap"
-import "../../style.css"
+import React from "react";
+import {Modal ,Button, ModalBody, ModalFooter} from "react-bootstrap";
+import "../../style.css";
 import {AiOutlineDotChart , AiOutlineFunction} from "react-icons/ai";
 import {ImDatabase} from "react-icons/im";
 import {FaFileCsv} from "react-icons/fa";
@@ -12,7 +12,7 @@ function Guida(props) {
 	const {
 		modalIsOpen,
 		closeModal
-	} = props
+	} = props;
 	return (
 		<Modal
 			show={modalIsOpen}
@@ -163,7 +163,7 @@ function Guida(props) {
 				<Button variant="secondary" onClick={closeModal}>Torna al menù</Button>
 			</ModalFooter>
 		</Modal>
-	)
+	);
 }
 
-export default Guida
+export default Guida;

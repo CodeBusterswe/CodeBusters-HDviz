@@ -1,11 +1,11 @@
 import React,{useState,useEffect} from "react";
-import { Dropdown,DropdownButton,ButtonGroup,Container,Row,Col } from "react-bootstrap"
-import { useStore } from "../../../../../../ContextProvider"
-import {OptionList} from "./"
+import { Dropdown,DropdownButton,ButtonGroup,Container,Row,Col } from "react-bootstrap";
+import { useStore } from "../../../../../../ContextProvider";
+import {OptionList} from "./";
 export const DropDown = props => {
 	const {Dataset,Columns,getAllOptions}=props;
 	const viewModel = useStore();
-	const [getColumns,setColumns] = useState(null)
+	const [getColumns,setColumns] = useState(null);
 	const [columnOption, setcolumnOption] = useState(null);
 	const [table, setTable] = useState(null);
 	
@@ -13,17 +13,17 @@ export const DropDown = props => {
 		//const col =await viewModel.getColumnsWithName();
 		//setColumns(col);		
 		return () => {
-		}
-	},[])
+		};
+	},[]);
 
 	async function handleData(table_name){
 	//	console.log("selected:",table_name)
 		const col =await viewModel.getColumnsWithName(table_name);
 		setColumns(col);
-		setTable(table_name)
+		setTable(table_name);
 		const colList =await viewModel.getColumnList(table_name);
-		console.log("colList:",colList)
-		setcolumnOption(colList)
+		console.log("colList:",colList);
+		setcolumnOption(colList);
 		//viewModel.getTableWithName(table_name)	
 	}
 
@@ -35,7 +35,7 @@ export const DropDown = props => {
 		viewModel.getDatasetByParams(A,table)
 	} */
 	function hanldeAllOptions(newData,dims){
-		getAllOptions(newData,dims)
+		getAllOptions(newData,dims);
 		console.log("hanldeAllOptions:",newData, "dims:",dims);
 	}
 	return (

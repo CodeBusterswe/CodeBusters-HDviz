@@ -43,14 +43,14 @@ const AdjacencyMatrix = () => {
 			
 		let linkHash = {};
 		links.forEach(edge =>{
-			let id = edge.source + "-" + edge.target
-			linkHash[id] = edge
-		})
+			let id = edge.source + "-" + edge.target;
+			linkHash[id] = edge;
+		});
 
-		var matrix = []
+		var matrix = [];
 		for (let i = 0; i < nodes.length; i++) {
 			for (let j = 0; j < nodes.length; j++) {
-				let grid = {id: nodes[i].id+"-"+nodes[j].id, x:i, y: j, source: nodes[i], target: nodes[j], value: 0}
+				let grid = {id: nodes[i].id+"-"+nodes[j].id, x:i, y: j, source: nodes[i], target: nodes[j], value: 0};
 				if(linkHash[grid.id]){ //esiste
 					grid.value = linkHash[grid.id].value; //value=2
 				}else{
@@ -60,7 +60,7 @@ const AdjacencyMatrix = () => {
 						grid.value = linkHash[correct].value;
 					}
 				}
-				matrix.push(grid)
+				matrix.push(grid);
 			}
 		}
 			
@@ -106,7 +106,7 @@ const AdjacencyMatrix = () => {
 			attr("y", (d,i) => i * scale.bandwidth() + scale.bandwidth()/2).
 			text(d => d[dimLabels]).
 			style("text-anchor","start").
-			style("font-size","10px")        
+			style("font-size","10px");        
 		
 		svg.
 			append("g").attr("transform","translate(45,50)").
@@ -117,12 +117,12 @@ const AdjacencyMatrix = () => {
 			attr("y",(d,i) => i * scale.bandwidth() + scale.bandwidth()/2).
 			text(d => d[dimLabels]).
 			style("text-anchor","end").
-			style("font-size","10px")
+			style("font-size","10px");
 				
 	});
 	return (
 		<div className="adjacencyMatrix">
 		</div>
-	)
-}
+	);
+};
 export default observer(AdjacencyMatrix);

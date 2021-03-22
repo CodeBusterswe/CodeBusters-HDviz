@@ -1,8 +1,8 @@
 import React,{useState,useEffect} from "react";
-import Select from "react-select"
+import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import { Form } from "react-bootstrap"
-import { useStore } from "../../../../../../ContextProvider"
+import { Form } from "react-bootstrap";
+import { useStore } from "../../../../../../ContextProvider";
 
 const OptionList = props => {
 	const {options,table,hanldeAllOptions} =props;
@@ -11,21 +11,21 @@ const OptionList = props => {
 	const [columnSelected, setcolumnSelected] = useState(null);
 	//console.log("dataSelected:",dataSelected);
 	async function handleColumnSelected(col){
-		setcolumnSelected(col)
-		const parsedData= await viewModel.getDatasetByParams(col,table)
+		setcolumnSelected(col);
+		const parsedData= await viewModel.getDatasetByParams(col,table);
 		//var myJsonString = JSON.stringify(parsedData);
 		console.log("parsedData:",parsedData);
 
-		setDataSelected(parsedData)
+		setDataSelected(parsedData);
 		if(dataSelected){
 			function prepareData(){
 				return parsedData.map(data=> {
-					return {data:Object.values(data)}
-				})
+					return {data:Object.values(data)};
+				});
 			}
 			const toParseData=prepareData();
-			const [data, dimensions] = viewModel.parseAndLoadCsvData(toParseData)
-			hanldeAllOptions(data, dimensions)
+			const [data, dimensions] = viewModel.parseAndLoadCsvData(toParseData);
+			hanldeAllOptions(data, dimensions);
 			//console.log("parsedData:",data, "dimensions:",dimensions);
 		}
 	}

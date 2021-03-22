@@ -7,6 +7,6 @@ const PlmaPreferences = () => {
 
 	return(
 		<p>preferences plma</p>
-	)
-}
+	);
+};
 export default observer(PlmaPreferences);
