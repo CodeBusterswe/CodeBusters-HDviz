@@ -1,8 +1,8 @@
 import { createEvent, fireEvent, getByRole, getByText, render, screen, waitFor } from "@testing-library/react";
 import App from "../App";
-/*
+
 test("Scatterplot matrix", async() => {
-	render(<App />);
+/*	render(<App />);
 	fireEvent.click(screen.getByRole("button",{name: "Scatterplot Matrix" }));
 	await waitFor(() => {
 		
@@ -14,9 +14,9 @@ test("Scatterplot matrix", async() => {
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis Three" }),{key: "petal_length"});
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis Four" }),{key: "petal_width"});
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Color" }),{key: "species"});
-	screen.debug();
+	screen.debug();*/
 });
-
+/*
 test("Adjacency matrix", async() => {
 	render(<App />);
 	fireEvent.click(screen.getByRole("button",{name: "Adjacency Matrix" }));
