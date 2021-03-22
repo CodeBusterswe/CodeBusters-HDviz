@@ -25,7 +25,7 @@ const DistanceCalculation = props => {
     	if (form.checkValidity() === true) {
 			viewModel.beginReduceDimensionsByDist(distanceType, dimensionsToRedux.map(d => d.value), newDistanceMatrixName)
 			closeModal()
-			alert("Distanza calcolata con successo");
+			//alert("Distanza calcolata con successo");
 		}
 		setValidated(true);
 	}

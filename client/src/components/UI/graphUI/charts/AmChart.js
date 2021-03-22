@@ -19,7 +19,7 @@ const AdjacencyMatrix = () => {
 		nodes = dm.nodes; 
 		links = dm.links;
 	}
-	
+	console.log(nodes);
 	const scale = d3.scaleBand().
 			domain(nodes.map(d => d.id)).
 			range([ 0, width]),
@@ -73,7 +73,7 @@ const AdjacencyMatrix = () => {
 			attr("id", "am-canvas").
 			attr("width", width + margin.left + margin.right).
 			attr("height", height + margin.top + margin.bottom);
-
+		
 		let ctx = canvas.node().getContext("2d");
 		ctx.translate(50, 50);
 

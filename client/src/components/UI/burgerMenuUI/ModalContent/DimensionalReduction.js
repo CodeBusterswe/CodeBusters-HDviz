@@ -39,7 +39,7 @@ const DimensionalReduction = props => {
 					Epsilon: epsilon
 				});
 			closeModal()
-			alert("Riduzione eseguita con successo");
+			//alert("Riduzione eseguita con successo");
 		}
 		setValidated(true);
 	}

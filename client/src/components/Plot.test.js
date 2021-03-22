@@ -2,7 +2,7 @@ import { createEvent, fireEvent, getByRole, getByText, render, screen, waitFor }
 import App from "../App";
 
 test("Scatterplot matrix", async() => {
-/*	render(<App />);
+	render(<App />);
 	fireEvent.click(screen.getByRole("button",{name: "Scatterplot Matrix" }));
 	await waitFor(() => {
 		
@@ -14,11 +14,24 @@ test("Scatterplot matrix", async() => {
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis Three" }),{key: "petal_length"});
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis Four" }),{key: "petal_width"});
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Color" }),{key: "species"});
-	screen.debug();*/
+	screen.debug();
 });
-/*
+
 test("Adjacency matrix", async() => {
+	jest.setTimeout(30000);
 	render(<App />);
+	fireEvent.click(screen.getByRole('button',{name: 'Calcola distanza' }));
+	await waitFor(() => {
+		(
+			expect(screen.getByRole('button',{name: 'Start reduction' })).toBeInTheDocument()
+		)
+	})
+	fireEvent.click(screen.getByRole('button', { name: 'Start reduction' }));
+	await waitFor(() => {
+		(
+			expect(screen.getByRole("button",{name: "Adjacency Matrix" })).toBeInTheDocument()
+		)
+	})
 	fireEvent.click(screen.getByRole("button",{name: "Adjacency Matrix" }));
 	await waitFor(() => {
 		
@@ -26,9 +39,8 @@ test("Adjacency matrix", async() => {
 		
 	})
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Distance Matrix" }),{key: "euclidean"});
-	fireEvent.keyDown(screen.getByRole("combobox",{name: "Order by" }),{key: "cluster"});
-	fireEvent.keyDown(screen.getByRole("combobox",{name: "Labels" }),{key: "species"});
-	screen.debug();
+	fireEvent.keyDown(screen.getByRole("combobox",{name: "Order by" }),{key: "petal_length"});
+	fireEvent.keyDown(screen.getByRole("combobox",{name: "Labels" }),{key: "petal_width"});
 });
 
 test("Heat map", async() => {
@@ -44,4 +56,3 @@ test("Heat map", async() => {
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Heat" }),{key: "petal_length"});
 	screen.debug();
 });
-*/
