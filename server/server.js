@@ -2,7 +2,10 @@ const express=require('express');
 const bodyParser =require('body-parser')
 const path =require('path')
 const db=require('./config/db')
+var port= require('./config/default');
 const cors = require('cors')
+/* const dotenv =require('dotenv');
+dotenv.config(); */
 
 
 const app=express();
@@ -59,6 +62,6 @@ if (process.env.NODE_ENV === 'production') {
   }
 
 
-const PORT =process.env.PORT ||5000;
+const RUN_ON =process.env.PORT||port.PORT;
 
-app.listen(PORT,()=>console.log(`Server started on port ${PORT}`))
+app.listen(RUN_ON,()=>console.log(`Server started on port ${RUN_ON}`))
