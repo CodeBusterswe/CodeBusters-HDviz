@@ -2,7 +2,7 @@ import Dimension from "./model/Dimension";
 import DistanceMatrix from "./model/DistanceMatrix";
 import Model from "./model/Model";
 import { toJS } from "mobx";
-import DimReductionStrategy from "./viewModel/DimReductionStrategy";
+import DimReduction from "./viewModel/DimReduction";
 import * as distCalc from "ml-distance";
 import {getDataset, getTables,getDatasetByName,getColumnByName,getDatasetWithParams} from "./model/services";  
 import Preferences from "./model/Preferences";
@@ -294,14 +294,14 @@ class ViewModel{
 		for (let i = 0; i < data.length; i++) {
 			for (let j = i+1; j < data.length; j++) {
 				let link = {
-					source : `node${i}`,
-					target : `node${j}`,
+					source : "node"+i,
+					target : "node"+j,
 					value: distCalc.distance[distType](data[i], data[j])
 				};
 				matrix.pushLink(link);
 			}
-			let node = this.getSelectedData()[i];
-			node.id="node".concat(i);
+			let node = {...this.getSelectedData()[i]};
+			node.id="node"+i;
 			node.group = prodotto.clusters[i];
 			matrix.pushNode(node);
 		}
@@ -319,7 +319,7 @@ class ViewModel{
 			console.log(e);
 		  }
 		//*******************************************************************
-		const drStrategy = new DimReductionStrategy();
+		const drStrategy = new DimReduction();
 
 		drStrategy.setStrategy(algorithm);
 		drStrategy.setData(data);
