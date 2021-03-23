@@ -217,6 +217,7 @@ class ViewModel{
 	}
 
 	loadDataAndDims(data, dims){
+		console.log(data,dims);
 		this.model.reset();
 		this.model.loadData(data);
 		this.model.loadDimensions(dims);
@@ -261,8 +262,6 @@ class ViewModel{
 			 })
 		console.log(string);
 		*/ 
-		//prova della riduzione tramite distanze
-		//this.reduceDimensionsByDist("euclidean", originalData, "name", "age");
 	}
 	
 	prepareDataForDR(dimensionsToRedux) {
@@ -308,8 +307,7 @@ class ViewModel{
 		this.model.addDistanceMatrix(matrix,matrixName);
 	}
 
-	async reduceDimensions(algorithm, paramaters, data) {
-		
+	reduceDimensions(algorithm, paramaters, data) {
 		//spostare dove serve questo controllo
 		try{
 			let nameAlreadyUsed = this.model.getDimensions().some(dim => dim.getValue().includes(paramaters.Name));
