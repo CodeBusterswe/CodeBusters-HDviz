@@ -11,6 +11,7 @@ const LoadDataFromDB = props => {
 	const [showSuccess, setShowSuccess] = useState(false);
 	const [showDanger, setShowDanger] = useState(false);
 	const [localData, setLocalData] = useState();
+	const [confirme, setConfirme] = useState(false);
 
 	const {
 		modalIsOpen,
@@ -19,7 +20,7 @@ const LoadDataFromDB = props => {
 
 	async function viewData(){
 		const data=await viewModel.getAllTables()
-		console.log("data:",data[0].length);
+		//console.log("data:",data[0].length);
 		setTables(data)
 	}
 
@@ -90,7 +91,7 @@ const LoadDataFromDB = props => {
 					<Modal.Title>Seleziona Dataset</Modal.Title>
 				</Modal.Header>
 				<ModalBody>
-					{getTable?<DropDown Dataset={getTable} Columns={getColumns} getAllOptions={getAllOptions}/>:
+					{getTable?<DropDown confirme={confirme} Dataset={getTable} Columns={getColumns} getAllOptions={getAllOptions}/>:
 						<Button variant="primary" disabled>
 							<Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
 								Loading...
@@ -100,7 +101,7 @@ const LoadDataFromDB = props => {
 				
 				<ModalFooter>
 					<Button variant="secondary" onClick={resetAndClose}>Torna al menù</Button>
-					<Button variant="primary" onClick={()=>{loadDataAndDims(); openAlertSuccess()}}>Conferma selezione</Button>
+					<Button variant="primary" onClick={()=>{loadDataAndDims(); openAlertSuccess(); setConfirme(true)}}>Conferma selezione</Button>
 				</ModalFooter>
 			</Modal>
 			<Alert show={showSuccess} variant="success" className="alert" dismissible onClose={() => setShowSuccess(false)}>

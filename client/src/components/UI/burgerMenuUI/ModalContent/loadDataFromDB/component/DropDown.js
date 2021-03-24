@@ -3,40 +3,37 @@ import { Dropdown,DropdownButton,ButtonGroup,Container,Row,Col } from "react-boo
 import { useStore } from "../../../../../../ContextProvider"
 import {OptionList} from "./"
 export const DropDown = props => {
-	const {Dataset,Columns,getAllOptions}=props;
+	const {Dataset,Columns,getAllOptions,confirme}=props;
+	console.log("confirme:",confirme)
 	const viewModel = useStore();
-	const [getColumns,setColumns] = useState(null)
+	//const [getColumns,setColumns] = useState(null)
 	const [columnOption, setcolumnOption] = useState(null);
 	const [table, setTable] = useState(null);
+	//console.log("getSelectedParams:",getSelectedParams)
 	
-	useEffect(async() => {
-		//const col =await viewModel.getColumnsWithName();
-		//setColumns(col);		
-		return () => {
+	useEffect(()=>{
+		if(confirme){
+			function handleConfirme(){
+				console.log("handleConfirme:",confirme)
+			}
+			handleConfirme();
 		}
-	},[])
-
+		
+	})
 	async function handleData(table_name){
-	//	console.log("selected:",table_name)
-		const col =await viewModel.getColumnsWithName(table_name);
-		setColumns(col);
+		//const col =await viewModel.getColumnsWithName(table_name);
 		setTable(table_name)
-		const colList =await viewModel.getColumnList(table_name);
-		console.log("colList:",colList)
-		setcolumnOption(colList)
-		//viewModel.getTableWithName(table_name)	
+		const columnList =await viewModel.getColumnList(table_name);
+		setcolumnOption(columnList)
+		
 	}
-
 	//handle column selected
-	/* 	function handleColumnSelected(col){
-		setcolumnSelected(col)
-		setQuery(columnSelected)
-		console.log("Query:", A.map(i=>i));
-		viewModel.getDatasetByParams(A,table)
-	} */
+	 	function handleColumnSelected(col){
+		//viewModel.getDatasetByParams(A,table)
+	} 
 	function hanldeAllOptions(newData,dims){
 		getAllOptions(newData,dims)
-		console.log("hanldeAllOptions:",newData, "dims:",dims);
+		//console.log("hanldeAllOptions:",newData, "dims:",dims);
 	}
 	return (
 		<Container >
@@ -68,7 +65,7 @@ export const DropDown = props => {
 			<Dropdown.Divider/>
 			<Row>
 				<Col>
-					<OptionList	options={columnOption} table={table} hanldeAllOptions={hanldeAllOptions}/>
+					<OptionList	options={columnOption} table={table} hanldeAllOptions={hanldeAllOptions} />
 				</Col>	
 			</Row>
 		</Container>

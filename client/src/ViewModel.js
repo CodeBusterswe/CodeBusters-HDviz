@@ -4,7 +4,7 @@ import Model from "./model/Model";
 import { toJS } from "mobx"
 import DimReductionStrategy from "./viewModel/DimReductionStrategy"
 import * as distCalc from "ml-distance";
-import {getDataset, getTables,getDatasetByName,getColumnByName,getDatasetWithParams} from "./model/services"  
+import {getDataset, getTables,getDatasetByName,getColumnByName,getDatasetWithParams,getDatasetWithCustomParams} from "./model/services"  
 import Preferences from "./model/Preferences";
 import kmeans from "ml-kmeans";
 
@@ -13,6 +13,7 @@ class ViewModel{
 	constructor(){
 		this.model = new Model(true);
 		this.preferences = new Preferences();
+		this.DIMS = new Dimension();
 	}
 	
 	//get all dataset from csv table
@@ -23,6 +24,11 @@ class ViewModel{
 	}	
 	async getDatasetByParams(columnSelected,table){
 		const dataset = await getDatasetWithParams(columnSelected,table);
+		//console.log("ViewModel dataset:",dataset);
+		return dataset;
+	}
+	async getDatasetByCustomParams(columnSelected,conditionSelected,inputData,table){
+		const dataset = await getDatasetWithCustomParams(columnSelected,conditionSelected,inputData,table);
 		//console.log("ViewModel dataset:",dataset);
 		return dataset;
 	}
@@ -167,7 +173,27 @@ class ViewModel{
 		return this.model.getDistanceMatricesNames();
 	}
 
+	parseAndLoadCsvDataFromDB(header) {
+		function getData(){
+			return header.map((item, i) => {
+				return item.value;
+			});
+		}
+		//console.log("Parse data:",data);
+		let dimensions;
+		let columns =getData();
+		dimensions = columns.map(dimName => {
+			let d = new Dimension(dimName);
+			d.isNumeric(+[dimName] || [dimName]===0 ? true : false)
+			return d;
+		}); 
+		
+		return [dimensions];
+
+	}
+
 	parseAndLoadCsvData(data) {
+		//console.log("bewfor Parse data:",data);
 		let columns = data.shift().data, 
 			parsedData = [],
 			dimensions;
@@ -188,7 +214,9 @@ class ViewModel{
 						break;
 					}
 				}
-				parsedData.push(line);  
+				parsedData.push(line); 
+				console.log("after push Parse data:",parsedData);
+				
 			}
 		});
         

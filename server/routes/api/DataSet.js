@@ -60,6 +60,60 @@ router.post('/get-data', async (req, res, next)=>{
 });
 
 
+router.post('/get-custom-data', async (req, res, next)=>{
+    const {queryField}=req.body;
+    
+    const {selectField,conditionSelected,inputData,table_name}=req.body
+    var prepareQuery =q=>q.map(item=>item).join();
+
+    var invals = [1,2,3,4], cols = [0,0,0,0],col2 = [11,1,1];
+    var values = [];  
+    var setvs = vs => vs.map(v=> (values.push(v))+'||'  ).join();
+    
+    
+
+      
+   // console.log('API get_data query values:',setvs(cols))
+
+    let params = [];
+ 
+    function concatQuery(){
+        return selectField.map(d=>{
+            return d+ conditionSelected +`'${inputData.value}'`;
+        })
+    }
+
+    const dataQuery=concatQuery()
+    //setvs(dataQuery)
+    var prepareConcatQuery =q=>q.map(item=>item).join(' AND ');
+   // var element = prepareConcatQuery(concatQuery()).reverse().slice(1).reverse();
+     
+    for (let i = 1; i <= dataQuery.length; i++) {
+        params.push();
+      }
+    console.log('element:',prepareConcatQuery(concatQuery()))
+
+    try{
+        if(!table_name){
+            return res.status(400).send({msg:'Pleas select table name!!'});
+        }
+            //WHERE ${queryField}=${queryType} ${prepareQuery(selectField)}
+        const query=`SELECT  ${prepareQuery(selectField)} FROM ${table_name} WHERE ${prepareConcatQuery(concatQuery())}`;
+        db.query(query, function (err, result) {
+            if (err) {
+                console.log(err.message);
+                res.status(400).send(err);
+            }
+            //console.log ("result.rows:",result.rows)
+            res.status(200).send(result.rows);
+        });
+    }catch(err){
+        console.error(err.message);
+        res.status(500).send('Server error in get data');
+    }
+});
+
+
 // get all columns from table
 router.post('/get-params', async (req, res, next)=>{
 const {table}=req.body;
