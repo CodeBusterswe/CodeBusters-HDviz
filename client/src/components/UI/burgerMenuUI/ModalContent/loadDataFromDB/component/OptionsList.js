@@ -1,6 +1,6 @@
 import React,{useState} from "react";
-import Select from "react-select"
-import { Dropdown,DropdownButton,ButtonGroup,Button,Container,Row,Col,Alert} from "react-bootstrap"
+import Select from "react-select";
+import { Dropdown,DropdownButton,ButtonGroup,Button,Container,Row,Col,Alert} from "react-bootstrap";
 import makeAnimated from "react-select/animated";
 import { Form } from "react-bootstrap";
 import { useStore } from "../../../../../../ContextProvider";
@@ -18,12 +18,12 @@ const OptionList = props => {
 	//console.log("parsedData:",parsedData);
 
 	 async function handleColumnSelected(col){
-		setcolumnSelected(col)
+		setcolumnSelected(col);
 		//const {conditionSelected,inputData,table}=query;
 		
 		async function getQueryResult(){
 			if(conditionSelected){
-				console.log("conditionSelected:",conditionSelected,"inputData:",inputData,columnSelected)
+				console.log("conditionSelected:",conditionSelected,"inputData:",inputData,columnSelected);
 				const data= await viewModel.getDatasetByCustomParams(columnSelected,conditionSelected,inputData,table);
 				console.log("data:",data);
 				return data;
@@ -39,18 +39,18 @@ const OptionList = props => {
 
 		if(parsedData){
 			console.log("col:",col);
-			const [dimensions] = viewModel.parseAndLoadCsvDataFromDB(col)
-			hanldeAllOptions(parsedData, dimensions,col)
+			const [dimensions] = viewModel.parseAndLoadCsvDataFromDB(col);
+			hanldeAllOptions(parsedData, dimensions,col);
 			//console.log("dimensions:",dimensions);
 		}
 	}
 
-	const custom_value=[{value:"=",label:"="},{value:">",label:">"},{value:"<",label:"<"},{value:">=",label:">="},{value:"<=",label:"<="},{value:"null",label:"nessun valore"}]
+	const custom_value=[{value:"=",label:"="},{value:">",label:">"},{value:"<",label:"<"},{value:">=",label:">="},{value:"<=",label:"<="},{value:"null",label:"nessun valore"}];
 	//console.log("handleCustomValue:",conditionSelected.length)
 
 	async function handleData(value){
-		setConditionSelected(value)
-		setShowInput(value==="null"?false:true)
+		setConditionSelected(value);
+		setShowInput(value==="null"?false:true);
 		//setMessage(true)
 
 	}
@@ -60,15 +60,15 @@ const OptionList = props => {
 	//console.log("onChange:",inputData,"CompareValue:",compareValue)
 	const onSubmit = e => {
 		e.preventDefault();
-		setCompareValue(value)	
-		handleColumnSelected(columnSelected)
+		setCompareValue(value);	
+		handleColumnSelected(columnSelected);
 	  };
 
 	function handleCompareValue(value){
-		console.log("Numeric value:",value)
-		setCompareValue(value)
+		console.log("Numeric value:",value);
+		setCompareValue(value);
 	}
-	console.log("value selected:",conditionSelected?conditionSelected:"nessun valore")
+	console.log("value selected:",conditionSelected?conditionSelected:"nessun valore");
 
 	return (
 		<div>

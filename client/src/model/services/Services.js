@@ -1,7 +1,7 @@
 import {api} from "./ApiURL";
 
 export const getDatasetWithParams=async(columnSelected,table_name)=>{
-	console.log("columnSelected1 api: ",columnSelected,"table_name:",table_name)
+	console.log("columnSelected1 api: ",columnSelected,"table_name:",table_name);
 	function getData(){
 		return columnSelected.map((item, i) => {
 			return item.value;
@@ -11,17 +11,17 @@ export const getDatasetWithParams=async(columnSelected,table_name)=>{
 		const selectField=getData();
 		const dataSet= await api.post("/get-data",{selectField,table_name});
 		//console.log("columnSelected api: ", dataSet.data)
-		return dataSet.data
+		return dataSet.data;
 		//Data.push(dataSet.data);
 	}catch(err){
 		console.error(err.message);    
 	 }
 	 //console.log("Data api: ", Data)
 	 //return A;
-}
+};
 
 export const getDatasetWithCustomParams=async(columnSelected,conditionSelected,inputData,table_name)=>{
-	console.log("columnSelected1 api: ",columnSelected,"table_name:",table_name,conditionSelected,inputData)
+	console.log("columnSelected1 api: ",columnSelected,"table_name:",table_name,conditionSelected,inputData);
 	function getData(){
 		return columnSelected.map((item, i) => {
 			return item.value;
@@ -31,7 +31,7 @@ export const getDatasetWithCustomParams=async(columnSelected,conditionSelected,i
 		const selectField=getData();
 		const dataSet= await api.post("/get-custom-data",{selectField,conditionSelected,inputData,table_name});
 		//console.log("columnSelected api: ", dataSet.data)
-		return dataSet.data
+		return dataSet.data;
 		//Data.push(dataSet.data);
 	}catch(err){
 		console.error(err.message);    

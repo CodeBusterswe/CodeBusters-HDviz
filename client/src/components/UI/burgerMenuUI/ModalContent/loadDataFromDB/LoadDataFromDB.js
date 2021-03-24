@@ -19,9 +19,9 @@ const LoadDataFromDB = props => {
 	} = props;
 
 	async function viewData(){
-		const data=await viewModel.getAllTables()
+		const data=await viewModel.getAllTables();
 		//console.log("data:",data[0].length);
-		setTables(data)
+		setTables(data);
 	}
 
 	useEffect(async() => {
@@ -101,7 +101,7 @@ const LoadDataFromDB = props => {
 				
 				<ModalFooter>
 					<Button variant="secondary" onClick={resetAndClose}>Torna al menù</Button>
-					<Button variant="primary" onClick={()=>{loadDataAndDims(); openAlertSuccess(); setConfirme(true)}}>Conferma selezione</Button>
+					<Button variant="primary" onClick={()=>{loadDataAndDims(); openAlertSuccess(); setConfirme(true);}}>Conferma selezione</Button>
 				</ModalFooter>
 			</Modal>
 			<Alert show={showSuccess} variant="success" className="alert" dismissible onClose={() => setShowSuccess(false)}>

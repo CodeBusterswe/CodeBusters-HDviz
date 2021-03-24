@@ -4,7 +4,7 @@ import Model from "./model/Model";
 import { toJS } from "mobx";
 import DimReduction from "./viewModel/DimReduction";
 import * as distCalc from "ml-distance";
-import {getDataset, getTables,getDatasetByName,getColumnByName,getDatasetWithParams,getDatasetWithCustomParams} from "./model/services"  
+import {getDataset, getTables,getDatasetByName,getColumnByName,getDatasetWithParams,getDatasetWithCustomParams} from "./model/services";
 import Preferences from "./model/Preferences";
 import kmeans from "ml-kmeans";
 
@@ -199,7 +199,7 @@ class ViewModel{
 		let columns =getData();
 		dimensions = columns.map(dimName => {
 			let d = new Dimension(dimName);
-			d.isNumeric(+[dimName] || [dimName]===0 ? true : false)
+			d.isNumeric(+[dimName] || [dimName]===0 ? true : false);
 			return d;
 		}); 
 		
