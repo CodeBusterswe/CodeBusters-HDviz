@@ -281,14 +281,12 @@ class ViewModel{
 	}
 
 	reduceDimensionsByDist(distType, data, matrixName) {
-		//data = [ [5.1, 3.5], [4.9, 3], [4.7, 3.2] ]
-		//console.log(this.getSelectedData())
-		let numericDims = this.model.getNumericDimensions(),
-			numericData = this.model.getSelectedData().map(row => Array.from(numericDims.map(dim => row[dim.getValue()])));
+		data = [ [700,24], [600, 23]];
+		//let numericDims = this.model.getNumericDimensions(),
+		//	numericData = this.model.getSelectedData().map(row => Array.from(numericDims.map(dim => row[dim.getValue()])));
 		
-		let prodotto = kmeans(numericData, 3, {distanceFunction: distCalc.distance[distType]});
+		//let prodotto = kmeans(numericData, 3, {distanceFunction: distCalc.distance[distType]});
 		let matrix = new DistanceMatrix();
-		console.log(prodotto);
 
 		for (let i = 0; i < data.length; i++) {
 			for (let j = i+1; j < data.length; j++) {
@@ -301,9 +299,10 @@ class ViewModel{
 			}
 			let node = {...this.getSelectedData()[i]};
 			node.id="node"+i;
-			node.group = prodotto.clusters[i];
+			//	node.group = prodotto.clusters[i];
 			matrix.pushNode(node);
 		}
+		console.log(matrix.getLinks());
 		this.model.addDistanceMatrix(matrix,matrixName);
 	}
 

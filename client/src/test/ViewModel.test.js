@@ -1,5 +1,6 @@
 import ViewModel from "./../ViewModel";
 import Dimension from "./../model/Dimension";
+import DistanceMatrix from "../model/DistanceMatrix";
 
 let viewModel,
 	dimensions,
@@ -73,11 +74,14 @@ describe("viewModel should reduce dimensions", () => {
 
 	let data = [[300,16],[300,20]],
 		dims = [new Dimension("salary"), new Dimension("age")];
+
+	beforeEach(() => {
+		viewModel.loadDataAndDims(data,dims);
+	});
 	
 	describe("dimensionality reduction by algorithm", () => {
 
 		test("FastMap algorithm", () => {
-			viewModel.loadDataAndDims(data,dims);
 			viewModel.reduceDimensions("fastMap", {Name:"fastMap", DimensionNumber: 2}, data);
 			let dimR1 = new Dimension("fastMap1"),
 				dimR2 = new Dimension("fastMap2");
@@ -87,7 +91,6 @@ describe("viewModel should reduce dimensions", () => {
 		});
 
 		test("IsoMap algorithm", () => {
-			viewModel.loadDataAndDims(data,dims);
 			viewModel.reduceDimensions("isoMap", {Name:"isoMap", DimensionNumber: 2, Neighbors: 30}, data);
 			let dimR1 = new Dimension("isoMap1"),
 				dimR2 = new Dimension("isoMap2");
@@ -97,7 +100,6 @@ describe("viewModel should reduce dimensions", () => {
 		});
 
 		test("LLE algorithm", () => {
-			viewModel.loadDataAndDims(data,dims);
 			viewModel.reduceDimensions("lle", {Name:"lle", DimensionNumber: 2, Neighbors: 30}, data);
 			let dimR1 = new Dimension("lle1"),
 				dimR2 = new Dimension("lle2");
@@ -107,13 +109,38 @@ describe("viewModel should reduce dimensions", () => {
 		});
 
 		test("t-sne algorithm", () => {
-			viewModel.loadDataAndDims(data,dims);
-			viewModel.reduceDimensions("t-sne", {Name:"tSne", DimensionNumber: 2, Neighbors: 30}, data);
+			viewModel.reduceDimensions("t-sne", {Name:"tSne", DimensionNumber: 2, Perplexity: 130, Epsilon: 15}, data);
 			let dimR1 = new Dimension("tSne1"),
 				dimR2 = new Dimension("tSne2");
 			dimR1.isReduced(true);
 			dimR2.isReduced(true);
 			expect(viewModel.getDimensions()).toStrictEqual([dims[0],dims[1],dimR1,dimR2]);
+		});
+	});
+
+	describe("dimensionality reduction by distance", () => {
+
+		let data = [{salary:700, age:24}, {salary:600, age:23}];
+
+		test("Euclidean", () => {
+			viewModel.loadDataAndDims(data,dims);
+			viewModel.beginReduceDimensionsByDist("euclidean",data, "test");
+			let dm = viewModel.getDistanceMatrices();
+			expect(dm.test).toBeTruthy();
+			expect(dm.test.getNodes()).toStrictEqual([{id: "node0",salary:700, age:24},{id: "node1",salary:600, age:23}]);
+			expect(dm.test.getLinks()).toStrictEqual([{source: "node0", target: "node1", value: 100.00499987500625}]);
+		});
+
+		test("Manhattan", () => {
+
+		});
+
+		test("Canberra", () => {
+
+		});
+
+		test("Chebyshev", () => {
+
 		});
 	});
 });

@@ -1,15 +1,5 @@
 class DistanceMatrix {
-    /*array di objects
-    {
-        source : "s1"
-        target : "t1"
-        distance : 15.3
-    }
-    {
-        id : "id1"
-        group : "g1"
-    }
-    */
+    
     nodes = [];
     links = [];
 
