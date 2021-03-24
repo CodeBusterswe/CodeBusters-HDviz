@@ -1,12 +1,12 @@
-import React from "react"
-import {Form} from "react-bootstrap"
+import React from "react";
+import {Form} from "react-bootstrap";
 const DimList = (props) => {
 	const {
 		dimensions,
 		selectAllDimensions,
 		selectDimension,
 		allSelected
-	} = props
+	} = props;
 	return (
 		<Form>
 			{
@@ -37,7 +37,7 @@ const DimList = (props) => {
 										id={dim.getValue()}
 										label={dim.getValue()}
 										onChange={selectDimension}
-									/>
+									/>;
 								})
 							}
 						</Form.Row> 
@@ -45,7 +45,7 @@ const DimList = (props) => {
 					null
 			}
 		</Form>
-	)
-}
+	);
+};
 
-export default DimList
+export default DimList;

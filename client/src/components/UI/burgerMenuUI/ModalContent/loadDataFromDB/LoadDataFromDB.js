@@ -1,13 +1,13 @@
 import React, {useState,useEffect} from "react";
-import { useStore } from "../../../../../ContextProvider"
-import {Modal,Alert} from "react-bootstrap"
-import { ModalBody, ModalFooter,Spinner,Button} from "react-bootstrap"
-import {DropDown} from "./component"
+import { useStore } from "../../../../../ContextProvider";
+import {Modal,Alert} from "react-bootstrap";
+import { ModalBody, ModalFooter,Spinner,Button} from "react-bootstrap";
+import {DropDown} from "./component";
 const LoadDataFromDB = props => {
 	const viewModel = useStore();
 	const [localDimensions, setLocalDimensions] = useState(viewModel.getDimensions());
-	const [getTable,setTables] = useState(null)
-	const [getColumns,setColumns] = useState(null)
+	const [getTable,setTables] = useState(null);
+	const [getColumns,setColumns] = useState(null);
 	const [showSuccess, setShowSuccess] = useState(false);
 	const [showDanger, setShowDanger] = useState(false);
 	const [localData, setLocalData] = useState();
@@ -16,7 +16,7 @@ const LoadDataFromDB = props => {
 	const {
 		modalIsOpen,
 		closeModal
-	} = props
+	} = props;
 
 	async function viewData(){
 		const data=await viewModel.getAllTables()
@@ -29,16 +29,16 @@ const LoadDataFromDB = props => {
 		const col =await viewModel.getColumnsWithName();
 		setColumns(col);		
 		return () => {
-		}
-	},[])
+		};
+	},[]);
 
 	function loadDataAndDims(){
 		console.time("clickLoadData");
 		//devo anche aggiornare i selectedData con le nuove dimensioni selezionate
 		if(localData)
-			viewModel.loadDataAndDims(localData, localDimensions)//questo viene chiamato quando l'utente cambia il file
+			viewModel.loadDataAndDims(localData, localDimensions);//questo viene chiamato quando l'utente cambia il file
 		else	
-			viewModel.updateDims(localDimensions) //quessto viene chiamato quando l'utente aggiorna le dimensioni
+			viewModel.updateDims(localDimensions); //quessto viene chiamato quando l'utente aggiorna le dimensioni
 		//funzione utilizzata da CSV Reader per salvare localmente dati e dimensioni
 		resetAndClose();
 		console.timeEnd("clickLoadData");
@@ -46,7 +46,7 @@ const LoadDataFromDB = props => {
 
 	function resetAndClose(){
 		setLocalData();
-		closeModal()
+		closeModal();
 	}
 	//funzione utilizzata da CSV Reader per salvare localmente dati e dimensioni
 	/* 	function setLocalStates(newData, newDims){
@@ -57,27 +57,27 @@ const LoadDataFromDB = props => {
 	function openAlertSuccess() {
 		return viewModel.getCheckedDimensions().length !== 0 ?
 			setShowSuccess(true) :
-			setShowDanger(true)
+			setShowDanger(true);
 	}
 	useEffect(() => {
-		const time = 3000
-		let timer = setTimeout(() => setShowSuccess(false), time)
-		return () => clearTimeout(timer)
-	},[showSuccess])
+		const time = 3000;
+		let timer = setTimeout(() => setShowSuccess(false), time);
+		return () => clearTimeout(timer);
+	},[showSuccess]);
 
 	function openAlertDanger() {
-		setShowDanger(true)
+		setShowDanger(true);
 	}
 	
 	useEffect(() => {
-		const time = 3000
-		let timer = setTimeout(() => setShowDanger(false), time)
-		return () => clearTimeout(timer)
-	},[showDanger])
+		const time = 3000;
+		let timer = setTimeout(() => setShowDanger(false), time);
+		return () => clearTimeout(timer);
+	},[showDanger]);
 
 	function getAllOptions(newData,dims){
-		setLocalData(newData)
-		setLocalDimensions(dims)
+		setLocalData(newData);
+		setLocalDimensions(dims);
 		console.log("Load DataFromDB:",newData, "dims:",dims);
 	}
 
@@ -85,7 +85,7 @@ const LoadDataFromDB = props => {
 		<>
 			<Modal
 				show={modalIsOpen}
-				onHide={()=>{closeModal();openAlertDanger()}}
+				onHide={()=>{closeModal();openAlertDanger();}}
 			>
 				<Modal.Header closeButton>
 					<Modal.Title>Seleziona Dataset</Modal.Title>
@@ -117,7 +117,7 @@ const LoadDataFromDB = props => {
 				</p>
 			</Alert> 
 		</>
-	)
-}
+	);
+};
 
-export default LoadDataFromDB
+export default LoadDataFromDB;

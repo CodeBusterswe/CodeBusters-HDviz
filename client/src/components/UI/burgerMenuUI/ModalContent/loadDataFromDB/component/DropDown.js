@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from "react";
-import { Dropdown,DropdownButton,ButtonGroup,Container,Row,Col } from "react-bootstrap"
-import { useStore } from "../../../../../../ContextProvider"
-import {OptionList} from "./"
+import { Dropdown,DropdownButton,ButtonGroup,Container,Row,Col } from "react-bootstrap";
+import { useStore } from "../../../../../../ContextProvider";
+import {OptionList} from "./";
 export const DropDown = props => {
 	const {Dataset,Columns,getAllOptions,confirme}=props;
 	console.log("confirme:",confirme)

@@ -2,8 +2,8 @@ import React,{useState} from "react";
 import Select from "react-select"
 import { Dropdown,DropdownButton,ButtonGroup,Button,Container,Row,Col,Alert} from "react-bootstrap"
 import makeAnimated from "react-select/animated";
-import { Form } from "react-bootstrap"
-import { useStore } from "../../../../../../ContextProvider"
+import { Form } from "react-bootstrap";
+import { useStore } from "../../../../../../ContextProvider";
 
 const OptionList = props => {
 	const {options,table,hanldeAllOptions} =props;

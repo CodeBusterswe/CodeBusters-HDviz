@@ -1,4 +1,4 @@
-import {api} from "./ApiURL"
+import {api} from "./ApiURL";
 
 export const getDatasetWithParams=async(columnSelected,table_name)=>{
 	console.log("columnSelected1 api: ",columnSelected,"table_name:",table_name)
@@ -38,10 +38,10 @@ export const getDatasetWithCustomParams=async(columnSelected,conditionSelected,i
 	 }
 	 //console.log("Data api: ", Data)
 	 //return A;
-}
+};
 
 export const getDataset=async()=>{
-	const table="dataset"
+	const table="dataset";
 	const Data=[];
 	//console.log("Data api: ", Data)
 	try{
@@ -53,10 +53,10 @@ export const getDataset=async()=>{
 	 }
 	 
 	 return {data:Data};
-}
+};
 
 export const getTables=async()=>{
-	const table="dataset"
+	const table="dataset";
 	const tables=[];
 	//console.log("tables api: ", tables)
 	try{
@@ -68,7 +68,7 @@ export const getTables=async()=>{
 	 }
 	 //console.log("Data api: ", Data)
 	 return tables;
-}
+};
 export const getDatasetByName=async(table_name)=>{
 	//console.log("table_name service:",table_name)
 	const tables=[];
@@ -82,10 +82,10 @@ export const getDatasetByName=async(table_name)=>{
 	 }
 	 //console.log("Data api: ", Data)
 	 return tables;
-}
+};
 
 export const getColumnByName=async(table_name)=>{
-	console.log("table_name service:",table_name)
+	console.log("table_name service:",table_name);
 	const tables=[];
 	//console.log("tables api: ", tables)
 	try{
@@ -97,4 +97,4 @@ export const getColumnByName=async(table_name)=>{
 	 }
 	 //console.log("Data api: ", Data)
 	 return tables;
-}
+};

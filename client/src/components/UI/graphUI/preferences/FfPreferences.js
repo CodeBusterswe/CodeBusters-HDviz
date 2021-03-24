@@ -29,7 +29,7 @@ const ForceFieldPreferences = () => {
 				>
 					<option value={"undefined"} key={"noDistancematrix"}>No distance matrix</option>
 					{matrices.map((d) => {
-						return <option value={d} key={d}>{d}</option>
+						return <option value={d} key={d}>{d}</option>;
 					})}
 				</Form.Control>
 			</Form.Group>
@@ -44,7 +44,7 @@ const ForceFieldPreferences = () => {
 					<option value={"undefined"} key={"noColor"}>No color</option>
 					<option value={"group"} key={"group"}>Group</option>
 					{keys.map((d) => {
-						return <option value={d} key={d}>{d}</option>
+						return <option value={d} key={d}>{d}</option>;
 					})}
 				</Form.Control>
 			</Form.Group>
@@ -71,6 +71,6 @@ const ForceFieldPreferences = () => {
 				</Form.Control>
 			</Form.Group>
 		</Form>
-	)
-}
+	);
+};
 export default observer(ForceFieldPreferences);

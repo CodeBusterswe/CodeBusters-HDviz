@@ -32,6 +32,6 @@ test("model should add new distance matrices and return them", () => {
 });
 
 test("model should add new dimensions from dimensionality reduction process", () => {
-	model.addDimensionsToDataset(dimension)
+	model.addDimensionsToDataset(dimension);
 	expect(model.getSelectedDimensions()).toStrictEqual([dimension]);
 });

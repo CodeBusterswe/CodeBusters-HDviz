@@ -1,15 +1,7 @@
-import AlgorithmInterface from "./../AlghorithmInterface"
+import AlghorithmStrategy from "../AlghorithmStrategy";
 import * as dr from "@saehrimnir/druidjs";
 
-class FastmapStrategy extends AlgorithmInterface{
-    
-	//stessi campi dati di AlgorithmStrategy
-
-	constructor() {
-		super();
-		this.result = null;
-		this.matrix = null;
-	}
+class FastmapStrategy extends AlghorithmStrategy{
 
 	startDR(parameters,data) {
 		const matrix = dr.Matrix.from(data);

@@ -14,7 +14,7 @@ const ScatterPlotMatrixPreferences = () => {
 	function handleSelectChange(e){
 		const identifier = e.target.id;
 		const value = e.target.value==="undefined" ? undefined : e.target.value;
-		viewModel.setSpmAxis(identifier, value)
+		viewModel.setSpmAxis(identifier, value);
 	}
 
 	return (
@@ -32,11 +32,11 @@ const ScatterPlotMatrixPreferences = () => {
 							>
 								<option value={"undefined"} key={"noDimensions"+identifiers}>No dimension</option>
 								{keys.map((d) => {
-									return <option value={d} key={d+identifiers}>{d}</option>
+									return <option value={d} key={d+identifiers}>{d}</option>;
 								})}
 							</Form.Control>
 						</Form.Group>
-					)
+					);
 				})
 			}
 			<Form.Group controlId="color" key={"color"}>
@@ -49,11 +49,11 @@ const ScatterPlotMatrixPreferences = () => {
 				>
 					<option value={"undefined"} key={"noDimensionsColor"}>No dimension</option>
 					{keys.map((d) => {
-						return <option value={d} key={d+"Color"}>{d}</option>
+						return <option value={d} key={d+"Color"}>{d}</option>;
 					})}
 				</Form.Control>
 			</Form.Group>
 		</Form>
-	)
-}
+	);
+};
 export default observer(ScatterPlotMatrixPreferences);
