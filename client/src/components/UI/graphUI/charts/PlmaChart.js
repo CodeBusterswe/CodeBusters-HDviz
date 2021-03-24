@@ -9,8 +9,8 @@ const Plma = () => {
 		data = viewModel.getSelectedData().map(d => {return {...d};}),
 		[dimensionsNames, color]=viewModel.getPlmaPreferences(),
 		margin = {top: 30, right: 30, bottom: 100, left: 100},
-		width = 1400 - margin.left - margin.right,
-		height = 900 - margin.top - margin.bottom,
+		width = 1000 - margin.left - margin.right,
+		height = 1000 - margin.top - margin.bottom,
 		radius = 4;
 
 	useEffect(() => {
@@ -51,8 +51,21 @@ const Plma = () => {
 		//console.log("value trimmed:", A);
 		//console.log("autovettori trimmed:", B)
 		//console.log("-----------------------------------------")
-		x.domain(d3.extent(A.map(line => line[0]))).nice();
-		y.domain(d3.extent(A.map(line => line[1]))).nice();
+		let min, minData1, minData2, minDims2, minDims1, max, maxData1, maxData2, maxDims1, maxDims2;
+		minData1 = d3.min(A.map(line => line[0]));
+		minData2 = d3.min(A.map(line => line[1]));
+		minDims1 = d3.min(B.map(line => line[0]*4));
+		minDims2 = d3.min(B.map(line => line[1]*4));
+		min = d3.min([minData1, minData2, minDims1, minDims2]);
+		console.log(minData1, minData2, minDims1, minDims2, min);
+		maxData1 = d3.max(A.map(line => line[0]));
+		maxData2 = d3.max(A.map(line => line[1]));
+		maxDims1 = d3.max(B.map(line => line[0]*4));
+		maxDims2 = d3.max(B.map(line => line[1]*4));
+		max = d3.max([maxData1, maxData2, maxDims1, maxDims2]);
+		console.log(maxData1, maxData2, maxDims1, maxDims2, max);
+		x.domain([min, max]).nice();
+		y.domain([min, max]).nice();
 		//x.domain([-3.5, 3.5])
 		//y.domain([-3.5, 3.5])
 		for (let i = 0; i < data.length; i++) {
@@ -68,7 +81,7 @@ const Plma = () => {
 				  id: i,
 				};
 			  });
-		var showAxis = false;
+		var showAxis = true;
 		if (showAxis) {
 			svg.append("g").
 				attr("class", "x axis").
