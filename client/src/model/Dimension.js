@@ -11,9 +11,11 @@ class Dimension{
 	isChecked(bool) {
 		this._isChecked = bool;
 	}
-
-	isNumeric(bool) {
-		this._isNumeric = bool;
+	set value(value){
+		this.#value = value;
+	}
+	set isChecked(bool) {
+		this.#isChecked = bool;
 	}
 
 	isReduced(bool) {
