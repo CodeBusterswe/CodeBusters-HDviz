@@ -9,9 +9,9 @@ const ForceFieldPreferences = () => {
 	const keys = viewModel.getCheckedDimensions();
 	const matrices = viewModel.getDistanceMatricesNames();
 	const [matrixName, color, distMax, distMin] = viewModel.getFfPreferences();
-	const matrix = viewModel.getDistanceMatrices()[matrixName];
-	const min = matrix ? Math.min.apply(Math, matrix.getLinks().map(link =>link.value)) : undefined;
-	const max = matrix ? Math.max.apply(Math,matrix.getLinks().map(link =>link.value)) : undefined;
+	const matrix = viewModel.getDistanceMatricesByName(matrixName);
+	const min = matrix ? Math.min.apply(Math, matrix.links.map(link =>link.value)) : undefined;
+	const max = matrix ? Math.max.apply(Math,matrix.links.map(link =>link.value)) : undefined;
 	function handleSelectChange(e){
 		const value = e.target.value==="undefined" ? undefined : e.target.value,
 			identifier = e.target.id;

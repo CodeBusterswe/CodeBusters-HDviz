@@ -6,17 +6,16 @@ import { observer } from "mobx-react-lite";
 
 const AdjacencyMatrix = () => {
 	const viewModel = useStore(),
-		distanceMatrix = viewModel.getDistanceMatrices(),
 		[matrixName, orderBy, dimLabels]=viewModel.getAmPreferences(),
+		distanceMatrix = viewModel.getDistanceMatricesByName(matrixName),
 		margin = {top: 30, right: 30, bottom: 100, left: 100},
 		width = 850 - margin.left - margin.right,
 		height = 850 - margin.top - margin.bottom;
 	useEffect(() => {
-		let dm = {}, nodes = [], links= [];
-		if(matrixName!==undefined){
-			dm = distanceMatrix[matrixName];
-			nodes = dm.nodes; 
-			links = dm.links;
+		let nodes = [], links= [];
+		if(distanceMatrix){
+			nodes = distanceMatrix.nodes; 
+			links = distanceMatrix.links;
 		}
 		const scale = d3.scaleBand().
 				domain(nodes.map(d => d.id)).

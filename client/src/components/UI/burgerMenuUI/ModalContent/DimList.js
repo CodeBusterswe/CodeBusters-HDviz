@@ -26,16 +26,16 @@ const DimList = (props) => {
 							/>
 						</Form.Row><Form.Row>
 							{	
-								dimensions.filter(dim => !dim.getIsReduced()).map((dim) =>
+								dimensions.filter(dim => !dim.isReduced).map((dim) =>
 								{
 									return <Form.Check
 										custom
 										inline
 										type="checkbox"
-										checked={dim.getChecked()}
-										key={dim.getValue()}
-										id={dim.getValue()}
-										label={dim.getValue()}
+										checked={dim.isChecked}
+										key={dim.value}
+										id={dim.value}
+										label={dim.value}
 										onChange={selectDimension}
 									/>;
 								})

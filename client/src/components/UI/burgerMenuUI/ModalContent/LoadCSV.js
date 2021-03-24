@@ -18,7 +18,6 @@ const LoadCSV = props => {
 	} = props;
 
 	function loadDataAndDims(){
-		console.time("clickLoadData");
 		//devo anche aggiornare i selectedData con le nuove dimensioni selezionate
 		if(localData)
 			viewModel.loadDataAndDims(localData, localDimensions);//questo viene chiamato quando l'utente cambia il file
@@ -26,7 +25,6 @@ const LoadCSV = props => {
 			viewModel.updateDims(localDimensions); //quessto viene chiamato quando l'utente aggiorna le dimensioni
 		//funzione utilizzata da CSV Reader per salvare localmente dati e dimensioni
 		resetAndClose();
-		console.timeEnd("clickLoadData");
 	}
 
 	function resetAndClose(){
@@ -41,20 +39,20 @@ const LoadCSV = props => {
 	function selectAllDimensions(event){
 		let temp = [...localDimensions];
 		temp.forEach(dimension => {
-			dimension.isChecked(event.target.checked);
+			dimension.isChecked = event.target.checked;
 		});
 		setLocalDimensions(temp);
 	}
 	function selectDimension(event){
 		let temp = [...localDimensions];
 		temp.forEach(dimension =>{
-			if(dimension.getValue() === event.target.id)
-				dimension.isChecked(event.target.checked);
+			if(dimension.value === event.target.id)
+				dimension.isChecked = event.target.checked;
 		});
 		setLocalDimensions(temp);
 	}
 	function areAllSelected(){
-		return localDimensions.length === localDimensions.filter(d => d.getChecked()).length;
+		return localDimensions.length === localDimensions.filter(d => d.isChecked).length;
 	}
 	
 	function openAlertSuccess() {

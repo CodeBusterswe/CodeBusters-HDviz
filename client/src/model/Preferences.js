@@ -1,46 +1,39 @@
 import { makeAutoObservable} from "mobx";
 import {VisualizationType} from "../utils";
 class Preferences{
-	#chart;
-	#SPMPreferences;
-	#SPMColor;
-	#AMpreferences;
-	#HMpreferences;
-	#FFpreferences;
-	#PLMApreferences;
 	constructor(){
-		this.#chart = {
+		this._chart = {
 			[VisualizationType.ScatterPlotMatrix]: false,
 			[VisualizationType.ForceField]: false,
 			[VisualizationType.HeatMap]: false,
 			[VisualizationType.AdjacencyMatrix]: false,
 			[VisualizationType.PLMA]: false,
 		};
-		this.#SPMPreferences = {
+		this._SPMPreferences = {
 			axis1: undefined,
 			axis2: undefined,
 			axis3: undefined,
 			axis4: undefined,
 			axis5: undefined,
 		};
-		this.#SPMColor = undefined;
-		this.#AMpreferences = {
+		this._SPMColor = undefined;
+		this._AMpreferences = {
 			distanceMatrix: undefined,
 			orderBy: undefined,
 			label: undefined
 		};
-		this.#HMpreferences = {
+		this._HMpreferences = {
 			xAxis: undefined,
 			yAxis: undefined,
 			heat: undefined
 		};
-		this.#FFpreferences = {
+		this._FFpreferences = {
 			distanceMatrix: undefined,
 			color: undefined,
 			distMax: Infinity,
 			distMin: 0,
 		};
-		this.#PLMApreferences = {
+		this._PLMApreferences = {
 			dimensions: [],
 			color: undefined,
 		};
@@ -49,172 +42,176 @@ class Preferences{
 	}
 
 	set chart(chart_name){
-		if(this.#chart[chart_name])
-			this.#chart[chart_name] = false;
+		if(this._chart[chart_name])
+			this._chart[chart_name] = false;
 		else{
 			this.resetCharts();
-			this.#chart[chart_name] = true;
+			this._chart[chart_name] = true;
 		}
 	}
 	get plmaDimensions(){
-		return this.#PLMApreferences.dimensions;
+		return this._PLMApreferences.dimensions;
 	}
 	get plmaColor(){
-		return this.#PLMApreferences.plmaColor;
+		return this._PLMApreferences.plmaColor;
 	}
 	set plmaDimensions(dimensions){
-		this.#PLMApreferences.dimensions = dimensions ;
+		this._PLMApreferences.dimensions = dimensions ;
 	}
 	set plmaColor(color){
-		this.#PLMApreferences.color = color;
+		this._PLMApreferences.color = color;
 	}
 	get amLabel(){
-		return this.#AMpreferences.label;
+		return this._AMpreferences.label;
 	}
 
 	get amDistanceMatrix(){
-		return this.#AMpreferences.distanceMatrix;
+		return this._AMpreferences.distanceMatrix;
 	}	
 
 	get amOrderBy(){
-		return this.#AMpreferences.orderBy;
+		return this._AMpreferences.orderBy;
 	}
 
 	set amLabel(label){
-		this.#AMpreferences.label = label;
+		this._AMpreferences.label = label;
 	}
 	
 	set amDistanceMatrix(matrix){
-		this.#AMpreferences.distanceMatrix = matrix;
+		this._AMpreferences.distanceMatrix = matrix;
 	}
 
 	set amOrderBy(group){
-		this.#AMpreferences.orderBy = group;
+		this._AMpreferences.orderBy = group;
 	}
 
 	set hmXaxis(dimension){
-		this.#HMpreferences.xAxis = dimension;
+		this._HMpreferences.xAxis = dimension;
 	}
 
 	set hmYaxis(dimension){
-		this.#HMpreferences.yAxis = dimension;
+		this._HMpreferences.yAxis = dimension;
 	}
 
 	set hmFill(heat){
-		this.#HMpreferences.heat = heat;
+		this._HMpreferences.heat = heat;
 	}
 
 	get hmXaxis(){
-		return this.#HMpreferences.xAxis;
+		return this._HMpreferences.xAxis;
 	}
 
 	get hmYaxis(){
-		return this.#HMpreferences.yAxis;
+		return this._HMpreferences.yAxis;
 	}
 
 	get hmFill(){
-		return this.#HMpreferences.heat;
+		return this._HMpreferences.heat;
 	}
 
 	set ffDistanceMatrix(matrix){
-		this.#FFpreferences.distanceMatrix = matrix;
+		this._FFpreferences.distanceMatrix = matrix;
 	}
 
 	set ffColor(group){
-		this.#FFpreferences.color = group;
+		this._FFpreferences.color = group;
 	}
 
 	set ffDistMin(dist){
-		this.#FFpreferences.distMin = dist;
+		this._FFpreferences.distMin = dist;
 	}
 
 	set ffDistMax(dist){
-		this.#FFpreferences.distMax = dist;
+		this._FFpreferences.distMax = dist;
 	}
 
 	get ffDistanceMatrix(){
-		return this.#FFpreferences.distanceMatrix;
+		return this._FFpreferences.distanceMatrix;
 	}
 
 	get ffColor(){
-		return this.#FFpreferences.color;
+		return this._FFpreferences.color;
 	}
 	get ffDistMin(){
-		return this.#FFpreferences.distMin;
+		return this._FFpreferences.distMin;
 	}
 
 	get ffDistMax(){
-		return this.#FFpreferences.distMax;
+		return this._FFpreferences.distMax;
 	}
 
 	set SpmAxis1(dimensionsValue){
-		this.#SPMPreferences.axis1 = dimensionsValue;
+		this._SPMPreferences.axis1 = dimensionsValue;
 	}
 	set SpmAxis2(dimensionsValue){
-		this.#SPMPreferences.axis2 = dimensionsValue;
+		this._SPMPreferences.axis2 = dimensionsValue;
 	}
 	set SpmAxis3(dimensionsValue){
-		this.#SPMPreferences.axis3 = dimensionsValue;
+		this._SPMPreferences.axis3 = dimensionsValue;
 	}
 	set SpmAxis4(dimensionsValue){
-		this.#SPMPreferences.axis4 = dimensionsValue;
+		this._SPMPreferences.axis4 = dimensionsValue;
 	}
 	set SpmAxis5(dimensionsValue){
-		this.#SPMPreferences.axis5 = dimensionsValue;
+		this._SPMPreferences.axis5 = dimensionsValue;
 	}
 	set SpmColor(dimensionsValue){
-		this.#SPMColor = dimensionsValue;
+		this._SPMColor = dimensionsValue;
 	}
 
 	get amPreferences(){
-		return this.#AMpreferences;
+		return this._AMpreferences;
 	}
 
 	get ffPreferences(){
-		return this.#FFpreferences;
+		return this._FFpreferences;
 	}
 
 	get plmaPreferences(){
-		return this.#PLMApreferences;
+		return this._PLMApreferences;
 	}
 
 	get hmPreferences(){
-		return this.#HMpreferences;
+		return this._HMpreferences;
+	}
+
+	get SpmAxes(){
+		return [this.SpmAxis1, this.SpmAxis2, this.SpmAxis3, this.SpmAxis4, this.SpmAxis5];
 	}
 
 	setSPMAxis(identifier, value){
-		this.#SPMPreferences[identifier] = value;
+		this._SPMPreferences[identifier] = value;
 	}
 
 	get SpmAxis1(){
-		return this.#SPMPreferences.axis1;
+		return this._SPMPreferences.axis1;
 	}
 	get SpmAxis2(){
-		return this.#SPMPreferences.axis2;
+		return this._SPMPreferences.axis2;
 	}
 	get SpmAxis3(){
-		return this.#SPMPreferences.axis3;
+		return this._SPMPreferences.axis3;
 	}
 	get SpmAxis4(){
-		return this.#SPMPreferences.axis4;
+		return this._SPMPreferences.axis4;
 	}
 	get SpmAxis5(){
-		return this.#SPMPreferences.axis5;
+		return this._SPMPreferences.axis5;
 	}
 	get SpmColor(){
-		return this.#SPMColor;
+		return this._SPMColor;
 	}
 
 	get chart(){
-		return Object.keys(this.#chart).filter(key => this.#chart[key])[0];
+		return Object.keys(this._chart).filter(key => this._chart[key])[0];
 	}
 
 	resetCharts(){
-		this.#chart[VisualizationType.ScatterPlotMatrix] = false;
-		this.#chart[VisualizationType.ForceField] = false;
-		this.#chart[VisualizationType.HeatMap] = false;
-		this.#chart[VisualizationType.AdjacencyMatrix] = false;
-		this.#chart[VisualizationType.PLMA] = false;
+		this._chart[VisualizationType.ScatterPlotMatrix] = false;
+		this._chart[VisualizationType.ForceField] = false;
+		this._chart[VisualizationType.HeatMap] = false;
+		this._chart[VisualizationType.AdjacencyMatrix] = false;
+		this._chart[VisualizationType.PLMA] = false;
 	}
 
 	resetSpmPreferences(){
@@ -227,24 +224,24 @@ class Preferences{
 	}
 
 	resetFfPreferences(){
-		this.#FFpreferences.distanceMatrix = undefined;
-		this.#FFpreferences.forceType = undefined;
-		this.#FFpreferences.color = undefined;
+		this._FFpreferences.distanceMatrix = undefined;
+		this._FFpreferences.forceType = undefined;
+		this._FFpreferences.color = undefined;
 	}
 
 	resetAmPreferences(){
-		this.#AMpreferences.distanceMatrix = undefined;
-		this.#AMpreferences.orderBy = undefined;
+		this._AMpreferences.distanceMatrix = undefined;
+		this._AMpreferences.orderBy = undefined;
 	}
 
 	resetHmPreferences(){
-		this.#HMpreferences.xAxis = undefined;
-		this.#HMpreferences.yAxis = undefined;
-		this.#HMpreferences.heat = undefined;
+		this._HMpreferences.xAxis = undefined;
+		this._HMpreferences.yAxis = undefined;
+		this._HMpreferences.heat = undefined;
 	}
 	resetPlmaPreferences(){
-		this.#PLMApreferences.dimensions.clear();
-		this.#PLMApreferences.color = undefined;
+		this._PLMApreferences.dimensions.clear();
+		this._PLMApreferences.color = undefined;
 	}
 
 	reset(){

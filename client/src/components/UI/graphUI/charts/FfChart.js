@@ -5,8 +5,8 @@ import { select } from "d3";
 import { observer } from "mobx-react-lite";
 const ForceField = () => {
 	const viewModel = useStore(),
-		distanceMatrix = viewModel.getDistanceMatrices(),
 		[matrixName, color, distMax, distMin]=viewModel.getFfPreferences(),
+		distanceMatrix = viewModel.getDistanceMatricesByName(matrixName),
 		margin = {top: 30, right: 30, bottom: 100, left: 100},
 		width = 1500 - margin.left - margin.right,
 		height = 850 - margin.top - margin.bottom,
@@ -18,13 +18,12 @@ const ForceField = () => {
 		const canvas = canvasRef.current;
 		canvas.width = width;
 		canvas.height = height;
-		let data, nodes, links, context, simulation;
-		if(matrixName!==undefined){
-			data = distanceMatrix[matrixName];
-			nodes = data.nodes.map(node => {
+		let nodes, links, context, simulation;
+		if(distanceMatrix){
+			nodes = distanceMatrix.nodes.map(node => {
 				return {...node};
 			}); 
-			links = data.links.filter(link => link.value<distMax && link.value>distMin).map(link => {
+			links = distanceMatrix.links.filter(link => link.value<distMax && link.value>distMin).map(link => {
 				return {...link};
 			});
 			context = canvas.getContext("2d");
