@@ -4,7 +4,7 @@ import { useStore } from "../../../../../../ContextProvider";
 import {OptionList} from "./";
 export const DropDown = props => {
 	const {Dataset,Columns,getAllOptions,confirme}=props;
-	console.log("confirme:",confirme)
+	console.log("confirme:",confirme);
 	const viewModel = useStore();
 	//const [getColumns,setColumns] = useState(null)
 	const [columnOption, setcolumnOption] = useState(null);
@@ -14,17 +14,17 @@ export const DropDown = props => {
 	useEffect(()=>{
 		if(confirme){
 			function handleConfirme(){
-				console.log("handleConfirme:",confirme)
+				console.log("handleConfirme:",confirme);
 			}
 			handleConfirme();
 		}
 		
-	})
+	});
 	async function handleData(table_name){
 		//const col =await viewModel.getColumnsWithName(table_name);
-		setTable(table_name)
+		setTable(table_name);
 		const columnList =await viewModel.getColumnList(table_name);
-		setcolumnOption(columnList)
+		setcolumnOption(columnList);
 		
 	}
 	//handle column selected
@@ -32,7 +32,7 @@ export const DropDown = props => {
 		//viewModel.getDatasetByParams(A,table)
 	} 
 	function hanldeAllOptions(newData,dims){
-		getAllOptions(newData,dims)
+		getAllOptions(newData,dims);
 		//console.log("hanldeAllOptions:",newData, "dims:",dims);
 	}
 	return (
