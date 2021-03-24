@@ -1,8 +1,8 @@
-import React, {useState} from "react"
-import logo from "./logo/logo.svg"
-import {Button} from "react-bootstrap"
-import "../../style.css"
-import Guida from "./Guida"
+import React, {useState} from "react";
+import logo from "./logo/logo.svg";
+import {Button} from "react-bootstrap";
+import "../../style.css";
+import Guida from "./Guida";
 
 const Header = () => {
 	const [modalIsOpen, setIsOpen] = useState(false);
@@ -24,6 +24,6 @@ const Header = () => {
 			</header>
 			<Guida modalIsOpen={modalIsOpen} closeModal={closeModal}/>
 		</>
-	)
-}
-export default Header
+	);
+};
+export default Header;

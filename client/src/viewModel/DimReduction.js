@@ -1,16 +1,10 @@
-import { AlgorithmType } from "./../utils"
-import IsomapStrategy from "./alghorithms/IsomapStrategy"
-import FastmapStrategy from "./alghorithms/FastmapStrategy"
-import LLEStrategy from "./alghorithms/LLEStrategy"
-import TsneStrategy from "./alghorithms/TsneStrategy"
+import { AlgorithmType } from "../utils";
+import IsomapStrategy from "./alghorithms/IsomapStrategy";
+import FastmapStrategy from "./alghorithms/FastmapStrategy";
+import LLEStrategy from "./alghorithms/LLEStrategy";
+import TsneStrategy from "./alghorithms/TsneStrategy";
 
-/*
-classe concreta che rappresenta il context e al suo interno viene scelto, sulla base dei dati 
-e della richieste ricevute, quale strategia seguire, che in questo caso è rappresentata da
-quale algoritmo di riduzione dimensionale usare
-*/
-
-class DimReductionStrategy {
+class DimReduction {
     
 	constructor() {
     	this.strategy = null;
@@ -58,4 +52,4 @@ class DimReductionStrategy {
 	}
 }
 
-export default DimReductionStrategy;
+export default DimReduction;

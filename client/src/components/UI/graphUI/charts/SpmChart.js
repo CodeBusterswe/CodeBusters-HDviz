@@ -8,7 +8,7 @@ const ScatterPlotMatrix = () => {
 	const viewModel = useStore();
 	const data = viewModel.getSelectedData();
 	const [axes, color] = viewModel.getSpmPreferences();
-	const traits = axes.filter(axis => axis!==undefined)
+	const traits = axes.filter(axis => axis!==undefined);
 	let domainByTrait={}, yScales={}, xScales={}, palette, canvas, ctx;
 	const TotalSize = 800;
 	const numberOfTraits = traits.length,
@@ -53,7 +53,7 @@ const ScatterPlotMatrix = () => {
 		updatePointsCanvas(svg);
 		if(color)
 			updateLegend(svg);
-	},)
+	},);
 	
 	function updatePointsCanvas(svg){
 		svg.selectAll(".cell").remove();
@@ -111,12 +111,12 @@ const ScatterPlotMatrix = () => {
 			domainByTrait[t] = d3.extent(data, function(d) { return +d[t]; });
 			let xScale, yScale;
 			if(domainByTrait[t][0] || domainByTrait[t][0]===0){//controllo se il minore è un numero
-				xScale=d3.scaleLinear().domain(domainByTrait[t])
-				yScale=d3.scaleLinear().domain(domainByTrait[t])
+				xScale=d3.scaleLinear().domain(domainByTrait[t]);
+				yScale=d3.scaleLinear().domain(domainByTrait[t]);
 			}else{
 				let domain = data.map(l => l[t]);
-				xScale=d3.scalePoint().domain([...new Set(domain)])
-				yScale=d3.scalePoint().domain([...new Set(domain)])
+				xScale=d3.scalePoint().domain([...new Set(domain)]);
+				yScale=d3.scalePoint().domain([...new Set(domain)]);
 			}
 			xScale.range([padding / 2, size - padding / 2]);
 			yScale.range([size - padding / 2, padding / 2]);
@@ -125,7 +125,7 @@ const ScatterPlotMatrix = () => {
 		  });
 	}
 	function updateAxis(svg){
-		svg.selectAll(".x.axis").remove()
+		svg.selectAll(".x.axis").remove();
 		svg.selectAll(".x.axis").
 			data(traits).
 			enter().append("g").
@@ -139,7 +139,7 @@ const ScatterPlotMatrix = () => {
 				select(this).call(x_axis); 
 			});
 
-		svg.selectAll(".y.axis").remove()
+		svg.selectAll(".y.axis").remove();
 		svg.selectAll(".y.axis").
 			data(traits).
 			enter().append("g").
@@ -183,6 +183,6 @@ const ScatterPlotMatrix = () => {
 	}
 	return (
 		<div className="scatterplotmatrix"></div>
-	)
-}
-export default observer(ScatterPlotMatrix)
+	);
+};
+export default observer(ScatterPlotMatrix);

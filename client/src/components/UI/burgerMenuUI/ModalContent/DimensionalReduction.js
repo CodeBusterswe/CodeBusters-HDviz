@@ -1,28 +1,28 @@
-import React, { useState } from "react"
-import { useStore } from "../../../../ContextProvider"
-import Modal from "react-bootstrap/Modal"
-import { Button, ModalBody, ModalFooter } from "react-bootstrap"
+import React, { useState } from "react";
+import { useStore } from "../../../../ContextProvider";
+import Modal from "react-bootstrap/Modal";
+import { Button, ModalBody, ModalFooter } from "react-bootstrap";
 import RangeSlider from "react-bootstrap-range-slider";
-import Select from "react-select"
+import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import {AlgorithmType} from "../../../../utils"
-import Form from "react-bootstrap/Form"
+import {AlgorithmType} from "../../../../utils";
+import Form from "react-bootstrap/Form";
 
 const DimensionalReduction = props => {
-	const viewModel = useStore()
+	const viewModel = useStore();
 	const [dimensionsToRedux, setDimensionsToRedux] = useState(viewModel.getOptionsForReduxDimensionsList().slice(0,2));
 	const [algorithmType, setAlgorithmType] = useState(AlgorithmType.FastMap);	
 	const [newDimensionsName, setNewDimensionsName] = useState(AlgorithmType.FastMap);
 	const [newDimensionsNumber, setNewDimensionsNumber] = useState(2);
 	const [neighbors, setNeighbors] = useState(30);
-	const [perplexity, setPerplexity] = useState(50)
-	const [epsilon, setEpsilon] = useState(10)
+	const [perplexity, setPerplexity] = useState(50);
+	const [epsilon, setEpsilon] = useState(10);
 	const [validated, setValidated] = useState(false);
 	
 	const {
 		modalIsOpen,
 		closeModal
-	} = props
+	} = props;
 
 	function handleSubmit(e){
 		const form = e.currentTarget;
@@ -38,7 +38,7 @@ const DimensionalReduction = props => {
 					Perplexity: perplexity,
 					Epsilon: epsilon
 				});
-			closeModal()
+			closeModal();
 			//alert("Riduzione eseguita con successo");
 		}
 		setValidated(true);
@@ -47,37 +47,37 @@ const DimensionalReduction = props => {
 		setNeighbors(e.target.value);
 	}
 	function handleChangeAlgorithmType(e){
-		setNewDimensionsName(e.target.value)
-		setAlgorithmType(e.target.value)
-		setNeighbors(30)
-		setNewDimensionsNumber(2)
-		setEpsilon(10)
-		setPerplexity(50)
+		setNewDimensionsName(e.target.value);
+		setAlgorithmType(e.target.value);
+		setNeighbors(30);
+		setNewDimensionsNumber(2);
+		setEpsilon(10);
+		setPerplexity(50);
 	}
 	function handleChangeNewDimensionsName(e){
 		e.preventDefault();
-		setNewDimensionsName(e.target.value)
+		setNewDimensionsName(e.target.value);
 	}
 	function handleChangeNewDimensionsNumber(e){
-		setNewDimensionsNumber(e.target.value)
+		setNewDimensionsNumber(e.target.value);
 	}
 	function handleChangePerplexity(e){
-		setPerplexity(e.target.value)
+		setPerplexity(e.target.value);
 	}
 	function handleChangeEspilon(e){
-		setEpsilon(e.target.value)
+		setEpsilon(e.target.value);
 	}
 	function handleChangeDimensionsToRedux (value, handler){
 		switch(handler.action){
 		case "select-option":
-			setDimensionsToRedux(value)
+			setDimensionsToRedux(value);
 			return;
 		case "remove-value":
 			if(value.length >= 2)
-				setDimensionsToRedux(value)
+				setDimensionsToRedux(value);
 			return;
 		case "clear":
-			setDimensionsToRedux(dimensionsToRedux.slice(0,2))
+			setDimensionsToRedux(dimensionsToRedux.slice(0,2));
 			return;
 		default:
 			return;
@@ -201,7 +201,7 @@ const DimensionalReduction = props => {
 				</ModalFooter>
 			</Form>
 		</Modal>
-	)
-}
+	);
+};
 
-export default DimensionalReduction
+export default DimensionalReduction;

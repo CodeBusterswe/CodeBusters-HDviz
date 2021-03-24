@@ -1,13 +1,9 @@
 import ViewModel from "./../ViewModel";
 import Dimension from "./../model/Dimension";
-import DistanceMatrix from "./../model/DistanceMatrix";
 
 let viewModel,
 	dimensions,
 	data;
-
-//template
-//test("", () => {});
 
 beforeEach(() => {
 	viewModel = new ViewModel();
@@ -26,7 +22,6 @@ describe("tests for getters/setters", () => {
 		
 		viewModel.updateDims([dimension1]);
 
-		//expect(viewModel.updateSelectedData()).toHaveBeenCalled();
 		expect(viewModel.getDimensions()).toStrictEqual([dimension1]);
 		expect(viewModel.getSelectedData()).toStrictEqual([{test1: "x"}, {test1: "x"}]);
 	});
@@ -42,12 +37,83 @@ describe("tests for getters/setters", () => {
 	});
 });
 
-test("viewModel should parse csv files", () => {
-	/*
-	let readCsv = [{data: ["name", "age"]},{data: ["Rick", "24"]}],
-		parsedDims = [new Dimension("name").isNumeric(false), new Dimension("age")],
-		parsedData = 
+describe("parsing csv data", () => {
 
-	expect.(viewModel.parseAndLoadCsvData(readCsv)).toBe();
-	*/
+	let dim1 = new Dimension("name"),
+		dim2 = new Dimension("age"),
+		readCsv = [{data: ["name", "age"]},{data: ["Rick", "24"]}],
+		parsedData = [],
+		parsedDims = [dim1, dim2];
+
+	test("viewModel should parse csv files", () => {
+
+		parsedData = [{name:"Rick", age:24}];
+		dim1.isNumeric(false);
+		expect(viewModel.parseAndLoadCsvData(readCsv)).toStrictEqual([parsedData,parsedDims]);
+	});
+
+	test("if a cat. dim. has an empty value it should be undefined", () => {
+	
+		readCsv = [{data: ["name", "age"]},{data: ["", "24"]}];
+		parsedData = [{name: undefined, age:24}];
+		dim1.isNumeric(false);
+		expect(viewModel.parseAndLoadCsvData(readCsv)).toStrictEqual([parsedData,parsedDims]);
+	});
+
+	test("NaN conversion in numeric dimensions", () => {
+	
+		readCsv = [{data: ["name", "age"]},{data: ["Rick", "24"]},{data: ["Rick", "NaN"]}];
+		parsedData = [{name: "Rick", age: 24},{name: "Rick", age: NaN}];
+		dim1.isNumeric(false);
+		expect(viewModel.parseAndLoadCsvData(readCsv)).toStrictEqual([parsedData,parsedDims]);
+	});
+});
+
+describe("viewModel should reduce dimensions", () => {
+
+	let data = [[300,16],[300,20]],
+		dims = [new Dimension("salary"), new Dimension("age")];
+	
+	describe("dimensionality reduction by algorithm", () => {
+
+		test("FastMap algorithm", () => {
+			viewModel.loadDataAndDims(data,dims);
+			viewModel.reduceDimensions("fastMap", {Name:"fastMap", DimensionNumber: 2}, data);
+			let dimR1 = new Dimension("fastMap1"),
+				dimR2 = new Dimension("fastMap2");
+			dimR1.isReduced(true);
+			dimR2.isReduced(true);
+			expect(viewModel.getDimensions()).toStrictEqual([dims[0],dims[1],dimR1,dimR2]);
+		});
+
+		test("IsoMap algorithm", () => {
+			viewModel.loadDataAndDims(data,dims);
+			viewModel.reduceDimensions("isoMap", {Name:"isoMap", DimensionNumber: 2, Neighbors: 30}, data);
+			let dimR1 = new Dimension("isoMap1"),
+				dimR2 = new Dimension("isoMap2");
+			dimR1.isReduced(true);
+			dimR2.isReduced(true);
+			expect(viewModel.getDimensions()).toStrictEqual([dims[0],dims[1],dimR1,dimR2]);
+		});
+
+		test("LLE algorithm", () => {
+			viewModel.loadDataAndDims(data,dims);
+			viewModel.reduceDimensions("lle", {Name:"lle", DimensionNumber: 2, Neighbors: 30}, data);
+			let dimR1 = new Dimension("lle1"),
+				dimR2 = new Dimension("lle2");
+			dimR1.isReduced(true);
+			dimR2.isReduced(true);
+			expect(viewModel.getDimensions()).toStrictEqual([dims[0],dims[1],dimR1,dimR2]);
+		});
+
+		test("t-sne algorithm", () => {
+			viewModel.loadDataAndDims(data,dims);
+			viewModel.reduceDimensions("t-sne", {Name:"tSne", DimensionNumber: 2, Neighbors: 30}, data);
+			let dimR1 = new Dimension("tSne1"),
+				dimR2 = new Dimension("tSne2");
+			dimR1.isReduced(true);
+			dimR2.isReduced(true);
+			expect(viewModel.getDimensions()).toStrictEqual([dims[0],dims[1],dimR1,dimR2]);
+		});
+	});
 });

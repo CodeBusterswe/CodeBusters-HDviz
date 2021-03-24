@@ -1,8 +1,8 @@
 import Dimension from "./model/Dimension";
 import DistanceMatrix from "./model/DistanceMatrix";
 import Model from "./model/Model";
-import { toJS } from "mobx"
-import DimReductionStrategy from "./viewModel/DimReductionStrategy"
+import { toJS } from "mobx";
+import DimReduction from "./viewModel/DimReduction";
 import * as distCalc from "ml-distance";
 import {getDataset, getTables,getDatasetByName,getColumnByName,getDatasetWithParams,getDatasetWithCustomParams} from "./model/services"  
 import Preferences from "./model/Preferences";
@@ -46,15 +46,15 @@ class ViewModel{
 	}
 
 	async getColumnList(table_name){
-		const dataset = await getColumnByName(table_name)
+		const dataset = await getColumnByName(table_name);
 		//console.log("dataset:",dataset);
 		return dataset[0].map(d => {
-			return {value: d.column_name, label: d.column_name}
-		})
+			return {value: d.column_name, label: d.column_name};
+		});
 	}
 	//get all dataset from csv table
 	async getTableWithName(table_name){
-		this.getColumnsWithName(table_name)
+		this.getColumnsWithName(table_name);
 		const dataset = await getDatasetByName(table_name);
 		//console.log("dataset:",dataset);
 		return dataset.data;
@@ -70,10 +70,10 @@ class ViewModel{
 		return this.preferences.chart;
 	}
 	getSpmPreferences(){
-		return [this.preferences.SpmAxes, this.preferences.SpmColor]
+		return [this.preferences.SpmAxes, this.preferences.SpmColor];
 	}
 	getSpmColor(){
-		return this.preferences.SpmColor
+		return this.preferences.SpmColor;
 	}
 	getHmPreferences(){
 		return Object.values(this.preferences.hmPreferences);
@@ -84,6 +84,9 @@ class ViewModel{
 	getFfPreferences(){
 		return Object.values(this.preferences.ffPreferences);
 	}
+	getPlmaPreferences(){
+		return Object.values(this.preferences.plmaPreferences);
+	}
 
 	setChartToShow(chartName){
 		this.preferences.chart = chartName;
@@ -92,18 +95,18 @@ class ViewModel{
 		if(identifier !== "color")
 			this.preferences.setSPMAxis(identifier, value);
 		else
-			this.preferences.SpmColor = value
+			this.preferences.SpmColor = value;
 	}
 	setHmPreferences(identifier, value){
 		switch(identifier){
 		case "xAxis":
-			this.preferences.hmXaxis = value
+			this.preferences.hmXaxis = value;
 			break;
 		case "yAxis":
-			this.preferences.hmYaxis = value
+			this.preferences.hmYaxis = value;
 			break;
 		case "heat":
-			this.preferences.hmFill = value
+			this.preferences.hmFill = value;
 			break;
 		default:
 			break;
@@ -112,10 +115,10 @@ class ViewModel{
 	setAmPreferences(identifier, value){
 		switch(identifier){
 		case "distanceMatrix":
-			this.preferences.amDistanceMatrix = value
+			this.preferences.amDistanceMatrix = value;
 			break;
 		case "orderBy":
-			this.preferences.amOrderBy = value
+			this.preferences.amOrderBy = value;
 			break;
 		case "label":
 			this.preferences.amLabel = value;
@@ -127,16 +130,28 @@ class ViewModel{
 	setFfPreferences(identifier, value){
 		switch(identifier){
 		case "distanceMatrix":
-			this.preferences.ffDistanceMatrix = value
+			this.preferences.ffDistanceMatrix = value;
 			break;
 		case "color":
-			this.preferences.ffColor = value
+			this.preferences.ffColor = value;
 			break;
 		case "distMax":
-			this.preferences.ffDistMax = value
+			this.preferences.ffDistMax = value;
 			break;
 		case "distMin":
-			this.preferences.ffDistMin = value
+			this.preferences.ffDistMin = value;
+			break;
+		default:
+			break;
+		}
+	}
+	setPlmaPreferences(identifier, value){
+		switch(identifier){
+		case "dimensions":
+			this.preferences.plmaDimensions = value;
+			break;
+		case "color":
+			this.preferences.plmaColor = value;
 			break;
 		default:
 			break;
@@ -166,8 +181,8 @@ class ViewModel{
 
 	getOptionsForReduxDimensionsList(){
 		return this.model.getNumericDimensions().map(d => {
-			return {value: d.value, label: d.value}
-		})
+			return {value: d.value, label: d.value};
+		});
 	}
 	getDistanceMatricesNames(){
 		return this.model.getDistanceMatricesNames();
@@ -222,7 +237,7 @@ class ViewModel{
         
 		dimensions = columns.map(dimName => {
 			let d = new Dimension(dimName);
-			d.isNumeric(+parsedData[0][dimName] || parsedData[0][dimName]===0 ? true : false)
+			d.isNumeric(+parsedData[0][dimName] || parsedData[0][dimName]===0 ? true : false);
 			return d;
 		});  
 
@@ -230,6 +245,7 @@ class ViewModel{
 	}
 
 	loadDataAndDims(data, dims){
+		console.log(data,dims);
 		this.model.reset();
 		this.model.loadData(data);
 		this.model.loadDimensions(dims);
@@ -240,11 +256,11 @@ class ViewModel{
 	updateDims(dims){
 		this.model.loadDimensions(dims);
 		this.preferences.reset();	//resetto le preferenze per il grafico
-		this.updateSelectedData()
+		this.updateSelectedData();
 	}
 
 	haveNotANumberValue(datasetRow) {
-		return !Object.values(datasetRow).some(value => Number.isNaN(value) || value === undefined)
+		return !Object.values(datasetRow).some(value => Number.isNaN(value) || value === undefined);
 	}
 
 	updateSelectedData(){
@@ -253,7 +269,7 @@ class ViewModel{
 			originalData = toJS(this.model.getOriginalData());
 		//con filter tolgo i dati che hanno alcune dimensioni numeriche selezionate NaN; e con map prendo le dimensioni selezionate
 		let selectedData = originalData.map(d => {
-			return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]))
+			return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]));
 	 	}).filter(this.haveNotANumberValue);
 		this.model.loadDimensions(checkedDims);//le aggiorno perché rimuovo le dimensioni ridotte create precedentemente
 		this.model.updateSelectedData(selectedData);
@@ -274,8 +290,6 @@ class ViewModel{
 			 })
 		console.log(string);
 		*/ 
-		//prova della riduzione tramite distanze
-		//this.reduceDimensionsByDist("euclidean", originalData, "name", "age");
 	}
 	
 	prepareDataForDR(dimensionsToRedux) {
@@ -307,32 +321,31 @@ class ViewModel{
 		for (let i = 0; i < data.length; i++) {
 			for (let j = i+1; j < data.length; j++) {
 				let link = {
-					source : `node${i}`,
-					target : `node${j}`,
+					source : "node"+i,
+					target : "node"+j,
 					value: distCalc.distance[distType](data[i], data[j])
 				};
 				matrix.pushLink(link);
 			}
-			let node = this.getSelectedData()[i];
-			node.id="node".concat(i);
+			let node = {...this.getSelectedData()[i]};
+			node.id="node"+i;
 			node.group = prodotto.clusters[i];
 			matrix.pushNode(node);
 		}
 		this.model.addDistanceMatrix(matrix,matrixName);
 	}
 
-	async reduceDimensions(algorithm, paramaters, data) {
-		
+	reduceDimensions(algorithm, paramaters, data) {
 		//spostare dove serve questo controllo
 		try{
 			let nameAlreadyUsed = this.model.getDimensions().some(dim => dim.getValue().includes(paramaters.Name));
 			if(nameAlreadyUsed)
-			  throw new Error("The name is already in use. Please choose a different one.")
+			  throw new Error("The name is already in use. Please choose a different one.");
 		  }catch(e){
 			console.log(e);
 		  }
 		//*******************************************************************
-		const drStrategy = new DimReductionStrategy();
+		const drStrategy = new DimReduction();
 
 		drStrategy.setStrategy(algorithm);
 		drStrategy.setData(data);

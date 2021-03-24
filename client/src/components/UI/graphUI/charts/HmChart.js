@@ -17,25 +17,25 @@ const HeatMap = () => {
 		let newData = [];
 		if(+data[0][heat]){
 			data.forEach(d => {
-				let notFound = true
+				let notFound = true;
 				newData.forEach(x => {
 					if(d[asseX] === x[asseX] && d[asseY] === x[asseY]){
 						notFound = false;
-						x[heat] = (d[heat]+x[heat])/2
+						x[heat] = (d[heat]+x[heat])/2;
 						return;
 					}
-				})
+				});
 				if(notFound){
 					newData.push(d);
 				}
 			});
 		}else{
 			data.forEach(d => {
-				let notFound = true
+				let notFound = true;
 				newData.forEach(x => {
 					if(d[asseX] === x[asseX] && d[asseY] === x[asseY])
 						notFound = false;
-				})
+				});
 				if(notFound){
 					newData.push(d);
 				}
@@ -58,7 +58,7 @@ const HeatMap = () => {
 			style("font-size", 15).
 			attr("transform", "translate(0," + height + ")").
 			call(d3.axisBottom(x).tickSize(0)).
-			select(".domain").remove()
+			select(".domain").remove();
 
 		// Build Y scales and axis:
 		const y = d3.scaleBand().
@@ -68,7 +68,7 @@ const HeatMap = () => {
 		svg.append("g").
 			style("font-size", 15).
 			call(d3.axisLeft(y).tickSize(0)).
-			select(".domain").remove()
+			select(".domain").remove();
   
 		// create a tooltip
 		d3.select(".heatmap").select("div").remove();
@@ -81,30 +81,30 @@ const HeatMap = () => {
 			style("border", "solid").
 			style("border-width", "2px").
 			style("border-radius", "5px").
-			style("padding", "5px")
+			style("padding", "5px");
 		// Three function that change the tooltip when user hover / move / leave a cell
 		const mouseover = function(event,d) {
 			tooltip.
-				style("opacity", 1)
+				style("opacity", 1);
 			d3.select(this).
 				style("stroke", "black").
-				style("opacity", 1)
-		}
+				style("opacity", 1);
+		};
 		const mousemove = function(event,d) {
 			var matrix = this.getScreenCTM().
 				translate(+ this.getAttribute("cx"), + this.getAttribute("cy"));
 			tooltip.
 				html("The exact value of<br>this cell is: " + d[heat]).
 				style("left", d3.pointer(event)[0] + matrix.e + 15 + "px").
-				style("top", d3.pointer(event)[1] + 100 + "px")
-		}
+				style("top", d3.pointer(event)[1] + 100 + "px");
+		};
 		const mouseleave = function(event,d) {
 			tooltip.
-				style("opacity", 0)
+				style("opacity", 0);
 			d3.select(this).
 				style("stroke", "none").
-				style("opacity", 0.8)
-		}
+				style("opacity", 0.8);
+		};
   		// Build color scale
 
 		let colorDomain = d3.extent(data, function(d) {return +d[heat]; });
@@ -121,26 +121,26 @@ const HeatMap = () => {
 			data(newData).
 			enter().
 			append("rect").
-			attr("x", function(d) {	return x(d[asseX]) }).
-			attr("y", function(d) { return y(d[asseY]) }).
+			attr("x", function(d) {	return x(d[asseX]); }).
+			attr("y", function(d) { return y(d[asseY]); }).
 			attr("rx", 4).
 			attr("ry", 4).
 			attr("width", x.bandwidth() ).
 			attr("height", y.bandwidth() ).
-			style("fill", function(d) { return myColor(d[heat])} ).
+			style("fill", function(d) { return myColor(d[heat]);} ).
 			style("stroke-width", 4).
 			style("stroke", "none").
 			style("opacity", 0.8).
 			on("mouseover", mouseover).
 			on("mousemove", mousemove).
-			on("mouseleave", mouseleave)
+			on("mouseleave", mouseleave);
 
 	},);
 
 	return (
 		<div className="heatmap">
 		</div>
-	)
+	);
 
-}
+};
 export default observer(HeatMap);

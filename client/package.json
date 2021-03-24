@@ -10,6 +10,7 @@
     "@tippyjs/react": "^4.2.4",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
+    "canvas": "^2.7.0",
     "d3": "^6.6.0",
     "ml-distance": "^3.0.0",
     "ml-kmeans": "^5.0.0",
@@ -65,6 +66,7 @@
       "dot-notation": "error",
       "eqeqeq": "error",
       "no-multi-spaces": "error",
+      "semi": ["error", "always"],
       "indent": [
         "error",
         "tab"

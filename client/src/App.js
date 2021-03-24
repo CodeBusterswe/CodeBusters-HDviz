@@ -1,6 +1,6 @@
 import "./App.css";
-import React from "react"
-import ViewModel from "./ViewModel"
+import React from "react";
+import ViewModel from "./ViewModel";
 import View from "./components/View";
 import {AppContextProvider} from "./ContextProvider";
 
@@ -10,7 +10,7 @@ const App = () => {
 		<AppContextProvider value={viewModel}>
 			<View/>
 		</AppContextProvider>
-	)
-}
+	);
+};
 
 export default App;

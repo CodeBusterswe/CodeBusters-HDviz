@@ -30,14 +30,14 @@ const HeatMapPreferences = () => {
 							>
 								<option value={"undefined"} key={"noDimensions"+identifiers}>No dimension</option>
 								{keys.map((d) => {
-									return <option value={d} key={d+identifiers}>{d}</option>
+									return <option value={d} key={d+identifiers}>{d}</option>;
 								})}
 							</Form.Control>
 						</Form.Group>
-					)
+					);
 				})
 			}
 		</Form>
-	)
-}
+	);
+};
 export default observer(HeatMapPreferences);

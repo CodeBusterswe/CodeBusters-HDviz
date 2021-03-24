@@ -44,4 +44,4 @@ class Dimension{
 		return this._isRedux;
 	}
 }
-export default Dimension
+export default Dimension;
