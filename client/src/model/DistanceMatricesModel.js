@@ -27,4 +27,6 @@ class DistanceMatricesModel {
 		this.#distanceMatrices = [];
 		this.distanceNames.clear();
 	}
-}export default DistanceMatricesModel;
+}
+
+export default DistanceMatricesModel;

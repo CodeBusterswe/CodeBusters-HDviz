@@ -312,7 +312,7 @@ class ViewModel{
 		
 		let prodotto = kmeans(numericData, 3, {distanceFunction: distCalc.distance[distType]});
 		let matrix = new DistanceMatrix();
-		console.log(prodotto);
+		//console.log(prodotto);
 		matrix.name = matrixName;
 		for (let i = 0; i < data.length; i++) {
 			for (let j = i+1; j < data.length; j++) {

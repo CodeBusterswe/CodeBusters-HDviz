@@ -7,6 +7,6 @@ let distanceMatrix = new DistanceMatrix(),
 test("add elements and get data", () => {
 	distanceMatrix.pushNode(node);
 	distanceMatrix.pushLink(link);
-	expect(distanceMatrix.getNodes()).toStrictEqual([node]);
-	expect(distanceMatrix.getLinks()).toStrictEqual([link]);
+	expect(distanceMatrix.nodes).toStrictEqual([node]);
+	expect(distanceMatrix.links).toStrictEqual([link]);
 });

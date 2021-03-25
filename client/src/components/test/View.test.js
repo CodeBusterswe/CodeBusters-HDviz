@@ -1,5 +1,5 @@
 import { createEvent, fireEvent, getByRole, getByText, render, screen, waitFor } from "@testing-library/react";
-import App from "../../App";
+import App from "./../View";
 
 test("Open web app", () => {
 	render(<App />);
