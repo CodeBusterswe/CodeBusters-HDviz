@@ -123,27 +123,37 @@ describe("viewModel should reduce dimensions", () => {
 		let data = [{salary:700, age:24}, {salary:600, age:23}];
 
 		test("Euclidean", () => {
-			/*
 			viewModel.loadDataAndDims(data,dims);
-			viewModel.beginReduceDimensionsByDist("euclidean",data, "test");
+			viewModel.beginReduceDimensionsByDist("euclidean",["salary","age"], "test");
 			let dm = viewModel.getDistanceMatrices();
 			dm = dm[0];
 			expect(dm).toBeTruthy();
 			expect(dm.nodes).toStrictEqual([{id: "node0",salary:700, age:24},{id: "node1",salary:600, age:23}]);
-			expect(dm.links).toStrictEqual([{source: "node0", target: "node1", value: 100.00499987500625}]);
-			*/
+			expect(dm.links).toStrictEqual([{source: "node0", target: "node1", value: 100.00499987500625}]);		
 		});
 
 		test("Manhattan", () => {
-
+			viewModel.loadDataAndDims(data,dims);
+			viewModel.beginReduceDimensionsByDist("manhattan",["salary","age"], "test");
+			let dm = viewModel.getDistanceMatrices();
+			dm = dm[0];
+			expect(dm.links).toStrictEqual([{source: "node0", target: "node1", value: 101}]);
 		});
 
 		test("Canberra", () => {
-
+			viewModel.loadDataAndDims(data,dims);
+			viewModel.beginReduceDimensionsByDist("canberra",["salary","age"], "test");
+			let dm = viewModel.getDistanceMatrices();
+			dm = dm[0];
+			expect(dm.links).toStrictEqual([{source: "node0", target: "node1", value: 0.09819967266775778}]);
 		});
 
 		test("Chebyshev", () => {
-
+			viewModel.loadDataAndDims(data,dims);
+			viewModel.beginReduceDimensionsByDist("chebyshev",["salary","age"], "test");
+			let dm = viewModel.getDistanceMatrices();
+			dm = dm[0];
+			expect(dm.links).toStrictEqual([{source: "node0", target: "node1", value: 100}]);
 		});
 	});
 });
