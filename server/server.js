@@ -25,17 +25,18 @@ CREATE TABLE Iris (
 );
 `;
 
-const query1 = `
-CREATE TABLE Admin (
-    email varchar,
-    firstName varchar,
-    lastName varchar,
-    age int
+const irisDataset = `
+CREATE TABLE IrisDataset (
+    sepal_length NUMERIC,
+    sepal_width NUMERIC,
+    petal_length NUMERIC,
+    petal_width NUMERIC,
+    species VARCHAR(255)
 );
 `;
 
 app.get('/c', function (req, res, next) {
-    db.query(query, (err, res) => {
+    db.query(irisDataset, (err, res) => {
         if (err) {
             console.error(err.message);
             return;

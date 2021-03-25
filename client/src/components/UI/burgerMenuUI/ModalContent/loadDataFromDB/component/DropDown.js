@@ -1,12 +1,11 @@
 import React,{useState,useEffect} from "react";
-import { Dropdown,DropdownButton,ButtonGroup,Container,Row,Col } from "react-bootstrap";
+import { Dropdown,DropdownButton,ButtonGroup,Container,Row,Col,Badge } from "react-bootstrap";
 import { useStore } from "../../../../../../ContextProvider";
 import {OptionList} from "./";
 export const DropDown = props => {
-	const {Dataset,Columns,getAllOptions,confirme}=props;
+	const {Dataset,getAllOptions,confirme}=props;
 	console.log("confirme:",confirme);
 	const viewModel = useStore();
-	//const [getColumns,setColumns] = useState(null)
 	const [columnOption, setcolumnOption] = useState(null);
 	const [table, setTable] = useState(null);
 	//console.log("getSelectedParams:",getSelectedParams)
@@ -14,12 +13,13 @@ export const DropDown = props => {
 	useEffect(()=>{
 		if(confirme){
 			function handleConfirme(){
-				console.log("handleConfirme:",confirme);
+				//console.log("handleConfirme:",confirme);
 			}
 			handleConfirme();
 		}
 		
-	});
+	},[]);
+	
 	async function handleData(table_name){
 		//const col =await viewModel.getColumnsWithName(table_name);
 		setTable(table_name);
@@ -59,6 +59,7 @@ export const DropDown = props => {
 								</DropdownButton>
 							,
 						)}
+						{<Badge variant="light">{"Dataset scelta: "} {table}</Badge>}
 					</div>
 				</Col>
 			</Row>
