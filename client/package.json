@@ -33,6 +33,12 @@
     "test": "craco test",
     "eject": "react-scripts eject"
   },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "src/index.js",
+      "src/reportWebVitals.js"
+    ]
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
