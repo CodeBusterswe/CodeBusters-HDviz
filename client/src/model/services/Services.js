@@ -1,15 +1,10 @@
 import {api} from "./ApiURL";
 
 //restituisce il valore delle colonne selezionate
-export const getDatasetWithParams=async(columnSelected,table_name)=>{
-	function getData(){
-		return columnSelected.map((item, i) => {
-			return item.value;
-		});
-	}
+export const getDatasetWithParams=async(selectedColumns,table)=>{
 	try{
-		const selectField=getData();
-		const dataSet= await api.post("/get-data",{selectField,table_name});
+		const selectField=selectedColumns.map(item => item.value);
+		const dataSet= await api.post("/get-data",{selectField, table});
 		return dataSet.data;
 	}catch(err){
 		console.error(err.message);    
@@ -19,13 +14,8 @@ export const getDatasetWithParams=async(columnSelected,table_name)=>{
 // ritorna il valore della query personalizzata
 export const getDatasetWithCustomParams=async(selectedColumns, conditionSign, conditionColumn, conditionValue, table)=>{
 	let params = {conditionSign, conditionColumn, conditionValue, table};
-	function getData(){
-		return selectedColumns.map((item, i) => {
-			return item.value;
-		});
-	} 
 	try{
-		const selectField=getData();
+		const selectField=selectedColumns.map(item => item.value);
 		const dataSet= await api.post("/get-custom-data",{selectField, params});
 		return dataSet.data;
 	}catch(err){
@@ -33,7 +23,26 @@ export const getDatasetWithCustomParams=async(selectedColumns, conditionSign, co
 	 }
 };
 
-// ritirna i dataset presenti nel database
+//ritorna tutte le tabelle presenti nel database
+export const getTables=async()=>{
+	try{
+		const table= await api.get("/get-tables");
+		return table.data;
+	}catch(err){
+		console.error(err.message);    
+	}
+};
+//Ritorna le colonne di una tabella
+export const getColumnsByName=async(table_name)=>{
+	try{
+		const columns = await api.post("/get-columns",{table:table_name});
+		return columns.data;
+	}catch(err){
+		console.error(err.message);    
+	 }
+};
+
+/* ritirna i dataset presenti nel database NOT USED
 export const getDataset=async()=>{
 	const table="dataset";
 	const Data=[];
@@ -46,18 +55,9 @@ export const getDataset=async()=>{
 	 }
 	 
 	 return {data:Data};
-};
+};*/
 
-export const getTables=async()=>{
-	try{
-		const table= await api.get("/get-tables");
-		return table.data;
-	}catch(err){
-		console.error(err.message);    
-	}
-};
-
-export const getDatasetByName=async(table_name)=>{
+/*export const getDatasetByName=async(table_name)=>{ NOT USED
 	const tables=[];
 
 	try{
@@ -67,15 +67,4 @@ export const getDatasetByName=async(table_name)=>{
 		console.error(err.message);    
 	 }
 	 return tables;
-};
-
-export const getColumnByName=async(table_name)=>{
-	const tables=[];
-	try{
-		const table= await api.post("/get-columns",{table:table_name});
-		tables.push(table.data);
-	}catch(err){
-		console.error(err.message);    
-	 }
-	 return tables;
-};
+};*/
