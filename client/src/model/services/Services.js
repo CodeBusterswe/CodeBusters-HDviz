@@ -2,6 +2,7 @@ import {api} from "./ApiURL";
 
 //restituisce il valore delle colonne selezionate
 export const getDatasetWithParams=async(columnSelected,table_name)=>{
+	console.log("columnSelected:",columnSelected);
 	function getData(){
 		return columnSelected.map((item, i) => {
 			return item.value;
@@ -19,9 +20,9 @@ export const getDatasetWithParams=async(columnSelected,table_name)=>{
 // ritorna il valore della query personalizzata
 export const getDatasetWithCustomParams=async(params)=>{
 	console.log("params:",params);
-	var {columnSelected}=params;
+	var {options}=params;
 	function getData(){
-		return columnSelected.map((item, i) => {
+		return options.map((item, i) => {
 			return item.value;
 		});
 	} 

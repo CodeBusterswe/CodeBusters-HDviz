@@ -4,6 +4,7 @@ import {Modal,Alert, Form} from "react-bootstrap";
 import { ModalBody, ModalFooter,Spinner,Button} from "react-bootstrap";
 import Select from "react-select";
 import {DropDown} from "./component";
+import {OptionList} from "./component";
 const LoadDataFromDB = props => {
 	const viewModel = useStore();
 	const [localDimensions, setLocalDimensions] = useState(viewModel.getDimensions());
@@ -38,6 +39,7 @@ const LoadDataFromDB = props => {
 	},[]);
 
 	function handleChangeColumns (value, handler){
+		console.log("handle colums:",value, handler);
 		switch(handler.action){
 		case "select-option":
 			setSelectedColumns(value);
@@ -87,10 +89,10 @@ const LoadDataFromDB = props => {
 		return () => clearTimeout(timer);
 	},[showDanger]);
 
-	function getAllOptions(newData,dims){
+	function hanldeAllOptions(newData,dims){
 		setLocalData(newData);
 		setLocalDimensions(dims);
-		console.log("Load DataFromDB:",newData, "dims:",dims);
+		//console.log("Load DataFromDB:",newData, "dims:",dims);
 	}
 
 	return(
@@ -103,12 +105,6 @@ const LoadDataFromDB = props => {
 					<Modal.Title>Seleziona Dataset</Modal.Title>
 				</Modal.Header>
 				<ModalBody>
-					{/*getTable?<DropDown Dataset={getTable} Columns={getColumns} getAllOptions={getAllOptions}/>:
-						<Button variant="primary" disabled>
-							<Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
-								Loading...
-						</Button>
-					*/}
 					<Form>
 						{tables ? <Form.Group controlId="distanceMatrix">
 							<Form.Label>Distance Matrix</Form.Label>
@@ -118,13 +114,12 @@ const LoadDataFromDB = props => {
 								value={table}
 								onChange={handleSelectTable}
 							>
-								<option value={null} key={"null"}>null</option>
 								{tables.map((d) => {
 									return <option value={d} key={d}>{d}</option>;
 								})}
 							</Form.Control>
 						</Form.Group>: null}
-						{table ? <Form.Group controlId="dimensionsToReduxList">
+						{table?<Form.Group controlId="dimensionsToReduxList">
 							<Form.Label>Select the dimensions to use</Form.Label>
 							<Select
 								value={selectedColumns}
@@ -139,6 +134,7 @@ const LoadDataFromDB = props => {
 						</Form.Group> : null
 						}
 					</Form>
+					{selectedColumns?<OptionList options={selectedColumns} table={table} hanldeAllOptions={hanldeAllOptions} />:null}
 				</ModalBody>
 				
 				<ModalFooter>
