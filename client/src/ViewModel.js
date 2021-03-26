@@ -114,7 +114,6 @@ class ViewModel{
 			this.#preferences.hmFill = value;
 			break;
 		default:
-			break;
 		}
 	}
 	setAmPreferences(identifier, value){
@@ -129,7 +128,6 @@ class ViewModel{
 			this.#preferences.amLabel = value;
 			break;
 		default:
-			break;
 		}
 	}
 	setFfPreferences(identifier, value){
@@ -147,7 +145,6 @@ class ViewModel{
 			this.#preferences.ffDistMin = value;
 			break;
 		default:
-			break;
 		}
 	}
 	setPlmaPreferences(identifier, value){
@@ -159,7 +156,6 @@ class ViewModel{
 			this.#preferences.plmaColor = value;
 			break;
 		default:
-			break;
 		}
 	}
 	
@@ -191,25 +187,6 @@ class ViewModel{
 	}
 	getDistanceMatricesNames(){
 		return this.#distanceMatricesModel.distanceMatricesNames;
-	}
-
-	parseAndLoadCsvDataFromDB(header) {
-		function getData(){
-			return header.map((item, i) => {
-				return item.value;
-			});
-		}
-		//console.log("Parse data:",data);
-		let dimensions;
-		let columns =getData();
-		dimensions = columns.map(dimName => {
-			let d = new Dimension(dimName);
-			d.isNumeric(+[dimName] || [dimName]===0 ? true : false);
-			return d;
-		}); 
-		
-		return [dimensions];
-
 	}
 
 	parseAndLoadCsvDataFromDB(header) {

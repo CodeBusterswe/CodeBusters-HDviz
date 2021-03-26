@@ -36,7 +36,8 @@
   "jest": {
     "coveragePathIgnorePatterns": [
       "src/index.js",
-      "src/reportWebVitals.js"
+      "src/reportWebVitals.js",
+      "src/viewModel/AlghorithmStrategy.js"
     ]
   },
   "eslintConfig": {
