@@ -1,6 +1,6 @@
 import { createEvent, fireEvent, getByRole, getByText, render, screen, waitFor } from "@testing-library/react";
 import { Modal } from "react-bootstrap";
-import App from "../../App";
+import App from "./../View";
 
 test("Carica un csv", async() => {
 	render(<App/>);

@@ -1,32 +1,29 @@
 class DistanceMatrix {
-    /*array di objects
-    {
-        source : "s1"
-        target : "t1"
-        distance : 15.3
-    }
-    {
-        id : "id1"
-        group : "g1"
-    }
-    */
-    nodes = [];
-    links = [];
+    #nodes = [];
+    #links = [];
+    #name = "";
 
-    getNodes() {
-    	return this.nodes;
+    get nodes() {
+    	return this.#nodes;
     }
 
-    getLinks() {
-    	return this.links;
+    get links() {
+    	return this.#links;
     }
 
+    get name(){
+    	return this.#name;
+    }
+
+    set name(name){
+    	this.#name = name;
+    }
     pushNode(node) {
-    	this.nodes.push(node);
+    	this.#nodes.push(node);
     }
 
     pushLink(link) {
-    	this.links.push(link);
+    	this.#links.push(link);
     }
 }
 
