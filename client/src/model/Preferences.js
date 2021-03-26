@@ -49,19 +49,19 @@ class Preferences{
 			this._chart[chart_name] = true;
 		}
 	}
-	get plmaDimensions(){
+	/*get plmaDimensions(){
 		return this._PLMApreferences.dimensions;
 	}
 	get plmaColor(){
 		return this._PLMApreferences.plmaColor;
-	}
+	}*/
 	set plmaDimensions(dimensions){
 		this._PLMApreferences.dimensions = dimensions ;
 	}
 	set plmaColor(color){
 		this._PLMApreferences.color = color;
 	}
-	get amLabel(){
+	/*get amLabel(){
 		return this._AMpreferences.label;
 	}
 
@@ -71,7 +71,7 @@ class Preferences{
 
 	get amOrderBy(){
 		return this._AMpreferences.orderBy;
-	}
+	}*/
 
 	set amLabel(label){
 		this._AMpreferences.label = label;
@@ -97,7 +97,7 @@ class Preferences{
 		this._HMpreferences.heat = heat;
 	}
 
-	get hmXaxis(){
+	/*get hmXaxis(){
 		return this._HMpreferences.xAxis;
 	}
 
@@ -107,7 +107,7 @@ class Preferences{
 
 	get hmFill(){
 		return this._HMpreferences.heat;
-	}
+	}*/
 
 	set ffDistanceMatrix(matrix){
 		this._FFpreferences.distanceMatrix = matrix;
@@ -125,7 +125,7 @@ class Preferences{
 		this._FFpreferences.distMax = dist;
 	}
 
-	get ffDistanceMatrix(){
+	/*get ffDistanceMatrix(){
 		return this._FFpreferences.distanceMatrix;
 	}
 
@@ -138,7 +138,7 @@ class Preferences{
 
 	get ffDistMax(){
 		return this._FFpreferences.distMax;
-	}
+	}*/
 
 	set SpmAxis1(dimensionsValue){
 		this._SPMPreferences.axis1 = dimensionsValue;
