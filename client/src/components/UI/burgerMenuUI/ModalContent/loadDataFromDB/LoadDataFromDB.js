@@ -1,13 +1,16 @@
 import React, {useState,useEffect} from "react";
 import { useStore } from "../../../../../ContextProvider";
-import {Modal,Alert} from "react-bootstrap";
+import {Modal,Alert, Form} from "react-bootstrap";
 import { ModalBody, ModalFooter,Spinner,Button} from "react-bootstrap";
+import Select from "react-select";
 import {DropDown} from "./component";
 const LoadDataFromDB = props => {
 	const viewModel = useStore();
 	const [localDimensions, setLocalDimensions] = useState(viewModel.getDimensions());
-	const [getTable,setTables] = useState(null);
-	const [getColumns,setColumns] = useState(null);
+	const [tables, setTables] = useState(null);
+	const [columns, setColumns] = useState([]);
+	const [table, setTable] = useState(null);
+	const [selectedColumns, setSelectedColumns] = useState([]);
 	const [showSuccess, setShowSuccess] = useState(false);
 	const [showDanger, setShowDanger] = useState(false);
 	const [localData, setLocalData] = useState();
@@ -16,23 +19,44 @@ const LoadDataFromDB = props => {
 		modalIsOpen,
 		closeModal
 	} = props;
-
 	async function viewData(){
 		const data=await viewModel.getAllTables();
-		setTables(data);
+		console.log(data);
+		setTables(data[0].map(d => d.table_name));
 	}
-
-	useEffect(async() => {
+	async function getColumns(table){
+		const columns=await viewModel.getColumnList(table);
+		setColumns(columns);
+	}
+	function handleSelectTable(e){
+		setTable(e.target.value);
+		getColumns(e.target.value);
+		setSelectedColumns([]);
+	}
+	useEffect(() => {
 		viewData();
 	},[]);
 
+	function handleChangeColumns (value, handler){
+		switch(handler.action){
+		case "select-option":
+			setSelectedColumns(value);
+			return;
+		case "remove-value":
+			setSelectedColumns(value);
+			return;
+		case "clear":
+			setSelectedColumns([]);
+			return;
+		default:
+			return;
+		}
+	}
 	function loadDataAndDims(){
 		console.time("clickLoadData");
 		//devo anche aggiornare i selectedData con le nuove dimensioni selezionate
 		if(localData)
 			viewModel.loadDataAndDims(localData, localDimensions);//questo viene chiamato quando l'utente cambia il file
-		else	
-			viewModel.updateDims(localDimensions); //quessto viene chiamato quando l'utente aggiorna le dimensioni
 		//funzione utilizzata da CSV Reader per salvare localmente dati e dimensioni
 		resetAndClose();
 	}
@@ -79,12 +103,42 @@ const LoadDataFromDB = props => {
 					<Modal.Title>Seleziona Dataset</Modal.Title>
 				</Modal.Header>
 				<ModalBody>
-					{getTable?<DropDown Dataset={getTable} /* Columns={getColumns} */ getAllOptions={getAllOptions}/>:
+					{/*getTable?<DropDown Dataset={getTable} Columns={getColumns} getAllOptions={getAllOptions}/>:
 						<Button variant="primary" disabled>
 							<Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
 								Loading...
 						</Button>
-					}
+					*/}
+					<Form>
+						{tables ? <Form.Group controlId="distanceMatrix">
+							<Form.Label>Distance Matrix</Form.Label>
+							<Form.Control
+								custom
+								as="select"
+								value={table}
+								onChange={handleSelectTable}
+							>
+								<option value={null} key={"null"}>null</option>
+								{tables.map((d) => {
+									return <option value={d} key={d}>{d}</option>;
+								})}
+							</Form.Control>
+						</Form.Group>: null}
+						{table ? <Form.Group controlId="dimensionsToReduxList">
+							<Form.Label>Select the dimensions to use</Form.Label>
+							<Select
+								value={selectedColumns}
+								options={columns}
+								isMulti
+								name="toReduxDimensionsList"
+								className="basic-multi-select"
+    							classNamePrefix="select"
+								closeMenuOnSelect={false}
+								onChange={handleChangeColumns}
+							/>
+						</Form.Group> : null
+						}
+					</Form>
 				</ModalBody>
 				
 				<ModalFooter>
