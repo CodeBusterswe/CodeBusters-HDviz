@@ -1,40 +1,91 @@
 import React, {useState,useEffect} from "react";
 import { useStore } from "../../../../../ContextProvider";
 import {Modal,Alert, Form} from "react-bootstrap";
-import { ModalBody, ModalFooter,Spinner,Button} from "react-bootstrap";
+import { ModalBody, ModalFooter, Button} from "react-bootstrap";
 import Select from "react-select";
-import {DropDown} from "./component";
 const LoadDataFromDB = props => {
 	const viewModel = useStore();
-	const [localDimensions, setLocalDimensions] = useState(viewModel.getDimensions());
+	const [localData, setLocalData] = useState();
+	const [localDimensions, setLocalDimensions] = useState();
 	const [tables, setTables] = useState(null);
 	const [columns, setColumns] = useState([]);
 	const [table, setTable] = useState(null);
 	const [selectedColumns, setSelectedColumns] = useState([]);
+	const [conditionColumn, setConditionColumn] = useState("undefined");
+	const [conditionSign, setConditionSign] = useState("undefined");
+	const [conditionValue, setConditionValue] = useState("");
+	const [clicked, setClicked] = useState(false);
+	const [empty, setEmpty] = useState(false);
+	const [resultLength, setResultLenght] = useState(0);
 	const [showSuccess, setShowSuccess] = useState(false);
 	const [showDanger, setShowDanger] = useState(false);
-	const [localData, setLocalData] = useState();
 
 	const {
 		modalIsOpen,
 		closeModal
 	} = props;
-	async function viewData(){
-		const data=await viewModel.getAllTables();
-		console.log(data);
-		setTables(data[0].map(d => d.table_name));
+
+	async function getTables(){
+		const tables=await viewModel.getAllTables();
+		setTables(tables.map(d => d.table_name));
+		setTable(tables.map(d => d.table_name)[0]);
 	}
-	async function getColumns(table){
+
+	async function getColumns(){
 		const columns=await viewModel.getColumnList(table);
 		setColumns(columns);
 	}
+
 	function handleSelectTable(e){
-		setTable(e.target.value);
-		getColumns(e.target.value);
+		const tableName = e.target.value;
+		setTable(tableName);
 		setSelectedColumns([]);
+		setConditionColumn("undefined");
+		setConditionSign("undefined");
+		setConditionValue("");
+		setClicked(false);
+		setResultLenght(0);
 	}
+	function handleSelectConditionColumn(e){
+		const columnName = e.target.value;
+		setConditionColumn(columnName);
+	}
+	function handleSelectConditionValue(e){
+		const conditionValue = e.target.value;
+		setConditionValue(conditionValue);
+	}
+	function handleSelectConditionSign(e){
+		const conditionSign = e.target.value;
+		setConditionSign(conditionSign);
+	}
+
+	async function getQueryResult(){
+		let data;
+		if(conditionValue!=="" && conditionSign!=="undefined" && conditionColumn!=="undefined")
+			data = await viewModel.getDatasetByCustomParams(selectedColumns, conditionSign, conditionColumn, conditionValue, table);
+		else
+			data = await viewModel.getDatasetByParams(selectedColumns, table);
+	   return data;
+	}
+	async function onSubmit(){
+		setClicked(true);
+		const parsedData=await getQueryResult();
+		if(parsedData && parsedData.length>0){
+			setEmpty(false);
+			setResultLenght(parsedData.length);
+			const dimensions = viewModel.parseAndLoadCsvDataFromDB(selectedColumns);
+			setLocalData(parsedData);
+			setLocalDimensions(dimensions);
+		}else{
+			setEmpty(true);
+			setResultLenght(0);
+		}
+	}
+	useEffect(() =>{
+		getColumns();
+	}, [table]);
 	useEffect(() => {
-		viewData();
+		getTables();
 	},[]);
 
 	function handleChangeColumns (value, handler){
@@ -53,15 +104,13 @@ const LoadDataFromDB = props => {
 		}
 	}
 	function loadDataAndDims(){
-		console.time("clickLoadData");
-		//devo anche aggiornare i selectedData con le nuove dimensioni selezionate
 		if(localData)
-			viewModel.loadDataAndDims(localData, localDimensions);//questo viene chiamato quando l'utente cambia il file
-		//funzione utilizzata da CSV Reader per salvare localmente dati e dimensioni
+			viewModel.loadDataAndDims(localData, localDimensions);
 		resetAndClose();
 	}
 
 	function resetAndClose(){
+		setSelectedColumns([]);
 		setLocalData();
 		closeModal();
 	}
@@ -87,12 +136,6 @@ const LoadDataFromDB = props => {
 		return () => clearTimeout(timer);
 	},[showDanger]);
 
-	function getAllOptions(newData,dims){
-		setLocalData(newData);
-		setLocalDimensions(dims);
-		console.log("Load DataFromDB:",newData, "dims:",dims);
-	}
-
 	return(
 		<div>
 			<Modal
@@ -103,42 +146,80 @@ const LoadDataFromDB = props => {
 					<Modal.Title>Seleziona Dataset</Modal.Title>
 				</Modal.Header>
 				<ModalBody>
-					{/*getTable?<DropDown Dataset={getTable} Columns={getColumns} getAllOptions={getAllOptions}/>:
-						<Button variant="primary" disabled>
-							<Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
-								Loading...
-						</Button>
-					*/}
 					<Form>
-						{tables ? <Form.Group controlId="distanceMatrix">
-							<Form.Label>Distance Matrix</Form.Label>
-							<Form.Control
-								custom
-								as="select"
-								value={table}
-								onChange={handleSelectTable}
-							>
-								<option value={null} key={"null"}>null</option>
-								{tables.map((d) => {
-									return <option value={d} key={d}>{d}</option>;
-								})}
-							</Form.Control>
-						</Form.Group>: null}
-						{table ? <Form.Group controlId="dimensionsToReduxList">
-							<Form.Label>Select the dimensions to use</Form.Label>
-							<Select
-								value={selectedColumns}
-								options={columns}
-								isMulti
-								name="toReduxDimensionsList"
-								className="basic-multi-select"
-    							classNamePrefix="select"
-								closeMenuOnSelect={false}
-								onChange={handleChangeColumns}
-							/>
-						</Form.Group> : null
+						{tables ? 
+							<Form.Group controlId="tablesSelect">
+								<Form.Label>Select table</Form.Label>
+								<Form.Control
+									custom
+									as="select"
+									value={table}
+									onChange={handleSelectTable}
+								>
+									{tables.map((d) => {
+										return <option value={d} key={d}>{d}</option>;
+									})}
+								</Form.Control>
+							</Form.Group>: null}
+						{table ? 
+							<><Form.Group controlId="columnsSelect">
+								<Form.Label>Select the columns to use</Form.Label>
+								<Select
+									value={selectedColumns}
+									options={columns}
+									isMulti
+									name="toReduxDimensionsList"
+									className="basic-multi-select"
+    								classNamePrefix="select"
+									closeMenuOnSelect={false}
+									onChange={handleChangeColumns}
+								/>
+							</Form.Group>
+							<Form.Group controlId="conditionColumn">
+								<Form.Label>Where column</Form.Label>
+								<Form.Control
+									custom
+									as="select"
+									value={conditionColumn}
+									onChange={handleSelectConditionColumn}
+								>
+									<option value={"undefined"} key={"noConditionColumn"}>No column</option>
+									{columns.map((d) => {
+										return <option value={d.value} key={d.value+"Condition"}>{d.label}</option>;
+									})}
+								</Form.Control>
+							</Form.Group>
+							<Form.Group controlId="conditionSign">
+								<Form.Label>Where sign</Form.Label>
+								<Form.Control
+									custom
+									as="select"
+									value={conditionSign}
+									onChange={handleSelectConditionSign}
+								>
+									<option value={"undefined"} key={"noConditionSign"}>No condition</option>
+									<option value={"like"} key={"like"}>{"like"}</option>
+									<option value={"="} key={"equal"}>{"="}</option>
+									<option value={"<="} key={"leq"}>{"<="}</option>
+									<option value={">="} key={"geq"}>{">="}</option>
+								</Form.Control>
+							</Form.Group>
+							<Form.Group controlId="conditionValue">
+								<Form.Label>Condition Value</Form.Label>
+								<Form.Control
+									custom
+									as="input"
+									value={conditionValue}
+									defaultValue={undefined}
+									onChange={handleSelectConditionValue}
+								>
+								</Form.Control>
+							</Form.Group>
+							<Button variant="primary" onClick={onSubmit}>Invia</Button>
+							</> : null
 						}
 					</Form>
+					{clicked ? <Alert variant ={empty ? "danger" : "success"} >{resultLength} elementi trovati</Alert>:null}
 				</ModalBody>
 				
 				<ModalFooter>

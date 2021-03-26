@@ -17,17 +17,16 @@ export const getDatasetWithParams=async(columnSelected,table_name)=>{
 };
 
 // ritorna il valore della query personalizzata
-export const getDatasetWithCustomParams=async(params)=>{
-	console.log("params:",params);
-	var {columnSelected}=params;
+export const getDatasetWithCustomParams=async(selectedColumns, conditionSign, conditionColumn, conditionValue, table)=>{
+	let params = {conditionSign, conditionColumn, conditionValue, table};
 	function getData(){
-		return columnSelected.map((item, i) => {
+		return selectedColumns.map((item, i) => {
 			return item.value;
 		});
 	} 
 	try{
 		const selectField=getData();
-		const dataSet= await api.post("/get-custom-data",{selectField,params});
+		const dataSet= await api.post("/get-custom-data",{selectField, params});
 		return dataSet.data;
 	}catch(err){
 		console.error(err.message);    
@@ -50,14 +49,12 @@ export const getDataset=async()=>{
 };
 
 export const getTables=async()=>{
-	const tables=[];
 	try{
 		const table= await api.get("/get-tables");
-		tables.push(table.data);
+		return table.data;
 	}catch(err){
 		console.error(err.message);    
-	 }
-	 return tables;
+	}
 };
 
 export const getDatasetByName=async(table_name)=>{

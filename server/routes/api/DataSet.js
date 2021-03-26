@@ -24,13 +24,21 @@ const {table}=req.body;
 router.post('/get-data', async (req, res, next)=>{
         const {selectField,table_name}=req.body
         var prepareQuery =q=>q.map(item=>item).join();
+        console.log(selectField.length);
         try{
             if(!table_name){
                 return res.status(400).send({msg:'Pleas select table name!!'});
             }
-            const query=`SELECT ${prepareQuery(selectField)} FROM ${table_name}`;
-            const result= await db.query(query);
-            return res.json(result.rows);
+            else if(selectField.length === 0){
+                console.log("len0")
+                return res.status(400).send({msg:'Pleas select some columns!!'});
+            }
+            else{
+                const query=`SELECT ${prepareQuery(selectField)} FROM ${table_name}`;
+                const result= await db.query(query);
+                //console.log(result);
+                return res.json(result.rows);
+            }
         }catch(err){
             console.error(err.message);
             res.status(500).send('Server error in get data');
@@ -40,23 +48,17 @@ router.post('/get-data', async (req, res, next)=>{
 
 router.post('/get-custom-data', async (req, res, next)=>{
     const {selectField}=req.body;
-    const {compareValue,conditionSelected,inputData,table}=req.body.params
-    
+    const {conditionSign, conditionColumn, conditionValue, table}=req.body.params
     var prepareQuery =q=>q.map(item=>item).join();
-
-    const compareValues=[]
-    compareValues.push(compareValue)
-    function concatQuery(){return compareValues.map(d=>{return d+ conditionSelected+`'${inputData.value}'`;})}
-    const dataQuery=concatQuery()
-    var prepareConcatQuery =q=>q.map(item=>item).join('');
-
+    
+    let val = +conditionValue ? conditionValue : '\''+conditionValue+'\'';
+    console.log(val)
     try{
         if(!table){
             return res.status(400).send({msg:'Pleas select table name!!'});
         }
-        const query=`SELECT ${prepareQuery(selectField)} FROM ${table} WHERE (${prepareConcatQuery(dataQuery)})`;
+        const query=`SELECT ${prepareQuery(selectField)} FROM ${table} WHERE ${conditionColumn} ${conditionSign} ${val}`;
         const result=await db.query(query);
-        console.log ("result.rows:",res.rows)
         return res.json(result.rows);
     }catch(err){
         console.error(err.message);

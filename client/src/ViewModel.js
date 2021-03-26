@@ -30,8 +30,8 @@ class ViewModel{
 		return dataset;
 	}
 	// get custom query, use compare value
-	async getDatasetByCustomParams(columnSelected,conditionSelected,inputData,table){
-		const dataset = await getDatasetWithCustomParams(columnSelected,conditionSelected,inputData,table);
+	async getDatasetByCustomParams(selectedColumns, conditionSign, conditionColumn, conditionValue, table){
+		const dataset = await getDatasetWithCustomParams(selectedColumns, conditionSign, conditionColumn, conditionValue, table);
 		//console.log("ViewModel dataset:",dataset);
 		return dataset;
 	}
@@ -197,7 +197,7 @@ class ViewModel{
 			return d;
 		}); 
 		
-		return [dimensions];
+		return dimensions;
 
 	}
 
