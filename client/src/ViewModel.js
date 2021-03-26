@@ -17,7 +17,7 @@ class ViewModel{
 		this.#preferences = new Preferences();
 		this.#distanceMatricesModel = new DistanceMatricesModel();
 	}
-	/*
+
 	//get all dataset from csv table
 	async getAllDataset(){
 		const dataset = await getDataset();
@@ -62,7 +62,7 @@ class ViewModel{
 	async getAllTables(){
 		const table = await getTables();
 		return table;
-	}*/
+	}
 
 	getDistanceMatricesByName(matrixName){
 		return this.#distanceMatricesModel.getDistanceMatricesByName(matrixName);

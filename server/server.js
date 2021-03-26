@@ -2,7 +2,10 @@ const express=require('express');
 const bodyParser =require('body-parser')
 const path =require('path')
 const db=require('./config/db')
+var port= require('./config/default');
 const cors = require('cors')
+/* const dotenv =require('dotenv');
+dotenv.config(); */
 
 
 const app=express();
@@ -22,17 +25,18 @@ CREATE TABLE Iris (
 );
 `;
 
-const query1 = `
-CREATE TABLE Admin (
-    email varchar,
-    firstName varchar,
-    lastName varchar,
-    age int
+const irisDataset = `
+CREATE TABLE IrisDataset (
+    sepal_length NUMERIC,
+    sepal_width NUMERIC,
+    petal_length NUMERIC,
+    petal_width NUMERIC,
+    species VARCHAR(255)
 );
 `;
 
 app.get('/c', function (req, res, next) {
-    db.query(query, (err, res) => {
+    db.query(irisDataset, (err, res) => {
         if (err) {
             console.error(err.message);
             return;
@@ -59,6 +63,6 @@ if (process.env.NODE_ENV === 'production') {
   }
 
 
-const PORT =process.env.PORT ||5000;
+const RUN_ON =process.env.PORT||port.PORT;
 
-app.listen(PORT,()=>console.log(`Server started on port ${PORT}`))
+app.listen(RUN_ON,()=>console.log(`Server started on port ${RUN_ON}`))

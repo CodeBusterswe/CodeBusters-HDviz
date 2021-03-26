@@ -11,7 +11,6 @@ const LoadDataFromDB = props => {
 	const [showSuccess, setShowSuccess] = useState(false);
 	const [showDanger, setShowDanger] = useState(false);
 	const [localData, setLocalData] = useState();
-	const [confirme, setConfirme] = useState(false);
 
 	const {
 		modalIsOpen,
@@ -48,11 +47,6 @@ const LoadDataFromDB = props => {
 		setLocalData();
 		closeModal();
 	}
-	//funzione utilizzata da CSV Reader per salvare localmente dati e dimensioni
-	/* 	function setLocalStates(newData, newDims){
-		setLocalData(newData);
-		setLocalDimensions(newDims);
-	} */
 
 	function openAlertSuccess() {
 		return viewModel.getCheckedDimensions().length !== 0 ?
@@ -82,7 +76,7 @@ const LoadDataFromDB = props => {
 	}
 
 	return(
-		<>
+		<div>
 			<Modal
 				show={modalIsOpen}
 				onHide={()=>{closeModal();openAlertDanger();}}
@@ -91,7 +85,7 @@ const LoadDataFromDB = props => {
 					<Modal.Title>Seleziona Dataset</Modal.Title>
 				</Modal.Header>
 				<ModalBody>
-					{getTable?<DropDown confirme={confirme} Dataset={getTable} Columns={getColumns} getAllOptions={getAllOptions}/>:
+					{getTable?<DropDown Dataset={getTable} Columns={getColumns} getAllOptions={getAllOptions}/>:
 						<Button variant="primary" disabled>
 							<Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
 								Loading...
@@ -101,7 +95,7 @@ const LoadDataFromDB = props => {
 				
 				<ModalFooter>
 					<Button variant="secondary" onClick={resetAndClose}>Torna al menù</Button>
-					<Button variant="primary" onClick={()=>{loadDataAndDims(); openAlertSuccess(); setConfirme(true);}}>Conferma selezione</Button>
+					<Button variant="primary" onClick={()=>{loadDataAndDims(); openAlertSuccess();}}>Conferma selezione</Button>
 				</ModalFooter>
 			</Modal>
 			<Alert show={showSuccess} variant="success" className="alert" dismissible onClose={() => setShowSuccess(false)}>
@@ -116,7 +110,7 @@ const LoadDataFromDB = props => {
 					Nessun dato è stato caricato. Assicurati di aver inserito il file e premuto il tasto "<strong>Conforma selezione</strong>"
 				</p>
 			</Alert> 
-		</>
+		</div>
 	);
 };
 
