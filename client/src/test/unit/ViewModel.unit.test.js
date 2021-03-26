@@ -1,5 +1,5 @@
-import ViewModel from "./../ViewModel";
-import Dimension from "./../model/Dimension";
+import ViewModel from "../../ViewModel";
+import Dimension from "../../model/Dimension";
 
 let viewModel,
 	dimensions,
