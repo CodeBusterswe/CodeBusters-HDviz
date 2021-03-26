@@ -6,7 +6,7 @@ import * as distCalc from "ml-distance";
 import {getDataset, getTables,getDatasetByName,getColumnByName,getDatasetWithParams,getDatasetWithCustomParams} from "./model/services";
 import Preferences from "./model/Preferences";
 import DistanceMatricesModel from "./model/DistanceMatricesModel";
-import kmeans from "ml-kmeans";
+//import kmeans from "ml-kmeans";
 
 class ViewModel{
 	#model;

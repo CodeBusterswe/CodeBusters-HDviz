@@ -1,7 +1,7 @@
-import Model from "./../model/Model";
-import Dimension from "./../model/Dimension";
-import DistanceMatrix from "./../model/DistanceMatrix";
-import DistanceMatricesModel from "./../model/DistanceMatricesModel";
+import Model from "../../model/Model";
+import Dimension from "../../model/Dimension";
+import DistanceMatrix from "../../model/DistanceMatrix";
+import DistanceMatricesModel from "../../model/DistanceMatricesModel";
 
 let model,
 	dmModel,

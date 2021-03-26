@@ -1,4 +1,4 @@
-import Dimension from "./../model/Dimension";
+import Dimension from "../../model/Dimension";
 
 let dimension = new Dimension("test");
 
