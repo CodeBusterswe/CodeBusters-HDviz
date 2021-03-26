@@ -68,7 +68,7 @@ test("Force field", async() => {
 	fireEvent.click(screen.getByRole("button",{name: "Nascondi preferenze"}));
 },30000);
 
-test("Linear Projection", ()=>{
+test("Linear Projection", async()=>{
 	render (<App/>);
 	fireEvent.click(screen.getByRole("button",{name: "Linear Projection"}));
 	expect(screen.getByRole("option",{name:"sepal_length"})).toBeInTheDocument();
