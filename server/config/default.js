@@ -5,6 +5,6 @@ module.exports={
 	'PASSWORD':'michele',
 	'HOST':5432,
 	'DB_NAME':'demoDatabase',
-	'PORT':5000
+	'PORT':5000,
 }
 

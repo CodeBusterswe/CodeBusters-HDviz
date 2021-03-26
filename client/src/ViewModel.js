@@ -29,20 +29,14 @@ class ViewModel{
 		//console.log("ViewModel dataset:",dataset);
 		return dataset;
 	}
+	// get custom query, use compare value
 	async getDatasetByCustomParams(columnSelected,conditionSelected,inputData,table){
 		const dataset = await getDatasetWithCustomParams(columnSelected,conditionSelected,inputData,table);
 		//console.log("ViewModel dataset:",dataset);
 		return dataset;
 	}
-
-	//get all dataset from csv table
-	async getColumnsWithName(table_name){
-		//console.log("model col:",table_name);
-		const dataset = await getColumnByName(table_name);
-		//console.log("dataset:",dataset);
-		return dataset;
-	}
 	
+	// get column list from table
 	async getColumnList(table_name){
 		const dataset = await getColumnByName(table_name);
 		//console.log("dataset:",dataset);
@@ -52,7 +46,6 @@ class ViewModel{
 	}
 	//get all dataset from csv table
 	async getTableWithName(table_name){
-		this.getColumnsWithName(table_name);
 		const dataset = await getDatasetByName(table_name);
 		//console.log("dataset:",dataset);
 		return dataset.data;
@@ -200,7 +193,7 @@ class ViewModel{
 		let columns =getData();
 		dimensions = columns.map(dimName => {
 			let d = new Dimension(dimName);
-			d.isNumeric = +[dimName] || [dimName]===0 ? true : false;
+			d.isNumeric=+[dimName] || [dimName]===0 ? true : false;
 			return d;
 		}); 
 		

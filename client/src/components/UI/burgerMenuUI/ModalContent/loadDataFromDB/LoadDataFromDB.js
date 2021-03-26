@@ -19,16 +19,11 @@ const LoadDataFromDB = props => {
 
 	async function viewData(){
 		const data=await viewModel.getAllTables();
-		//console.log("data:",data[0].length);
 		setTables(data);
 	}
 
 	useEffect(async() => {
 		viewData();
-		const col =await viewModel.getColumnsWithName();
-		setColumns(col);		
-		return () => {
-		};
 	},[]);
 
 	function loadDataAndDims(){
@@ -40,7 +35,6 @@ const LoadDataFromDB = props => {
 			viewModel.updateDims(localDimensions); //quessto viene chiamato quando l'utente aggiorna le dimensioni
 		//funzione utilizzata da CSV Reader per salvare localmente dati e dimensioni
 		resetAndClose();
-		console.timeEnd("clickLoadData");
 	}
 
 	function resetAndClose(){
@@ -85,7 +79,7 @@ const LoadDataFromDB = props => {
 					<Modal.Title>Seleziona Dataset</Modal.Title>
 				</Modal.Header>
 				<ModalBody>
-					{getTable?<DropDown Dataset={getTable} Columns={getColumns} getAllOptions={getAllOptions}/>:
+					{getTable?<DropDown Dataset={getTable} /* Columns={getColumns} */ getAllOptions={getAllOptions}/>:
 						<Button variant="primary" disabled>
 							<Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
 								Loading...
