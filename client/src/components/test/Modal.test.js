@@ -23,10 +23,11 @@ test("Carica un csv", async() => {
 },30000);
 test("Open and redux dimension", async () => {
 	render(<App />);
-	fireEvent.click(screen.getByRole("button",{name: "Riduci dimensioni" }));
-		
+	fireEvent.click(screen.getByRole("button",{name: "Riduci dimensioni" }));	
 	expect(screen.getByRole("button",{name: "Start reduction" })).toBeInTheDocument();
-	
+	fireEvent.keyDown(screen.getByRole("combobox",{name:"Select algorithm"},{key:"LLE"}));
+	fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),"test1");
+	fireEvent.change(screen.getByText("New dimensions number"),5);
 	fireEvent.click(screen.getByRole("button", { name: "Start reduction" }));
 	await waitFor(() => {
 		
@@ -39,7 +40,8 @@ test("Calcola distanza", async() => {
 	fireEvent.click(screen.getByRole("button",{name: "Calcola distanza" }));
 		
 	expect(screen.getByRole("button",{name: "Start reduction" })).toBeInTheDocument();
-	
+	fireEvent.keyDown(screen.getByRole("combobox",{name:"Select distance type"},{key:"CANBERRA"}));
+	fireEvent.change(screen.getByRole("textbox",{name:"Distances matrix name"}),"test1");
 	fireEvent.click(screen.getByRole("button", { name: "Start reduction" }));
 	await waitFor(() => {
 		

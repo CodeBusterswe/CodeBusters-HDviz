@@ -1,6 +1,5 @@
 import ViewModel from "./../ViewModel";
 import Dimension from "./../model/Dimension";
-import DistanceMatrix from "../model/DistanceMatrix";
 
 let viewModel,
 	dimensions,

@@ -95,7 +95,8 @@ const {table}=req.body;
     }
 });
 
-// get all tables from db 
+// get all tables from db //Funziona solo se il catalog é demoDatabase -> restituisce tutte le tabelle del database
+//SELECT table_name FROM information_schema.tables WHERE table_catalog='demoDatabase' AND table_schema='public'
 router.get('/get-tables', async (req, res, next)=>{
     try{
         console.log("${DB_NAME}:",DB_NAME.DB_NAME)
