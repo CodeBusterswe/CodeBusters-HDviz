@@ -35,18 +35,6 @@ class DimReduction {
     	this.data = data;
 	}
 
-	getStrategy() {
-    	return this.strategy;
-	}
-
-	getParams() {
-    	return this.parameters;
-	}
-
-	getData() {
-    	return this.data;
-	}
-
 	executeStrategy() {
     	return this.strategy.startDR(this.parameters, this.data);
 	}

@@ -267,7 +267,6 @@ class ViewModel{
 	}
 
 	loadDataAndDims(data, dims){
-		console.log(data,dims);
 		this.#model.reset();
 		this.#distanceMatricesModel.reset();
 		this.#model.loadData(data);
