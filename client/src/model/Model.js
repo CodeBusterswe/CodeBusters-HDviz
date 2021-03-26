@@ -69,7 +69,7 @@ class Model {
 	}
     
 	loadData(data) {
-		this.#originalData = [...data];
+		this.#originalData = data;
 	}
 	loadDimensions(dimensions){
 		this.dimensions.replace(dimensions);	//metodo di mobx per array observable
