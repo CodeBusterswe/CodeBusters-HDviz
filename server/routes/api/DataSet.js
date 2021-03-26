@@ -100,7 +100,7 @@ const {table}=req.body;
 router.get('/get-tables', async (req, res, next)=>{
     try{
         console.log("${DB_NAME}:",DB_NAME.DB_NAME)
-        const query=`SELECT * FROM information_schema.tables WHERE table_catalog='${DB_NAME.DB_NAME}' AND table_schema='public'`;
+        const query=`SELECT table_name FROM information_schema.tables WHERE table_catalog='${DB_NAME.DB_NAME}' AND table_schema='public'`;
         const result= await db.query(query);
         return res.json(result.rows);
     }catch(err){
