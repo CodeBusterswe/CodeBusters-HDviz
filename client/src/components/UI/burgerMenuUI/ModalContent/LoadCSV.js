@@ -109,7 +109,7 @@ const LoadCSV = props => {
 			<Alert show={showDanger} variant="danger" className="alert" dismissible onClose={() => setShowDanger(false)}>
 				<Alert.Heading>Avviso</Alert.Heading>
 				<p>
-					Nessun dato è stato caricato. Assicurati di aver inserito il file e premuto il tasto "<strong>Conforma selezione</strong>"
+					Nessun dato è stato caricato. Assicurati di aver inserito il file e premuto il tasto "<strong>Conferma selezione</strong>"
 				</p>
 			</Alert> 
 		</>

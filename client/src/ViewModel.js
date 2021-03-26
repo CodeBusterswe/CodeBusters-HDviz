@@ -200,7 +200,7 @@ class ViewModel{
 		let columns =getData();
 		dimensions = columns.map(dimName => {
 			let d = new Dimension(dimName);
-			d.isNumeric(+[dimName] || [dimName]===0 ? true : false);
+			d.isNumeric = +[dimName] || [dimName]===0 ? true : false;
 			return d;
 		}); 
 		
