@@ -1,6 +1,6 @@
 import ViewModel from "./../ViewModel";
 import Dimension from "./../model/Dimension";
-import DistanceMatrix from "../model/DistanceMatrix";
+import AlgorithmStrategy from "./../viewModel/AlghorithmStrategy"
 
 let viewModel,
 	dimensions,
@@ -77,6 +77,14 @@ describe("viewModel should reduce dimensions", () => {
 
 	beforeEach(() => {
 		viewModel.loadDataAndDims(data,dims);
+	});
+
+	test("Abstract class AlgorithmStrategy can't be istantied", () => {
+		const t = () => {
+			let a = new AlgorithmStrategy(); 
+			a.startDR();
+		};
+		expect(t).toThrow(TypeError);
 	});
 	
 	describe("dimensionality reduction by algorithm", () => {
