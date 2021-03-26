@@ -1,5 +1,6 @@
 import {api} from "./ApiURL";
 
+//restituisce il valore delle colonne selezionate
 export const getDatasetWithParams=async(columnSelected,table_name)=>{
 	function getData(){
 		return columnSelected.map((item, i) => {
@@ -15,6 +16,7 @@ export const getDatasetWithParams=async(columnSelected,table_name)=>{
 	 }
 };
 
+// ritorna il valore della query personalizzata
 export const getDatasetWithCustomParams=async(params)=>{
 	console.log("params:",params);
 	var {columnSelected}=params;
@@ -32,6 +34,7 @@ export const getDatasetWithCustomParams=async(params)=>{
 	 }
 };
 
+// ritirna i dataset presenti nel database
 export const getDataset=async()=>{
 	const table="dataset";
 	const Data=[];
