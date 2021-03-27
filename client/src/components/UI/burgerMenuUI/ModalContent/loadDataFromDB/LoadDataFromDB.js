@@ -67,6 +67,7 @@ const LoadDataFromDB = props => {
 	},[viewModel]);
 
 	function handleChangeColumns (value, handler){
+		console.log("handle colums:",value, handler);
 		switch(handler.action){
 		case "select-option":
 			setSelectedColumns(value);
