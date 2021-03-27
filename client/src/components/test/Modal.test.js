@@ -1,5 +1,6 @@
 import { createEvent, fireEvent, getByRole, getByText, render, screen, waitFor } from "@testing-library/react";
 import { Modal } from "react-bootstrap";
+import { useStore } from "../../ContextProvider";
 import App from "./../View";
 
 test("Carica un csv", async() => {
@@ -26,12 +27,9 @@ test("Open and redux dimension", async () => {
 	
 	fireEvent.click(screen.getByRole("button",{name: "Riduci dimensioni" }));	
 	expect(screen.getByRole("button",{name: "Start reduction" })).toBeInTheDocument();
-	fireEvent.keyDown(screen.getByRole("combobox",{name:"Select algorithm"},{key:"ISOMAP"}));
-	render()
+	fireEvent.keyDown(screen.getByRole("combobox",{name:"Select algorithm"},{key:"LLE"}));
 	fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),"test1");
 	fireEvent.change(screen.getByText("New dimensions number"),5);
-	
-	fireEvent.change(screen.getByRole("Neighbors"),53);
 	fireEvent.click(screen.getByRole("button",{name:"Start reduction"}));
 	await waitFor(() => {
 		
