@@ -17,7 +17,7 @@ const DimensionalReduction = props => {
 	const [neighbors, setNeighbors] = useState(30);
 	const [perplexity, setPerplexity] = useState(50);
 	const [epsilon, setEpsilon] = useState(10);
-	const [validated, setValidated] = useState(false);
+	const [nameError, setNameError] = useState(false);
 	
 	const {
 		modalIsOpen,
@@ -25,9 +25,8 @@ const DimensionalReduction = props => {
 	} = props;
 
 	function handleSubmit(e){
-		const form = e.currentTarget;
 		e.preventDefault();
-    	if (form.checkValidity() === true) {
+		try{
 			viewModel.beginDimensionalRedux(
 				algorithmType, 
 				dimensionsToRedux.map(d => d.value),
@@ -39,9 +38,9 @@ const DimensionalReduction = props => {
 					Epsilon: epsilon
 				});
 			closeModal();
-			//alert("Riduzione eseguita con successo");
+		}catch(e){
+			setNameError(true);
 		}
-		setValidated(true);
 	}
 	function handleChangeNeighbours(e){
 		setNeighbors(e.target.value);
@@ -55,7 +54,7 @@ const DimensionalReduction = props => {
 		setPerplexity(50);
 	}
 	function handleChangeNewDimensionsName(e){
-		e.preventDefault();
+		setNameError(false);
 		setNewDimensionsName(e.target.value);
 	}
 	function handleChangeNewDimensionsNumber(e){
@@ -135,7 +134,7 @@ const DimensionalReduction = props => {
 			onHide={closeModal}
 			//ariaHideApp={false}
 		>
-			<Form onSubmit={handleSubmit} noValidate validated={validated}>
+			<Form onSubmit={handleSubmit} noValidate>
 				<Modal.Header closeButton>
 					<Modal.Title>Riduzione dimensionale</Modal.Title>
 				</Modal.Header>
@@ -175,9 +174,10 @@ const DimensionalReduction = props => {
 							type="text"
 							value={newDimensionsName}
 							onChange={handleChangeNewDimensionsName}
+							isInvalid={nameError}
 						/>
 						<Form.Control.Feedback type="invalid">
-              				Please choose a name.
+              				Please choose a different name.
             			</Form.Control.Feedback>
 					</Form.Group>
 					<Form.Group controlId="newDimensionsNumber">

@@ -63,7 +63,9 @@ class Model {
 	get numericDimensions() {
 		return this.dimensions.filter(dim => dim.isChecked && dim.isNumeric);
 	}
-
+	get notReducedDimensions(){
+		return this.dimensions.filter(dim => !dim.isReduced);
+	}
 	get selectedDimensions() {
 		return this.dimensions.filter(dim => dim.isChecked && !dim.isReduced);
 	}
@@ -79,7 +81,6 @@ class Model {
 	}
 
 	addDimensionsToDataset(dimensions) {
-		//this.dimensions.push(dimensions);
 		this.dimensions.replace(this.dimensions.concat(dimensions));
 	}
 
