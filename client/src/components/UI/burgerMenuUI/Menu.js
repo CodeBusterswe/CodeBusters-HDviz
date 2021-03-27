@@ -11,7 +11,7 @@ import {FaFileCsv} from "react-icons/fa";
 import { RiMistFill } from "react-icons/ri";
 import { IoGrid, IoShareSocialOutline, IoMoveSharp } from "react-icons/io5";
 import {SiGraphcool , SiJson} from "react-icons/si";
-import LoadDataFromDB from "./ModalContent/loadDataFromDB/LoadDataFromDB";
+import LoadDataFromDB from "./ModalContent/LoadDataFromDB";
 import { VisualizationType } from "../../../utils";
 import useWindowWidth from "./WindowWidth";
 

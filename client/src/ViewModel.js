@@ -186,15 +186,13 @@ class ViewModel{
 		let dimensions = selectedColumns.map(name => {
 			let d = new Dimension(name);
 			allColumns.forEach(c => {
-				if(c.value === name){
+				if(c.value === name){//vado solo a cercare quelle non numeriche, di default é true
 					switch (c.type) {
-					case "double precision":
-						d.isNumeric = true;
-						break;
 					case "character varying":
 						d.isNumeric = false;
 						break;
 					default:
+						d.isNumeric = true;
 						break;
 					}
 				}

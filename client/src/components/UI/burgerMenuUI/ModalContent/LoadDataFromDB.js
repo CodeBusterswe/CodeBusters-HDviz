@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from "react";
-import { useStore } from "../../../../../ContextProvider";
+import { useStore } from "../../../../ContextProvider";
 import {Modal,Alert, Form, Col} from "react-bootstrap";
 import { ModalBody, ModalFooter, Button} from "react-bootstrap";
 import Select from "react-select";
@@ -41,7 +41,6 @@ const LoadDataFromDB = props => {
 			setEmpty(false);
 			setResultLenght(parsedData.length);
 			const dimensions = viewModel.prepareDimensions(selectedColumns.map(c=>c.value), columns);
-			console.log(dimensions);
 			setLocalData(parsedData);
 			setLocalDimensions(dimensions);
 		}else{
