@@ -3,7 +3,7 @@
 module.exports={
 	'USER_NAME':'postgres',
 	'PASSWORD':'admin',
-	'HOST':5400,
+	'HOST':5432,
 	'DB_NAME':'demoDatabase',
 	'PORT':5000,
 }
