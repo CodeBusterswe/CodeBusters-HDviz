@@ -11,7 +11,7 @@ test("Scatterplot matrix", async() => {
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis two" }),{key: "sepal_width"});
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis Three" }),{key: "petal_length"});
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis Four" }),{key: "petal_width"});
-	fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis Five" }),{key: "No dimension"});
+	fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis Five" }),{key: "petal_width"});
 	fireEvent.keyDown(screen.getByRole("combobox",{name: "Color" }),{key: "species"});
 	fireEvent.click(screen.getByRole("button",{name: "Nascondi preferenze"}));
 });

@@ -23,12 +23,16 @@ test("Carica un csv", async() => {
 },30000);
 test("Open and redux dimension", async () => {
 	render(<App />);
+	
 	fireEvent.click(screen.getByRole("button",{name: "Riduci dimensioni" }));	
 	expect(screen.getByRole("button",{name: "Start reduction" })).toBeInTheDocument();
-	fireEvent.keyDown(screen.getByRole("combobox",{name:"Select algorithm"},{key:"LLE"}));
+	fireEvent.keyDown(screen.getByRole("combobox",{name:"Select algorithm"},{key:"ISOMAP"}));
+	render()
 	fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),"test1");
 	fireEvent.change(screen.getByText("New dimensions number"),5);
-	fireEvent.click(screen.getByRole("button", { name: "Start reduction" }));
+	
+	fireEvent.change(screen.getByRole("Neighbors"),53);
+	fireEvent.click(screen.getByRole("button",{name:"Start reduction"}));
 	await waitFor(() => {
 		
 		expect(screen.getByRole("heading",{name: "HDViz" })).toBeInTheDocument();

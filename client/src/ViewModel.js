@@ -3,7 +3,7 @@ import DistanceMatrix from "./model/DistanceMatrix";
 import Model from "./model/Model";
 import DimReduction from "./viewModel/DimReduction";
 import * as distCalc from "ml-distance";
-import {getDataset, getTables,getDatasetByName,getColumnByName,getDatasetWithParams,getDatasetWithCustomParams} from "./model/services";
+import {getTables, getColumnsByName, getDatasetWithParams, getDatasetWithCustomParams} from "./model/services";
 import Preferences from "./model/Preferences";
 import DistanceMatricesModel from "./model/DistanceMatricesModel";
 //import kmeans from "ml-kmeans";
@@ -18,40 +18,41 @@ class ViewModel{
 		this.#distanceMatricesModel = new DistanceMatricesModel();
 	}
 
-	//get all dataset from csv table
+	/*get all dataset from csv table - Not used
 	async getAllDataset(){
 		const dataset = await getDataset();
 		//console.log("dataset:",dataset);
 		return dataset;
-	}	
+	}*/	
+	/*get all dataset from csv table NOT USED
+	async getTableWithName(table_name){
+		const dataset = await getDatasetByName(table_name);
+		//console.log("dataset:",dataset);
+		return dataset.data;
+	}*/
+	//restituisce i valori dei dati nelle colonne selezionate della tabella scelta
 	async getDatasetByParams(columnSelected,table){
 		const dataset = await getDatasetWithParams(columnSelected,table);
 		//console.log("ViewModel dataset:",dataset);
 		return dataset;
 	}
-	// get custom query, use compare value
-	async getDatasetByCustomParams(columnSelected,conditionSelected,inputData,table){
-		const dataset = await getDatasetWithCustomParams(columnSelected,conditionSelected,inputData,table);
+	//restituisce i valori dei dati nelle colonne selezionate della tabella scelta con condizione di where
+	async getDatasetByCustomParams(selectedColumns, conditionSign, conditionColumn, conditionValue, table){
+		const dataset = await getDatasetWithCustomParams(selectedColumns, conditionSign, conditionColumn, conditionValue, table);
 		//console.log("ViewModel dataset:",dataset);
 		return dataset;
 	}
 	
-	// get column list from table
+	//Ritorna le colonne di una tabella
 	async getColumnList(table_name){
-		const dataset = await getColumnByName(table_name);
+		const columns = await getColumnsByName(table_name);
 		//console.log("dataset:",dataset);
-		return dataset[0].map(d => {
-			return {value: d.column_name, label: d.column_name};
+		return columns.map(c => {
+			return {value: c.column_name, label: c.column_name};
 		});
 	}
-	//get all dataset from csv table
-	async getTableWithName(table_name){
-		const dataset = await getDatasetByName(table_name);
-		//console.log("dataset:",dataset);
-		return dataset.data;
-	}
 	
-	//get all tables from DB
+	//ritorna tutte le tabelle presenti nel database
 	async getAllTables(){
 		const table = await getTables();
 		return table;
@@ -182,23 +183,13 @@ class ViewModel{
 		return this.#distanceMatricesModel.distanceMatricesNames;
 	}
 
-	parseAndLoadCsvDataFromDB(header) {
-		function getData(){
-			return header.map((item, i) => {
-				return item.value;
-			});
-		}
-		//console.log("Parse data:",data);
-		let dimensions;
-		let columns =getData();
-		dimensions = columns.map(dimName => {
-			let d = new Dimension(dimName);
-			d.isNumeric=+[dimName] || [dimName]===0 ? true : false;
+	prepareDimensions(header, firstDataLine) {
+		let dimensions = header.map(dimName => {
+			let d = new Dimension(dimName.value);
+			d.isNumeric=+firstDataLine[dimName.value] || firstDataLine[dimName.value]===0 ? true : false;
 			return d;
 		}); 
-		
-		return [dimensions];
-
+		return dimensions;
 	}
 
 	parseAndLoadCsvData(data) {
@@ -232,7 +223,7 @@ class ViewModel{
 			d.isNumeric = +parsedData[0][dimName] || parsedData[0][dimName]===0 ? true : false;
 			return d;
 		});  
-
+		console.log(dimensions);
 		return [parsedData, dimensions];
 	}
 
@@ -252,7 +243,7 @@ class ViewModel{
 	}
 
 	haveNotANumberValue(datasetRow) {
-		return !Object.values(datasetRow).some(value => Number.isNaN(value) || value === undefined);
+		return !Object.values(datasetRow).some(value => Number.isNaN(value) || value === undefined || !value);
 	}
 
 	updateSelectedData(){
