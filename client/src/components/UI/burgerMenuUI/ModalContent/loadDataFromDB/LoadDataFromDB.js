@@ -40,7 +40,8 @@ const LoadDataFromDB = props => {
 		if(parsedData && parsedData.length>0){
 			setEmpty(false);
 			setResultLenght(parsedData.length);
-			const dimensions = viewModel.prepareDimensions(selectedColumns, parsedData[0]);
+			const dimensions = viewModel.prepareDimensions(selectedColumns.map(c=>c.value), columns);
+			console.log(dimensions);
 			setLocalData(parsedData);
 			setLocalDimensions(dimensions);
 		}else{
@@ -57,6 +58,7 @@ const LoadDataFromDB = props => {
 		}
 		getColumns();
 	}, [viewModel, table]);
+
 	useEffect(() => {
 		async function getTables(){
 			const tables=await viewModel.getAllTables();
@@ -67,7 +69,6 @@ const LoadDataFromDB = props => {
 	},[viewModel]);
 
 	function handleChangeColumns (value, handler){
-		console.log("handle colums:",value, handler);
 		switch(handler.action){
 		case "select-option":
 			setSelectedColumns(value);

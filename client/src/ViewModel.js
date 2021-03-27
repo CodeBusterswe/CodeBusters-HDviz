@@ -46,9 +46,8 @@ class ViewModel{
 	//Ritorna le colonne di una tabella
 	async getColumnList(table_name){
 		const columns = await getColumnsByName(table_name);
-		//console.log("dataset:",dataset);
 		return columns.map(c => {
-			return {value: c.column_name, label: c.column_name};
+			return {value: c.column_name, label: c.column_name, type: c.data_type};
 		});
 	}
 	
@@ -183,10 +182,23 @@ class ViewModel{
 		return this.#distanceMatricesModel.distanceMatricesNames;
 	}
 
-	prepareDimensions(header, firstDataLine) {
-		let dimensions = header.map(dimName => {
-			let d = new Dimension(dimName.value);
-			d.isNumeric=+firstDataLine[dimName.value] || firstDataLine[dimName.value]===0 ? true : false;
+	prepareDimensions(selectedColumns, allColumns) {
+		let dimensions = selectedColumns.map(name => {
+			let d = new Dimension(name);
+			allColumns.forEach(c => {
+				if(c.value === name){
+					switch (c.type) {
+					case "double precision":
+						d.isNumeric = true;
+						break;
+					case "character varying":
+						d.isNumeric = false;
+						break;
+					default:
+						break;
+					}
+				}
+			});
 			return d;
 		}); 
 		return dimensions;

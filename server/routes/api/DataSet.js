@@ -51,7 +51,7 @@ router.post('/get-custom-data', async (req, res, next)=>{
 router.post('/get-columns', async (req, res, next)=>{
 const {table}=req.body;
     try{
-        const query=`SELECT column_name FROM information_schema.columns WHERE table_catalog='${DB_NAME.DB_NAME}' AND table_name ='${table}'`;
+        const query=`SELECT column_name, data_type FROM information_schema.columns WHERE table_catalog='${DB_NAME.DB_NAME}' AND table_name ='${table}'`;
         const result= await db.query(query);
         return res.json(result.rows);
     }catch(err){
