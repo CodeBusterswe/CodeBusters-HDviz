@@ -5,11 +5,11 @@ import { ModalBody, ModalFooter, Button} from "react-bootstrap";
 import Select from "react-select";
 const LoadDataFromDB = props => {
 	const viewModel = useStore();
-	const [localData, setLocalData] = useState();
-	const [localDimensions, setLocalDimensions] = useState();
+	const [localData, setLocalData] = useState([]);
+	const [localDimensions, setLocalDimensions] = useState([]);
 	const [tables, setTables] = useState(null);
 	const [columns, setColumns] = useState([]);
-	const [table, setTable] = useState(null);
+	const [table, setTable] = useState("undefined");
 	const [selectedColumns, setSelectedColumns] = useState([]);
 	const [conditionColumn, setConditionColumn] = useState("undefined");
 	const [conditionSign, setConditionSign] = useState("undefined");
@@ -44,6 +44,8 @@ const LoadDataFromDB = props => {
 			setLocalData(parsedData);
 			setLocalDimensions(dimensions);
 		}else{
+			setLocalDimensions([]);
+			setLocalData([]);
 			setEmpty(true);
 			setResultLenght(0);
 		}
@@ -84,6 +86,8 @@ const LoadDataFromDB = props => {
 		const tableName = e.target.value;
 		setTable(tableName);
 		setSelectedColumns([]);
+		setLocalData([]);
+		setLocalDimensions([]);
 		setConditionColumn("undefined");
 		setConditionSign("undefined");
 		setConditionValue("");
@@ -110,7 +114,7 @@ const LoadDataFromDB = props => {
 
 	function resetAndClose(){
 		setSelectedColumns([]);
-		setLocalData();
+		setLocalData([]);
 		setConditionColumn("undefined");
 		setConditionSign("undefined");
 		setConditionValue("");
@@ -120,12 +124,12 @@ const LoadDataFromDB = props => {
 	}
 
 	function openAlertSuccess() {
-		return viewModel.getCheckedDimensions().length !== 0 ?
+		return localDimensions.length !== 0 ?
 			setShowSuccess(true) :
 			setShowDanger(true);
 	}
 	useEffect(() => {
-		const time = 3000;
+		const time = 4000;
 		let timer = setTimeout(() => setShowSuccess(false), time);
 		return () => clearTimeout(timer);
 	},[showSuccess]);
@@ -135,7 +139,7 @@ const LoadDataFromDB = props => {
 	}
 	
 	useEffect(() => {
-		const time = 3000;
+		const time = 4000;
 		let timer = setTimeout(() => setShowDanger(false), time);
 		return () => clearTimeout(timer);
 	},[showDanger]);
@@ -198,7 +202,7 @@ const LoadDataFromDB = props => {
 								</Col>
 								<Col xs={4}>
 									<Form.Group as={Col} controlId="conditionSign">
-										<Form.Label>Where sign</Form.Label>
+										<Form.Label>sign</Form.Label>
 										<Form.Control
 											custom
 											as="select"
@@ -217,7 +221,7 @@ const LoadDataFromDB = props => {
 								</Col>
 								<Col xs={4}>
 									<Form.Group as={Col} controlId="conditionValue">
-										<Form.Label>Condition Value</Form.Label>
+										<Form.Label>Value</Form.Label>
 										<Form.Control
 											as="input"
 											value={conditionValue}
@@ -229,7 +233,7 @@ const LoadDataFromDB = props => {
 								</Col>
 							</Form.Row>
 							<Form.Row className="align-items-center">
-								<Button variant="primary" onClick={onSubmit}>Invia</Button>
+								<Button variant="primary" onClick={onSubmit}>Invia query</Button>
 								{clicked ? <Alert variant ={empty ? "danger" : "success"} >{resultLength} elementi trovati</Alert>:null}
 							</Form.Row>
 							</> : null
@@ -252,7 +256,7 @@ const LoadDataFromDB = props => {
 			<Alert show={showDanger} variant="danger" className="alert" dismissible onClose={() => setShowDanger(false)}>
 				<Alert.Heading>Avviso</Alert.Heading>
 				<p>
-					Nessun dato è stato caricato. Assicurati di aver inserito il file e premuto il tasto "<strong>Conferma selezione</strong>"
+					Nessun dato è stato caricato. Assicurati di aver eseguito la query e premuto il tasto "<strong>Conferma selezione</strong>"
 				</p>
 			</Alert> 
 		</div>

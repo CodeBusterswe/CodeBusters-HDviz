@@ -193,7 +193,6 @@ class ViewModel{
 	}
 
 	parseAndLoadCsvData(data) {
-		//console.log("bewfor Parse data:",data);
 		let columns = data.shift().data, 
 			parsedData = [],
 			dimensions;
@@ -223,7 +222,6 @@ class ViewModel{
 			d.isNumeric = +parsedData[0][dimName] || parsedData[0][dimName]===0 ? true : false;
 			return d;
 		});  
-		console.log(dimensions);
 		return [parsedData, dimensions];
 	}
 
@@ -243,7 +241,7 @@ class ViewModel{
 	}
 
 	haveNotANumberValue(datasetRow) {
-		return !Object.values(datasetRow).some(value => Number.isNaN(value) || value === undefined || !value);
+		return !Object.values(datasetRow).some(value => Number.isNaN(value) || value === undefined || value===null);
 	}
 
 	updateSelectedData(){
@@ -254,12 +252,12 @@ class ViewModel{
 		let selectedData = originalData.map(d => {
 			return Object.fromEntries(checkedDims.map(dim => [dim.value, d[dim.value]]));
 	 	}).filter(this.haveNotANumberValue);
-		this.#model.loadDimensions(checkedDims);//le aggiorno perché rimuovo le dimensioni ridotte create precedentemente
+		this.#model.loadDimensions(this.#model.notReducedDimensions);
 		this.#model.updateSelectedData(selectedData);
-		 /*log di test
+		/*log di test
 		 console.log("original: ",this.#model.originalData);
 		 console.log("selected: ",this.#model.selectedData);
-		 console.log("dimensions:", this.#model.allDimensions);/*
+		 console.log("dimensions:", this.#model.allDimensions);
 		 let string = ""; 
 		 this.#model.originalData.forEach(line => {
 			 let temp = "{"
@@ -290,6 +288,8 @@ class ViewModel{
 		//	numericData = this.#model.selectedData.map(row => Array.from(numericDims.map(dim => row[dim.value])));
 		
 		//let prodotto = kmeans(numericData, 3, {distanceFunction: distCalc.distance[distType]});
+		if(this.#distanceMatricesModel.getDistanceMatricesByName(matrixName))
+			throw new Error("The name is already in use. Please choose a different one.");
 		let matrix = new DistanceMatrix();
 		//console.log(prodotto);
 		matrix.name = matrixName;
@@ -311,14 +311,9 @@ class ViewModel{
 	}
 
 	reduceDimensions(algorithm, paramaters, data) {
-		//spostare dove serve questo controllo
-		try{
-			let nameAlreadyUsed = this.#model.allDimensions.some(dim => dim.value.includes(paramaters.Name));
-			if(nameAlreadyUsed)
-			  throw new Error("The name is already in use. Please choose a different one.");
-		  }catch(e){
-			console.log(e);
-		  }
+		let nameAlreadyUsed = this.#model.allDimensions.some(dim => dim.value.slice(0, -1) === paramaters.Name);
+		if(nameAlreadyUsed)
+			throw new Error("The name is already in use. Please choose a different one.");
 		//*******************************************************************
 		const drStrategy = new DimReduction();
 
@@ -344,7 +339,6 @@ class ViewModel{
 			  j++;
 			});
 		}
-
 		this.#model.addDimensionsToDataset(newDimsFromReduction);
 	}
 	 

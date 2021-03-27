@@ -12,7 +12,7 @@ const DistanceCalculation = props => {
 	const [dimensionsToRedux, setDimensionsToRedux] = useState(viewModel.getOptionsForReduxDimensionsList().slice(0,2));
 	const [distanceType, setDistanceType] = useState(DistanceType.Euclidean);	
 	const [newDistanceMatrixName, setNewDistanceMatrixName] = useState(DistanceType.Euclidean);
-	const [validated, setValidated] = useState(false);
+	const [nameError, setNameError] = useState(false);
 	
 	const {
 		modalIsOpen,
@@ -20,20 +20,20 @@ const DistanceCalculation = props => {
 	} = props;
 
 	function handleSubmit(e){
-		const form = e.currentTarget;
 		e.preventDefault();
-    	if (form.checkValidity() === true) {
+    	try{
 			viewModel.beginReduceDimensionsByDist(distanceType, dimensionsToRedux.map(d => d.value), newDistanceMatrixName);
 			closeModal();
-			//alert("Distanza calcolata con successo");
+		}catch(e){
+			setNameError(true);
 		}
-		setValidated(true);
 	}
 	function handleChangeDistanceType(e){
 		setNewDistanceMatrixName(e.target.value);
 		setDistanceType(e.target.value);
 	}
 	function handleChangeNewDistanceMatrixName(e){
+		setNameError(false);
 		setNewDistanceMatrixName(e.target.value);
 	}
 
@@ -59,7 +59,7 @@ const DistanceCalculation = props => {
 			show={modalIsOpen}
 			onHide={closeModal}
 		>
-			<Form onSubmit={handleSubmit} noValidate validated={validated}>
+			<Form onSubmit={handleSubmit} noValidate>
 				<Modal.Header closeButton>
 					<Modal.Title>Riduzione dimensionale tramite calcolo delle distanze</Modal.Title>
 				</Modal.Header>
@@ -99,9 +99,10 @@ const DistanceCalculation = props => {
 							type="text"
 							value={newDistanceMatrixName}
 							onChange={handleChangeNewDistanceMatrixName}
+							isInvalid={nameError}
 						/>
 						<Form.Control.Feedback type="invalid">
-              				Please choose a name.
+              				Please choose a different name.
             			</Form.Control.Feedback>
 					</Form.Group>
 				</ModalBody>

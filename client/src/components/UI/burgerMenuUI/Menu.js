@@ -81,14 +81,14 @@ const Menu = () => {
 	}
 	
 	function checkToDisabled(index){
-		return index >= 3 && viewModel.getCheckedDimensions().length === 0;
+		return index >= 3 && viewModel.getCheckedDimensions().length < 2;
 	}
 
 	const popover = 
 		<Popover id="popover-basic">
 			<Popover.Title as="h3">Voce disabilitata</Popover.Title>
 			<Popover.Content>
-					Prima devi aver caricato i dati
+					Prima devi aver caricato i dati e selezionato almeno due dimensioni
 			</Popover.Content>
 		</Popover>;
 
