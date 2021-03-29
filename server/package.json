@@ -8,7 +8,9 @@
     "server": "nodemon server",
     "client": "cd ../ client && npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watchAll --verbose --runInBand",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "author": "safy",
   "license": "MIT",
@@ -28,6 +30,13 @@
     "multer": "^1.4.2",
     "nodemon": "^2.0.7",
     "path": "^0.12.7",
-    "pg": "^8.5.1"
+    "pg": "^8.5.1",
+    "supertest": "^6.1.3"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
   }
 }

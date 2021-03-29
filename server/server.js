@@ -13,6 +13,10 @@ app.use(bodyParser.json());
 app.use('/api/data', require('./routes/api/DataSet'));
 
 
+app.get('/test-server', function(req, res) {
+	res.status(200).json({ server: `server running ${port.PORT}`});
+});
+
 
 
 const irisDataset = `
@@ -110,4 +114,5 @@ if (process.env.NODE_ENV === 'production') {
 
 const RUN_ON =process.env.PORT||port.PORT;
 
-app.listen(RUN_ON,()=>console.log(`Server started on port ${RUN_ON}`))
+const server=app.listen(RUN_ON,()=>console.log(`🚀 🚀 Server started on port ${RUN_ON}`));
+module.exports = server;
