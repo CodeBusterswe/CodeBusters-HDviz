@@ -25,3 +25,10 @@ test("Carica dati da database",()=>{
 	expect(screen.getByRole("button", { name: "Torna al menù" })).toBeInTheDocument();
 	fireEvent.click(screen.getByRole("button",{name: "Conferma selezione" }));
 });
+
+test("Aiuti all'utente",()=>{
+	render(<App/>);
+	fireEvent.click(screen.getByRole("button",{name: "Guida introduttiva" }));
+	expect(screen.getByText("Guida introduttiva all'utilizzo di HDViz")).toBeInTheDocument();
+	fireEvent.click(screen.getByRole("button",{name: "Torna al menù" }));
+});
