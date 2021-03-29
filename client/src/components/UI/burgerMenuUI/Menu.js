@@ -81,14 +81,17 @@ const Menu = () => {
 	}
 	
 	function checkToDisabled(index){
-		return index >= 3 && viewModel.getCheckedDimensions().length < 2;
+		// eslint-disable-next-line no-extra-parens
+		return (index >= 3 && viewModel.getCheckedDimensions().length < 2) || ((index ===6 || index===8) && viewModel.getDistanceMatricesNames().length < 1) ;
 	}
 
 	const popover = 
 		<Popover id="popover-basic">
 			<Popover.Title as="h3">Voce disabilitata</Popover.Title>
 			<Popover.Content>
-					Prima devi aver caricato i dati e selezionato almeno due dimensioni
+				{viewModel.getCheckedDimensions().length < 2 ? 
+					"Prima devi aver caricato i dati e selezionato almeno due dimensioni" :
+				 	"Prima devi aver calcolato una matrice delle distanze"}
 			</Popover.Content>
 		</Popover>;
 

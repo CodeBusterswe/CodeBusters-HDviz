@@ -120,6 +120,12 @@ class ViewModel{
 		case "label":
 			this.#preferences.amLabel = value;
 			break;
+		case "distMax":
+			this.#preferences.amDistMax = value;
+			break;
+		case "distMin":
+			this.#preferences.amDistMin = value;
+			break;
 		default:
 		}
 	}

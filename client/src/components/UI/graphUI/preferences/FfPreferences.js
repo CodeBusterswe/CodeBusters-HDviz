@@ -49,9 +49,8 @@ const ForceFieldPreferences = () => {
 				</Form.Control>
 			</Form.Group>
 			<Form.Group controlId="distMax">
-				<Form.Label>Max Distance:{max}</Form.Label>
+				<Form.Label>Max Distance: {max}</Form.Label>
 				<Form.Control
-					custom
 					as="input"
 					value={distMax}
 					defaultValue={1000}
@@ -60,9 +59,8 @@ const ForceFieldPreferences = () => {
 				</Form.Control>
 			</Form.Group>
 			<Form.Group controlId="distMin">
-				<Form.Label>MinDistance:{min}</Form.Label>
+				<Form.Label>MinDistance: {min}</Form.Label>
 				<Form.Control
-					custom
 					as="input"
 					value={distMin}
 					defaultValue={0}
