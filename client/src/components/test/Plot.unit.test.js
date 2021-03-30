@@ -72,10 +72,10 @@ test("Linear Projection", async()=>{
 	render (<App/>);
 	fireEvent.click(screen.getByRole("button",{name: "Linear Projection"}));
 	expect(screen.getByRole("option",{name:"sepal_length"})).toBeInTheDocument();
-	fireEvent.keyDown(screen.getByRole("option",{name:"petal_width"}));
-	fireEvent.keyDown(screen.getByRole("option",{name:"sepal_width"}));
-	fireEvent.keyDown(screen.getByRole("option",{name:"petal_length"}));
-	fireEvent.keyDown(screen.getByRole("option",{name:"sepal_length"}));
-	fireEvent.keyDown(screen.getByRole("combobox",{name:"Color"}),{key:"species"});
+	fireEvent.click(screen.getByRole("option",{name:"petal_width"}));
+	fireEvent.click(screen.getByRole("option",{name:"sepal_width"}));
+	fireEvent.click(screen.getByRole("option",{name:"petal_length"}));
+	fireEvent.click(screen.getByRole("option",{name:"sepal_length"}));
+	fireEvent.click(screen.getByRole("combobox",{name:"Color"}),{key:"species"});
 	fireEvent.click(screen.getByRole("button",{name: "Nascondi preferenze"}));
 });
