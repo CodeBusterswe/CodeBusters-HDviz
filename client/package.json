@@ -12,6 +12,7 @@
     "bootstrap": "^4.6.0",
     "canvas": "^2.7.0",
     "d3": "^6.6.0",
+    "express": "^4.17.1",
     "ml-distance": "^3.0.0",
     "ml-kmeans": "^5.0.0",
     "mobx": "^6.1.8",
