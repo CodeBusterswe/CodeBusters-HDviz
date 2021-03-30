@@ -1,9 +1,8 @@
 const request =require("supertest");
-const server = require("../../../../server/server");
+const server = require("../server");
 
 // start connection
 beforeAll(async () => {
-	// eslint-disable-next-line no-unused-expressions
 	server.address().port;
 	
 });
