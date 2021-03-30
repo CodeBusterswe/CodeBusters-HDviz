@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from "react";
 import { useStore } from "../../../../ContextProvider";
-import {Modal,Alert, Form, Col} from "react-bootstrap";
+import {Modal,Alert, Form, Col, Spinner} from "react-bootstrap";
 import { ModalBody, ModalFooter, Button} from "react-bootstrap";
 import Select from "react-select";
 const LoadDataFromDB = props => {
@@ -52,8 +52,13 @@ const LoadDataFromDB = props => {
 	}
 	useEffect(() =>{
 		async function getColumns(){
-			const columns=await viewModel.getColumnList(table);
-			setColumns(columns);
+			try{
+				const columns=await viewModel.getColumnList(table);
+				setColumns(columns);
+			}catch(e){
+				console.log("Nessuna colonna trovata");
+				return;
+			}
 		}
 		getColumns();
 	}, [viewModel, table]);
@@ -61,8 +66,13 @@ const LoadDataFromDB = props => {
 	useEffect(() => {
 		async function getTables(){
 			const tables=await viewModel.getAllTables();
-			setTables(tables.map(d => d.table_name));
-			setTable(tables.map(d => d.table_name)[0]);
+			try{
+				setTables(tables.map(d => d.table_name));
+				setTable(tables.map(d => d.table_name)[0]);
+			}catch(e){
+				console.log("Nessuna tabella trovata");
+				return;
+			}
 		}
 		getTables();
 	},[viewModel]);
@@ -156,7 +166,7 @@ const LoadDataFromDB = props => {
 				</Modal.Header>
 				<ModalBody>
 					<Form>
-						{tables ? 
+						{tables!==null ?
 							<Form.Group controlId="tablesSelect">
 								<Form.Label>Select table</Form.Label>
 								<Form.Control
@@ -169,8 +179,12 @@ const LoadDataFromDB = props => {
 										return <option value={d} key={d}>{d}</option>;
 									})}
 								</Form.Control>
-							</Form.Group>: null}
-						{table ? 
+							</Form.Group>: 
+							<div className="d-flex">
+								<span>Assicurati di aver acceso il server...</span>
+								<Spinner animation="border" variant="primary"/>
+							</div>}
+						{columns.length>0 ? 
 							<><Form.Group controlId="columnsSelect">
 								<Form.Label>Select the columns to use</Form.Label>
 								<Select

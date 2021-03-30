@@ -20,7 +20,9 @@ class Preferences{
 		this._AMpreferences = {
 			distanceMatrix: undefined,
 			orderBy: undefined,
-			label: undefined
+			label: undefined,
+			distMax: Infinity,
+			distMin: 0,
 		};
 		this._HMpreferences = {
 			xAxis: undefined,
@@ -83,6 +85,14 @@ class Preferences{
 
 	set amOrderBy(group){
 		this._AMpreferences.orderBy = group;
+	}
+
+	set amDistMin(dist){
+		this._AMpreferences.distMin = dist;
+	}
+
+	set amDistMax(dist){
+		this._AMpreferences.distMax = dist;
 	}
 
 	set hmXaxis(dimension){
@@ -232,6 +242,9 @@ class Preferences{
 	resetAmPreferences(){
 		this._AMpreferences.distanceMatrix = undefined;
 		this._AMpreferences.orderBy = undefined;
+		this._AMpreferences.label = undefined;
+		this._AMpreferences.distMax = Infinity;
+		this._AMpreferences.distMin = 0;
 	}
 
 	resetHmPreferences(){

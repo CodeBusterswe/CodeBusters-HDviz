@@ -7,19 +7,12 @@ const AdjacencyMatrixPreferences = () => {
 	const viewModel = useStore();
 	const sorts = viewModel.getCheckedDimensions();
 	const matrices = viewModel.getDistanceMatricesNames();
-	const [matrixName, order, label] = viewModel.getAmPreferences();
+	const [matrixName, order, label, distMax, distMin] = viewModel.getAmPreferences();
+	const matrix = viewModel.getDistanceMatricesByName(matrixName);
+	const min = matrix ? Math.min.apply(Math, matrix.links.map(link =>link.value)) : undefined;
+	const max = matrix ? Math.max.apply(Math,matrix.links.map(link =>link.value)) : undefined;
 
-	function handleSelectMatrixChange(e){
-		const value = e.target.value==="undefined" ? undefined : e.target.value,
-			identifier = e.target.id;
-		viewModel.setAmPreferences(identifier, value);
-	}
-	function handleSelectOrderChange(e){
-		const value = e.target.value==="undefined" ? undefined : e.target.value,
-			identifier = e.target.id;
-		viewModel.setAmPreferences(identifier, value);
-	}
-	function handleSelectLabelChange(e){
+	function handleSelectChange(e){
 		const value = e.target.value==="undefined" ? undefined : e.target.value,
 			identifier = e.target.id;
 		viewModel.setAmPreferences(identifier, value);
@@ -32,7 +25,7 @@ const AdjacencyMatrixPreferences = () => {
 					custom
 					as="select"
 					value={matrixName}
-					onChange={handleSelectMatrixChange}
+					onChange={handleSelectChange}
 				>
 					<option value={"undefined"} key={"noDistancematrix"}>No distance matrix</option>
 					{matrices.map((d) => {
@@ -46,10 +39,9 @@ const AdjacencyMatrixPreferences = () => {
 					custom
 					as="select"
 					value={order}
-					onChange={handleSelectOrderChange}
+					onChange={handleSelectChange}
 				>
 					<option value={"undefined"} key={"noOrder"}>No order</option>
-					<option value={"group"} key={"group"}>Group</option>
 					{sorts.map((d) => {
 						return <option value={d} key={d}>{d}</option>;
 					})}
@@ -61,13 +53,32 @@ const AdjacencyMatrixPreferences = () => {
 					custom
 					as="select"
 					value={label}
-					onChange={handleSelectLabelChange}
+					onChange={handleSelectChange}
 				>
 					<option value={"undefined"} key={"noLabel"} >No label</option>
-					<option value={"group"} key={"group"}>Group</option>
 					{sorts.map((d) => {
 						return <option value={d} key={d}>{d}</option>;
 					})}
+				</Form.Control>
+			</Form.Group>
+			<Form.Group controlId="distMax">
+				<Form.Label>Max Distance: {max}</Form.Label>
+				<Form.Control
+					as="input"
+					value={distMax}
+					defaultValue={1000}
+					onChange={handleSelectChange}
+				>
+				</Form.Control>
+			</Form.Group>
+			<Form.Group controlId="distMin">
+				<Form.Label>MinDistance: {min}</Form.Label>
+				<Form.Control
+					as="input"
+					value={distMin}
+					defaultValue={0}
+					onChange={handleSelectChange}
+				>
 				</Form.Control>
 			</Form.Group>
 		</Form>
