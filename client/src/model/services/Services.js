@@ -45,12 +45,12 @@ export const getColumnsByName=async(table_name)=>{
 //for testing 
 export const serverTest=async()=>{
 	try{
-		const response= await api.get('/test-server');
+		const response= await api.get("/test-server");
 		return response.data;
 	}catch(err){
 		console.error(err.message);   
 	}
-}
+};
 
 /* ritirna i dataset presenti nel database NOT USED
 export const getDataset=async()=>{
