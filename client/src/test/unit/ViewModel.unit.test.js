@@ -192,8 +192,10 @@ describe("tests for preferences", () => {
 		viewModel.setAmPreferences("distanceMatrix",[1,3,5,7]);
 		viewModel.setAmPreferences("orderBy","test1");
 		viewModel.setAmPreferences("label","test2");
+		viewModel.setAmPreferences("distMax","2");
+		viewModel.setAmPreferences("distMin","1");
 		expect(viewModel.getChartToShow()).toStrictEqual("AdjacencyMatrix");
-		expect(viewModel.getAmPreferences()).toStrictEqual([[1,3,5,7],"test1","test2"]);		
+		expect(viewModel.getAmPreferences()).toStrictEqual([[1,3,5,7],"test1","test2","2","1"]);		
 	});
 
 	test("ForceField", () => {
