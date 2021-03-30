@@ -1,1 +1,5 @@
-{}
+{
+  "devDependencies": {
+    "supertest": "^6.1.3"
+  }
+}
