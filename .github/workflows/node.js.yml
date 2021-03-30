@@ -11,7 +11,7 @@ on:
     
 defaults:
   run: 
-    working-directory: client, server
+    working-directory: client
 
 jobs:
   build:
@@ -30,6 +30,10 @@ jobs:
         
     - run: npm ci
     - run: CI='' npm run build --if-present
+    - run: npm ci
+      working-directory: server
+    - run: CI='' npm run build --if-present
+      working-directory: server
     - run: npm test
       
     - name: Run the tests and generate coverage report
