@@ -6,7 +6,9 @@ import {FaFileCsv} from "react-icons/fa";
 import { RiMistFill } from "react-icons/ri";
 import { IoGrid, IoShareSocialOutline, IoMoveSharp } from "react-icons/io5";
 import {SiGraphcool , SiJson} from "react-icons/si";
+
 export class MenuVM {
+
     modalIsOpen = false;
     id = 0;
 	names = ["Carica/Salva sessione", "Carica dati dal DB", 
@@ -22,6 +24,7 @@ export class MenuVM {
 		<RiMistFill size={32} className="icon"/>,
 		<IoShareSocialOutline size={32} className="icon"/>,
 		<IoMoveSharp size={32} className="icon"/>];
+
 	constructor(rootStore){
     	this.preferencesStore = rootStore.preferencesStore;
     	this.datasetStore = rootStore.datasetStore;
@@ -40,8 +43,8 @@ export class MenuVM {
 			distanceMatricesNumber: computed
     	});
 	}
+	
 	openModal = index => {
-		console.log(index);
     	this.modalIsOpen = true;
     	this.id = index;
 	}
@@ -51,7 +54,6 @@ export class MenuVM {
 	}
 
 	showChart = index => {
-		console.log(index);
     	switch(index) {
     	case 5:
     		this.preferencesStore.setChartToShow(VisualizationType.ScatterPlotMatrix);

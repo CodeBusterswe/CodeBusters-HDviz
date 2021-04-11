@@ -32,11 +32,11 @@ const Menu = observer(() => {
 		case 1: 
 		  return <LoadDataFromDB modalIsOpen={modalIsOpen} closeModal={closeModal}/>;
 		case 2:
-			return <LoadCSV modalIsOpen={modalIsOpen} closeModal={closeModal}></LoadCSV>;
+			return <LoadCSV modalIsOpen={modalIsOpen} closeModal={closeModal}/>;
 		case 3:
-			return <DimensionalReduction modalIsOpen={modalIsOpen} closeModal={closeModal}></DimensionalReduction>;
+			return <DimensionalReduction modalIsOpen={modalIsOpen} closeModal={closeModal}/>;
 		case 4:
-			return <DistanceCalculation modalIsOpen={modalIsOpen} closeModal={closeModal}></DistanceCalculation>;
+			return <DistanceCalculation modalIsOpen={modalIsOpen} closeModal={closeModal}/>;
 		default:
 			break;
 		}
