@@ -4,17 +4,18 @@ import "./style.css";
 import "../App.css";
 import Header from "./UI/headerUI/Header";
 import Graph from "./UI/graphUI/Graph";
-import ViewModel from "../ViewModel";
+import RootStore from "../stores/RootStore";
 import { AppContextProvider } from "../ContextProvider";
 
 const View = () => {
-	const viewModel = new ViewModel();
+	const rootStore = new RootStore();
 	return (
-		<AppContextProvider value={viewModel}>
+		<>
 			<Header/>
-			<Menu/>
-			<Graph/>
-		</AppContextProvider>
+			<AppContextProvider value={rootStore}>
+				<Menu/>
+			</AppContextProvider>
+		</>
 	);
 };
 export default View;

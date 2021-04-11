@@ -1,69 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
+import { observer } from "mobx-react-lite";
 import { useStore } from "../../../ContextProvider";
 import DimensionalReduction from "./ModalContent/DimensionalReduction";
 import DistanceCalculation from "./ModalContent/DistanceCalculation";
 import LoadCSV from "./ModalContent/LoadCSV";
 import "../../style.css";
 import {OverlayTrigger , Popover} from "react-bootstrap";
-import {AiOutlineArrowRight , AiOutlineDotChart , AiOutlineFunction} from "react-icons/ai";
-import {ImDatabase} from "react-icons/im";
-import {FaFileCsv} from "react-icons/fa";
-import { RiMistFill } from "react-icons/ri";
-import { IoGrid, IoShareSocialOutline, IoMoveSharp } from "react-icons/io5";
-import {SiGraphcool , SiJson} from "react-icons/si";
+import {AiOutlineArrowRight} from "react-icons/ai";
 import LoadDataFromDB from "./ModalContent/LoadDataFromDB";
-import { VisualizationType } from "../../../utils";
 import useWindowWidth from "./WindowWidth";
+import { MenuVM } from "./MenuVM";
+import { useInstance } from "../../../useInstance";
 
-const Menu = () => { 
-	const [modalIsOpen, setIsOpen] = useState(false);
-	const [id, setId] = useState(0);
-	const {width} = useWindowWidth();
-
-	const names = ["Carica/Salva sessione", "Carica dati dal DB", 
-		"Carica dati da CSV", "Riduci dimensioni", "Calcola distanza", "Scatterplot Matrix",
-		"Adjacency Matrix","Heat Map","Force Field","Linear Projection"]; 
-	const icons = [<SiJson size={32} className="icon"/>, 
-		<ImDatabase size={32} className="icon"/>,
-		<FaFileCsv size={32} className="icon"/>, 
-		<SiGraphcool size={32} className="icon"/>,
-		<AiOutlineFunction size={32} className="icon"/>,
-		<AiOutlineDotChart size={32} className="icon"/>,
-		<IoGrid size={32} className="icon"/>,
-		<RiMistFill size={32} className="icon"/>,
-		<IoShareSocialOutline size={32} className="icon"/>,
-		<IoMoveSharp size={32} className="icon"/>];
-	const viewModel = useStore();
-	function openModal(index) {
-		setIsOpen(true);
-		setId(index);
-	}
-
-	function closeModal() {
-		setIsOpen(false);
-	}
-
-	function openGraph(index) {
-		switch(index) {
-		case 5:
-			viewModel.setChartToShow(VisualizationType.ScatterPlotMatrix);
-			break;
-		case 6:
-			viewModel.setChartToShow(VisualizationType.AdjacencyMatrix);
-			break;
-		case 7:
-			viewModel.setChartToShow(VisualizationType.HeatMap);
-			break;
-		case 8:
-			viewModel.setChartToShow(VisualizationType.ForceField);
-			break;
-		case 9:
-			viewModel.setChartToShow(VisualizationType.PLMA);
-			break;
-			//TODO: togliere che se il bottone è cliccato più volte il grafico compare e scompare (toggle)
-		default: break;
-		}
-	}
+const Menu = observer(() => { 
+	const {
+		modalIsOpen,
+		id,
+		names,
+		icons,
+		closeModal,
+		openModal,
+		showChart,
+		isDataLoaded,
+		checkToDisabled,
+	} = useInstance(new MenuVM(useStore()));
+	
+	//const {width} = useWindowWidth();
 
 	function handleContent(index) {
 		switch (index) {
@@ -79,17 +41,11 @@ const Menu = () => {
 			break;
 		}
 	}
-	
-	function checkToDisabled(index){
-		// eslint-disable-next-line no-extra-parens
-		return (index >= 3 && viewModel.getCheckedDimensions().length < 2) || ((index ===6 || index===8) && viewModel.getDistanceMatricesNames().length < 1) ;
-	}
-
 	const popover = 
 		<Popover id="popover-basic">
 			<Popover.Title as="h3">Voce disabilitata</Popover.Title>
 			<Popover.Content>
-				{viewModel.getCheckedDimensions().length < 2 ? 
+				{isDataLoaded ? 
 					"Prima devi aver caricato i dati e selezionato almeno due dimensioni" :
 				 	"Prima devi aver calcolato una matrice delle distanze"}
 			</Popover.Content>
@@ -98,7 +54,7 @@ const Menu = () => {
 	//? CON QUESTA IL POPOVER CAMBIA POSIZIONE A TOP SOLO IN UNA NUOVA SESSIONE
 	//? RICEVE LA WIDTH SOLO APPENA INIZIATA LA SESSIONE (quindi non cambia il valore se si ridimensiona la pagina)
 	//const { innerWidth: width } = window;
-
+					
 	return (
 		<> 
  			<nav className="navbar">
@@ -115,7 +71,8 @@ const Menu = () => {
 								{checkToDisabled(index) ?		
 									<OverlayTrigger 
 										overlay={popover} 
-										placement={width > 600 ? "right" : "top"} 
+										//placement={width > 600 ? "right" : "top"} 
+										placement = "right"
 										delay={{ show: 200, hide: 0 }}>
 										<span className="d-inline-block" style={{ width: "100%" }} > 
 											<button className="nav-link" disabled aria-disabled="true" style={{ pointerEvents: "none"}}>	
@@ -124,7 +81,7 @@ const Menu = () => {
 											</button>	
 										</span>
 									</OverlayTrigger> : 
-									<button className="nav-link" onClick={index < 5 ? () => openModal(index) : () => openGraph(index)}>	
+									<button className="nav-link" onClick={index < 5 ? openModal.bind(null, index) : showChart.bind(null, index)}>	
 										{icons[index]}
 										<span className="link-text">{name}</span>
 									</button>
@@ -137,6 +94,6 @@ const Menu = () => {
 			{handleContent(id)}
 		</>
 	);
-};
+});
 
 export default Menu;
