@@ -16,10 +16,6 @@ class PreferencesStore {
 		this.PreferencesAm = new PreferencesFF();
 		makeAutoObservable(this, {rootStore: false});
 	}
-
-	setChartToShow(chartName){
-		this.chart = chartName;
-	}
 }
 
 export default PreferencesStore;

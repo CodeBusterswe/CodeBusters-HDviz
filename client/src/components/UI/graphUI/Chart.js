@@ -1,34 +1,27 @@
-import { makeObservable, observable } from "mobx";
+import React from "react";
+import {observer} from "mobx-react-lite";
+import { useStore } from "../../../ContextProvider";
+import { ChartVM } from "./ChartVM";
+import { useInstance } from "../../../useInstance";
+import {Button} from "react-bootstrap";
 import {VisualizationType} from "../../../utils";
 import { ScatterPlotMatrix, ForceField, AdjacencyMatrix, HeatMap, Plma } from "./charts";
 import { ScatterPlotMatrixPreferences, ForceFieldPreferences, AdjacencyMatrixPreferences, HeatMapPreferences, PlmaPreferences } from "./preferences";
 
-export class GraphVM {
-    
-	show = true;
+const Chart = observer( () => {
 
-	constructor(rootStore){
-    	this.preferencesStore = rootStore.preferencesStore;
+	const {
+		handlePref,
+		showChart,
+		chartToShow
+	} = useInstance(new ChartVM(useStore()));
 
-    	makeObservable(this,{
-			show : observable
-    	});
+	function btnContent(){
+		return showChart ? "Nascondi preferenze" : "Mostra preferenze";
 	}
 
-	handlePref() {
-		this.show = !this.show;
-	}
-
-	btnContent(){
-		return this.show ? "Nascondi preferenze" : "Mostra preferenze";
-	}
-
-	get show(){
-		return this.show;
-	}
-
-	renderPreferences(){
-		switch(this.preferencesStore.getChartToShow()){
+	function renderPreferences(){
+		switch(chartToShow){
 		case VisualizationType.ScatterPlotMatrix:
 			return <ScatterPlotMatrixPreferences/>;
 		case VisualizationType.AdjacencyMatrix:
@@ -44,8 +37,8 @@ export class GraphVM {
 		}
 	}	
 
-	renderCharts(){
-		switch(this.preferencesStore.getChartToShow()){
+	function renderCharts(){
+		switch(chartToShow){
 		case VisualizationType.ScatterPlotMatrix:
 			return <ScatterPlotMatrix/>;
 		case VisualizationType.AdjacencyMatrix:
@@ -60,4 +53,21 @@ export class GraphVM {
 			return null;
 		}
 	}	
-}
+
+	return(
+		<div className="content">
+			<div className="container-pref">
+				<>
+					{chartToShow !== undefined ? <Button className="btn-pref" onClick={handlePref}>{btnContent()}</Button> : <></>}				
+					<div className={showChart ? "show-pref" : "hide-pref"}>
+						{renderPreferences()}
+					</div>	
+				</>
+			</div>
+			<div className={showChart ? null : "center-graph"}>
+				{renderCharts()}
+			</div>
+		</div>
+	);
+});
+export default Chart;

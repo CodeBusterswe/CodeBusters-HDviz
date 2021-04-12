@@ -3,7 +3,7 @@ import Menu from "./UI/burgerMenuUI/Menu";
 import "./style.css";
 import "../App.css";
 import Header from "./UI/headerUI/Header";
-import Graph from "./UI/graphUI/Graph";
+import Chart from "./UI/graphUI/Chart";
 import RootStore from "../stores/RootStore";
 import { AppContextProvider } from "../ContextProvider";
 
@@ -14,6 +14,7 @@ const View = () => {
 			<Header/>
 			<AppContextProvider value={rootStore}>
 				<Menu/>
+				<Chart/>
 			</AppContextProvider>
 		</>
 	);

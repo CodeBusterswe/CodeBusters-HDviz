@@ -6,6 +6,7 @@ import {FaFileCsv} from "react-icons/fa";
 import { RiMistFill } from "react-icons/ri";
 import { IoGrid, IoShareSocialOutline, IoMoveSharp } from "react-icons/io5";
 import {SiGraphcool , SiJson} from "react-icons/si";
+import {Popover} from "react-bootstrap";
 
 export class MenuVM {
 
@@ -30,16 +31,13 @@ export class MenuVM {
     	this.datasetStore = rootStore.datasetStore;
     	this.distanceMatricesStore = rootStore.distanceMatricesStore;
 		this.checkToDisabled = this.checkToDisabled.bind(this);
-		/*this.showChart = this.showChart.bind(this);
-		this.openModal = this.openModal.bind(this);
-		this.closeModal = this.closeModal.bind(this);*/
+
     	makeObservable(this,{
     		modalIsOpen : observable,
     		id: observable,
     		openModal: action,
 			closeModal: action,
 			showChart: action,
-			isDataLoaded: computed,
 			distanceMatricesNumber: computed
     	});
 	}
@@ -56,26 +54,25 @@ export class MenuVM {
 	showChart = index => {
     	switch(index) {
     	case 5:
-    		this.preferencesStore.setChartToShow(VisualizationType.ScatterPlotMatrix);
+    		this.preferencesStore.chart = VisualizationType.ScatterPlotMatrix;
     		break;
     	case 6:
-    		this.preferencesStore.setChartToShow(VisualizationType.AdjacencyMatrix);
+    		this.preferencesStore.chart = VisualizationType.AdjacencyMatrix;
     		break;
     	case 7:
-    		this.preferencesStore.setChartToShow(VisualizationType.HeatMap);
+    		this.preferencesStore.chart = VisualizationType.HeatMap;
     		break;
     	case 8:
-    		this.preferencesStore.setChartToShow(VisualizationType.ForceField);
+    		this.preferencesStore.chart = VisualizationType.ForceField;
     		break;
     	case 9:
-    		this.preferencesStore.setChartToShow(VisualizationType.PLMA);
+    		this.preferencesStore.chart = VisualizationType.PLMA;
     		break;
     	default: break;
     	}
+
 	}
-	get isDataLoaded(){
-    	return this.datasetStore.checkedDimensions.length < 2;
-	}
+
 	get distanceMatricesNumber(){
 		return this.distanceMatricesStore.distanceMatricesNames.length < 1;
 	}
