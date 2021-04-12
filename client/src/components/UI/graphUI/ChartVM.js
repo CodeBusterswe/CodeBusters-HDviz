@@ -6,6 +6,7 @@ export class ChartVM {
 
 	constructor(rootStore){
     	this.preferencesStore = rootStore.preferencesStore;
+		this.datasetStore = rootStore.datasetStore;
     	makeObservable(this,{
 			show : observable,
 			chartToShow : computed,
@@ -24,5 +25,14 @@ export class ChartVM {
 
 	get showChart(){
 		return this.show;
+	}
+	get dimensions(){
+		return this.datasetStore.dimensions;
+	}
+	get data(){
+		return this.datasetStore.originalData;
+	}
+	get selData(){
+		return this.datasetStore.selectedData;
 	}
 }

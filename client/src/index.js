@@ -8,9 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css";
 
 ReactDOM.render(
-	<React.StrictMode>
-		<View/>
-	</React.StrictMode>,
+	<View/>,
 	document.getElementById("root")
 );
 

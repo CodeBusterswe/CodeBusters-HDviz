@@ -24,8 +24,7 @@ class DistanceMatricesModel {
 		return this.distanceMatrices.map(matrix => matrix.name);
 	}
 	reset(){
-		this.distanceMatrices = [];
-		this.distanceNames.clear();
+		this.distanceMatrices.clear();
 	}
 }
 

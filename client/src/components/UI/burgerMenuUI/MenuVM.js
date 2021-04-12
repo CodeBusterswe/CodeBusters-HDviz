@@ -6,7 +6,6 @@ import {FaFileCsv} from "react-icons/fa";
 import { RiMistFill } from "react-icons/ri";
 import { IoGrid, IoShareSocialOutline, IoMoveSharp } from "react-icons/io5";
 import {SiGraphcool , SiJson} from "react-icons/si";
-import {Popover} from "react-bootstrap";
 
 export class MenuVM {
 
@@ -38,7 +37,8 @@ export class MenuVM {
     		openModal: action,
 			closeModal: action,
 			showChart: action,
-			distanceMatricesNumber: computed
+			distanceMatricesNumber: computed,
+			isDataLoaded: computed
     	});
 	}
 	
@@ -47,7 +47,7 @@ export class MenuVM {
     	this.id = index;
 	}
 
-	closeModal() {
+	closeModal = () => {
     	this.modalIsOpen = false;
 	}
 
@@ -70,9 +70,10 @@ export class MenuVM {
     		break;
     	default: break;
     	}
-
 	}
-
+	get isDataLoaded(){
+		return this.datasetStore.checkedDimensions.length < 2;
+	}
 	get distanceMatricesNumber(){
 		return this.distanceMatricesStore.distanceMatricesNames.length < 1;
 	}

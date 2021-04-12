@@ -78,15 +78,23 @@ class DatasetStore {
 	loadDimensions(dimensions){
 		this.dimensions.replace(dimensions);	//metodo di mobx per array observable
 	}
-	updateSelectedData(selectedData){
+	haveNotANumberValue(datasetRow) {
+		return !Object.values(datasetRow).some(value => Number.isNaN(value) || value === undefined || value===null);
+	}
+	updateSelectedData(){
+		//con filter tolgo i dati che hanno alcune dimensioni numeriche selezionate NaN; e con map prendo le dimensioni selezionate
+		let selectedData = this.originalData.map(d => {
+			return Object.fromEntries(this.selectedDimensions.map(dim => [dim.value, d[dim.value]]));
+	 	}).filter(this.haveNotANumberValue);
+		this.loadDimensions(this.notReducedDimensions);
 		this.selectedData.replace(selectedData);
 	}
 
-	addDimensionsToDataset(dimensions) {
+	addDimensionsToDataset(dimensions){
 		this.dimensions.replace(this.dimensions.concat(dimensions));
 	}
 
-	reset() {
+	reset(){
 		this.originalData.clear();
 		this.dimensions.clear();	//metodo di mobx per array observable
 		this.selectedData.clear();

@@ -1,41 +1,45 @@
+import { makeObservable, observable } from "mobx";
+
 class Dimension{
-	#value;
-	#isChecked;
-	#isNumeric;
-	#isRedux;
 	constructor(value = "dims", isChecked = true, isNumeric=true, isRedux = false){
-		this.#value = value;
-		this.#isChecked = isChecked;
-		this.#isNumeric = isNumeric;
-		this.#isRedux = isRedux;
+		this._value = value;
+		this._isChecked = isChecked;
+		this._isNumeric = isNumeric;
+		this._isRedux = isRedux;
+		makeObservable(this,{
+			_isChecked: observable,
+			_isNumeric: observable,
+			_isRedux: observable,
+			_value: observable,
+		});
 	}
 
 	set isChecked(bool) {
-		this.#isChecked = bool;
+		this._isChecked = bool;
 	}
 
 	set isNumeric(bool) {
-		this.#isNumeric = bool;
+		this._isNumeric = bool;
 	}
 
 	set isReduced(bool) {
-		this.#isRedux = bool;
+		this._isRedux = bool;
 	}
 
 	get value() {
-		return this.#value;
+		return this._value;
 	}
 	
 	get isChecked() {
-		return this.#isChecked;
+		return this._isChecked;
 	}
 
 	get isNumeric() {
-		return this.#isNumeric;
+		return this._isNumeric;
 	}
 
 	get isReduced() {
-		return this.#isRedux;
+		return this._isRedux;
 	}
 }
 export default Dimension;

@@ -13,7 +13,10 @@ const Chart = observer( () => {
 	const {
 		handlePref,
 		showChart,
-		chartToShow
+		chartToShow,
+		dimensions,
+		data,
+		selData,
 	} = useInstance(new ChartVM(useStore()));
 
 	function btnContent(){
@@ -56,6 +59,11 @@ const Chart = observer( () => {
 
 	return(
 		<div className="content">
+			{
+				dimensions.map(d => { return <span>{d.value}</span>;})
+			}
+			<p>{console.log(data)}</p>
+			<p>{console.log(selData)}</p>
 			<div className="container-pref">
 				<>
 					{chartToShow !== undefined ? <Button className="btn-pref" onClick={handlePref}>{btnContent()}</Button> : <></>}				

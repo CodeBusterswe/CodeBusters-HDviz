@@ -10,11 +10,20 @@ class PreferencesStore {
 		this.rootStore = rootStore;
 		this.chart = undefined;
 		this.PreferencesAm = new PreferencesAM();
-		this.PreferencesAm = new PreferencesHM();
-		this.PreferencesAm = new PreferencesSPM();
-		this.PreferencesAm = new PreferencesPLMA();
-		this.PreferencesAm = new PreferencesFF();
+		this.PreferencesHm = new PreferencesHM();
+		this.PreferencesSpm = new PreferencesSPM();
+		this.PreferencesPlma = new PreferencesPLMA();
+		this.PreferencesFf = new PreferencesFF();
 		makeAutoObservable(this, {rootStore: false});
+	}
+
+	reset(){
+		this.chart = undefined;
+		this.PreferencesAm = new PreferencesAM();
+		this.PreferencesHm = new PreferencesHM();
+		this.PreferencesSpm = new PreferencesSPM();
+		this.PreferencesPlma = new PreferencesPLMA();
+		this.PreferencesFf = new PreferencesFF();
 	}
 }
 

@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../../ContextProvider";
 import DimensionalReduction from "./ModalContent/DimensionalReduction";
 import DistanceCalculation from "./ModalContent/DistanceCalculation";
-import LoadCSV from "./ModalContent/LoadCSV";
+import LoadCsv from "./ModalContent/LoadCsv";
 import "../../style.css";
 import {OverlayTrigger , Popover} from "react-bootstrap";
 import {AiOutlineArrowRight} from "react-icons/ai";
@@ -30,13 +30,13 @@ const Menu = observer(() => {
 	function handleContent(index) {
 		switch (index) {
 		case 1: 
-		  return <LoadDataFromDB modalIsOpen={modalIsOpen} closeModal={closeModal}/>;
+		  return <LoadDataFromDB modalIsOpen={modalIsOpen} closeModal={closeModal.bind(null)}/>;
 		case 2:
-			return <LoadCSV modalIsOpen={modalIsOpen} closeModal={closeModal}/>;
+			return <LoadCsv modalIsOpen={modalIsOpen} closeModal={closeModal.bind(null)}/>;
 		case 3:
-			return <DimensionalReduction modalIsOpen={modalIsOpen} closeModal={closeModal}/>;
+			return <DimensionalReduction modalIsOpen={modalIsOpen} closeModal={closeModal.bind(null)}/>;
 		case 4:
-			return <DistanceCalculation modalIsOpen={modalIsOpen} closeModal={closeModal}/>;
+			return <DistanceCalculation modalIsOpen={modalIsOpen} closeModal={closeModal.bind(null)}/>;
 		default:
 			break;
 		}
