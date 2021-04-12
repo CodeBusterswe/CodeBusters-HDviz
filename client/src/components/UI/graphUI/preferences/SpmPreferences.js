@@ -2,20 +2,19 @@ import React from "react";
 import { useStore } from "../../../../ContextProvider";
 import { observer } from "mobx-react-lite";
 import Form from "react-bootstrap/Form";
+import { SpmPreferencesVM } from "./SpmPreferencesVM";
+import { useInstance } from "../../../../useInstance";
 
-const ScatterPlotMatrixPreferences = () => {
-	const viewModel = useStore();
-	const [axis, color] = viewModel.getSpmPreferences();
-	const keys = viewModel.getCheckedDimensions();
-	const labels = ["Axis one", "Axis two", "Axis Three", "Axis Four", "Axis Five"];
-	const identifiers = ["axis1", "axis2", "axis3", "axis4", "axis5"];
+const ScatterPlotMatrixPreferences = observer(() => {
 
-	//Funzione che non permette di selezionare più volte la stessa dimensione
-	function handleSelectChange(e){
-		const identifier = e.target.id;
-		const value = e.target.value==="undefined" ? undefined : e.target.value;
-		viewModel.setSpmAxis(identifier, value);
-	}
+	const {
+		handleSelectChange,
+		identifiers,
+		labels,
+		axes,
+		color,
+		dimensions
+	} = useInstance(new SpmPreferencesVM(useStore()));
 
 	return (
 		<Form className="chartPreferences">
@@ -27,11 +26,11 @@ const ScatterPlotMatrixPreferences = () => {
 							<Form.Control
 								custom
 								as="select"
-								value={axis[index]}
-								onChange={handleSelectChange}
+								value={axes[index]}
+								onChange={handleSelectChange.bind(null)}
 							>
-								<option value={"undefined"} key={"noDimensions"+identifiers}>No dimension</option>
-								{keys.map((d) => {
+								<option value={"undefined"} key={"noDimensions "+identifiers}>No dimension</option>
+								{dimensions.map((d) => {
 									return <option value={d} key={d+identifiers}>{d}</option>;
 								})}
 							</Form.Control>
@@ -45,15 +44,15 @@ const ScatterPlotMatrixPreferences = () => {
 					custom
 					as="select"
 					value={color}
-					onChange={handleSelectChange}
+					onChange={handleSelectChange.bind(null)}
 				>
 					<option value={"undefined"} key={"noDimensionsColor"}>No dimension</option>
-					{keys.map((d) => {
+					{dimensions.map((d) => {
 						return <option value={d} key={d+"Color"}>{d}</option>;
 					})}
 				</Form.Control>
 			</Form.Group>
 		</Form>
 	);
-};
-export default observer(ScatterPlotMatrixPreferences);
+});
+export default ScatterPlotMatrixPreferences;

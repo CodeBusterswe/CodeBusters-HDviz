@@ -9,21 +9,21 @@ class PreferencesStore {
 	constructor(rootStore){
 		this.rootStore = rootStore;
 		this.chart = undefined;
-		this.PreferencesAm = new PreferencesAM();
-		this.PreferencesHm = new PreferencesHM();
-		this.PreferencesSpm = new PreferencesSPM();
-		this.PreferencesPlma = new PreferencesPLMA();
-		this.PreferencesFf = new PreferencesFF();
+		this.preferencesAm = new PreferencesAM();
+		this.preferencesHm = new PreferencesHM();
+		this.preferencesSpm = new PreferencesSPM();
+		this.preferencesPlma = new PreferencesPLMA();
+		this.preferencesFf = new PreferencesFF();
 		makeAutoObservable(this, {rootStore: false});
 	}
 
 	reset(){
 		this.chart = undefined;
-		this.PreferencesAm = new PreferencesAM();
-		this.PreferencesHm = new PreferencesHM();
-		this.PreferencesSpm = new PreferencesSPM();
-		this.PreferencesPlma = new PreferencesPLMA();
-		this.PreferencesFf = new PreferencesFF();
+		this.preferencesAm = new PreferencesAM();
+		this.preferencesHm = new PreferencesHM();
+		this.preferencesSpm = new PreferencesSPM();
+		this.preferencesPlma = new PreferencesPLMA();
+		this.preferencesFf = new PreferencesFF();
 	}
 }
 
