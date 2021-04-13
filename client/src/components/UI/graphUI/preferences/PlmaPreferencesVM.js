@@ -1,17 +1,12 @@
-import { computed, makeObservable, observable } from "mobx";
+import { makeAutoObservable } from "mobx";
 
 export class PlmaPreferencesVM {
 
 	constructor(rootStore){
 		this.preferencesStore = rootStore.preferencesStore;
+		this.datasetStore = rootStore.datasetStore;
 
-    	makeObservable(this,{
-			preferencesStore : observable,
-			keys : computed,
-			colors : computed,
-			userDimensions : computed,
-			userColor : computed
-    	});
+    	makeAutoObservable(this,{preferencesStore : false, datasetStore : false}, {autoBind : true});
 	}
 
 	get keys(){
@@ -50,7 +45,7 @@ export class PlmaPreferencesVM {
 		}
 	}
 	
-	handleMultiSelectChange(value, handler){
+	handleMultiSelectChange = (value, handler) => {
 		switch(handler.action){
 		case "select-option":
 			this.setPlmaPreferences("dimensions", value.map(val => val.value));

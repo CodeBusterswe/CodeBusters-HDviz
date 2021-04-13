@@ -13,11 +13,7 @@ const Chart = observer( () => {
 	const {
 		handlePref,
 		showChart,
-		chartToShow,
-		dimensions,
-		data,
-		selData,
-		preferences,
+		chartToShow
 	} = useInstance(new ChartVM(useStore()));
 
 	function btnContent(){
