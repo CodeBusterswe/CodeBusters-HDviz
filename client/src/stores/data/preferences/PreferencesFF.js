@@ -5,6 +5,7 @@ class PreferencesFF{
 		this._color = undefined;
 		this._distMax = Infinity;
 		this._distMin = 0;
+		makeAutoObservable(this);
 	}
 
 	get distanceMatrix(){
@@ -12,7 +13,7 @@ class PreferencesFF{
 	}
 
 	get distMax(){
-		return this._distmax;
+		return this._distMax;
 	}
 
 	get distMin(){

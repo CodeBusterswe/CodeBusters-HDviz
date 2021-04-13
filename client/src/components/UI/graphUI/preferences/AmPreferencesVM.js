@@ -1,4 +1,4 @@
-import { computed, makeObservable, observable } from "mobx";
+import { makeAutoObservable } from "mobx";
 
 export class AmPreferencesVM {
 
@@ -7,20 +7,15 @@ export class AmPreferencesVM {
 		this.datasetStore = rootStore.datasetStore;
 		this.distanceMatricesStore = rootStore.distanceMatricesStore;
 
-		this.matrixName = this.preferencesStore.preferencesAm.distanceMatrix;
-
-    	makeObservable(this,{
-			preferencesStore : observable,
-			sorts : computed,
-			matrices : computed,
-			matrixName : computed,
-			order : computed,
-			label : computed,
-			distMax : computed,
-			distMin : computed,
-			min : computed,
-			max : computed
-    	});
+    	makeAutoObservable(
+			this,
+			{
+				preferencesStore : false,
+				datasetStore : false,
+				distanceMatricesStore : false
+			},
+			{autoBind : true}
+		);
 	}
 
 	get sorts(){
@@ -28,7 +23,7 @@ export class AmPreferencesVM {
 	}
 	
 	get matrices(){
-		return this.distanceMatricesStore.getDistanceMatricesNames;
+		return this.distanceMatricesStore.distanceMatricesNames;
 	}
 
 	get matrixName(){
@@ -56,11 +51,13 @@ export class AmPreferencesVM {
 	}
 
 	get min(){
-		return this.getDistanceMatricesByName(this.matrixName) ? Math.min.apply(Math,this.matrix.links.map(link =>link.value)) : undefined;
+		const matrix = this.getDistanceMatricesByName(this.matrixName);
+		return matrix ? Math.min.apply(Math, matrix.links.map(link =>link.value)) : undefined;
 	} 
 
 	get max(){
-		return this.getDistanceMatricesByName(this.matrixName) ? Math.max.apply(Math,this.matrix.links.map(link =>link.value)) : undefined;
+		const matrix = this.getDistanceMatricesByName(this.matrixName);
+		return matrix ? Math.max.apply(Math, matrix.links.map(link =>link.value)) : undefined;
 	}
     
 	setAmPreferences(identifier, value){
@@ -87,6 +84,6 @@ export class AmPreferencesVM {
 	handleSelectChange = (e) => {
 		const value = e.target.value==="undefined" ? undefined : e.target.value,
 			identifier = e.target.id;
-		this.preferencesStore.preferencesAm.setAmPreferences(identifier, value);
+		this.setAmPreferences(identifier, value);
 	}
 }

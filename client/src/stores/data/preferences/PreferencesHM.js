@@ -4,6 +4,7 @@ class PreferencesHM{
 		this._xAxis = undefined;
 		this._yAxis = undefined;
 		this._heat = undefined;
+		makeAutoObservable(this);
 	}
 
 	get xAxis(){

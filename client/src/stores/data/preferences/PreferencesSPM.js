@@ -1,4 +1,4 @@
-import { makeAutoObservable, isObservable} from "mobx";
+import { makeAutoObservable } from "mobx";
 
 class PreferencesSPM{
 	constructor(){

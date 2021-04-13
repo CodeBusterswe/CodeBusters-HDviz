@@ -1,4 +1,4 @@
-import { makeObservable, observable } from "mobx";
+import { makeAutoObservable } from "mobx";
 
 export class FfPreferencesVM {
 
@@ -7,13 +7,18 @@ export class FfPreferencesVM {
 		this.datasetStore = rootStore.datasetStore;
 		this.distanceMatricesStore = rootStore.distanceMatricesStore;
 
-    	makeObservable(this,{
-			preferencesStore : observable
-    	});
+    	makeAutoObservable(
+			this, 
+			{
+				preferencesStore : false, 
+				datasetStore : false, 
+				distanceMatricesStore : false
+			}, 
+			{autoBind : true});
 	}
 
 	get keys(){
-		return this.datasetStore.checkedDimensions;
+		return this.datasetStore.checkedDimensions.map(d => d.value);
 	}
     
 	get matrices(){
@@ -45,11 +50,13 @@ export class FfPreferencesVM {
 	}
 
 	get min(){
-		return this.getDistanceMatricesByName(this.matrixName) ? Math.min.apply(Math,this.matrix.links.map(link =>link.value)) : undefined;
+		const matrix = this.getDistanceMatricesByName(this.matrixName);
+		return matrix ? Math.min.apply(Math, matrix.links.map(link =>link.value)) : undefined;
 	} 
 
 	get max(){
-		return this.getDistanceMatricesByName(this.matrixName) ? Math.max.apply(Math,this.matrix.links.map(link =>link.value)) : undefined;
+		const matrix = this.getDistanceMatricesByName(this.matrixName);
+		return matrix ? Math.max.apply(Math, matrix.links.map(link =>link.value)) : undefined;
 	}
 
 	setFfPreferences(identifier, value){

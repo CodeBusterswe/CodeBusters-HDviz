@@ -1,4 +1,4 @@
-import { computed, makeObservable, observable } from "mobx";
+import { makeAutoObservable } from "mobx";
 
 export class HmPreferencesVM {
 
@@ -9,15 +9,18 @@ export class HmPreferencesVM {
 		this.preferencesStore = rootStore.preferencesStore;
 		this.datasetStore = rootStore.datasetStore;
 
-    	makeObservable(this,{
-			preferencesStore : observable,
-			keys : computed,
-			values : computed
-    	});
+    	makeAutoObservable(
+			this,
+			{
+				preferencesStore : false,
+				datasetStore : false
+    		},
+			{autoBind : true}
+		);
 	}
 
 	get keys(){
-		return this.datasetStore.checkedDimension;
+		return this.datasetStore.checkedDimensions.map(d => d.value);
 	}
 
 	get values(){
@@ -29,7 +32,7 @@ export class HmPreferencesVM {
 		return pref;
 	}
 	
-	setHmPreferences = (identifier, value) => {
+	setHmPreferences(identifier, value){
 		switch(identifier){
 		case "xAxis":
 			this.preferencesStore.preferencesHm.xAxis = value;
