@@ -11,7 +11,7 @@ const Plma = observer(() => {
 		colorChart,
 	} = useInstance(new PlmaChartVM(useStore()));
 	useEffect(() => {renderChart();}, [dimensionsNames]);
-	//useEffect(() => { colorChart();}, [color]);
+	useEffect(() => { colorChart();}, [color]);
 	return(
 		<div className="plma">
 			<svg className="plot" id="plma-svg">

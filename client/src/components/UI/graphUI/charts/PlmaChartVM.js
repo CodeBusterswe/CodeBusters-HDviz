@@ -22,18 +22,11 @@ export class PlmaChartVM {
 		makeAutoObservable(this, {datasetStore: false, preferencesStore:false}, {autoBind: true});
 	}
 
-	get svg(){
-		console.log(this);
+	get svgParent(){
 		return select(".plma").select("svg");
 	}
     
-	get svgParent(){
-		console.log(this);
-		return select(".plma").select("svg");
-	}
-
-	get sdsvg(){
-		console.log(select(".plma").select("svg").select(".plma-chart"));
+	get svg(){
 		return select(".plma").select("svg").select(".plma-chart");
 	}
 
@@ -49,8 +42,6 @@ export class PlmaChartVM {
 		const y = d3.scaleLinear([0, this.height]);
 		const xAxis = d3.axisBottom(x).ticks(6);
 		const yAxis = d3.axisLeft(y).ticks(6);
-		this.svg.remove();
-		//this.svgParent.selectAll(".legend").remove();
 		if(this.dimensionsNames.length<1){
 			return;
 		}
@@ -77,13 +68,11 @@ export class PlmaChartVM {
 		minDims1 = d3.min(B.map(line => line[0]*4));
 		minDims2 = d3.min(B.map(line => line[1]*4));
 		min = d3.min([minData1, minData2, minDims1, minDims2]);
-		console.log(minData1, minData2, minDims1, minDims2, min);
 		maxData1 = d3.max(A.map(line => line[0]));
 		maxData2 = d3.max(A.map(line => line[1]));
 		maxDims1 = d3.max(B.map(line => line[0]*4));
 		maxDims2 = d3.max(B.map(line => line[1]*4));
 		max = d3.max([maxData1, maxData2, maxDims1, maxDims2]);
-		console.log(maxData1, maxData2, maxDims1, maxDims2, max);
 		x.domain([min, max]).nice();
 		y.domain([min, max]).nice();
 		//x.domain([-3.5, 3.5])
@@ -103,7 +92,8 @@ export class PlmaChartVM {
 			  });
 		var showAxis = true;
 		if (showAxis) {
-			this.svg.
+			this.svg.selectAll("g").remove();
+			this.svg.append("g").
 				attr("class", "x axis").
 				attr("transform", "translate(0," + this.height + ")").
 				call(xAxis).
@@ -114,7 +104,7 @@ export class PlmaChartVM {
 				style("text-anchor", "end").
 				text("PC1");
 			
-			this.svg.
+			this.svg.append("g").
 				attr("class", "y axis").
 				call(yAxis).
 				append("text").
@@ -130,6 +120,7 @@ export class PlmaChartVM {
 			d3.scaleLinear().domain(colorDomain).range(["red", "lightblue"]) : 
 			d3.scaleOrdinal(d3.schemeTableau10).domain(new Set(this.data.map(d => d[this.color])));
 		//legenda colori
+		this.svgParent.selectAll(".legend").remove();
 		var legend = this.svgParent.selectAll(".legend").
 			data(palette.domain()).
 			enter().append("g").
@@ -148,8 +139,9 @@ export class PlmaChartVM {
 			attr("y", 9).
 			attr("dy", ".35em").
 			style("text-anchor", "end").
-			text(function(d) { console.log(d);return d; });
+			text(function(d) {return d; });
 		//punti sopra agli assi
+		this.svg.selectAll("circle.square").remove();
 		this.svg.selectAll("circle.brand").
 			data(dimensions).
 			enter().append("circle").
@@ -163,6 +155,7 @@ export class PlmaChartVM {
 				on("drag", dragged).
 				on("end", dragended));
 
+		this.svg.selectAll("text.label-brand").remove();
 		this.svg.selectAll("text.brand").
 			data(dimensions).
 			enter().append("text").
@@ -171,7 +164,8 @@ export class PlmaChartVM {
 			attr("x", function(d) { return x(d.pc1) + 10; }).
 			attr("y", function(d) { return y(d.pc2) + 0; }).
 			text(function(d) { return d.value;});
-			  
+		
+		this.svg.selectAll("line.square").remove();
 		this.svg.selectAll(".line").
 			data(dimensions).
 			enter().append("line").
@@ -184,6 +178,7 @@ export class PlmaChartVM {
 			style("stroke", function(d) { return colorAxis(d.value); });
 			
 			  //punti
+		this.svg.selectAll("circle.dot").remove();
 		this.svg.selectAll(".dot").
 			data(this.data).
 			enter().append("circle").
@@ -198,7 +193,8 @@ export class PlmaChartVM {
 		}
 			
 		function dragged(event, d) {
-			d.x = event.x;
+			console.log(this, d);
+			/*d.x = event.x;
 			d.y = event.y;
 			d3.select(this).attr("cx", d.x).attr("cy", d.y);
 			d3.select("#"+d.value+"_line").attr("x2", d.x).attr("y2", d.y);
@@ -214,7 +210,7 @@ export class PlmaChartVM {
 			});
 			d3.selectAll(".dot").
 				attr("cx", function(d) { return x(d.pc1); }).
-				attr("cy", function(d) { return y(d.pc2); });
+				attr("cy", function(d) { return y(d.pc2); });*/
 		}
 		function transpose(X){
 			return d3.range(X[0].length).map(function(i){
