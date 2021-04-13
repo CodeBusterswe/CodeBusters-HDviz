@@ -18,12 +18,7 @@ class distanceMatricesStore {
 	getDistanceMatrixByName(matrixName){
 		return this.distanceMatrices.filter(matrix => matrix.name === matrixName)[0];
 	}
-	/*get distanceMatrices() {
-		return this.distanceMatrices;
-	}*/
-	get distanceMatricesNames(){
-		return this.distanceMatrices.map(matrix => matrix.name);
-	}
+    
 	reset(){
 		this.distanceMatrices.clear();
 	}
