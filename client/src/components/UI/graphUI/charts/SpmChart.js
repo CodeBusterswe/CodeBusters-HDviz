@@ -8,13 +8,15 @@ const ScatterPlotMatrix = observer(() => {
 
 	const {
 		renderChart,
-		color
 	} = useInstance(new SpmChartVM(useStore()));
     
-	//useEffect(() => {console.log("hey"); renderChart();});
+	useEffect(() => {renderChart();});
 	
 	return (
-		<div className="scatterplotmatrix"><p>{color}</p></div>
+		<div className="scatterplotmatrix">
+			<svg className="plot" id="spm-svg"><g></g></svg>
+			<canvas className="plot" id="spm-canvas"></canvas>
+		</div>
 	);
 });
 export default ScatterPlotMatrix;

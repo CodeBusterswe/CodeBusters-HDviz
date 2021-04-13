@@ -27,14 +27,8 @@ export class SpmPreferencesVM {
 	handleSelectChange = e => {
 		const identifier = e.target.id;
 		const value = e.target.value==="undefined" ? undefined : e.target.value;
-		this.setSpmAxis(identifier, value);
-	}
-
-	setSpmAxis = (identifier, value) => {
-		if(identifier !== "color")
-			this.preferencesStore.preferencesSpm.setAxisById(identifier, value);
-		else
-			this.preferencesStore.preferencesSpm.color = value;
+		console.log(identifier, value);
+		this.preferencesStore.preferencesSpm.setPreferenceById(identifier, value);
 	}
 
 	get dimensions(){

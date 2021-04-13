@@ -1,3 +1,4 @@
+import { makeAutoObservable } from "mobx";
 class PreferencesFF{
 	constructor(){
 		this._distanceMatrix = undefined;

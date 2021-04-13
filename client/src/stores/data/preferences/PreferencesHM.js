@@ -1,3 +1,4 @@
+import { makeAutoObservable } from "mobx";
 class PreferencesHM{
 	constructor(){
 		this._xAxis = undefined;

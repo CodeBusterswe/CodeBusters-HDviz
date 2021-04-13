@@ -1,10 +1,9 @@
 import { computed, makeObservable, observable, action } from "mobx";
 
 export class ChartVM {
-    
-	show = true;
 
 	constructor(rootStore){
+		this.show = true;
     	this.preferencesStore = rootStore.preferencesStore;
 		this.datasetStore = rootStore.datasetStore;
     	makeObservable(this,{
@@ -15,7 +14,7 @@ export class ChartVM {
     	});
 	}
 
-	handlePref() {
+	handlePref = () => {
 		this.show = !this.show;
 	}
 
@@ -34,5 +33,8 @@ export class ChartVM {
 	}
 	get selData(){
 		return this.datasetStore.selectedData;
+	}
+	get preferences(){
+		return this.preferencesStore.preferencesSpm;
 	}
 }

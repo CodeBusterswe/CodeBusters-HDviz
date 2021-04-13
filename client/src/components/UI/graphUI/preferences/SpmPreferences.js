@@ -38,7 +38,7 @@ const ScatterPlotMatrixPreferences = observer(() => {
 					);
 				})
 			}
-			<Form.Group controlId="color" key={"color"}>
+			<Form.Group controlId="SPMcolor" key={"SPMcolor"}>
 				<Form.Label className="labels">Color</Form.Label>
 				<Form.Control
 					custom

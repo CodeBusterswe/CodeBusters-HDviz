@@ -17,6 +17,7 @@ const Chart = observer( () => {
 		dimensions,
 		data,
 		selData,
+		preferences,
 	} = useInstance(new ChartVM(useStore()));
 
 	function btnContent(){
@@ -59,14 +60,9 @@ const Chart = observer( () => {
 
 	return(
 		<div className="content">
-			{
-				dimensions.map(d => { return <span>{d.value}</span>;})
-			}
-			<p>{console.log(data)}</p>
-			<p>{console.log(selData)}</p>
 			<div className="container-pref">
 				<>
-					{chartToShow !== undefined ? <Button className="btn-pref" onClick={handlePref}>{btnContent()}</Button> : <></>}				
+					{chartToShow !== undefined ? <Button className="btn-pref" onClick={handlePref.bind(null)}>{btnContent()}</Button> : <></>}				
 					<div className={showChart ? "show-pref" : "hide-pref"}>
 						{renderPreferences()}
 					</div>	

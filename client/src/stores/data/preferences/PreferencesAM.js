@@ -1,3 +1,5 @@
+import { makeAutoObservable } from "mobx";
+
 class PreferencesAM{
 	constructor(){
 		this._distanceMatrix = undefined;

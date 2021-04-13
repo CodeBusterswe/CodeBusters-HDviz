@@ -1,3 +1,5 @@
+import { makeAutoObservable, isObservable} from "mobx";
+
 class PreferencesSPM{
 	constructor(){
 		this.axis1 = undefined;
@@ -5,7 +7,8 @@ class PreferencesSPM{
 		this.axis3 = undefined;
 		this.axis4 = undefined;
 		this.axis5 = undefined;
-		this.SPMColor = undefined;
+		this.SPMcolor = undefined;
+		makeAutoObservable(this);
 	}
 
 	get axes(){
@@ -13,14 +16,11 @@ class PreferencesSPM{
 	}
 
 	get color(){
-		return this.SPMColor;
+		return this.SPMcolor;
 	}
 
-	set color(color){
-		this.SPMColor = color;
-	}
-
-	setAxisById(id, value){
+	setPreferenceById(id, value){
+		console.log(id, value);
 		this[id] = value;
 	}
 
