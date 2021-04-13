@@ -20,7 +20,6 @@ class PreferencesSPM{
 	}
 
 	setPreferenceById(id, value){
-		console.log(id, value);
 		this[id] = value;
 	}
 

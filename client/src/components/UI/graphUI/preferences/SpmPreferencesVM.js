@@ -27,7 +27,6 @@ export class SpmPreferencesVM {
 	handleSelectChange = e => {
 		const identifier = e.target.id;
 		const value = e.target.value==="undefined" ? undefined : e.target.value;
-		console.log(identifier, value);
 		this.preferencesStore.preferencesSpm.setPreferenceById(identifier, value);
 	}
 

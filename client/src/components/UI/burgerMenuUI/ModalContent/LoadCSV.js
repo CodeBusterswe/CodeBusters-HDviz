@@ -31,12 +31,14 @@ const LoadCsv = observer((props) => {
 		const time = 4000;
 		let timer = setTimeout(() => setShowSuccess(false), time);
 		return () => clearTimeout(timer);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[showSuccess]);
 	
 	useEffect(() => {
 		const time = 4000;
 		let timer = setTimeout(() => setShowDanger(false), time);
 		return () => clearTimeout(timer);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[showDanger]);
     
 	return(

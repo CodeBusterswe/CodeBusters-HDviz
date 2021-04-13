@@ -8,7 +8,7 @@ import "../../style.css";
 import {OverlayTrigger , Popover} from "react-bootstrap";
 import {AiOutlineArrowRight} from "react-icons/ai";
 import LoadDataFromDB from "./ModalContent/LoadDataFromDB";
-import useWindowWidth from "./WindowWidth";
+//import useWindowWidth from "./WindowWidth";
 import { MenuVM } from "./MenuVM";
 import { useInstance } from "../../../useInstance";
 

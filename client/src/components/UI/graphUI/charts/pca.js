@@ -34,12 +34,14 @@ function zeros(i,j){
 	});
 }
 
+// eslint-disable-next-line no-unused-vars
 function trunc(X,d){
 	return X.map(function(row){
 		return row.map(function(x){ return x < d ? 0 : x; });
 	});
 }
 
+// eslint-disable-next-line no-unused-vars
 function same(X,Y){
 	return d3.zip(X,Y).map(function(v){
 		return d3.zip(v[0],v[1]).map(function(w){ return w[0] == w[1]; });
@@ -380,6 +382,7 @@ export function pca(X,dim){
 	var V = USV.V.map(v => v.slice(0,dim)); //prendo solo i primi 2 valori
 	// T = X*V = U*S => pcXV ===pcUdS
 	var pcXV = dot(X,V).map(d => d.splice(0,dim)); //dati originali e autovettori (tutti) => pcXV ha cardinalitá righe = numero dati, colonne = numero dimensioni (sono ordinati per importanza)
+	// eslint-disable-next-line no-unused-vars
 	var pcUdS = dot(U,S);//u ??? e autovalori (tutti) => pcUds ha cardinalitá righe = numero dati, colonne = numero dimensioni (sono ordinati per importanza)
     
 	return [pcXV,V] ;
