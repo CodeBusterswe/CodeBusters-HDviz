@@ -19,6 +19,9 @@ class distanceMatricesStore {
 		return this.distanceMatrices.filter(matrix => matrix.name === matrixName)[0];
 	}
     
+	get distanceMatricesNames(){
+		return this.distanceMatrices.map(matrix => matrix.name);
+	}
 	reset(){
 		this.distanceMatrices.clear();
 	}
