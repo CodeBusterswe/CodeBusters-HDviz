@@ -4,40 +4,26 @@ import { observer } from "mobx-react-lite";
 import Form from "react-bootstrap/Form";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import { useInstance } from "./../../../../useInstance";
+import { PlmaPreferencesVM } from "./PlmaPreferencesVM";
 
-const PlmaPreferences = () => {
-	const viewModel = useStore();
-	const keys = viewModel.getOptionsForReduxDimensionsList();
-	const colors = viewModel.getCheckedDimensions();
-	const [dimensions, color] = viewModel.getPlmaPreferences();
+const PlmaPreferences = observer(() => {
 
-	function handleSelectChange(e){
-		const value = e.target.value==="undefined" ? undefined : e.target.value,
-			identifier = e.target.id;
-		viewModel.setPlmaPreferences(identifier, value);
-	}
-	function handleMultiSelectChange(value, handler){
-		switch(handler.action){
-		case "select-option":
-			viewModel.setPlmaPreferences("dimensions", value.map(val => val.value));
-			break;
-		case "remove-value":
-			viewModel.setPlmaPreferences("dimensions", value.map(val => val.value));
-			break;
-		case "clear":
-			viewModel.setPlmaPreferences("dimensions", []);
-			break;
-		default:
-			break;
-		}
-	}
+	const {
+		handleSelectChange,
+		handleMultiSelectChange,
+		keys,
+		colors,
+		userColor,
+		userDimensions
+	} = useInstance(new PlmaPreferencesVM(useStore()));
 
 	return(
 		<Form className="chartPreferences">
 			<Form.Group controlId="dimensionsToReduxList">
 				<Form.Label>Select the dimensions to show</Form.Label>
 				<Select
-					values={dimensions}
+					values={userDimensions}
 					options={keys}
 					isMulti
 					name="toReduxDimensionsList"
@@ -53,7 +39,7 @@ const PlmaPreferences = () => {
 				<Form.Control
 					custom
 					as="select"
-					value={color}
+					value={userColor}
 					onChange={handleSelectChange}
 				>
 					<option value={"undefined"} key={"noDimensionsColor"}>No dimension</option>
@@ -64,5 +50,5 @@ const PlmaPreferences = () => {
 			</Form.Group>
 		</Form>
 	);
-};
-export default observer(PlmaPreferences);
+});
+export default PlmaPreferences;

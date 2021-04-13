@@ -1,9 +1,41 @@
 class PreferencesFF{
 	constructor(){
-		this.distanceMatrix = undefined;
-		this.color = undefined;
-		this.distMax = Infinity;
-		this.distMin = 0;
+		this._distanceMatrix = undefined;
+		this._color = undefined;
+		this._distMax = Infinity;
+		this._distMin = 0;
+	}
+
+	get distanceMatrix(){
+		return this._distanceMatrix;
+	}
+
+	get distMax(){
+		return this._distmax;
+	}
+
+	get distMin(){
+		return this._distMin;
+	}
+
+	get color(){
+		return this._color;
+	}
+	
+	set color(value){
+		this._color = value;
+	}
+
+	set distMin(value){
+		this._distMin = value;
+	}
+
+	set distMax(value){
+		this._distMax = value;
+	}
+
+	set distanceMatrix(value){
+		this._distanceMatrix = value;
 	}
 
 	serializeJSON(){

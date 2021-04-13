@@ -208,8 +208,6 @@ class ViewModel{
 		return dimensions;
 	}
 
-	
-
 	loadDataAndDims(data, dims){
 		this.#model.reset();
 		this.#distanceMatricesModel.reset();

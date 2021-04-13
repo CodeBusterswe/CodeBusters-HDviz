@@ -2,21 +2,24 @@ import React from "react";
 import { useStore } from "../../../../ContextProvider";
 import { observer } from "mobx-react-lite";
 import Form from "react-bootstrap/Form";
+import { useInstance } from "./../../../../useInstance";
+import { AmPreferencesVM } from "./AmPreferencesVM";
 
-const AdjacencyMatrixPreferences = () => {
-	const viewModel = useStore();
-	const sorts = viewModel.getCheckedDimensions();
-	const matrices = viewModel.getDistanceMatricesNames();
-	const [matrixName, order, label, distMax, distMin] = viewModel.getAmPreferences();
-	const matrix = viewModel.getDistanceMatricesByName(matrixName);
-	const min = matrix ? Math.min.apply(Math, matrix.links.map(link =>link.value)) : undefined;
-	const max = matrix ? Math.max.apply(Math,matrix.links.map(link =>link.value)) : undefined;
+const AdjacencyMatrixPreferences = observer(() => {
 
-	function handleSelectChange(e){
-		const value = e.target.value==="undefined" ? undefined : e.target.value,
-			identifier = e.target.id;
-		viewModel.setAmPreferences(identifier, value);
-	}
+	const {
+		handleSelectChange,
+		matrixName,
+		matrices,
+		order,
+		label,
+		sorts,
+		max,
+		min,
+		distMax,
+		distMin
+	} = useInstance(new AmPreferencesVM(useStore()));
+
 	return(
 		<Form className="chartPreferences">
 			<Form.Group controlId="distanceMatrix">
@@ -83,5 +86,5 @@ const AdjacencyMatrixPreferences = () => {
 			</Form.Group>
 		</Form>
 	);
-};
-export default observer(AdjacencyMatrixPreferences);
+});
+export default AdjacencyMatrixPreferences;

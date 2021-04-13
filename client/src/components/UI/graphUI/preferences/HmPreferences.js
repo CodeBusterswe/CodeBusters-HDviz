@@ -2,19 +2,19 @@ import React from "react";
 import { useStore } from "../../../../ContextProvider";
 import { observer } from "mobx-react-lite";
 import Form from "react-bootstrap/Form";
+import { useInstance } from "./../../../../useInstance";
+import { HmPreferencesVM } from "./HmPreferencesVM";
 
-const HeatMapPreferences = () => {
-	const viewModel = useStore();
-	const keys = viewModel.getCheckedDimensions();
-	const values = viewModel.getHmPreferences();
-	const labels = ["Axis X", "Axis Y", "Heat"];
-	const identifiers = ["xAxis", "yAxis", "heat"];
+const HeatMapPreferences = observer(() => {
 
-	function handleSelectChange(e){
-		const value = e.target.value==="undefined" ? undefined : e.target.value,
-			identifier = e.target.id;
-		viewModel.setHmPreferences(identifier, value);
-	}
+	const {
+		handleSelectChange,
+		keys,
+		identifiers,
+		values,
+		labels
+	} = useInstance(new HmPreferencesVM(useStore()));
+
 	return(
 		<Form className="chartPreferences">
 			{
@@ -39,5 +39,5 @@ const HeatMapPreferences = () => {
 			}
 		</Form>
 	);
-};
-export default observer(HeatMapPreferences);
+});
+export default HeatMapPreferences;

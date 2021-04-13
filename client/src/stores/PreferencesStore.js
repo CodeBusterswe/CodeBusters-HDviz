@@ -16,7 +16,7 @@ class PreferencesStore {
 		this.preferencesFf = new PreferencesFF();
 		makeAutoObservable(this, {rootStore: false});
 	}
-
+	
 	reset(){
 		this.chart = undefined;
 		this.preferencesAm = new PreferencesAM();

@@ -2,21 +2,23 @@ import React from "react";
 import { useStore } from "../../../../ContextProvider";
 import { observer } from "mobx-react-lite";
 import Form from "react-bootstrap/Form";
+import { useInstance } from "./../../../../useInstance";
+import { FfPreferencesVM } from "./FfPreferencesVM";
 
-const ForceFieldPreferences = () => {
+const ForceFieldPreferences = observer(() => {
 
-	const viewModel = useStore();
-	const keys = viewModel.getCheckedDimensions();
-	const matrices = viewModel.getDistanceMatricesNames();
-	const [matrixName, color, distMax, distMin] = viewModel.getFfPreferences();
-	const matrix = viewModel.getDistanceMatricesByName(matrixName);
-	const min = matrix ? Math.min.apply(Math, matrix.links.map(link =>link.value)) : undefined;
-	const max = matrix ? Math.max.apply(Math,matrix.links.map(link =>link.value)) : undefined;
-	function handleSelectChange(e){
-		const value = e.target.value==="undefined" ? undefined : e.target.value,
-			identifier = e.target.id;
-		viewModel.setFfPreferences(identifier, value);
-	}
+	const {
+		handleSelectChange,
+		keys,
+		matrixName,
+		matrices,
+		color,
+		max,
+		min,
+		distMax,
+		distMin
+	} = useInstance(new FfPreferencesVM(useStore()));
+
 	return(
 		<Form className="chartPreferences">
 			<Form.Group controlId="distanceMatrix">
@@ -70,5 +72,5 @@ const ForceFieldPreferences = () => {
 			</Form.Group>
 		</Form>
 	);
-};
-export default observer(ForceFieldPreferences);
+});
+export default ForceFieldPreferences;
