@@ -15,7 +15,8 @@ class distanceMatricesStore {
 		this.distanceMatrices.push(matrix);
 	}
 
-	getDistanceMatrixByName(matrixName){
+	getDistanceMatrixByName=(matrixName)=>{
+		console.log("matrixName:",matrixName);
 		return this.distanceMatrices.filter(matrix => matrix.name === matrixName)[0];
 	}
     

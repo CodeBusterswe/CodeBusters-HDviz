@@ -67,7 +67,7 @@ export class SpmChartVM {
 	get canvas(){
 		return select(".scatterplotmatrix").select("canvas");
 	}
-
+	
 	get size(){
 		return this.numberOfTraits ? this.totalSize / this.numberOfTraits : this.totalSize;
 	}

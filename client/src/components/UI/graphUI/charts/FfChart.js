@@ -6,16 +6,19 @@ import { FfChartVM } from "./FfChartVM";
 
 const ForceField = observer(() => {
 
-	const canvasRef = useRef(null);
+	//const canvasRef = useRef(null);
 
 	const {
 		renderChart,
 	} = useInstance(new FfChartVM(useStore()));
+	//console.log("renderChart:",renderChart());
 
 	useEffect(() => {renderChart();});
 	
 	return(
-		<canvas ref={canvasRef} className="plot" id="ff-canvas"></canvas>
+		<div className="forceField">
+			<canvas className="plot" id="ff-canvas"></canvas>
+		</div>
 	);
 });
 export default ForceField;
