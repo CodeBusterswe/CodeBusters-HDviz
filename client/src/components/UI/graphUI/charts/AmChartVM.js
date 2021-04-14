@@ -11,18 +11,38 @@ export class AmChartVM {
     constructor(rootStore){
     	this.preferencesStore = rootStore.preferencesStore;
     	this.distanceMatricesStore = rootStore.distanceMatricesStore;
-
-    	this.distanceMatrix = this.distanceMatricesStore.getDistanceMatricesByName(this.matrix);
-    	this.orderBy = this.preferencesStore.preferencesAm.orderBy;
-    	this.dimLabels = this.preferencesStore.preferencesAm.label;
-    	this.distMax = this.preferencesStore.preferencesAm.distMax;
-    	this.distMin = this.preferencesStore.preferencesAm.distMin;
+    	this.svg.
+    		attr("width", this.width + this.margin.left + this.margin.right).
+    		attr("height", this.height + this.margin.top + this.margin.bottom);
+    	this.canvas.
+    		attr("width", this.width + this.margin.left + this.margin.right).
+    		attr("height", this.height + this.margin.top + this.margin.bottom);
 
     	makeAutoObservable(this, {preferencesStore:false}, {autoBind: true});
     }
-
+    get distMin(){
+    	return this.preferencesStore.preferencesAm.distMin;
+    }
+    get distMax(){
+    	return this.preferencesStore.preferencesAm.distMax;
+    }
+    get label(){
+    	return this.preferencesStore.preferencesAm.label;
+    }
+    get orderBy(){
+    	return this.preferencesStore.preferencesAm.orderBy;
+    }
     get matrix(){
     	return this.preferencesStore.preferencesAm.distanceMatrix;
+    }
+    get distanceMatrix(){
+    	return this.distanceMatricesStore.getDistanceMatrixByName(this.matrix);
+    }
+    get svg(){
+    	return select(".adjacencyMatrix").select("svg");
+    }
+    get canvas(){
+    	return select(".adjacencyMatrix").select("canvas");
     }
 
     renderChart(){
@@ -43,22 +63,12 @@ export class AmChartVM {
     			range([ 0, this.width]),
     		colors = d3.scaleOrdinal(d3.schemeCategory10);
 
-    	let opacity = d3.scaleLinear().	//dovrei avere una scala per gruppo
+    	let opacity = d3.scaleLinear().
     		domain(d3.extent(links.filter(link => link.value > 0).map(obj => obj.value))).
     		range([1, 0.25]).
     		clamp(true);
-    	//remove previous chart
-    	select(".adjacencyMatrix").selectAll("svg").remove();
-    	select(".adjacencyMatrix").selectAll("canvas").remove();
 			
-    	const svg = select(".adjacencyMatrix").
-    		append("svg").
-    		attr("id","am-svg").
-    		attr("class","plot").
-    		attr("width", this.width + this.margin.left + this.margin.right).
-    		attr("height", this.height + this.margin.top + this.margin.bottom);
-			
-    	nodes.sort(function(x, y){
+    	nodes.sort((x, y) => {
     		return d3.ascending(x[this.orderBy], y[this.orderBy]);
     	});
 			
@@ -72,12 +82,11 @@ export class AmChartVM {
     	for (let i = 0; i < nodes.length; i++) {
     		for (let j = 0; j < nodes.length; j++) {
     			let grid = {id: nodes[i].id+"-"+nodes[j].id, x:i, y: j, source: nodes[i], target: nodes[j], value: 0};
-    			if(linkHash[grid.id]){ //esiste
-    				grid.value = linkHash[grid.id].value; //value=2
+    			if(linkHash[grid.id]){
+    				grid.value = linkHash[grid.id].value;
     			}else{
     				var split = grid.id.split("-");
     				let correct = split[1]+ "-" + split[0];
-    				console.log(correct);
     				if(split[1]!==split[0]){
     					grid.value = linkHash[correct].value;
     				}
@@ -85,14 +94,9 @@ export class AmChartVM {
     			matrix.push(grid);
     		}
     	}
-    	let canvas = select(".adjacencyMatrix").
-    		append("canvas").
-    		attr("class", "plot").
-    		attr("id", "am-canvas").
-    		attr("width", this.width + this.margin.left + this.margin.right).
-    		attr("height", this.height + this.margin.top + this.margin.bottom);
-    	if(canvas.node()){
-    		let ctx = canvas.node().getContext("2d");
+
+    	if(this.canvas.node()){
+    		let ctx = this.canvas.node().getContext("2d");
     		ctx.translate(50, 50);
 
     		matrix.forEach(d => {
@@ -121,8 +125,9 @@ export class AmChartVM {
     				ctx.stroke();
     			}
     		});
-    	}	
-    	svg.
+    	}
+    	this.svg.selectAll("g").remove();
+    	this.svg.
     		append("g").
     		attr("transform","translate(50,45)"). 
     		selectAll("text").
@@ -130,18 +135,18 @@ export class AmChartVM {
     		enter().
     		append("text").attr("transform","rotate(-90)").
     		attr("y", (d,i) => i * scale.bandwidth() + scale.bandwidth()/2).
-    		text(d => d[this.dimLabels]).
+    		text(d => {return d[this.label];}).
     		style("text-anchor","start").
     		style("font-size","10px");        
 		
-    	svg.
+    	this.svg.
     		append("g").attr("transform","translate(45,50)").
     		selectAll("text").
     		data(nodes).
     		enter().
     		append("text").
     		attr("y",(d,i) => i * scale.bandwidth() + scale.bandwidth()/2).
-    		text(d => d[this.dimLabels]).
+    		text(d => d[this.label]).
     		style("text-anchor","end").
     		style("font-size","10px");
     }
