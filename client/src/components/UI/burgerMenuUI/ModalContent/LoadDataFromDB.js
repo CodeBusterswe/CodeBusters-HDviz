@@ -155,7 +155,7 @@ const LoadDataFromDB = observer((props) => {
 								</Col>
 							</Form.Row>
 							<Form.Row className="align-items-center">
-								<Button variant="primary" onClick={onSubmit()}>Invia query</Button>
+								<Button variant="primary" onClick={() => onSubmit()}>Invia query</Button>
 								{clicked ? <Alert variant ={empty ? "danger" : "success"} >{resultLength} elementi trovati</Alert>:null}
 							</Form.Row>
 							</> : null
@@ -169,13 +169,13 @@ const LoadDataFromDB = observer((props) => {
 					<Button variant="primary" onClick={handleConfirm}>Conferma selezione</Button>
 				</ModalFooter>
 			</Modal>
-			<Alert show={showSuccess} variant="success" className="alert" dismissible onClose={setShowSuccess(false)}>
+			<Alert show={showSuccess} variant="success" className="alert" dismissible onClose={setShowSuccess.bind(null, false)}>
 				<Alert.Heading>Dati inseriti correttamente</Alert.Heading>
 				<p>
 					Ora puoi applicare una riduzione dimensionale ai tuoi dati o scegliere subito la visualizzazione che più preferisci
 				</p>
 			</Alert>
-			<Alert show={showDanger} variant="danger" className="alert" dismissible onClose={setShowDanger(false)}>
+			<Alert show={showDanger} variant="danger" className="alert" dismissible onClose={setShowDanger.bind(null, false)}>
 				<Alert.Heading>Avviso</Alert.Heading>
 				<p>
 					Nessun dato è stato caricato. Assicurati di aver eseguito la query e premuto il tasto "<strong>Conferma selezione</strong>"

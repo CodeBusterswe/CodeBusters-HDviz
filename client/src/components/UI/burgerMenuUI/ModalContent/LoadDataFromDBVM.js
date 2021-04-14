@@ -4,6 +4,8 @@ import Dimension from "../../../../stores/data/Dimension";
 export class LoadDataFromDBVM{
 	constructor(rootStore, closeModal){
 		this.datasetStore = rootStore.datasetStore;
+    	this.distanceMatricesStore = rootStore.distanceMatricesStore;
+    	this.preferencesStore = rootStore.preferencesStore;
 		this.localData = [];
 		this.localDimensions = [];
 		this.tables = null;
@@ -19,7 +21,16 @@ export class LoadDataFromDBVM{
 		this.showDanger = false;
 		this.showSuccess = false;
 		this.closeModal = closeModal.bind(null);
-		makeAutoObservable(this, {datasetStore: false, setShowDanger: action.bound, setShowSuccess: action.bound}, {autoBind: true}); 
+		makeAutoObservable(this, {
+			datasetStore: false, 
+			preferencesStore: false,
+			distanceMatricesStore: false,
+			setShowDanger: action.bound, 
+			setShowSuccess: action.bound,
+			onSubmit: action.bound,
+			getColumns: action.bound,
+			getTables: action.bound,
+		}, {autoBind: true}); 
 	}
 
 	async getQueryResult(){

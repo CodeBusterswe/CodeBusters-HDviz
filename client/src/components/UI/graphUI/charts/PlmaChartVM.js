@@ -17,7 +17,7 @@ export class PlmaChartVM {
 			attr("width", this.width + this.margin.left + this.margin.right).
 			attr("height", this.height + this.margin.top + this.margin.bottom);
 		this.svg.
-			attr("transform", "translate(" + this.margin.left-100 + "," + this.margin.top + ")");
+			attr("transform", "translate(" + (this.margin.left-100) + "," + this.margin.top + ")");
 
 		makeAutoObservable(this, {datasetStore: false, preferencesStore:false}, {autoBind: true});
 	}
