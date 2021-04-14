@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect} from "react";
 import { useStore } from "../../../../ContextProvider";
 import { observer } from "mobx-react-lite";
 import { useInstance } from "../../../../useInstance";
@@ -10,10 +10,13 @@ const ForceField = observer(() => {
 
 	const {
 		renderChart,
+		color,
+		distMin,
+		distMax
 	} = useInstance(new FfChartVM(useStore()));
 	//console.log("renderChart:",renderChart());
 
-	useEffect(() => {renderChart();});
+	useEffect(() => {renderChart();}, [color, distMax, distMin]);
 	
 	return(
 		<div className="forceField">

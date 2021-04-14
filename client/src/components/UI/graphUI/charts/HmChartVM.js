@@ -12,8 +12,6 @@ export class HmChartVM {
     	this.preferencesStore = rootStore.preferencesStore;
 
     	this.data = this.datasetStore.selectedData;
-    	//this.colums = new Set(this.data.map(d => d[this.asseX]));
-    	//this.rows = new Set(this.data.map(d => d[this.asseY]));
 
     	this.svgParent.
     		attr("width", this.width + this.margin.left + this.margin.right).
