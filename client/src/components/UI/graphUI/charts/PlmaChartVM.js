@@ -90,7 +90,7 @@ export class PlmaChartVM {
 				  id: i,
 				};
 			  });
-		var showAxis = true;
+		var showAxis = false;
 		if (showAxis) {
 			this.svg.selectAll("g").remove();
 			this.svg.append("g").
@@ -121,28 +121,49 @@ export class PlmaChartVM {
 			d3.scaleOrdinal(d3.schemeTableau10).domain(new Set(this.data.map(d => d[this.color])));
 		//legenda colori
 		this.svgParent.selectAll(".legend").remove();
-		var legend = this.svgParent.selectAll(".legend").
-			data(palette.domain()).
-			enter().append("g").
-			attr("class", "legend").
-			attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+		if(this.color){
+			var legend = this.svgParent.selectAll(".legend").
+				data(palette.domain()).
+				enter().append("g").
+				attr("class", "legend").
+				attr("transform", (d, i) => { return "translate("+this.margin.left+"," + i * 20 + ")"; });
 		
-		legend.append("rect").
-			attr("x", this.width - 18).
-			attr("width", 18).
-			attr("height", 18).
-			style("fill", palette).
-			style("stroke", "black");
+			legend.append("rect").
+				attr("x", this.width - 18).
+				attr("width", 18).
+				attr("height", 18).
+				style("fill", palette).
+				style("stroke", "black");
 			
-		legend.append("text").
-			attr("x", this.width - 24).
-			attr("y", 9).
-			attr("dy", ".35em").
-			style("text-anchor", "end").
-			text(function(d) {return d; });
-		//punti sopra agli assi
+			legend.append("text").
+				attr("x", this.width - 24).
+				attr("y", 9).
+				attr("dy", ".35em").
+				style("text-anchor", "end").
+				text(function(d) {return d; });
+		}
+		const dragged = (event, d) =>{
+			d.x = event.x;
+			d.y = event.y;
+			d3.select(event.subject).attr("cx", d.x).attr("cy", d.y);
+			d3.select("#"+d.value+"_line").attr("x2", d.x).attr("y2", d.y);
+			d3.select("#"+d.value+"_text").attr("x", d.x+10).attr("y", d.y);
+			//dovrei rifare il pca con il nuovo valore
+			const newPC1 = x.invert(event.x)/4, newPC2 = y.invert(event.y)/4;
+			B[d.id][0] = newPC1;
+			B[d.id][1] = newPC2;
+			const newA = dot(numericData, B);
+			this.data.forEach(function(d,i){
+			  d.pc1 = newA[i][0];
+			  d.pc2 = newA[i][1];
+			});
+			d3.selectAll(".dot").
+				attr("cx", function(d) { return x(d.pc1); }).
+				attr("cy", function(d) { return y(d.pc2); });
+		};
+		//assi
 		this.svg.selectAll("circle.square").remove();
-		this.svg.selectAll("circle.brand").
+		this.svg.selectAll("circle.square").
 			data(dimensions).
 			enter().append("circle").
 			attr("class", "square").
@@ -151,12 +172,13 @@ export class PlmaChartVM {
 			attr("cy", function(d) { return y(d.pc2); }).
 			style("fill", function(d) { return colorAxis(d.value); }).
 			call(d3.drag().
+				subject(function(){return this;}).
 				on("start", dragstarted).
 				on("drag", dragged).
 				on("end", dragended));
 
 		this.svg.selectAll("text.label-brand").remove();
-		this.svg.selectAll("text.brand").
+		this.svg.selectAll("text.label-brand").
 			data(dimensions).
 			enter().append("text").
 			attr("class", "label-brand").
@@ -177,7 +199,7 @@ export class PlmaChartVM {
 			attr("y2", function(d) { return y(d.pc2); }).
 			style("stroke", function(d) { return colorAxis(d.value); });
 			
-			  //punti
+		//punti
 		this.svg.selectAll("circle.dot").remove();
 		this.svg.selectAll(".dot").
 			data(this.data).
@@ -191,27 +213,7 @@ export class PlmaChartVM {
 		function dragstarted(event, d) {
 			d3.select(this).raise().attr("stroke", "black");
 		}
-			
-		function dragged(event, d) {
-			console.log(this, d);
-			/*d.x = event.x;
-			d.y = event.y;
-			d3.select(this).attr("cx", d.x).attr("cy", d.y);
-			d3.select("#"+d.value+"_line").attr("x2", d.x).attr("y2", d.y);
-			d3.select("#"+d.value+"_text").attr("x", d.x+10).attr("y", d.y);
-			//dovrei rifare il pca con il nuovo valore
-			const newPC1 = x.invert(event.x)/4, newPC2 = y.invert(event.y)/4;
-			B[d.id][0] = newPC1;
-			B[d.id][1] = newPC2;
-			const newA = dot(numericData, B);
-			this.data.forEach(function(d,i){
-			  d.pc1 = newA[i][0];
-			  d.pc2 = newA[i][1];
-			});
-			d3.selectAll(".dot").
-				attr("cx", function(d) { return x(d.pc1); }).
-				attr("cy", function(d) { return y(d.pc2); });*/
-		}
+		
 		function transpose(X){
 			return d3.range(X[0].length).map(function(i){
 				  return X.map(function(row){ return row[i]; });
@@ -246,7 +248,7 @@ export class PlmaChartVM {
 			data(palette.domain()).
 			enter().append("g").
 			attr("class", "legend").
-			attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+			attr("transform", (d, i) => { return "translate("+this.margin.left+"," + i * 20 + ")"; });
 		
 		legend.append("rect").
 			attr("x", this.width - 18).
@@ -260,7 +262,7 @@ export class PlmaChartVM {
 			attr("y", 9).
 			attr("dy", ".35em").
 			style("text-anchor", "end").
-			text(function(d) { console.log(d);return d; });
+			text(function(d) { return d; });
 		svg.selectAll(".dot").style("fill", (d) => { return palette(d[this.color]); });
 	
 	}

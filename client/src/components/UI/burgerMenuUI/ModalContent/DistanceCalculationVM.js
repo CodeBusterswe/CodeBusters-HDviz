@@ -19,7 +19,7 @@ export class DistanceCalculationVM{
     	e.preventDefault();
     	try{
     		const data = this.datasetStore.selectedData.map(obj => this.dimensionsToRedux.map((dim) => obj[dim.value]));
-    		if(this.distanceMatricesStore.getDistanceMatrixByName(this.newDistanceMatrixName))
+    		if(this.distanceMatricesStore.getDistanceMatrixByName(this.newDistanceMatrixName) || this.newDistanceMatrixName==="")
     			throw new Error("The name is already in use. Please choose a different one.");
     		let matrix = new DistanceMatrix();
     		matrix.name = this.newDistanceMatrixName;
