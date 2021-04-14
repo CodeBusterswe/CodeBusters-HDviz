@@ -1,87 +1,42 @@
-import React, { useState } from "react";
+import React from "react";
+import { observer } from "mobx-react-lite";
 import { useStore } from "../../../../ContextProvider";
+import { useInstance } from "../../../../useInstance";
 import Modal from "react-bootstrap/Modal";
 import { Button, ModalBody, ModalFooter } from "react-bootstrap";
 import RangeSlider from "react-bootstrap-range-slider";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import {AlgorithmType} from "../../../../utils";
+import { DimensionalReductionVM } from "./DimensionalReductionVM";
 import Form from "react-bootstrap/Form";
 
-const DimensionalReduction = props => {
-	const viewModel = useStore();
-	const [dimensionsToRedux, setDimensionsToRedux] = useState(viewModel.getOptionsForReduxDimensionsList().slice(0,2));
-	const [algorithmType, setAlgorithmType] = useState(AlgorithmType.FastMap);	
-	const [newDimensionsName, setNewDimensionsName] = useState(AlgorithmType.FastMap);
-	const [newDimensionsNumber, setNewDimensionsNumber] = useState(2);
-	const [neighbors, setNeighbors] = useState(30);
-	const [perplexity, setPerplexity] = useState(50);
-	const [epsilon, setEpsilon] = useState(10);
-	const [nameError, setNameError] = useState(false);
-	
+const DimensionalReduction = observer((props) => {
 	const {
 		modalIsOpen,
 		closeModal
 	} = props;
+	const {
+		handleSubmit,
+		dimensionsToRedux,
+		optionList,
+		algorithmType,
+		handleChangeDimensionsToRedux,
+		handleChangeAlgorithmType,
+		newDimensionsName,
+		handleChangeNewDimensionsName,
+		nameError,
+		newDimensionsNumber,
+		handleChangeNewDimensionsNumber,
+		perplexity,
+		handleChangePerplexity,
+		epsilon,
+		handleChangeEspilon,
+		neighbors,
+		handleChangeNeighbours
 
-	function handleSubmit(e){
-		e.preventDefault();
-		try{
-			viewModel.beginDimensionalRedux(
-				algorithmType, 
-				dimensionsToRedux.map(d => d.value),
-				{
-					Name: newDimensionsName,
-					DimensionsNumber: newDimensionsNumber,
-					Neighbors: neighbors,
-					Perplexity: perplexity,
-					Epsilon: epsilon
-				});
-			closeModal();
-		}catch(e){
-			setNameError(true);
-		}
-	}
-	function handleChangeNeighbours(e){
-		setNeighbors(e.target.value);
-	}
-	function handleChangeAlgorithmType(e){
-		setNewDimensionsName(e.target.value);
-		setAlgorithmType(e.target.value);
-		setNeighbors(30);
-		setNewDimensionsNumber(2);
-		setEpsilon(10);
-		setPerplexity(50);
-	}
-	function handleChangeNewDimensionsName(e){
-		setNameError(false);
-		setNewDimensionsName(e.target.value);
-	}
-	function handleChangeNewDimensionsNumber(e){
-		setNewDimensionsNumber(e.target.value);
-	}
-	function handleChangePerplexity(e){
-		setPerplexity(e.target.value);
-	}
-	function handleChangeEspilon(e){
-		setEpsilon(e.target.value);
-	}
-	function handleChangeDimensionsToRedux (value, handler){
-		switch(handler.action){
-		case "select-option":
-			setDimensionsToRedux(value);
-			return;
-		case "remove-value":
-			if(value.length >= 2)
-				setDimensionsToRedux(value);
-			return;
-		case "clear":
-			setDimensionsToRedux(dimensionsToRedux.slice(0,2));
-			return;
-		default:
-			return;
-		}
-	}
+	} = useInstance(new DimensionalReductionVM(useStore(), closeModal));
+
 	function renderParams() {
 		switch (algorithmType) {
 		case AlgorithmType.tSNE:
@@ -132,7 +87,6 @@ const DimensionalReduction = props => {
 		<Modal
 			show={modalIsOpen}
 			onHide={closeModal}
-			//ariaHideApp={false}
 		>
 			<Form onSubmit={handleSubmit} noValidate>
 				<Modal.Header closeButton>
@@ -144,7 +98,7 @@ const DimensionalReduction = props => {
 						<Form.Label>Select the dimensions to use</Form.Label>
 						<Select
 							value={dimensionsToRedux}
-							options={viewModel.getOptionsForReduxDimensionsList()}
+							options={optionList}
 							isMulti
 							name="toReduxDimensionsList"
 							className="basic-multi-select"
@@ -202,6 +156,6 @@ const DimensionalReduction = props => {
 			</Form>
 		</Modal>
 	);
-};
+});
 
 export default DimensionalReduction;

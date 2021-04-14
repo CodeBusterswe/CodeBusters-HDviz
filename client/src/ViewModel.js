@@ -1,7 +1,7 @@
 import Dimension from "./model/Dimension";
 import DistanceMatrix from "./model/DistanceMatrix";
 import Model from "./model/Model";
-import DimReduction from "./viewModel/DimReduction";
+import DimReduction from "./components/UI/burgerMenuUI/ModalContent/StrategyDimReduction/DimReduction";
 import * as distCalc from "ml-distance";
 import {getTables, getColumnsByName, getDatasetWithParams, getDatasetWithCustomParams} from "./model/services";
 import Preferences from "./model/Preferences";

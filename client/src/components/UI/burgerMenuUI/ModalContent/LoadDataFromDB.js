@@ -1,165 +1,72 @@
-import React, {useState,useEffect} from "react";
+import React, {useEffect} from "react";
+import { observer } from "mobx-react-lite";
 import { useStore } from "../../../../ContextProvider";
+import { useInstance } from "../../../../useInstance";
 import {Modal,Alert, Form, Col, Spinner} from "react-bootstrap";
 import { ModalBody, ModalFooter, Button} from "react-bootstrap";
 import Select from "react-select";
-const LoadDataFromDB = props => {
-	const viewModel = useStore();
-	const [localData, setLocalData] = useState([]);
-	const [localDimensions, setLocalDimensions] = useState([]);
-	const [tables, setTables] = useState(null);
-	const [columns, setColumns] = useState([]);
-	const [table, setTable] = useState("undefined");
-	const [selectedColumns, setSelectedColumns] = useState([]);
-	const [conditionColumn, setConditionColumn] = useState("undefined");
-	const [conditionSign, setConditionSign] = useState("undefined");
-	const [conditionValue, setConditionValue] = useState("");
-	const [clicked, setClicked] = useState(false);
-	const [empty, setEmpty] = useState(false);
-	const [resultLength, setResultLenght] = useState(0);
-	const [showSuccess, setShowSuccess] = useState(false);
-	const [showDanger, setShowDanger] = useState(false);
-
+import { LoadDataFromDBVM } from "./LoadDataFromDBVM";
+const LoadDataFromDB = observer((props) => {
 	const {
 		modalIsOpen,
 		closeModal
 	} = props;
+	const {
+		selectedColumns,
+		showSuccess,
+		setShowSuccess,
+		showDanger,
+		setShowDanger,
+		conditionValue,
+		conditionSign,
+		conditionColumn,
+		handleConfirm,
+		handleDismiss,
+		handleSelectTable,
+		table,
+		tables,
+		getColumns,
+		getTables,
+		columns,
+		handleChangeColumns,
+		handleSelectConditionColumn,
+		handleSelectConditionSign,
+		handleSelectConditionValue,
+		clicked,
+		empty,
+		resultLength,
+		onSubmit,
+	} = useInstance(new LoadDataFromDBVM(useStore(), closeModal));
 
-	async function getQueryResult(){
-		let data;
-		if(conditionValue!=="" && conditionSign!=="undefined" && conditionColumn!=="undefined")
-			data = await viewModel.getDatasetByCustomParams(selectedColumns, conditionSign, conditionColumn, conditionValue, table);
-		else
-			data = await viewModel.getDatasetByParams(selectedColumns, table);
-	   return data;
-	}
-
-	async function onSubmit(){
-		setClicked(true);
-		const parsedData=await getQueryResult();
-		if(parsedData && parsedData.length>0){
-			setEmpty(false);
-			setResultLenght(parsedData.length);
-			const dimensions = viewModel.prepareDimensions(selectedColumns.map(c=>c.value), columns);
-			setLocalData(parsedData);
-			setLocalDimensions(dimensions);
-		}else{
-			setLocalDimensions([]);
-			setLocalData([]);
-			setEmpty(true);
-			setResultLenght(0);
-		}
-	}
 	useEffect(() =>{
-		async function getColumns(){
-			try{
-				const columns=await viewModel.getColumnList(table);
-				setColumns(columns);
-			}catch(e){
-				console.log("Nessuna colonna trovata");
-				return;
-			}
-		}
 		getColumns();
-	}, [viewModel, table]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [table]);
 
 	useEffect(() => {
-		async function getTables(){
-			const tables=await viewModel.getAllTables();
-			try{
-				setTables(tables.map(d => d.table_name));
-				setTable(tables.map(d => d.table_name)[0]);
-			}catch(e){
-				console.log("Nessuna tabella trovata");
-				return;
-			}
-		}
 		getTables();
-	},[viewModel]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	},[]);
 
-	function handleChangeColumns (value, handler){
-		switch(handler.action){
-		case "select-option":
-			setSelectedColumns(value);
-			return;
-		case "remove-value":
-			setSelectedColumns(value);
-			return;
-		case "clear":
-			setSelectedColumns([]);
-			return;
-		default:
-			return;
-		}
-	}
-	
-	function handleSelectTable(e){
-		const tableName = e.target.value;
-		setTable(tableName);
-		setSelectedColumns([]);
-		setLocalData([]);
-		setLocalDimensions([]);
-		setConditionColumn("undefined");
-		setConditionSign("undefined");
-		setConditionValue("");
-		setClicked(false);
-		setResultLenght(0);
-	}
-	function handleSelectConditionColumn(e){
-		const columnName = e.target.value;
-		setConditionColumn(columnName);
-	}
-	function handleSelectConditionValue(e){
-		const conditionValue = e.target.value;
-		setConditionValue(conditionValue);
-	}
-	function handleSelectConditionSign(e){
-		const conditionSign = e.target.value;
-		setConditionSign(conditionSign);
-	}
-	function loadDataAndDims(){
-		if(localData)
-			viewModel.loadDataAndDims(localData, localDimensions);
-		resetAndClose();
-	}
-
-	function resetAndClose(){
-		setSelectedColumns([]);
-		setLocalData([]);
-		setConditionColumn("undefined");
-		setConditionSign("undefined");
-		setConditionValue("");
-		setClicked(false);
-		setResultLenght(0);
-		closeModal();
-	}
-
-	function openAlertSuccess() {
-		return localDimensions.length !== 0 ?
-			setShowSuccess(true) :
-			setShowDanger(true);
-	}
 	useEffect(() => {
 		const time = 4000;
 		let timer = setTimeout(() => setShowSuccess(false), time);
 		return () => clearTimeout(timer);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[showSuccess]);
-
-	function openAlertDanger() {
-		setShowDanger(true);
-	}
 	
 	useEffect(() => {
 		const time = 4000;
 		let timer = setTimeout(() => setShowDanger(false), time);
 		return () => clearTimeout(timer);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[showDanger]);
 
 	return(
 		<div>
 			<Modal
 				show={modalIsOpen}
-				onHide={()=>{closeModal();openAlertDanger();}}
+				onHide={handleDismiss}
 			>
 				<Modal.Header closeButton>
 					<Modal.Title>Seleziona Dataset</Modal.Title>
@@ -248,7 +155,7 @@ const LoadDataFromDB = props => {
 								</Col>
 							</Form.Row>
 							<Form.Row className="align-items-center">
-								<Button variant="primary" onClick={onSubmit}>Invia query</Button>
+								<Button variant="primary" onClick={onSubmit()}>Invia query</Button>
 								{clicked ? <Alert variant ={empty ? "danger" : "success"} >{resultLength} elementi trovati</Alert>:null}
 							</Form.Row>
 							</> : null
@@ -258,17 +165,17 @@ const LoadDataFromDB = props => {
 				</ModalBody>
 				
 				<ModalFooter>
-					<Button variant="secondary" onClick={() => {resetAndClose(); openAlertDanger();}}>Torna al menù</Button>
-					<Button variant="primary" onClick={()=>{loadDataAndDims(); openAlertSuccess();}}>Conferma selezione</Button>
+					<Button variant="secondary" onClick={handleDismiss}>Torna al menù</Button>
+					<Button variant="primary" onClick={handleConfirm}>Conferma selezione</Button>
 				</ModalFooter>
 			</Modal>
-			<Alert show={showSuccess} variant="success" className="alert" dismissible onClose={() => setShowSuccess(false)}>
+			<Alert show={showSuccess} variant="success" className="alert" dismissible onClose={setShowSuccess(false)}>
 				<Alert.Heading>Dati inseriti correttamente</Alert.Heading>
 				<p>
 					Ora puoi applicare una riduzione dimensionale ai tuoi dati o scegliere subito la visualizzazione che più preferisci
 				</p>
 			</Alert>
-			<Alert show={showDanger} variant="danger" className="alert" dismissible onClose={() => setShowDanger(false)}>
+			<Alert show={showDanger} variant="danger" className="alert" dismissible onClose={setShowDanger(false)}>
 				<Alert.Heading>Avviso</Alert.Heading>
 				<p>
 					Nessun dato è stato caricato. Assicurati di aver eseguito la query e premuto il tasto "<strong>Conferma selezione</strong>"
@@ -276,6 +183,6 @@ const LoadDataFromDB = props => {
 			</Alert> 
 		</div>
 	);
-};
+});
 
 export default LoadDataFromDB;
