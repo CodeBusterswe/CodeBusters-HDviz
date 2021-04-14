@@ -163,7 +163,7 @@ export class LoadDataFromDBVM{
     }
 
     openAlertSuccess(){
-    	return this.datasetStore.checkedDimensions.length!==0 ?
+    	return this.resultLength!==0 ?
     		this.showSuccess = true :
     		this.showDanger = true;
     }
