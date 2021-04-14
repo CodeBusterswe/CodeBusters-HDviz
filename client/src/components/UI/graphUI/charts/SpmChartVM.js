@@ -27,21 +27,6 @@ export class SpmChartVM {
 			attr("height", this.size*this.numberOfTraits+4*this.padding);
 
 		makeAutoObservable(this, {datasetStore: false, preferencesStore:false}, {autoBind: true});
-    	/*makeObservable(this,{
-			preferencesStore : observable,
-			renderChart: action.bound,
-			updateScales: action.bound,
-			updateAxis: action.bound,
-			updatePointsCanvas: action.bound,
-			updateColor: action.bound,
-			updateLegend: action.bound,
-			draw: action.bound,
-			color : computed,
-			data : computed,
-			traits : computed,
-			numberOfTraits : computed,
-			size : computed,
-    	}, {autoBind: true});*/
 	}
 
 	get data(){

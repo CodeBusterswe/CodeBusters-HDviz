@@ -1,4 +1,4 @@
-import { AlgorithmType } from "../utils";
+import { AlgorithmType } from "../../../../../utils";
 import IsomapStrategy from "./alghorithms/IsomapStrategy";
 import FastmapStrategy from "./alghorithms/FastmapStrategy";
 import LLEStrategy from "./alghorithms/LLEStrategy";

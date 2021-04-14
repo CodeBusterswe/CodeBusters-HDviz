@@ -69,7 +69,7 @@ const AdjacencyMatrixPreferences = observer(() => {
 				<Form.Control
 					as="input"
 					value={distMax}
-					defaultValue={1000}
+					//defaultValue={1000}
 					onChange={handleSelectChange}
 				>
 				</Form.Control>
@@ -79,7 +79,7 @@ const AdjacencyMatrixPreferences = observer(() => {
 				<Form.Control
 					as="input"
 					value={distMin}
-					defaultValue={0}
+					//defaultValue={0}
 					onChange={handleSelectChange}
 				>
 				</Form.Control>

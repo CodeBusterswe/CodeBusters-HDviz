@@ -8,12 +8,21 @@ const AdjacencyMatrix = observer(() => {
 
 	const {
 		renderChart,
+		matrix,
+		orderBy,
+		distMin,
+		distMax,
+		label,
 	} = useInstance(new AmChartVM(useStore()));
 	
-	useEffect(() => {renderChart();});
+	useEffect(() => {
+		renderChart();
+	}, [matrix, orderBy, distMin, distMax, label]);
 
 	return (
 		<div className="adjacencyMatrix">
+			<svg className="plot" id="am-svg"></svg>
+			<canvas className="plot" id="am-canvas"></canvas>
 		</div>
 	);
 });

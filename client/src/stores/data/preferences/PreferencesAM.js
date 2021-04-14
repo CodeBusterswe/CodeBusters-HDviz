@@ -39,7 +39,7 @@ class PreferencesAM{
 	}
 	
 	set label(value){
-		this._value = value;
+		this._label = value;
 	}
 	
 	set distMax(value){
