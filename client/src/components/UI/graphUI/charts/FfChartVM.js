@@ -6,7 +6,7 @@ export class FfChartVM {
 
 	myColor = d3.scaleOrdinal(d3.schemeCategory10);
 	margin = {top: 30, right: 30, bottom: 100, left: 100};
-	width = 1500 - this.margin.left - this.margin.right;
+	width = 950 - this.margin.left - this.margin.right;
 	height = 850 - this.margin.top - this.margin.bottom;
 	radius = 4;
 	
