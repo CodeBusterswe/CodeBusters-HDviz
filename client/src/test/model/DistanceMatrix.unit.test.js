@@ -1,4 +1,4 @@
-import DistanceMatrix from "../stores/data/DistanceMatrix";
+import DistanceMatrix from "../../stores/data/DistanceMatrix";
 
 let distanceMatrix = new DistanceMatrix(),
 	link = {sorce: "a", target: "b", value: 2},

@@ -1,7 +1,7 @@
-import Dimension from "../stores/data/Dimension";
-import DatasetStore from "../stores/DatasetStore";
-import DistanceMatrix from "../stores/data/DistanceMatrix";
-import DistanceMatricesStore from "../stores/DistanceMatricesStore";
+import Dimension from "../../stores/data/Dimension";
+import DatasetStore from "../../stores/DatasetStore";
+import DistanceMatrix from "../../stores/data/DistanceMatrix";
+import DistanceMatricesStore from "../../stores/DistanceMatricesStore";
 
 let store,
 	dimension,
