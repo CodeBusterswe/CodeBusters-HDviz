@@ -5,10 +5,10 @@ describe("Caricamento dei dati tramite CSV",() =>{
 	beforeEach(()=>{
 		render(<App/>);
 		fireEvent.click(screen.getByRole("button",{name: "Carica dati da CSV" }));
-		expect(screen.getByText("Sostituisci il file CSV caricato")).toBeInTheDocument();
+		expect(screen.getByText("Carica un file CSV")).toBeInTheDocument();
 	});
 	test("Carica un csv", async() => {
-		const inputEl=screen.getByText("Sostituisci il file CSV caricato");
+		const inputEl=screen.getByText("Carica un file CSV");
 		fireEvent.drop(inputEl, {
 			dataTransfer: {
 				files: [new File(["(id,group\n14,24)"], "penguins.csv")],
