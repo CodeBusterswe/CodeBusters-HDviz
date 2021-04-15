@@ -5,7 +5,7 @@ class FastmapStrategy extends AlghorithmStrategy{
 
 	startDR(parameters,data) {
 		const matrix = dr.Matrix.from(data);
-		let alg = new dr.FASTMAP(matrix, parameters.DimensionsNumber);
+		let alg = new dr.FASTMAP(matrix, parameters.getDimensionsNumber());
 		return alg.transform();
 	}
 }

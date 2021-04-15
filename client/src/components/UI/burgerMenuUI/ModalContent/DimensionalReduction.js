@@ -108,7 +108,7 @@ const DimensionalReduction = observer((props) => {
 							onChange={handleChangeDimensionsToRedux}
 						/>
 					</Form.Group>
-					<Form.Group controlId="algorithmType">	
+					<Form.Group controlId="algorithmType" id="alg">	
 						<Form.Label>Select algorithm</Form.Label>
 						<Form.Control 
 							as="select" 

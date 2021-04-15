@@ -5,7 +5,7 @@ class TsneStrategy extends AlghorithmStrategy{
 
 	startDR(parameters,data) {
 		const matrix = dr.Matrix.from(data);
-		let alg = new dr.TSNE(matrix, parameters.Perplexity, parameters.Epsilon, parameters.DimensionsNumber);
+		let alg = new dr.TSNE(matrix, parameters.getPerplexity(), parameters.getEpsilon(), parameters.getDimensionsNumber());
 		return alg.transform();
 	}
 }

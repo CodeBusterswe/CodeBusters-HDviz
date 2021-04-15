@@ -68,7 +68,7 @@ export class MenuVM {
     	case 9:
     		this.preferencesStore.chart = VisualizationType.PLMA;
     		break;
-    	default: break;
+    	default:
     	}
 	}
 	get isDataLoaded(){

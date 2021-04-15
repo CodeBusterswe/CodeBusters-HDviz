@@ -1,7 +1,6 @@
 import React from "react";
 import Menu from "./UI/burgerMenuUI/Menu";
 import "./style.css";
-import "../App.css";
 import Header from "./UI/headerUI/Header";
 import Chart from "./UI/graphUI/Chart";
 import RootStore from "../stores/RootStore";
