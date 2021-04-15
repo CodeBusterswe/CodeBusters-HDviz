@@ -63,7 +63,7 @@ export class FfChartVM {
 				on("tick", ticked);
 			this.canvas.call(
 				d3.drag().
-					container(this.canvas).
+					container(this.canvas.node()).
 					subject(dragsubject).
 					on("start", dragstarted).
 					on("drag", dragged).
@@ -101,7 +101,7 @@ export class FfChartVM {
 		}
 
 		function dragsubject(event) {	
-			return simulation.find(event.x-90, event.y-90);   
+			return simulation.find(event.x, event.y);   
 		}
 
 		function dragstarted(event) {
