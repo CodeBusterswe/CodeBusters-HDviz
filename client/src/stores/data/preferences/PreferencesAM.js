@@ -55,11 +55,6 @@ class PreferencesAM{
 	}
 
 	deserializeJSON(string){
-		this.distanceMatrix = undefined;
-		this.orderBy = undefined;
-		this.label = undefined;
-		this.distMax = Infinity;
-		this.distMin = 0;
 	}
 }
 
