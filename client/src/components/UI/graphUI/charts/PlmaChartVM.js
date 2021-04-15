@@ -6,8 +6,8 @@ import * as PCA from "./pca";
 export class PlmaChartVM {
 	constructor(rootStore){
 		this.margin = {top: 30, right: 30, bottom: 100, left: 100};
-		this.width = 1000 - this.margin.left - this.margin.right;
-		this.height = 1000 - this.margin.top - this.margin.bottom;
+		this.width = 950 - this.margin.left - this.margin.right;
+		this.height = 800 - this.margin.top - this.margin.bottom;
 		this.radius = 4;
     	this.datasetStore = rootStore.datasetStore;
 		this.preferencesStore = rootStore.preferencesStore;
