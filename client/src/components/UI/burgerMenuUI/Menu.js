@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../../ContextProvider";
 import DimensionalReduction from "./ModalContent/DimensionalReduction";
 import DistanceCalculation from "./ModalContent/DistanceCalculation";
-import LoadCsv from "./ModalContent/LoadCSV";
+import LoadCsv from "./ModalContent/LoadCsv";
 import "../../style.css";
 import {OverlayTrigger , Popover} from "react-bootstrap";
 import {AiOutlineArrowRight} from "react-icons/ai";

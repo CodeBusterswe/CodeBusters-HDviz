@@ -1,7 +1,6 @@
 import { makeAutoObservable} from "mobx";
 import * as d3 from "d3";
 import {select} from "d3";
-import { func } from "prop-types";
 
 export class FfChartVM {
 
@@ -91,18 +90,18 @@ export class FfChartVM {
 		}
 		function drawNode(d){
 			context.beginPath();
-			d.x = Math.max(4, Math.min(parent.width - parent.radius, d.x));
+			d.x = Math.max(parent.radius, Math.min(parent.width - parent.radius, d.x));
 			d.y = Math.max(parent.radius, Math.min(parent.height - parent.radius, d.y));
 			context.moveTo(d.x + 3, d.y);
-			context.arc(d.x, d.y, parent.radius, 0, 2 * Math.PI);
+			context.arc(d.x, d.y, parent.radius, 0,2 * Math.PI);
 			context.fillStyle = parent.myColor(d[parent.color]);
 			context.strokeStyle = parent.myColor(d[parent.color]);
 			context.fill();
 			context.stroke();
 		}
 
-		function dragsubject(event) {
-			return simulation.find(event.x, event.y);   
+		function dragsubject(event) {	
+			return simulation.find(event.x-90, event.y-90);   
 		}
 
 		function dragstarted(event) {

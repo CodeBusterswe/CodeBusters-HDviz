@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect} from "react";
 import { useStore } from "../../../../ContextProvider";
 import { observer } from "mobx-react-lite";
