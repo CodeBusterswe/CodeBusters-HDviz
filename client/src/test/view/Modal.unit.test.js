@@ -48,10 +48,11 @@ describe("Riduci le dimensioni", ()=>{
 	test("Seleziona LLE",()=>{
 		fireEvent.change(screen.getByRole("combobox",{name:"Select algorithm"}),{target:{value:"lle"}});
 		fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),{target:{value: "test1"}});
-		fireEvent.change(screen.getByRole("textbox",{name:""}),{target:{value: "5"}});
+		fireEvent.change(screen.getByRole("slider",{value:"2"}),{target:{value: "5"}});
+		//fireEvent.change(screen.getByRole("cbox",{name:"Select algorithm"}),{target:{value:"lle"}});
 		expect(screen.getByText("LLE")).toBeInTheDocument();
 		expect(screen.getByRole("textbox",{name:"New dimensions name"}).value).toBe("test1");
-		expect(screen.getByRole("textbox",{name:""}).value).toBe("5");
+		expect(screen.getByRole("slider",{name:"New dimensions number"}).value).toBe("5");
 	});
 	test("Seleziona FASTMAP",()=>{
 		fireEvent.change(screen.getByRole("combobox",{name:"Select algorithm"}),{target:{value:"fastMap"}});
@@ -69,7 +70,7 @@ describe("Riduci le dimensioni", ()=>{
 		expect(screen.getByRole("textbox",{name:"New dimensions name"}).value).toBe("test3");
 		expect(screen.getByRole("textbox",{name:""}).value).toBe("5");
 	});
-	test("Seleziona TSNE",()=>{
+	test("Seleziona TSNE", async()=>{
 		fireEvent.change(screen.getByRole("combobox",{name:"Select algorithm"}),{target:{value:"t-sne"}});
 		fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),{target:{value: "test4"}});
 		fireEvent.change(screen.getByRole("textbox",{name:""}),{target:{value: "5"}});
