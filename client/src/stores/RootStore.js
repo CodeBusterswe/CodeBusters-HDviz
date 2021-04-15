@@ -6,7 +6,7 @@ class RootStore{
 	constructor(){
 		this.preferencesStore = new PreferencesStore(this);
 		this.datasetStore = new DatasetStore(this, true);
-		console.log("this:",this);
+		//console.log("this:",this);
 		this.distanceMatricesStore = new DistanceMatricesStore(this);
 	}
 }export default RootStore;

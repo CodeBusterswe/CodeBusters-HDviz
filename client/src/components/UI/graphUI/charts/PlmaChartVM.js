@@ -12,12 +12,6 @@ export class PlmaChartVM {
     	this.datasetStore = rootStore.datasetStore;
 		this.preferencesStore = rootStore.preferencesStore;
 		this.data = this.datasetStore.selectedData.map(d => {return {...d};});
-			
-		this.svgParent.
-			attr("width", this.width + this.margin.left + this.margin.right).
-			attr("height", this.height + this.margin.top + this.margin.bottom);
-		this.svg.
-			attr("transform", "translate(" + (this.margin.left-100) + "," + this.margin.top + ")");
 
 		makeAutoObservable(this, {datasetStore: false, preferencesStore:false}, {autoBind: true});
 	}
@@ -37,6 +31,11 @@ export class PlmaChartVM {
 		return this.preferencesStore.preferencesPlma.color;
 	}
 	renderChart(){
+		this.svgParent.
+			attr("width", this.width + this.margin.left + this.margin.right).
+			attr("height", this.height + this.margin.top + this.margin.bottom);
+		this.svg.
+			attr("transform", "translate(" + (this.margin.left-100) + "," + this.margin.top + ")");
 		const colorAxis = d3.scaleOrdinal(d3.schemeCategory10);
 		const x = d3.scaleLinear([0, this.width]);
 		const y = d3.scaleLinear([0, this.height]);
@@ -241,10 +240,12 @@ export class PlmaChartVM {
 		const palette = colorDomain[0] || colorDomain[0] === 0 ? 
 			d3.scaleLinear().domain(colorDomain).range(["red", "lightblue"]) : 
 			d3.scaleOrdinal(d3.schemeTableau10).domain(new Set(this.data.map(d => d[this.color])));
-		const svg = select(".plma").select("svg");
+		if(this.dimensionsNames.length<1){
+			return;
+		}
 		//legenda colori
-		svg.selectAll(".legend").remove();
-		var legend = svg.selectAll(".legend").
+		this.svgParent.selectAll(".legend").remove();
+		var legend = this.svgParent.selectAll(".legend").
 			data(palette.domain()).
 			enter().append("g").
 			attr("class", "legend").
@@ -263,7 +264,7 @@ export class PlmaChartVM {
 			attr("dy", ".35em").
 			style("text-anchor", "end").
 			text(function(d) { return d; });
-		svg.selectAll(".dot").style("fill", (d) => { return palette(d[this.color]); });
+		this.svgParent.selectAll(".dot").style("fill", (d) => { return palette(d[this.color]); });
 	
 	}
 }

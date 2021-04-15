@@ -6,17 +6,17 @@ import { FfChartVM } from "./FfChartVM";
 
 const ForceField = observer(() => {
 
-	//const canvasRef = useRef(null);
-
 	const {
 		renderChart,
+		matrix,
 		color,
 		distMin,
 		distMax
 	} = useInstance(new FfChartVM(useStore()));
-	//console.log("renderChart:",renderChart());
 
-	useEffect(() => {renderChart();}, [color, distMax, distMin]);
+	useEffect(() => {
+		renderChart();
+	}, [color, distMax, distMin, matrix]);
 	
 	return(
 		<div className="forceField">

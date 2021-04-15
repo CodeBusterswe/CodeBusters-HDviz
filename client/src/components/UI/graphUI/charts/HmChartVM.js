@@ -13,12 +13,6 @@ export class HmChartVM {
 
     	this.data = this.datasetStore.selectedData;
 
-    	this.svgParent.
-    		attr("width", this.width + this.margin.left + this.margin.right).
-    		attr("height", this.height + this.margin.top + this.margin.bottom);
-    		
-    	this.svg.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
-
     	makeAutoObservable(this, {datasetStore: false, preferencesStore:false}, {autoBind: true});
     }
 
@@ -94,6 +88,12 @@ export class HmChartVM {
     }
 
     renderChart(){
+    	this.svgParent.
+    		attr("width", this.width + this.margin.left + this.margin.right).
+    		attr("height", this.height + this.margin.top + this.margin.bottom);
+    		
+    	this.svg.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+
     	let newData = this.prepareData();
 		    	
     	d3.selectAll("rect").remove();

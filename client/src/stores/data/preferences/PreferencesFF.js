@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 class PreferencesFF{
 	constructor(){
-		this._distanceMatrix = "euclidean";
+		this._distanceMatrix = "undefined";
 		this._color = undefined;
 		this._distMax = Infinity;
 		this._distMin = 0;
