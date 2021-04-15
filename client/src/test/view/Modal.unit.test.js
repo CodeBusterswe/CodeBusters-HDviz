@@ -76,7 +76,7 @@ describe("Riduci le dimensioni", ()=>{
 		expect(screen.getByText("TSNE")).toBeInTheDocument();
 		expect(screen.getByRole("textbox",{name:"New dimensions name"}).value).toBe("test4");
 		expect(screen.getByRole("textbox",{name:""}).value).toBe("5");
-	});
+	},10000);
 	
 });
 describe("Calcola distanza", ()=>{
