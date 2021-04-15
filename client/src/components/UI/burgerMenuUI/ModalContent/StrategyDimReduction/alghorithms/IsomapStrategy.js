@@ -5,7 +5,7 @@ class IsomapStrategy extends AlghorithmStrategy{
     
 	startDR(parameters,data) {
 		const matrix = dr.Matrix.from(data);
-		let alg = new dr.ISOMAP(matrix, parameters.Neighbors, parameters.DimensionsNumber);
+		let alg = new dr.ISOMAP(matrix, parameters.getNeighbors(), parameters.getDimensionsNumber());
 		return alg.transform();
 	}
 }
