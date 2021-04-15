@@ -46,7 +46,7 @@ describe("Riduci le dimensioni", ()=>{
 		});
 	});
 	test("Seleziona LLE",()=>{
-		fireEvent.keyDown(screen.getByRole("combobox",{name:"Select algorithm"},{key:"LLE"}));
+		fireEvent.change(screen.getByRole("combobox",{name:"Select algorithm"}),{target:{value:"lle"}});
 		fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),{target:{value: "test1"}});
 		fireEvent.change(screen.getByRole("textbox",{name:""}),{target:{value: "5"}});
 		expect(screen.getByText("LLE")).toBeInTheDocument();
@@ -54,7 +54,7 @@ describe("Riduci le dimensioni", ()=>{
 		expect(screen.getByRole("textbox",{name:""}).value).toBe("5");
 	});
 	test("Seleziona FASTMAP",()=>{
-		fireEvent.keyDown(screen.getByRole("combobox",{name:"Select algorithm"},{key:"FASTMAP"}));
+		fireEvent.change(screen.getByRole("combobox",{name:"Select algorithm"}),{target:{value:"fastMap"}});
 		fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),{target:{value: "test2"}});
 		fireEvent.change(screen.getByRole("textbox",{name:""}),{target:{value: "5"}});
 		expect(screen.getByText("FASTMAP")).toBeInTheDocument();
@@ -62,7 +62,7 @@ describe("Riduci le dimensioni", ()=>{
 		expect(screen.getByRole("textbox",{name:""}).value).toBe("5");
 	});
 	test("Seleziona ISOMAP",()=>{
-		fireEvent.keyDown(screen.getByRole("combobox",{name:"Select algorithm"},{key:"ISOMAP"}));
+		fireEvent.change(screen.getByRole("combobox",{name:"Select algorithm"}),{target:{value:"isoMap"}});
 		fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),{target:{value: "test3"}});
 		fireEvent.change(screen.getByRole("textbox",{name:""}),{target:{value: "5"}});
 		expect(screen.getByText("ISOMAP")).toBeInTheDocument();
@@ -70,7 +70,7 @@ describe("Riduci le dimensioni", ()=>{
 		expect(screen.getByRole("textbox",{name:""}).value).toBe("5");
 	});
 	test("Seleziona TSNE",()=>{
-		fireEvent.keyDown(screen.getByRole("combobox",{name:"Select algorithm"},{key:"TSNE"}));
+		fireEvent.change(screen.getByRole("combobox",{name:"Select algorithm"}),{target:{value:"t-sne"}});
 		fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),{target:{value: "test4"}});
 		fireEvent.change(screen.getByRole("textbox",{name:""}),{target:{value: "5"}});
 		expect(screen.getByText("TSNE")).toBeInTheDocument();
