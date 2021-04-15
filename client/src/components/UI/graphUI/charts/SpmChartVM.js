@@ -16,16 +16,6 @@ export class SpmChartVM {
 	constructor(rootStore){
     	this.datasetStore = rootStore.datasetStore;
 		this.preferencesStore = rootStore.preferencesStore;
-		this._color = this.preferencesStore.preferencesSpm.color; 
-		this.svgParent.
-			attr("width", this.size * this.numberOfTraits + 4*this.padding + 200).
-			attr("height", this.size * this.numberOfTraits + 4*this.padding);
-		this.svg.
-			attr("transform", "translate("+4*this.padding+","+this.padding/2+")");
-		this.canvas.
-			attr("width", this.size*this.numberOfTraits+4*this.padding).
-			attr("height", this.size*this.numberOfTraits+4*this.padding);
-
 		makeAutoObservable(this, {datasetStore: false, preferencesStore:false}, {autoBind: true});
 	}
 
@@ -58,11 +48,18 @@ export class SpmChartVM {
 	}
 
 	get color(){
-		this._color = this.preferencesStore.preferencesSpm.color;
-		return this._color;
+		return this.preferencesStore.preferencesSpm.color;
 	}
 	
 	renderChart(){
+		this.svgParent.
+			attr("width", this.size * this.numberOfTraits + 4*this.padding + 200).
+			attr("height", this.size * this.numberOfTraits + 4*this.padding);
+		this.svg.
+			attr("transform", "translate("+4*this.padding+","+this.padding/2+")");
+		this.canvas.
+			attr("width", this.size*this.numberOfTraits+4*this.padding).
+			attr("height", this.size*this.numberOfTraits+4*this.padding);
 		this.updateScales();
 		this.updateAxis();
 		this.updateColor();

@@ -8,9 +8,11 @@ const ScatterPlotMatrix = observer(() => {
 
 	const {
 		renderChart,
+		color,
+		traits
 	} = useInstance(new SpmChartVM(useStore()));
     
-	useEffect(() => {renderChart();});
+	useEffect(() => {renderChart();}, [color, traits]);
 	
 	return (
 		<div className="scatterplotmatrix">

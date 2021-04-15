@@ -44,7 +44,6 @@ const ForceFieldPreferences = observer(() => {
 					onChange={handleSelectChange}
 				>
 					<option value={"undefined"} key={"noColor"}>No color</option>
-					<option value={"group"} key={"group"}>Group</option>
 					{keys.map((d) => {
 						return <option value={d} key={d}>{d}</option>;
 					})}
@@ -55,7 +54,6 @@ const ForceFieldPreferences = observer(() => {
 				<Form.Control
 					as="input"
 					value={distMax}
-					defaultValue={1000}
 					onChange={handleSelectChange}
 				>
 				</Form.Control>
@@ -65,7 +63,6 @@ const ForceFieldPreferences = observer(() => {
 				<Form.Control
 					as="input"
 					value={distMin}
-					defaultValue={0}
 					onChange={handleSelectChange}
 				>
 				</Form.Control>

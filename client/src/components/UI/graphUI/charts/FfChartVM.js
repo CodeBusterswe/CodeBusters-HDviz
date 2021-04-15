@@ -1,6 +1,7 @@
 import { makeAutoObservable} from "mobx";
 import * as d3 from "d3";
 import {select} from "d3";
+import { func } from "prop-types";
 
 export class FfChartVM {
 
@@ -13,7 +14,6 @@ export class FfChartVM {
 	constructor(rootStore){
 		this.preferencesStore = rootStore.preferencesStore;
 		this.distanceMatricesStore = rootStore.distanceMatricesStore;
-
 		makeAutoObservable(this, {preferencesStore:false}, {autoBind: true});
 	}
 
@@ -41,32 +41,30 @@ export class FfChartVM {
 	}
 	
 	renderChart(){
-		const canvas = this.canvas;
-		canvas.width = this.width;
-		canvas.height = this.height;
-		
+		const parent = this;
 		let nodes, links, context, simulation;
-		
+		this.canvas.
+			attr("width", this.width).
+			attr("height", this.height);
 		if(this.distanceMatrix){
 			nodes = this.distanceMatrix.nodes.map(node => {return {...node};}); 
 			links = this.distanceMatrix.
 				links.filter(link => link.value < this.distMax && link.value > this.distMin).
 				map(link => {return {...link};
 				});
-			context = canvas.node().getContext("2d");
-			
+			context = this.canvas.node().getContext("2d");
+
 			simulation = d3.forceSimulation(nodes).
 				force("link", d3.forceLink(links).
 					id(function(d){return d.id;}).
 					distance(function(d) {return d.value;})).
 				force("charge", d3.forceManyBody()).
 				force("center", d3.forceCenter(this.width / 2, this.height / 2));
-			
-			simulation.on("tick", ticked);
-
-			canvas.call(
+			simulation.
+				on("tick", ticked);
+			this.canvas.call(
 				d3.drag().
-					container(canvas).
+					container(this.canvas).
 					subject(dragsubject).
 					on("start", dragstarted).
 					on("drag", dragged).
@@ -74,19 +72,34 @@ export class FfChartVM {
 			);
 		}
 		else{
-			context = canvas.node().getContext("2d");
+			context = this.canvas.node().getContext("2d");
 			context.clearRect(0, 0, this.width, this.height);
 		}
-		
-		function ticked() {
-			context.clearRect(0, 0, this.width, this.height);
+
+		function ticked(){
+			context.clearRect(0, 0, parent.width, parent.height);
 			context.beginPath();
 			links.forEach(drawLink);
 			context.strokeStyle = "#aaa";
 			context.stroke();
 			nodes.forEach(drawNode);
-			
-		}	
+		}
+
+		function drawLink(d){
+			context.moveTo(d.source.x, d.source.y);
+			context.lineTo(d.target.x, d.target.y);
+		}
+		function drawNode(d){
+			context.beginPath();
+			d.x = Math.max(4, Math.min(parent.width - parent.radius, d.x));
+			d.y = Math.max(parent.radius, Math.min(parent.height - parent.radius, d.y));
+			context.moveTo(d.x + 3, d.y);
+			context.arc(d.x, d.y, parent.radius, 0, 2 * Math.PI);
+			context.fillStyle = parent.myColor(d[parent.color]);
+			context.strokeStyle = parent.myColor(d[parent.color]);
+			context.fill();
+			context.stroke();
+		}
 
 		function dragsubject(event) {
 			return simulation.find(event.x, event.y);   
@@ -108,23 +121,6 @@ export class FfChartVM {
 			event.subject.fx = null;
 			event.subject.fy = null;
 		}
-
-		function drawLink(d) {
-			context.moveTo(d.source.x, d.source.y);
-			context.lineTo(d.target.x, d.target.y);
-		}
-
-		const drawNode = (d) => {
-			context.beginPath();
-			d.x = Math.max(4, Math.min(this.width - this.radius, d.x));
-			d.y =Math.max(this.radius, Math.min(this.height - this.radius, d.y));
-			context.moveTo(d.x + 3, d.y);
-			context.arc(d.x, d.y, this.radius, 0, 2 * Math.PI);
-			context.fillStyle = this.myColor(d[this.color]);
-			context.strokeStyle = this.myColor(d[this.color]);
-			context.fill();
-			context.stroke();
-		};
 	
 	}
 	

@@ -11,13 +11,6 @@ export class AmChartVM {
     constructor(rootStore){
     	this.preferencesStore = rootStore.preferencesStore;
     	this.distanceMatricesStore = rootStore.distanceMatricesStore;
-    	this.svg.
-    		attr("width", this.width + this.margin.left + this.margin.right).
-    		attr("height", this.height + this.margin.top + this.margin.bottom);
-    	this.canvas.
-    		attr("width", this.width + this.margin.left + this.margin.right).
-    		attr("height", this.height + this.margin.top + this.margin.bottom);
-
     	makeAutoObservable(this, {preferencesStore:false}, {autoBind: true});
     }
     get distMin(){
@@ -46,6 +39,13 @@ export class AmChartVM {
     }
 
     renderChart(){
+    	this.svg.
+    		attr("width", this.width + this.margin.left + this.margin.right).
+    		attr("height", this.height + this.margin.top + this.margin.bottom);
+    	this.canvas.
+    		attr("width", this.width + this.margin.left + this.margin.right).
+    		attr("height", this.height + this.margin.top + this.margin.bottom);
+
     	let nodes = [], links= [];
     	if(this.distanceMatrix){
     		nodes = this.distanceMatrix.nodes; 
