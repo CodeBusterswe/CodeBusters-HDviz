@@ -83,7 +83,6 @@ export class DimensionalReductionVM{
     		this.datasetStore.addDimensionsToDataset(newDimsFromReduction);
     		this.closeModal();
     	}catch(e){
-    		console.log(e);
     		this.nameError = true;
     	}
     }
