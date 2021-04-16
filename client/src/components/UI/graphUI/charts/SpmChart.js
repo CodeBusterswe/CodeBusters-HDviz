@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect} from "react";
 import { useStore } from "../../../../ContextProvider";
 import { observer } from "mobx-react-lite";
@@ -17,6 +18,7 @@ const ScatterPlotMatrix = observer(() => {
 	return (
 		<div className="scatterplotmatrix">
 			<svg className="plot" id="spm-svg"><g></g></svg>
+			<svg className="plot" id="spm-cell"><g></g></svg>
 			<canvas className="plot" id="spm-canvas"></canvas>
 		</div>
 	);

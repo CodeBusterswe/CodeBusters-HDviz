@@ -108,7 +108,7 @@ code {
 }
 
 .center-graph {
-	width: 60em;
+	width: 950px;
 	margin: auto;
 }
 
@@ -124,8 +124,9 @@ code {
 
 /*posizione canvas sopra a svg per SPM*/
 .plot {position: absolute;}
-#spm-canvas, #am-canvas, #ff-canvas {z-index: -1;}
-#spm-svg, #am-svg, #plma-svg, #hm-svg{z-index: -2;}
+#spm-canvas, #am-canvas, #ff-canvas {z-index: -2;}
+#spm-svg, #am-svg, #plma-svg, #hm-svg{z-index: -3;}
+#spm-cell {z-index: -1;}
 
 
 /* FINE GRAFICO */

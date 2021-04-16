@@ -7,6 +7,7 @@ import {Button} from "react-bootstrap";
 import {VisualizationType} from "../../../utils";
 import { ScatterPlotMatrix, ForceField, AdjacencyMatrix, HeatMap, Plma } from "./charts";
 import { ScatterPlotMatrixPreferences, ForceFieldPreferences, AdjacencyMatrixPreferences, HeatMapPreferences, PlmaPreferences } from "./preferences";
+import "./../../style.css";
 
 const Chart = observer( () => {
 

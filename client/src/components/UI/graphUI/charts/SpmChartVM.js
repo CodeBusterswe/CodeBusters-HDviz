@@ -32,11 +32,15 @@ export class SpmChartVM {
 	}
 
 	get svgParent(){
-		return select(".scatterplotmatrix").select("svg");
+		return select(".scatterplotmatrix").select("#spm-svg");
 	}
 
 	get svg(){
-		return select(".scatterplotmatrix").select("svg").select("g");
+		return select(".scatterplotmatrix").select("#spm-svg").select("g");
+	}
+
+	get svgCell(){
+		return select(".scatterplotmatrix").select("#spm-cell").select("g");
 	}
 
 	get canvas(){
@@ -55,7 +59,12 @@ export class SpmChartVM {
 		this.svgParent.
 			attr("width", this.size * this.numberOfTraits + 4*this.padding + 200).
 			attr("height", this.size * this.numberOfTraits + 4*this.padding);
+		select(".scatterplotmatrix").select("#spm-cell").
+			attr("width", this.size * this.numberOfTraits + 4*this.padding + 200).
+			attr("height", this.size * this.numberOfTraits + 4*this.padding);
 		this.svg.
+			attr("transform", "translate("+4*this.padding+","+this.padding/2+")");
+		this.svgCell.
 			attr("transform", "translate("+4*this.padding+","+this.padding/2+")");
 		this.canvas.
 			attr("width", this.size*this.numberOfTraits+4*this.padding).
@@ -78,10 +87,67 @@ export class SpmChartVM {
 					j: j});
 		return c;
 	}
+	mouseenter(e, p){
+		console.log("mouseneter");
+		select(e.target.parentNode).selectAll("line").remove();
+		select(e.target.parentNode).append("line").
+			attr("class", "xLine").
+			//attr("x1", (this.size - this.padding)/2). //<<== change your code here
+			attr("y1", this.padding / 2).
+			//attr("x2", (this.size - this.padding)/2). //<<== and here
+			attr("y2", this.size - this.padding / 2).
+			style("stroke-width", 2).
+			style("stroke", "red").
+			style("fill", "none");
+		select(e.target.parentNode).append("line").
+			attr("class", "yLine").
+			attr("x1", this.padding / 2). 
+			//attr("y1", (this.size - this.padding)/2). //<<== change your code here
+			attr("x2", this.size - this.padding / 2). 
+			//attr("y2", (this.size - this.padding)/2). //<<== and here
+			style("stroke-width", 2).
+			style("stroke", "red").
+			style("fill", "none");
 
+	}
+	mousemove(e, p){
+		//console.log("mousemove");
+		const dimx = p.x, dimy = p.y;
+		const valx = e.layerX-(p.i*this.size+4*this.padding), valy = e.layerY-(p.j*this.size+this.padding/2);
+		//const realValX = this.xScales[dimx].invert(valx), realValY = this.yScales[dimy].invert(valy);
+		const xLine = select(e.target.parentNode).select(".xLine"), yLine = select(e.target.parentNode).selectAll(".yLine");
+		if(select(e.target.parentNode).selectAll("line").nodes().length===0){
+			select(e.target.parentNode).append("line").
+				attr("class", "xLine").
+				attr("x1", valx). //<<== change your code here
+				attr("y1", this.padding / 2).
+				attr("x2", valx). //<<== and here
+				attr("y2", this.size - this.padding / 2).
+				style("stroke-width", 2).
+				style("stroke", "red").
+				style("fill", "none");
+			select(e.target.parentNode).append("line").
+				attr("class", "yLine").
+				attr("x1", this.padding / 2). 
+				attr("y1", valy). //<<== change your code here
+				attr("x2", this.size - this.padding / 2). 
+				attr("y2", valy). //<<== and here
+				style("stroke-width", 2).
+				style("stroke", "red").
+				style("fill", "none");
+		}else{
+			xLine.attr("x1", valx).attr("x2", valx);
+			yLine.attr("y1", valy).attr("y2", valy);
+		}
+		//console.log(dimx,": ", realValX, dimy, ": ", realValY);
+	}
+	mouseleave(e, p){
+		console.log("mouseleave");
+		select(e.target.parentNode).selectAll("line").remove();
+	}
 	updatePointsCanvas(){
-		this.svg.selectAll(".cell").remove();
-		let cell = this.svg.selectAll(".cell").
+		this.svgCell.selectAll(".cell").remove();
+		let cell = this.svgCell.selectAll(".cell").
 			data(this.cross(this.traits, this.traits)).
 			enter().append("g").
 			attr("class", "cell").
@@ -91,7 +157,7 @@ export class SpmChartVM {
 			each((d, i, list) => this.draw(d, i, list));
 		//cell._groups.forEach(c => console.log(c, c.__data__));
 		//aggiunge label alle cell centrali
-		cell.filter(function(d) { return d.i === d.j; }). 
+		cell.filter(function(d) { return d.i === d.j; }).
 			append("text").
 			attr("x", 25).
 			attr("y", this.size/2).
@@ -104,8 +170,12 @@ export class SpmChartVM {
 			attr("class", "frame").
 			attr("x", this.padding / 2).
 			attr("y", this.padding / 2).
+			style("pointer-events","visible").
 			attr("width", this.size - this.padding).
-			attr("height", this.size - this.padding);
+			attr("height", this.size - this.padding).
+			//on("mouseover", (e) => this.mouseenter(e, p)).
+			on("mousemove", (e) => this.mousemove(e, p));
+		    //on("mouseleave", (e) => this.mouseleave(e, p));
 		let ctx = this.canvas.node().getContext("2d");
 		ctx.resetTransform();
 		ctx.transform(1, 0, 0, 1, p.i*this.size+4*this.padding, p.j*this.size+this.padding/2);

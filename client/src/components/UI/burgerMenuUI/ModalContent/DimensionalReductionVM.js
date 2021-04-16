@@ -34,9 +34,8 @@ export class DimensionalReductionVM{
     		//*******************************************************************
 		    const drStrategy = new DimReduction();
 
-		    drStrategy.setStrategy(this.algorithmType);
+		    drStrategy.setStrategy(this.algorithmType, parameters);
 		    drStrategy.setData(data);
-		    drStrategy.setParameters(parameters);
 
     		const reduction = drStrategy.executeStrategy();
 		

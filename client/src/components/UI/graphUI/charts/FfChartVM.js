@@ -1,13 +1,12 @@
 import { makeAutoObservable} from "mobx";
 import * as d3 from "d3";
 import {select} from "d3";
-import { func } from "prop-types";
 
 export class FfChartVM {
 
 	myColor = d3.scaleOrdinal(d3.schemeCategory10);
 	margin = {top: 30, right: 30, bottom: 100, left: 100};
-	width = 1500 - this.margin.left - this.margin.right;
+	width = 950 - this.margin.left - this.margin.right;
 	height = 850 - this.margin.top - this.margin.bottom;
 	radius = 4;
 	
@@ -64,7 +63,7 @@ export class FfChartVM {
 				on("tick", ticked);
 			this.canvas.call(
 				d3.drag().
-					container(this.canvas).
+					container(this.canvas.node()).
 					subject(dragsubject).
 					on("start", dragstarted).
 					on("drag", dragged).
@@ -91,17 +90,17 @@ export class FfChartVM {
 		}
 		function drawNode(d){
 			context.beginPath();
-			d.x = Math.max(4, Math.min(parent.width - parent.radius, d.x));
+			d.x = Math.max(parent.radius, Math.min(parent.width - parent.radius, d.x));
 			d.y = Math.max(parent.radius, Math.min(parent.height - parent.radius, d.y));
 			context.moveTo(d.x + 3, d.y);
-			context.arc(d.x, d.y, parent.radius, 0, 2 * Math.PI);
+			context.arc(d.x, d.y, parent.radius, 0,2 * Math.PI);
 			context.fillStyle = parent.myColor(d[parent.color]);
 			context.strokeStyle = parent.myColor(d[parent.color]);
 			context.fill();
 			context.stroke();
 		}
 
-		function dragsubject(event) {
+		function dragsubject(event) {	
 			return simulation.find(event.x, event.y);   
 		}
 
