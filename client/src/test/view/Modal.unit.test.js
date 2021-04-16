@@ -39,6 +39,8 @@ describe("Riduci le dimensioni", ()=>{
 	});
 	afterEach( async() => {
 		fireEvent.click(screen.getByRole("button", { name: "Start reduction" }));
+		setInterval(() => {
+		  }, 5000);
 		await waitFor(() => {
 		
 			expect(screen.getByRole("heading",{name: "HDViz" })).toBeInTheDocument();
@@ -48,12 +50,11 @@ describe("Riduci le dimensioni", ()=>{
 	test("Seleziona LLE",()=>{
 		fireEvent.change(screen.getByRole("combobox",{name:"Select algorithm"}),{target:{value:"lle"}});
 		fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),{target:{value: "test1"}});
-		fireEvent.change(screen.getByRole("slider",{value:"2"}),{target:{value: "5"}});
-		//fireEvent.change(screen.getByRole("cbox",{name:"Select algorithm"}),{target:{value:"lle"}});
+		fireEvent.change(screen.getByDisplayValue("2"),{target:{value:5}});
 		expect(screen.getByText("LLE")).toBeInTheDocument();
 		expect(screen.getByRole("textbox",{name:"New dimensions name"}).value).toBe("test1");
-		expect(screen.getByRole("slider",{name:"New dimensions number"}).value).toBe("5");
-	});
+		expect(screen.getByDisplayValue("5").value).toBe("5");
+	},30000);
 	test("Seleziona FASTMAP",()=>{
 		fireEvent.change(screen.getByRole("combobox",{name:"Select algorithm"}),{target:{value:"fastMap"}});
 		fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),{target:{value: "test2"}});
@@ -61,7 +62,7 @@ describe("Riduci le dimensioni", ()=>{
 		expect(screen.getByText("FASTMAP")).toBeInTheDocument();
 		expect(screen.getByRole("textbox",{name:"New dimensions name"}).value).toBe("test2");
 		expect(screen.getByRole("textbox",{name:""}).value).toBe("5");
-	});
+	},150000);
 	test("Seleziona ISOMAP",()=>{
 		fireEvent.change(screen.getByRole("combobox",{name:"Select algorithm"}),{target:{value:"isoMap"}});
 		fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),{target:{value: "test3"}});
@@ -69,7 +70,7 @@ describe("Riduci le dimensioni", ()=>{
 		expect(screen.getByText("ISOMAP")).toBeInTheDocument();
 		expect(screen.getByRole("textbox",{name:"New dimensions name"}).value).toBe("test3");
 		expect(screen.getByRole("textbox",{name:""}).value).toBe("5");
-	});
+	},15000);
 	test("Seleziona TSNE", async()=>{
 		fireEvent.change(screen.getByRole("combobox",{name:"Select algorithm"}),{target:{value:"t-sne"}});
 		fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),{target:{value: "test4"}});
@@ -77,7 +78,7 @@ describe("Riduci le dimensioni", ()=>{
 		expect(screen.getByText("TSNE")).toBeInTheDocument();
 		expect(screen.getByRole("textbox",{name:"New dimensions name"}).value).toBe("test4");
 		expect(screen.getByRole("textbox",{name:""}).value).toBe("5");
-	},10000);
+	},15000);
 	
 });
 describe("Calcola distanza", ()=>{
