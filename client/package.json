@@ -38,7 +38,8 @@
     "coveragePathIgnorePatterns": [
       "src/index.js",
       "src/reportWebVitals.js",
-      "src/viewModel/AlghorithmStrategy.js"
+      "src/components/UI/graphUI/charts/pca.js",
+      "src/components/UI/burgerMenuUI/WindowWidth.js"
     ]
   },
   "eslintConfig": {
