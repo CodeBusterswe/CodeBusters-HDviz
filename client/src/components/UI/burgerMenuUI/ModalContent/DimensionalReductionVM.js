@@ -2,6 +2,15 @@ import { makeAutoObservable } from "mobx";
 import {AlgorithmType} from "../../../../utils";
 import Dimension from "../../../../stores/data/Dimension";
 import DimReduction from "./StrategyDimReduction/DimReduction";
+import IsomapStrategy from "./StrategyDimReduction/alghorithms/IsomapStrategy";
+import FastmapStrategy from "./StrategyDimReduction/alghorithms/FastmapStrategy";
+import LLEStrategy from "./StrategyDimReduction/alghorithms/LLEStrategy";
+import TsneStrategy from "./StrategyDimReduction/alghorithms/TsneStrategy";
+import FastmapParameter from "./StrategyDimReduction/parameters/FastmapParameter";
+import IsomapParameter from "./StrategyDimReduction/parameters/IsomapParameter";
+import LLEParameter from "./StrategyDimReduction/parameters/LLEParameter";
+import TsneParameter from "./StrategyDimReduction/parameters/TsneParameter";
+
 export class DimensionalReductionVM{
 	constructor(rootStore, closeModal){
 		this.datasetStore = rootStore.datasetStore;
@@ -32,12 +41,28 @@ export class DimensionalReductionVM{
 		    if(this.datasetStore.dimensions.some(dim => dim.value.slice(0, -1) === parameters.Name) || this.newDimensionsName ==="")
 			    throw new Error("The name is already in use. Please choose a different one.");
     		//*******************************************************************
+
 		    const drStrategy = new DimReduction();
+    		let params;
+				
+    		if(this.algorithmType === AlgorithmType.IsoMap) {
+    			drStrategy.setStrategy(new IsomapStrategy());
+    			params = new IsomapParameter(parameters);
+    		}
+    		if(this.algorithmType === AlgorithmType.FastMap) {
+    			drStrategy.setStrategy(new FastmapStrategy());
+    			params = new FastmapParameter(parameters);
+    		}
+    		if(this.algorithmType === AlgorithmType.LLE) {
+    			drStrategy.setStrategy(new LLEStrategy());
+    			params = new LLEParameter(parameters);
+    		}
+    		if(this.algorithmType === AlgorithmType.tSNE) {
+    			drStrategy.setStrategy(new TsneStrategy());
+    			params = new TsneParameter(parameters);
+    		}	
 
-		    drStrategy.setStrategy(this.algorithmType, parameters);
-		    drStrategy.setData(data);
-
-    		const reduction = drStrategy.executeStrategy();
+    		const reduction = drStrategy.executeStrategy(params,data);
 		
     		let newDimsFromReduction = [];
     		for (let i = 1; i <= reduction._cols; i++) {

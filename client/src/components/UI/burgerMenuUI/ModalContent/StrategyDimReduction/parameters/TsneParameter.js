@@ -4,7 +4,7 @@ export default class TsneParameter extends Parameter {
 	#perplexity;
 	#epsilon;
 	constructor(parameters){
-		super();
+		super(parameters);
 		this.#perplexity = parameters.Perplexity;
 		this.#epsilon = parameters.Epsilon;
 	}
