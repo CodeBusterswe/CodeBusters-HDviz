@@ -178,8 +178,8 @@ export class LoadDataFromDBVM{
     }
     handleConfirm=()=>{
     	this.loadDataAndDims();
-    	this.resetAndClose();
     	this.openAlertSuccess();
+    	this.resetAndClose();    	
     }
 	handleDismiss=()=>{
 		this.resetAndClose();

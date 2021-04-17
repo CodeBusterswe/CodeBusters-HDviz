@@ -3,7 +3,7 @@ import Parameter from "./../Parameter";
 export default class LLEParameter extends Parameter {
 	#neighbors;
 	constructor(parameters){
-		super();
+		super(parameters);
 		this.#neighbors = parameters.Neighbors;
 	}
 

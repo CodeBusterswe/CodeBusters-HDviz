@@ -11,7 +11,6 @@ export class PlmaChartVM {
 		this.radius = 4;
     	this.datasetStore = rootStore.datasetStore;
 		this.preferencesStore = rootStore.preferencesStore;
-		this.data = this.datasetStore.selectedData.map(d => {return {...d};});
 
 		makeAutoObservable(this, {datasetStore: false, preferencesStore:false}, {autoBind: true});
 	}
@@ -41,11 +40,12 @@ export class PlmaChartVM {
 		const y = d3.scaleLinear([0, this.height]);
 		const xAxis = d3.axisBottom(x).ticks(6);
 		const yAxis = d3.axisLeft(y).ticks(6);
+		let data = this.datasetStore.selectedData.map(d => {return {...d};});
 		if(this.dimensionsNames.length<1){
 			return;
 		}
 		let pc;
-		let numericData = this.data.map(d => {
+		let numericData = data.map(d => {
 			return this.dimensionsNames.map(dim => {
 				return d[dim];
 			});
@@ -76,9 +76,9 @@ export class PlmaChartVM {
 		y.domain([min, max]).nice();
 		//x.domain([-3.5, 3.5])
 		//y.domain([-3.5, 3.5])
-		for (let i = 0; i < this.data.length; i++) {
-			this.data[i].pc1 = isNaN(A[i][0]) ? 0 : A[i][0];
-			this.data[i].pc2 = isNaN(A[i][1]) ? 0 : A[i][1];
+		for (let i = 0; i < data.length; i++) {
+			data[i].pc1 = isNaN(A[i][0]) ? 0 : A[i][0];
+			data[i].pc2 = isNaN(A[i][1]) ? 0 : A[i][1];
 		}
 		let dimensions = this.dimensionsNames.
 			  map(function(key, i) {
@@ -114,10 +114,10 @@ export class PlmaChartVM {
 				style("text-anchor", "end").
 				text("PC2");
 		}
-		const colorDomain = d3.extent(this.data, (d)=>{return +d[this.color]; });
+		const colorDomain = d3.extent(data, (d)=>{return +d[this.color]; });
 		const palette = colorDomain[0] || colorDomain[0] === 0 ? 
 			d3.scaleLinear().domain(colorDomain).range(["red", "lightblue"]) : 
-			d3.scaleOrdinal(d3.schemeTableau10).domain(new Set(this.data.map(d => d[this.color])));
+			d3.scaleOrdinal(d3.schemeTableau10).domain(new Set(data.map(d => d[this.color])));
 		//legenda colori
 		this.svgParent.selectAll(".legend").remove();
 		if(this.color){
@@ -152,7 +152,7 @@ export class PlmaChartVM {
 			B[d.id][0] = newPC1;
 			B[d.id][1] = newPC2;
 			const newA = dot(numericData, B);
-			this.data.forEach(function(d,i){
+			data.forEach(function(d,i){
 			  d.pc1 = newA[i][0];
 			  d.pc2 = newA[i][1];
 			});
@@ -201,7 +201,7 @@ export class PlmaChartVM {
 		//punti
 		this.svg.selectAll("circle.dot").remove();
 		this.svg.selectAll(".dot").
-			data(this.data).
+			data(data).
 			enter().append("circle").
 			attr("class", "dot").
 			attr("r", 3).
@@ -236,10 +236,11 @@ export class PlmaChartVM {
 	}
 
 	colorChart(){
-		const colorDomain = d3.extent(this.data, (d) => {return +d[this.color]; });
+		let data = this.datasetStore.selectedData.map(d => {return {...d};});
+		const colorDomain = d3.extent(data, (d) => {return +d[this.color]; });
 		const palette = colorDomain[0] || colorDomain[0] === 0 ? 
 			d3.scaleLinear().domain(colorDomain).range(["red", "lightblue"]) : 
-			d3.scaleOrdinal(d3.schemeTableau10).domain(new Set(this.data.map(d => d[this.color])));
+			d3.scaleOrdinal(d3.schemeTableau10).domain(new Set(data.map(d => d[this.color])));
 		if(this.dimensionsNames.length<1){
 			return;
 		}

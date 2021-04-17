@@ -44,9 +44,10 @@ describe("Riduci le dimensioni", ()=>{
 			expect(screen.getByRole("heading",{name: "HDViz" })).toBeInTheDocument();
 			
 		});
+		fireEvent.click(screen.getByRole("button",{name: "Scatterplot Matrix"}));
+		fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis one" }),{key: "test"});
 	});
 	test("Seleziona LLE",()=>{
-		fireEvent.click(screen.getByRole("button", { name: "Stduction" }));
 		fireEvent.change(screen.getByRole("combobox",{name:"Select algorithm"}),{target:{value:"lle"}});
 		fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),{target:{value: "test"}});
 		fireEvent.change(screen.getByDisplayValue("2"),{target:{value:5}});
@@ -101,6 +102,8 @@ describe("Calcola distanza", ()=>{
 			expect(screen.getByRole("heading",{name: "HDViz" })).toBeInTheDocument();
 			
 		});
+		fireEvent.click(screen.getByRole("button",{name: "Scatterplot Matrix"}));
+		fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis one" }),{key: "test1"});
 	});
 	test("Seleziona EUCLIDEAN",()=>{
 		fireEvent.keyDown(screen.getByRole("combobox",{name:"Select distance type"},{key:"EUCLIDEAN"}));
