@@ -39,7 +39,7 @@ export class LoadDataFromDBVM{
 			data = await getDatasetWithCustomParams(this.selectedColumns, this.conditionSign, this.conditionColumn, this.conditionValue, this.table);
 		else
 			data = await getDatasetWithParams(this.selectedColumns, this.table);
-	   return data;
+	   return data.data;
 	}
 
 	async onSubmit(){
