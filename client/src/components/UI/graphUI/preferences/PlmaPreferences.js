@@ -24,6 +24,7 @@ const PlmaPreferences = observer(() => {
 				<Form.Label>Select the dimensions to show</Form.Label>
 				<Select
 					values={userDimensions}
+					defaultValue={userDimensions}
 					options={keys}
 					isMulti
 					name="toReduxDimensionsList"

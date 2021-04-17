@@ -5,7 +5,7 @@ export const getDatasetWithParams=async(selectedColumns,table)=>{
 	try{
 		const selectField=selectedColumns.map(item => item.value);
 		const dataSet= await api.post("/get-data",{selectField, table});
-		console.log(dataSet);
+		//console.log(dataSet);
 		return dataSet;
 		//return dataSet;
 	}catch(err){
@@ -19,7 +19,7 @@ export const getDatasetWithCustomParams=async(selectedColumns, conditionSign, co
 	try{
 		const selectField=selectedColumns.map(item => item.value);
 		const dataSet= await api.post("/get-custom-data",{selectField, params});
-		console.log(dataSet);
+		//console.log(dataSet);
 		//return dataSet.data;
 		return dataSet;
 	}catch(err){

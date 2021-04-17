@@ -42,6 +42,8 @@ export class PlmaChartVM {
 		const yAxis = d3.axisLeft(y).ticks(6);
 		let data = this.datasetStore.selectedData.map(d => {return {...d};});
 		if(this.dimensionsNames.length<1){
+			this.svg.selectAll("*").remove();
+			this.svgParent.selectAll(".legend").remove();
 			return;
 		}
 		let pc;
@@ -89,7 +91,7 @@ export class PlmaChartVM {
 				  id: i,
 				};
 			  });
-		var showAxis = false;
+		/*var showAxis = false;
 		if (showAxis) {
 			this.svg.selectAll("g").remove();
 			this.svg.append("g").
@@ -113,7 +115,7 @@ export class PlmaChartVM {
 				attr("dy", ".71em").
 				style("text-anchor", "end").
 				text("PC2");
-		}
+		}*/
 		const colorDomain = d3.extent(data, (d)=>{return +d[this.color]; });
 		const palette = colorDomain[0] || colorDomain[0] === 0 ? 
 			d3.scaleLinear().domain(colorDomain).range(["red", "lightblue"]) : 
@@ -241,11 +243,12 @@ export class PlmaChartVM {
 		const palette = colorDomain[0] || colorDomain[0] === 0 ? 
 			d3.scaleLinear().domain(colorDomain).range(["red", "lightblue"]) : 
 			d3.scaleOrdinal(d3.schemeTableau10).domain(new Set(data.map(d => d[this.color])));
-		if(this.dimensionsNames.length<1){
+		this.svgParent.selectAll(".legend").remove();
+		console.log(this.color);
+		if(this.dimensionsNames.length<1 || this.color === undefined){
 			return;
 		}
 		//legenda colori
-		this.svgParent.selectAll(".legend").remove();
 		var legend = this.svgParent.selectAll(".legend").
 			data(palette.domain()).
 			enter().append("g").

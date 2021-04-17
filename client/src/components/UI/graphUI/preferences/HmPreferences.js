@@ -25,7 +25,7 @@ const HeatMapPreferences = observer(() => {
 							<Form.Control
 								custom
 								as="select"
-								value={values[index]}
+								value={values[identifiers]}
 								onChange={handleSelectChange}
 							>
 								<option value={"undefined"} key={"noDimensions"+identifiers}>No dimension</option>

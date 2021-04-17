@@ -20,7 +20,9 @@ export class PlmaPreferencesVM {
 	}
     
 	get userDimensions(){
-		return this.preferencesStore.preferencesPlma.dimensions;
+		return this.preferencesStore.preferencesPlma.dimensions.map(d => {
+			return {value: d, label: d};
+		});
 	}
 
 	get userColor(){

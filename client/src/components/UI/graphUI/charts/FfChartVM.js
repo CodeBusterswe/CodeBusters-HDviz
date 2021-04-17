@@ -60,6 +60,7 @@ export class FfChartVM {
 				force("charge", d3.forceManyBody()).
 				force("center", d3.forceCenter(this.width / 2, this.height / 2));
 			simulation.
+				tick(40).	//riduce il numero di chiamate a ticked, maggiore é il numero, meno lagga
 				on("tick", ticked);
 			this.canvas.call(
 				d3.drag().
