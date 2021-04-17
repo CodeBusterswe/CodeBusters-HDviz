@@ -36,9 +36,6 @@
     "eject": "react-scripts eject"
   },
   "jest": {
-    "transformIgnorePatterns": [
-      "node_modules/(?!(react-native.*|@?saehrimnir/druidjs.*)/)"
-    ],
     "coveragePathIgnorePatterns": [
       "src/index.js",
       "src/reportWebVitals.js",
