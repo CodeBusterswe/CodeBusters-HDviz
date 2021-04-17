@@ -46,7 +46,7 @@ describe("Riduci le dimensioni", ()=>{
 		});
 		fireEvent.click(screen.getByRole("button",{name: "Scatterplot Matrix"}));
 		fireEvent.keyDown(screen.getByRole("combobox",{name: "Axis one" }),{key: "test"});
-	});
+	}, 30000);
 	test("Seleziona LLE",()=>{
 		fireEvent.change(screen.getByRole("combobox",{name:"Select algorithm"}),{target:{value:"lle"}});
 		fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),{target:{value: "test"}});
