@@ -32,3 +32,15 @@ test("Aiuti all'utente",()=>{
 	expect(screen.getByText("Guida introduttiva all'utilizzo di HDViz")).toBeInTheDocument();
 	fireEvent.click(screen.getByRole("button",{name: "Torna al menù" }));
 });
+
+test("Si verifica che venga visualizzato un messaggio d'errore se i dati non sono stati inseriti nel sistema", async() => {
+	render(<App />);
+	fireEvent.click(screen.getByRole("button",{name: "Carica dati da CSV" }));
+	await waitFor(() => {			
+		expect(screen.getByRole("button", { name: "Torna al menù" })).toBeInTheDocument();
+	});
+	fireEvent.click(screen.getByRole("button",{name: "Torna al menù" }));
+	await waitFor(() => {	
+		expect(screen.getByText("Avviso")).toBeInTheDocument();
+	});
+});
