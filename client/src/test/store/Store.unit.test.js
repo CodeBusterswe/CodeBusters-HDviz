@@ -36,3 +36,12 @@ test("store should add new dimensions from dimensionality reduction process", ()
 	store.addDimensionsToDataset(dimension);
 	expect(store.selectedDimensions).toStrictEqual([dimension]);
 });
+
+test("store should add new dimensions from dimensionality reduction process", () => {
+	store.addDimensionsToDataset(dimension);
+	store.loadData(dataset)
+	store.reset();
+	expect(store.originalData).toStrictEqual([]);
+	expect(store.dimensions).toStrictEqual([]);
+	expect(store.selectedData).toStrictEqual([]);
+});

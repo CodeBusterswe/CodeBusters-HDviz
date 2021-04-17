@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.8.3",
     "@tippyjs/react": "^4.2.4",
     "axios": "^0.21.1",
+    "axios-mock-adapter": "^1.19.0",
     "bootstrap": "^4.6.0",
     "canvas": "^2.7.0",
     "d3": "^6.6.0",
@@ -35,6 +36,9 @@
     "eject": "react-scripts eject"
   },
   "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native.*|@?saehrimnir/druidjs.*)/)"
+    ],
     "coveragePathIgnorePatterns": [
       "src/index.js",
       "src/reportWebVitals.js",

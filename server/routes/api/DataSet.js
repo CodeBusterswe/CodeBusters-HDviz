@@ -2,6 +2,7 @@ const express=require('express');
 const router=express.Router();
 var DB_NAME= require('../../config/default');
 const db = require('../../config/db');
+const cons = require('consolidate');
 
 router.post('/get-data', async (req, res, next)=>{
         const {selectField, table}=req.body
@@ -30,7 +31,7 @@ router.post('/get-custom-data', async (req, res, next)=>{
     const {selectField}=req.body;
     const {conditionSign, conditionColumn, conditionValue, table}=req.body.params
     let prepareQuery = columns => columns.map(c => c).join();
-    let val = +conditionValue ? conditionValue : '\''+conditionValue+'\'';
+    let val =+conditionValue ? conditionValue : '\''+conditionValue+'\'';
     try{
         if(!table){
             return res.status(400).send({msg:'Pleas select table name!!'});

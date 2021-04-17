@@ -1,11 +1,12 @@
 import {api} from "./ApiURL";
-
+import axios from "axios";
 //restituisce il valore delle colonne selezionate
 export const getDatasetWithParams=async(selectedColumns,table)=>{
 	try{
 		const selectField=selectedColumns.map(item => item.value);
-		const dataSet= await api.post("/get-data",{selectField, table});
-		return dataSet.data;
+		const dataSet= await axios.post("/get-data",{selectField, table});
+		//return dataSet.data;
+		return dataSet;
 	}catch(err){
 		console.error(err.message);    
 	 }
@@ -16,8 +17,9 @@ export const getDatasetWithCustomParams=async(selectedColumns, conditionSign, co
 	let params = {conditionSign, conditionColumn, conditionValue, table};
 	try{
 		const selectField=selectedColumns.map(item => item.value);
-		const dataSet= await api.post("/get-custom-data",{selectField, params});
-		return dataSet.data;
+		const dataSet= await axios.post("/get-custom-data",{selectField, params});
+		//return dataSet.data;
+		return dataSet;
 	}catch(err){
 		console.error(err.message);    
 	 }
@@ -26,8 +28,9 @@ export const getDatasetWithCustomParams=async(selectedColumns, conditionSign, co
 //ritorna tutte le tabelle presenti nel database
 export const getTables=async()=>{
 	try{
-		const table= await api.get("/get-tables");
-		return table.data;
+		const table= await axios.get("/get-tables");
+		return table;
+		//return {table:table.data,status:table.status};
 	}catch(err){
 		console.error(err.message);    
 	}
@@ -35,8 +38,9 @@ export const getTables=async()=>{
 //Ritorna le colonne di una tabella
 export const getColumnsByName=async(table_name)=>{
 	try{
-		const columns = await api.post("/get-columns",{table:table_name});
-		return columns.data;
+		const columns = await axios.post("/get-columns",{table:table_name});
+		return columns;
+		//return {columns:columns.data,status:columns.status};
 	}catch(err){
 		console.error(err.message);    
 	 }
