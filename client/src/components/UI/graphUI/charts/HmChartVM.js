@@ -97,8 +97,6 @@ export class HmChartVM {
     	let newData = this.prepareData();
 		    	
     	d3.selectAll("rect").remove();
-
-    	console.log(this.colums);
     	
     	// Build X scales and axis:
     	const x = d3.scaleBand().
@@ -168,9 +166,9 @@ export class HmChartVM {
     	else{
     		myColor = d3.scaleOrdinal(d3.schemeCategory10);
     	}
-
-    	console.log(this.svg);
-
+    	if(newData.length<2){
+    		return;
+    	}
     	this.svg.selectAll().
     		data(newData).
     		enter().

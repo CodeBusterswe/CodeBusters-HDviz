@@ -20,21 +20,16 @@ export class FfPreferencesVM {
 	get keys(){
 		return this.datasetStore.checkedDimensions.map(d => d.value);
 	}
-    
+  
+	get color(){
+		return this.preferencesStore.preferencesFf.color;
+	}
 	get matrices(){
 		return this.distanceMatricesStore.distanceMatricesNames;
 	}
 	
 	get matrixName(){
 		return this.preferencesStore.preferencesFf.distanceMatrix;
-	}
-
-	get order(){
-		return this.preferencesStore.preferencesFf.orderBy;
-	}
-
-	get label(){
-		return this.preferencesStore.preferencesFf.label;
 	}
 
 	get distMax(){
