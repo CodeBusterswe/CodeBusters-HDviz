@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "supertest": "^6.1.3"
+  },
+  "dependencies": {
+    "chokidar": "^3.5.1"
+  }
+}

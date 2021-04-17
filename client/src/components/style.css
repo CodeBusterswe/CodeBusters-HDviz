@@ -1,0 +1,411 @@
+:root {
+  --text-primary: #b6b6b6;
+  --text-secondary: #ececec;
+  --bg-primary: #282c34;
+  --bg-secondary: #141418;
+  --transition-speed: 300ms;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/*used for remove line at click, need it for a visible glitch in the menu*/
+*:focus {
+    outline: 0;
+}
+
+.listDimension
+{
+  margin:auto;
+  width: 15em;
+}
+
+/* css button qui*/
+.bm-item {
+  padding: 0;
+  display: inline-block;
+  border: none;
+  background: none;
+  color: white;
+}
+
+/* button on hover qui */
+.bm-item:hover {
+  color: blue;
+  transition-duration: 1s;
+}
+
+.content {
+  margin: 1em;
+  margin-left: 6em;
+}
+
+/* GRAFICO */
+.grafico {
+  display: grid;
+  height: 100vh;
+  grid: 50px 1fr 1fr 50px / 50px 1fr 1fr 50px;
+  font-size: calc(10px + 2vmin);
+  padding: 5em 2em 2em 5em;
+}
+
+.container-pref{
+	float: right;
+	display:flex;
+	flex-direction: column;
+	margin-right: 2em;
+	margin-top: 2em;
+	width: 18em;
+}
+
+.chartPreferences{
+	float: right;
+	margin-top: 2em;
+  width: 100%;
+  padding: 1em;
+  border: 2px solid var(--bg-primary);
+	box-shadow: 2px 3px var(--bg-primary);
+	border-radius: 5px;
+}
+
+.show-pref {
+	visibility: visible;
+  opacity: 1;
+	-moz-transition:all .3s ease-in; 
+	-webkit-transition: all .3s ease-in;
+	-o-transition:all .3s ease-in;
+	transition: all .3s ease-in;
+}
+
+.hide-pref {
+	opacity: 0;
+ 	-moz-transition:all .3s ease-out; 
+	-webkit-transition: all .3s ease-out;
+	-o-transition:all .3s ease-out;
+	transition: all .3s ease-out;
+	visibility: hidden;
+}
+
+.btn-pref{
+	margin: auto;
+	width: 60%;
+}
+
+.center-graph {
+	width: 950px;
+	margin: auto;
+}
+
+.chartDiv{
+  width: 80%;
+}
+
+.labels{
+	width:100%;
+	text-align: center;
+	margin-bottom: 2px;
+}
+
+/*posizione canvas sopra a svg per SPM*/
+.plot {position: absolute;}
+#spm-canvas, #am-canvas, #ff-canvas {z-index: -2;}
+#spm-svg, #am-svg, #plma-svg, #hm-svg{z-index: -3;}
+#spm-cell {z-index: -1;}
+
+
+/* FINE GRAFICO */
+
+/* INIZIO MENU */
+.navbar {
+  position: fixed!important;
+  display: block!important;
+  transition: width 200ms ease;
+	overflow-x: hidden;
+	overflow-y: auto;
+	background-color: var(--bg-primary);
+  padding: 0%!important;
+}
+
+.navbar::-webkit-scrollbar-track {
+  border: 1px solid #000;
+  padding: 2px 0;
+  background-color: #404040;
+}
+
+.navbar::-webkit-scrollbar {
+  width: 0px;
+}
+
+.navbar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #737272;
+  border: 1px solid #000;
+}
+
+.navbar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.navbar-nav:hover {
+	align-items: left;
+}
+
+.nav-item{
+  width: 100%;
+	background-color: none;
+}
+
+.logo {
+	margin-top: .7em;
+	width: 100%;
+	height: 3.3em;
+} 
+
+.nav-link {
+	background: var(--bg-primary);
+	cursor: pointer;
+	border: 0;
+	width: 100%;
+  display: flex!important;
+  align-items: center;
+	margin: auto;
+  height: 4.5em;
+  color: var(--text-primary);
+  text-decoration: none;
+  filter:opacity(0.8);
+  transition: var(--transition-speed);
+}
+
+.nav-link:hover {
+  filter: opacity(1);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.nav-link:disabled,.nav-link[disabled] {
+	filter:opacity(0.4);
+}
+
+.popover-header{
+	color: red;
+}
+
+.link-text {
+  margin-left: 1em;
+	font-size: 16px;
+	visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity .4s ease-in;
+}
+
+.icon {
+  width: 2em;
+  min-width: 2em;
+  margin: 0 1.4em;
+}
+
+.arrow-icon{
+	color:white;
+	margin: 0 1.4em;
+	margin-top: .5em;
+}
+
+.logo-text {
+	margin-top: .2em;
+	background-color: none;
+  font-weight: bold;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1.5em;
+  letter-spacing: 0.2ch;
+}
+
+.logo svg {
+  transform: rotate(0deg);
+  transition: var(--transition-speed);
+}
+
+.logo-text {
+  display: inline;
+  position: absolute;
+  left: -999px;
+  transition: var(--transition-speed);
+}
+
+.navbar:hover .logo svg {
+  transform: rotate(-180deg);
+}
+
+@media only screen and (max-width: 600px) {
+  .navbar {
+    bottom: 0;
+    width: 100vw;
+    height: 4em;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .navbar-nav {
+    flex-direction: row!important;
+  }
+
+  .nav-link {	
+		margin-left:0;
+		width: 3em;
+  }
+
+	.content {
+		margin-left: 0;
+	}
+	.icon {
+		margin-left: 1em;
+	}
+}
+
+@media only screen and (min-width: 600px) {
+  .navbar {
+    top: 0;
+    width: 5em;
+    height: 100vh;
+  }
+
+  .navbar:hover {
+    width: 16em;
+  }
+
+  .navbar:hover .link-text {
+    visibility: visible;
+  	opacity: 1;
+  }
+
+  .navbar:hover .logo svg {
+    margin-left: 11em;
+  }
+
+  .navbar:hover .logo-text {
+    left: 0px;
+  }
+}
+/* TODO: DA RIVEDERE */
+/* FINE MENU */
+
+/* INIZIO HEADER */
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  padding-left: 2em;
+  background-color: #282c34;
+  height: 3.3em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+	justify-content: center;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.App-logo {
+	height: 4rem;
+  pointer-events: none;
+  margin: 2rem .4rem 2rem;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.first{
+	margin-right: auto;
+  visibility: hidden;
+}
+
+.last{
+	margin-left: auto;
+  background: #ddd;
+	margin-right:1em;
+}
+
+#modal{
+	width: 50em;
+	max-width: 100%;
+}
+/* FINE HEADER */
+
+/* INIZIO ALERT */
+.alert{
+	width: 40em;
+	max-width: 50%;
+	position:absolute!important;
+	right:0;
+	bottom: -1em;
+}
+/* FINE ALERT */
+
+.frame {
+  fill: none; /*riempimento*/
+  stroke: grey; /*contorno del quadrato*/
+}
+
+.axis,
+.frame {
+  shape-rendering: crispEdges;
+}
+
+.axis line {
+  stroke: #ddd;
+}
+
+.axis path {
+  display: none;
+}
+
+.cell text {
+  font-weight: bold;
+  text-transform: capitalize;
+  fill: black;
+}
+
+.frame {
+  fill: none;
+  stroke: #aaa;
+}
+
+.extent {
+  fill: #000;
+  fill-opacity: .125;
+  stroke: #fff;
+}
