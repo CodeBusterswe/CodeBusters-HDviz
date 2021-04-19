@@ -89,25 +89,31 @@ export class SpmChartVM {
 	}
 	mouseenter(e){
 		select(e.target).selectAll("line").remove();
+		select(e.target).selectAll(".yText").remove();
+		select(e.target).selectAll(".xText").remove();
 		select(e.target).append("line").
 			attr("class", "xLine").
-			attr("x1", this.padding / 2). //<<== change your code here
 			attr("y1", this.padding / 2).
-			attr("x2", this.padding / 2). //<<== and here
 			attr("y2", this.totalSize - this.padding / 2).
 			style("stroke-width", 1).
 			style("stroke", "red").
 			style("fill", "none");
 		select(e.target).append("line").
 			attr("class", "yLine").
-			attr("x1", this.padding / 2). 
-			attr("y1", this.padding / 2). //<<== change your code here
-			attr("x2", this.totalSize - this.padding / 2). 
-			attr("y2", this.padding / 2). //<<== and here
+			attr("x1", this.padding / 2).
+			attr("x2", this.totalSize - this.padding / 2).
 			style("stroke-width", 1).
 			style("stroke", "red").
 			style("fill", "none");
-		select(e.target).
+		select(e.target).append("text").
+			attr("class", "xText").
+			attr("x", this.totalSize).
+			attr("y", 200);
+		select(e.target).append("text").
+			attr("class", "yText").
+			attr("x", this.totalSize).
+			attr("y", 220);
+		/*select(e.target).
 			append("div").
 			style("opacity", 0).
 			attr("class", "").
@@ -115,7 +121,7 @@ export class SpmChartVM {
 			style("border", "solid").
 			style("border-width", "2px").
 			style("border-radius", "5px").
-			style("padding", "5px");
+			style("padding", "5px");*/
 
 	}
 	mousemove(e){
@@ -124,9 +130,7 @@ export class SpmChartVM {
 		if((xLine.empty() || yLine.empty()) && p && p.i !== p.j){
 			this.svgCell.append("line").
 				attr("class", "xLine").
-				attr("x1", e.layerX-80). //<<== change your code here
 				attr("y1", this.padding / 2).
-				attr("x2", e.layerX-80). //<<== and here
 				attr("y2", this.totalSize - this.padding / 2).
 				style("stroke-width", 1).
 				style("stroke", "red").
@@ -134,12 +138,20 @@ export class SpmChartVM {
 			this.svgCell.append("line").
 				attr("class", "yLine").
 				attr("x1", this.padding / 2). 
-				attr("y1", e.layerY- this.padding / 2). //<<== change your code here
 				attr("x2", this.totalSize - this.padding / 2). 
-				attr("y2", e.layerY- this.padding / 2). //<<== and here
 				style("stroke-width", 1).
 				style("stroke", "red").
 				style("fill", "none");
+			this.svgCell.append("text").
+				attr("class", "xText").
+				attr("x", this.totalSize).
+				attr("y", 200).
+				style("fill", "red");
+			this.svgCell.append("text").
+				attr("class", "yText").
+				attr("x", this.totalSize).
+				attr("y", 220).
+				style("fill", "red");
 		}
 		xLine.attr("x1", e.layerX-80).attr("x2", e.layerX-80);
 		yLine.attr("y1", e.layerY- this.padding / 2).attr("y2", e.layerY- this.padding / 2);
@@ -148,26 +160,32 @@ export class SpmChartVM {
 				const dimx = p.x, dimy = p.y;
 				const valx = e.layerX-(p.i*this.size+4*this.padding), valy = e.layerY-(p.j*this.size+this.padding/2);
 				const realValX = this.xScales[dimx].invert(valx), realValY = this.yScales[dimy].invert(valy);
-				//console.log(dimx,": ", realValX, dimy, ": ", realValY);
-				//dovrei mettere i valori su un div
-				//var matrix = e.currentTarget.getScreenCTM().
-    			//translate(+ e.currentTarget.getAttribute("cx"), + e.currentTarget.getAttribute("cy"));
-    		this.svgCell.select("div").
-    			html("<span>"+dimx + ": " + realValX+ "," + dimy + ": " + realValY+ "</span>").
-    			style("left", 400 + "px").
-    			style("top", 400 + "px").
-    			style("opacity", 1);
+				this.svgCell.select(".xText").
+					text(dimx + ": "+ realValX.toFixed(3)).
+					//attr("x", e.layerX-70).
+					//attr("y", e.layerY-this.padding).
+					style("fill", "red");
+				this.svgCell.select(".yText").
+					text(dimy + ": "+ realValY.toFixed(3)).
+					//attr("x", e.layerX-70).
+					//attr("y", e.layerY-this.padding*2).
+					style("fill", "red");
 			}catch(e){
+				this.svgCell.select(".xText").remove();
+				this.svgCell.select(".yText").remove();
 				console.log("almeno una dimensione non é numerica");
 			}
 		}
 		if(p && p.i === p.j){
 			this.svgCell.selectAll("line").remove();
+			this.svgCell.select(".xText").remove();
+			this.svgCell.select(".yText").remove();
 		}
 	}
 	mouseleave(e){
 		select(e.target).selectAll("line").remove();
-		//select(e.target).selectAll("div").remove();
+		select(e.target).select(".xText").remove();
+		select(e.target).select(".yText").remove();
 	}
 	updatePointsCanvas(){
 		this.svgCell.selectAll(".cell").remove();
