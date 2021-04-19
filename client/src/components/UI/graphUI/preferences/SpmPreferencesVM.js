@@ -10,8 +10,7 @@ export class SpmPreferencesVM {
 		this.preferencesStore = rootStore.preferencesStore;
 
     	makeObservable(this,{
-			dimensions : computed,
-			spmPreferences : computed
+			dimensions : computed
     	});
 	}
 
