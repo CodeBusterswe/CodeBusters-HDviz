@@ -87,66 +87,112 @@ export class SpmChartVM {
 					j: j});
 		return c;
 	}
-	mouseenter(e, p){
-		console.log("mouseneter");
-		select(e.target.parentNode).selectAll("line").remove();
-		select(e.target.parentNode).append("line").
+	mouseenter(e){
+		select(e.target).selectAll("line").remove();
+		select(e.target).selectAll(".yText").remove();
+		select(e.target).selectAll(".xText").remove();
+		select(e.target).append("line").
 			attr("class", "xLine").
-			//attr("x1", (this.size - this.padding)/2). //<<== change your code here
 			attr("y1", this.padding / 2).
-			//attr("x2", (this.size - this.padding)/2). //<<== and here
-			attr("y2", this.size - this.padding / 2).
-			style("stroke-width", 2).
+			attr("y2", this.totalSize - this.padding / 2).
+			style("stroke-width", 1).
 			style("stroke", "red").
 			style("fill", "none");
-		select(e.target.parentNode).append("line").
+		select(e.target).append("line").
 			attr("class", "yLine").
-			attr("x1", this.padding / 2). 
-			//attr("y1", (this.size - this.padding)/2). //<<== change your code here
-			attr("x2", this.size - this.padding / 2). 
-			//attr("y2", (this.size - this.padding)/2). //<<== and here
-			style("stroke-width", 2).
+			attr("x1", this.padding / 2).
+			attr("x2", this.totalSize - this.padding / 2).
+			style("stroke-width", 1).
 			style("stroke", "red").
 			style("fill", "none");
+		select(e.target).append("text").
+			attr("class", "xText").
+			attr("x", this.totalSize).
+			attr("y", 200);
+		select(e.target).append("text").
+			attr("class", "yText").
+			attr("x", this.totalSize).
+			attr("y", 220);
+		/*select(e.target).
+			append("div").
+			style("opacity", 0).
+			attr("class", "").
+			style("background-color", "white").
+			style("border", "solid").
+			style("border-width", "2px").
+			style("border-radius", "5px").
+			style("padding", "5px");*/
 
 	}
-	mousemove(e, p){
-		//console.log("mousemove");
-		const dimx = p.x, dimy = p.y;
-		const valx = e.layerX-(p.i*this.size+4*this.padding), valy = e.layerY-(p.j*this.size+this.padding/2);
-		//const realValX = this.xScales[dimx].invert(valx), realValY = this.yScales[dimy].invert(valy);
-		const xLine = select(e.target.parentNode).select(".xLine"), yLine = select(e.target.parentNode).selectAll(".yLine");
-		if(select(e.target.parentNode).selectAll("line").nodes().length===0){
-			select(e.target.parentNode).append("line").
+	mousemove(e){
+		const p = select(e.target).data()[0];
+		const xLine = this.svgCell.select(".xLine"), yLine = this.svgCell.selectAll(".yLine");
+		if((xLine.empty() || yLine.empty()) && p && p.i !== p.j){
+			this.svgCell.append("line").
 				attr("class", "xLine").
-				attr("x1", valx). //<<== change your code here
 				attr("y1", this.padding / 2).
-				attr("x2", valx). //<<== and here
-				attr("y2", this.size - this.padding / 2).
-				style("stroke-width", 2).
+				attr("y2", this.totalSize - this.padding / 2).
+				style("stroke-width", 1).
 				style("stroke", "red").
 				style("fill", "none");
-			select(e.target.parentNode).append("line").
+			this.svgCell.append("line").
 				attr("class", "yLine").
 				attr("x1", this.padding / 2). 
-				attr("y1", valy). //<<== change your code here
-				attr("x2", this.size - this.padding / 2). 
-				attr("y2", valy). //<<== and here
-				style("stroke-width", 2).
+				attr("x2", this.totalSize - this.padding / 2). 
+				style("stroke-width", 1).
 				style("stroke", "red").
 				style("fill", "none");
-		}else{
-			xLine.attr("x1", valx).attr("x2", valx);
-			yLine.attr("y1", valy).attr("y2", valy);
+			this.svgCell.append("text").
+				attr("class", "xText").
+				attr("x", this.totalSize).
+				attr("y", 200).
+				style("fill", "red");
+			this.svgCell.append("text").
+				attr("class", "yText").
+				attr("x", this.totalSize).
+				attr("y", 220).
+				style("fill", "red");
 		}
-		//console.log(dimx,": ", realValX, dimy, ": ", realValY);
+		xLine.attr("x1", e.layerX-80).attr("x2", e.layerX-80);
+		yLine.attr("y1", e.layerY- this.padding / 2).attr("y2", e.layerY- this.padding / 2);
+		if(p){
+			try{
+				const dimx = p.x, dimy = p.y;
+				const valx = e.layerX-(p.i*this.size+4*this.padding), valy = e.layerY-(p.j*this.size+this.padding/2);
+				const realValX = this.xScales[dimx].invert(valx), realValY = this.yScales[dimy].invert(valy);
+				this.svgCell.select(".xText").
+					text(dimx + ": "+ realValX.toFixed(3)).
+					//attr("x", e.layerX-70).
+					//attr("y", e.layerY-this.padding).
+					style("fill", "red");
+				this.svgCell.select(".yText").
+					text(dimy + ": "+ realValY.toFixed(3)).
+					//attr("x", e.layerX-70).
+					//attr("y", e.layerY-this.padding*2).
+					style("fill", "red");
+			}catch(e){
+				this.svgCell.select(".xText").remove();
+				this.svgCell.select(".yText").remove();
+				console.log("almeno una dimensione non é numerica");
+			}
+		}
+		if(p && p.i === p.j){
+			this.svgCell.selectAll("line").remove();
+			this.svgCell.select(".xText").remove();
+			this.svgCell.select(".yText").remove();
+		}
 	}
-	mouseleave(e, p){
-		console.log("mouseleave");
-		select(e.target.parentNode).selectAll("line").remove();
+	mouseleave(e){
+		select(e.target).selectAll("line").remove();
+		select(e.target).select(".xText").remove();
+		select(e.target).select(".yText").remove();
 	}
 	updatePointsCanvas(){
 		this.svgCell.selectAll(".cell").remove();
+		this.svgCell.
+			on("mouseenter", (e) => this.mouseenter(e)).
+			on("mousemove", (e) => this.mousemove(e)).
+			on("mouseleave", (e) => this.mouseleave(e));
 		let cell = this.svgCell.selectAll(".cell").
 			data(this.cross(this.traits, this.traits)).
 			enter().append("g").
@@ -155,7 +201,7 @@ export class SpmChartVM {
 				return "translate(" + d.i*this.size + "," + d.j*this.size + ")";
 			}).
 			each((d, i, list) => this.draw(d, i, list));
-		//cell._groups.forEach(c => console.log(c, c.__data__));
+
 		//aggiunge label alle cell centrali
 		cell.filter(function(d) { return d.i === d.j; }).
 			append("text").
@@ -172,10 +218,7 @@ export class SpmChartVM {
 			attr("y", this.padding / 2).
 			style("pointer-events","visible").
 			attr("width", this.size - this.padding).
-			attr("height", this.size - this.padding).
-			//on("mouseover", (e) => this.mouseenter(e, p)).
-			on("mousemove", (e) => this.mousemove(e, p));
-		    //on("mouseleave", (e) => this.mouseleave(e, p));
+			attr("height", this.size - this.padding);
 		let ctx = this.canvas.node().getContext("2d");
 		ctx.resetTransform();
 		ctx.transform(1, 0, 0, 1, p.i*this.size+4*this.padding, p.j*this.size+this.padding/2);
