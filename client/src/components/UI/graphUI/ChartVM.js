@@ -25,16 +25,4 @@ export class ChartVM {
 	get showChart(){
 		return this.show;
 	}
-	get dimensions(){
-		return this.datasetStore.dimensions;
-	}
-	get data(){
-		return this.datasetStore.originalData;
-	}
-	get selData(){
-		return this.datasetStore.selectedData;
-	}
-	get preferences(){
-		return this.preferencesStore.preferencesSpm;
-	}
 }
