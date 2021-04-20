@@ -109,7 +109,7 @@ const DimensionalReduction = observer((props) => {
 						/>
 					</Form.Group>
 					<Form.Group controlId="algorithmType" id="alg">	
-						<Form.Label>Algoritmo:</Form.Label>
+						<Form.Label>Algoritmo</Form.Label>
 						<Form.Control 
 							as="select" 
 							custom 

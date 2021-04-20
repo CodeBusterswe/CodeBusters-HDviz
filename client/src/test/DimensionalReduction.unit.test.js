@@ -37,8 +37,8 @@ describe("riduzione dimensionale", () => {
 
 	test("riduzione dimensionale fastmap", () => {
 		//set algorithm
-		fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),{target:{value: "test"}});
-		fireEvent.click(screen.getByRole("button",{name: "Start reduction" }));	
+		fireEvent.change(screen.getByRole("textbox",{name:"Nome nuove dimensioni"}),{target:{value: "test"}});
+		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione" }));	
 		//test new data
 		let values = getData(),
 			row1 = [values[0][0][1], values[0][1][1]],
@@ -49,9 +49,9 @@ describe("riduzione dimensionale", () => {
 
 	test("riduzione dimensionale LLE", () => {
 		//set algorithm
-		fireEvent.change(screen.getByRole("combobox",{name:"Select algorithm"}),{target:{value:"lle"}});
-		fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),{target:{value: "test"}});
-		fireEvent.click(screen.getByRole("button",{name: "Start reduction" }));	
+		fireEvent.change(screen.getByRole("combobox",{name:"Algoritmo"}),{target:{value:"lle"}});
+		fireEvent.change(screen.getByRole("textbox",{name:"Nome nuove dimensioni"}),{target:{value: "test"}});
+		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione" }));	
 		//test new data
 		let values = getData(),
 			row1 = [values[0][0][1], values[0][1][1]],
@@ -62,9 +62,9 @@ describe("riduzione dimensionale", () => {
 
 	test("riduzione dimensionale IsoMap", () => {
 		//set algorithm
-		fireEvent.change(screen.getByRole("combobox",{name:"Select algorithm"}),{target:{value:"isoMap"}});
-		fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),{target:{value: "test"}});
-		fireEvent.click(screen.getByRole("button",{name: "Start reduction" }));	
+		fireEvent.change(screen.getByRole("combobox",{name:"Algoritmo"}),{target:{value:"isoMap"}});
+		fireEvent.change(screen.getByRole("textbox",{name:"Nome nuove dimensioni"}),{target:{value: "test"}});
+		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione" }));	
 		//test new data
 		let values = getData(),
 			row1 = [values[0][0][1], values[0][1][1]],
@@ -75,9 +75,9 @@ describe("riduzione dimensionale", () => {
 
 	test("riduzione dimensionale t-SNE", () => {
 		//set algorithm
-		fireEvent.change(screen.getByRole("combobox",{name:"Select algorithm"}),{target:{value:"t-sne"}});
-		fireEvent.change(screen.getByRole("textbox",{name:"New dimensions name"}),{target:{value: "test"}});
-		fireEvent.click(screen.getByRole("button",{name: "Start reduction" }));	
+		fireEvent.change(screen.getByRole("combobox",{name:"Algoritmo"}),{target:{value:"t-sne"}});
+		fireEvent.change(screen.getByRole("textbox",{name:"Nome nuove dimensioni"}),{target:{value: "test"}});
+		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione" }));	
 		//test new data
 		let values = getData(),
 			row1 = [values[0][0][1], values[0][1][1]],
