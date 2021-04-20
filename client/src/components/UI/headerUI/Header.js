@@ -1,29 +1,33 @@
-import React, {useState} from "react";
+import React from "react";
 import logo from "./logo/logo.svg";
 import {Button} from "react-bootstrap";
 import "../../style.css";
 import Guida from "./Guida";
+import { useInstance } from "../../../useInstance";
+import { HeaderVM } from "./HeaderVM";
+import { useStore } from "../../../ContextProvider";
+import { observer } from "mobx-react-lite";
 
-const Header = () => {
-	const [modalIsOpen, setIsOpen] = useState(false);
-	function openModal() {
-		setIsOpen(true);
-	}
-
-	function closeModal() {
-		setIsOpen(false);
-	}
-
+const Header = observer(() => {
+	const {
+		modalIsOpen,
+		openModal,
+		closeModal,
+		loadDefaultDataset,
+	} = useInstance(new HeaderVM(useStore()));
+	
 	return (
 		<>
 			<header className="App-header">
-				<div className="first"></div>
 				<img src={logo} className="App-logo" alt="logo" />
 				<h1>HDViz</h1>
-				<Button className="last" onClick={openModal}>Guida introduttiva</Button>	
+				<div className="headerBtnDiv">
+					<Button variant="success" onClick={loadDefaultDataset}>Carica un dataset di prova</Button>
+					<Button onClick={openModal}>Guida introduttiva</Button>
+				</div>
 			</header>
 			<Guida modalIsOpen={modalIsOpen} closeModal={closeModal}/>
 		</>
 	);
-};
+});
 export default Header;

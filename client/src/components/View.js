@@ -10,8 +10,8 @@ const View = () => {
 	const rootStore = new RootStore();
 	return (
 		<>
-			<Header/>
 			<AppContextProvider value={rootStore}>
+				<Header/>
 				<Menu/>
 				<Chart/>
 			</AppContextProvider>

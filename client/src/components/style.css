@@ -348,17 +348,6 @@ code {
   }
 }
 
-.first{
-	margin-right: auto;
-  visibility: hidden;
-}
-
-.last{
-	margin-left: auto;
-  background: #ddd;
-	margin-right:1em;
-}
-
 #modal{
 	width: 50em;
 	max-width: 100%;

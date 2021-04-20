@@ -38,8 +38,8 @@ export class PlmaChartVM {
 		const colorAxis = d3.scaleOrdinal(d3.schemeCategory10);
 		const x = d3.scaleLinear([0, this.width]);
 		const y = d3.scaleLinear([0, this.height]);
-		const xAxis = d3.axisBottom(x).ticks(6);
-		const yAxis = d3.axisLeft(y).ticks(6);
+		//const xAxis = d3.axisBottom(x).ticks(6);
+		//const yAxis = d3.axisLeft(y).ticks(6);
 		let data = this.datasetStore.selectedData.map(d => {return {...d};});
 		if(this.dimensionsNames.length<1){
 			this.svg.selectAll("*").remove();

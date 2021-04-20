@@ -155,7 +155,7 @@ function Guida(props) {
 					<h5>Conclusioni</h5>
 					<p>
 						Per ogni ulteriore chiarimento sull'utilizzo dell'applicazione è possibile contattarci 
-						all'e-mail codebuseterswe@gmail.com. Se vedemo
+						all'e-mail codebuseterswe@gmail.com.
 					</p>
 				</>
 			</ModalBody>	
