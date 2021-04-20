@@ -19,10 +19,11 @@ const Header = observer(() => {
 	return (
 		<>
 			<header className="App-header">
+				<div className="first"></div>
 				<img src={logo} className="App-logo" alt="logo" />
-				<h1>HDViz</h1>
-				<div className="headerBtnDiv">
-					<Button variant="success" onClick={loadDefaultDataset}>Carica un dataset di prova</Button>
+				<h1 className="mr-auto">HDViz</h1>
+				<div className="last mr-3">
+					<Button className="mr-2" variant="success" onClick={loadDefaultDataset}>Carica un dataset di prova</Button>
 					<Button onClick={openModal}>Guida introduttiva</Button>
 				</div>
 			</header>

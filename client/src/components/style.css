@@ -337,6 +337,7 @@ code {
 	height: 4rem;
   pointer-events: none;
   margin: 2rem .4rem 2rem;
+	margin-left: auto;
 }
 
 @keyframes App-logo-spin {
@@ -352,6 +353,16 @@ code {
 	width: 50em;
 	max-width: 100%;
 }
+
+.first{
+	margin-right: auto;
+  visibility: hidden;
+}
+
+.last{
+	background-color: #282c34;
+}
+
 /* FINE HEADER */
 
 /* INIZIO ALERT */
