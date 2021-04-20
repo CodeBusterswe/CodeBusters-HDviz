@@ -5,7 +5,6 @@ class LLEStrategy extends AlghorithmStrategy{
 
 	startDR(parameters,data) {		
 		const matrix = dr.Matrix.from(data);
-		console.log(parameters.getNeighbors());
 		let alg = new dr.LLE(matrix, parameters.getNeighbors(), parameters.getDimensionsNumber());
 		return alg.transform();
 	}

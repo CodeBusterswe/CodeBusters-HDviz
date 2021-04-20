@@ -244,7 +244,7 @@ export class PlmaChartVM {
 			d3.scaleLinear().domain(colorDomain).range(["red", "lightblue"]) : 
 			d3.scaleOrdinal(d3.schemeTableau10).domain(new Set(data.map(d => d[this.color])));
 		this.svgParent.selectAll(".legend").remove();
-		console.log(this.color);
+		//console.log(this.color);
 		if(this.dimensionsNames.length<1 || this.color === undefined){
 			return;
 		}
