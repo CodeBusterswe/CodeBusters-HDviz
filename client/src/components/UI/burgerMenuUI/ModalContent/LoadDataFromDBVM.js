@@ -8,16 +8,16 @@ export class LoadDataFromDBVM{
     	this.preferencesStore = rootStore.preferencesStore;
 		this.localData = [];
 		this.localDimensions = [];
-		this.tables = null;
-		this.columns = [];
-		this.table = "undefined";
+		this._tables = null;
+		this._columns = [];
+		this._table = "undefined";
 		this.selectedColumns = [];
 		this.conditionColumn = "undefined";
 		this.conditionValue = "";
 		this.conditionSign = "undefined";
 		this.clicked = false;
-		this.empty = false;
-		this.resultLength = 0;
+		this._empty = false;
+		this._resultLength = 0;
 		this.showDanger = false;
 		this.showSuccess = false;
 		this.closeModal = closeModal.bind(null);
@@ -32,7 +32,36 @@ export class LoadDataFromDBVM{
 			getTables: action.bound,
 		}, {autoBind: true}); 
 	}
-
+	get columns(){
+		return this._columns;
+	}
+	set columns(value){
+		this._columns = value;
+	}
+	get table(){
+		return this._table;
+	}
+	set table(value){
+		this._table = value;
+	}
+	get tables(){
+		return this._tables;
+	}
+	set tables(value){
+		this._tables = value;
+	}
+	get empty(){
+		return this._empty;
+	}
+	set empty(value){
+		this._empty = value;
+	}
+	get resultLength(){
+		return this._resultLength;
+	}
+	set resultLength(value){
+		this._resultLength = value;
+	}
 	async getQueryResult(){
 		let data;
 		if(this.conditionValue!=="" && this.conditionSign!=="undefined" && this.conditionColumn!=="undefined")
