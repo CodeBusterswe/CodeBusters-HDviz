@@ -52,7 +52,7 @@ const DistanceCalculation = observer((props) => {
 						/>
 					</Form.Group>
 					<Form.Group controlId="distanceType">	
-						<Form.Label>Tipo di distanza:</Form.Label>
+						<Form.Label>Tipo di distanza</Form.Label>
 						<Form.Control 
 							as="select" 
 							custom 
@@ -65,7 +65,7 @@ const DistanceCalculation = observer((props) => {
 						</Form.Control>
 					</Form.Group>
 					<Form.Group controlId="newDistanceMatrixName">
-						<Form.Label>Nome matrice delle distanze:</Form.Label>
+						<Form.Label>Nome matrice delle distanze</Form.Label>
 						<Form.Control
 							required
 							type="text"

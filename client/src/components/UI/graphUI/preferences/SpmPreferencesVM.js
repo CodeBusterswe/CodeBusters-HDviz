@@ -2,7 +2,7 @@ import { computed, makeObservable } from "mobx";
 
 export class SpmPreferencesVM {
 
-	labels = ["Asse uno:", "Asse due:", "Asse tre:", "Asse quattro:", "Asse cinque:"];
+	labels = ["Asse uno", "Asse due", "Asse tre", "Asse quattro", "Asse cinque"];
 	identifiers = ["axis1", "axis2", "axis3", "axis4", "axis5"];
 
 	constructor(rootStore){
