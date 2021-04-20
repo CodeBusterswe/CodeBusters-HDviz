@@ -11,6 +11,10 @@ class distanceMatricesStore {
 		});
 	}
 
+	get dm(){
+		return this.distanceMatrices;
+	}
+
 	addDistanceMatrix(matrix) {
 		this.distanceMatrices.push(matrix);
 	}
