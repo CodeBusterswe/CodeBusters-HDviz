@@ -95,7 +95,7 @@ const DimensionalReduction = observer((props) => {
 
 				<ModalBody>
 					<Form.Group controlId="dimensionsToReduxList">
-						<Form.Label>Select the dimensions to use</Form.Label>
+						<Form.Label>Seleziona dimensioni da utilizzare</Form.Label>
 						<Select
 							value={dimensionsToRedux}
 							options={optionList}
@@ -109,7 +109,7 @@ const DimensionalReduction = observer((props) => {
 						/>
 					</Form.Group>
 					<Form.Group controlId="algorithmType" id="alg">	
-						<Form.Label>Select algorithm</Form.Label>
+						<Form.Label>Algoritmo:</Form.Label>
 						<Form.Control 
 							as="select" 
 							custom 
@@ -122,7 +122,7 @@ const DimensionalReduction = observer((props) => {
 						</Form.Control>
 					</Form.Group>
 					<Form.Group controlId="newDimensionsName">
-						<Form.Label>New dimensions name</Form.Label>
+						<Form.Label>Nome nuove dimensioni</Form.Label>
 						<Form.Control
 							required
 							type="text"
@@ -131,11 +131,11 @@ const DimensionalReduction = observer((props) => {
 							isInvalid={nameError}
 						/>
 						<Form.Control.Feedback type="invalid">
-              				Please choose a different name.
+                            Nome invalido o già utilizzato.
             			</Form.Control.Feedback>
 					</Form.Group>
 					<Form.Group controlId="newDimensionsNumber">
-						<Form.Label>New dimensions number</Form.Label>
+						<Form.Label>Numero di nuove dimensioni</Form.Label>
 						<RangeSlider
 							tooltip="on"
 							value={newDimensionsNumber}
@@ -150,8 +150,8 @@ const DimensionalReduction = observer((props) => {
 				</ModalBody>
 			
 				<ModalFooter>
-					<Button variant="secondary" onClick={closeModal}>Back to menu</Button>
-					<Button type="submit">Start reduction</Button>
+					<Button variant="secondary" onClick={closeModal}>Torna al menù</Button>
+					<Button type="submit">Esegui riduzione</Button>
 				</ModalFooter>
 			</Form>
 		</Modal>

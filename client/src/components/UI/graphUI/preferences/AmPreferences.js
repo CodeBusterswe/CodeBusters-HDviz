@@ -23,49 +23,49 @@ const AdjacencyMatrixPreferences = observer(() => {
 	return(
 		<Form className="chartPreferences">
 			<Form.Group controlId="distanceMatrix">
-				<Form.Label>Distance Matrix</Form.Label>
+				<Form.Label>Matrice delle distanze:</Form.Label>
 				<Form.Control
 					custom
 					as="select"
 					value={matrixName}
 					onChange={handleSelectChange}
 				>
-					<option value={"undefined"} key={"noDistancematrix"}>No distance matrix</option>
+					<option value={"undefined"} key={"noDistancematrix"}>Nessuna matrice</option>
 					{matrices.map((d) => {
 						return <option value={d} key={d}>{d}</option>;
 					})}
 				</Form.Control>
 			</Form.Group>
 			<Form.Group controlId="orderBy">
-				<Form.Label>Order by</Form.Label>
+				<Form.Label>Ordine:</Form.Label>
 				<Form.Control
 					custom
 					as="select"
 					value={order}
 					onChange={handleSelectChange}
 				>
-					<option value={"undefined"} key={"noOrder"}>No order</option>
+					<option value={"undefined"} key={"noOrder"}>Nessun ordine</option>
 					{sorts.map((d) => {
 						return <option value={d} key={d}>{d}</option>;
 					})}
 				</Form.Control>
 			</Form.Group>
 			<Form.Group controlId="label">
-				<Form.Label>Labels</Form.Label>
+				<Form.Label>Etichette:</Form.Label>
 				<Form.Control
 					custom
 					as="select"
 					value={label}
 					onChange={handleSelectChange}
 				>
-					<option value={"undefined"} key={"noLabel"} >No label</option>
+					<option value={"undefined"} key={"noLabel"} >Nessuna etichetta</option>
 					{sorts.map((d) => {
 						return <option value={d} key={d}>{d}</option>;
 					})}
 				</Form.Control>
 			</Form.Group>
 			<Form.Group controlId="distMax">
-				<Form.Label>Max Distance: {max}</Form.Label>
+				<Form.Label>Distanza massima: {max}</Form.Label>
 				<Form.Control
 					as="input"
 					value={distMax}
@@ -75,7 +75,7 @@ const AdjacencyMatrixPreferences = observer(() => {
 				</Form.Control>
 			</Form.Group>
 			<Form.Group controlId="distMin">
-				<Form.Label>MinDistance: {min}</Form.Label>
+				<Form.Label>Distanza minima: {min}</Form.Label>
 				<Form.Control
 					as="input"
 					value={distMin}

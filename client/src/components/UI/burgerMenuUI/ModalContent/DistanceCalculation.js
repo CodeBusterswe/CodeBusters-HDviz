@@ -38,7 +38,7 @@ const DistanceCalculation = observer((props) => {
 				</Modal.Header>
 				<ModalBody>
 					<Form.Group controlId="dimensionsToReduxList">
-						<Form.Label>Select the dimensions to use</Form.Label>
+						<Form.Label>Seleziona dimensioni da utilizzare</Form.Label>
 						<Select
 							value={dimensionsToRedux}
 							options={optionList}
@@ -52,20 +52,20 @@ const DistanceCalculation = observer((props) => {
 						/>
 					</Form.Group>
 					<Form.Group controlId="distanceType">	
-						<Form.Label>Select distance type</Form.Label>
+						<Form.Label>Tipo di distanza:</Form.Label>
 						<Form.Control 
 							as="select" 
 							custom 
 							value={distanceType}
 							onChange={handleChangeDistanceType}>
-							<option value={DistanceType.Euclidean}>EUCLIDEAN</option>
+							<option value={DistanceType.Euclidean}>EUCLIDEA</option>
 							<option value={DistanceType.Canberra}>CANBERRA</option>
 							<option value={DistanceType.Chebyshev}>CHEBYSHEV</option>
 							<option value={DistanceType.Manhattan}>MANHATTAN</option>
 						</Form.Control>
 					</Form.Group>
 					<Form.Group controlId="newDistanceMatrixName">
-						<Form.Label>Distances matrix name</Form.Label>
+						<Form.Label>Nome matrice delle distanze:</Form.Label>
 						<Form.Control
 							required
 							type="text"
@@ -74,14 +74,14 @@ const DistanceCalculation = observer((props) => {
 							isInvalid={nameError}
 						/>
 						<Form.Control.Feedback type="invalid">
-              				Please choose a different name.
+              				Nome invalido o già utilizzato.
             			</Form.Control.Feedback>
 					</Form.Group>
 				</ModalBody>
 			
 				<ModalFooter>
-					<Button variant="secondary" onClick={closeModal}>Back to menu</Button>
-					<Button type="submit">Start reduction</Button>
+					<Button variant="secondary" onClick={closeModal}>Torna al menù</Button>
+					<Button type="submit">Esegui riduzione</Button>
 				</ModalFooter>
 			</Form>
 		</Modal>

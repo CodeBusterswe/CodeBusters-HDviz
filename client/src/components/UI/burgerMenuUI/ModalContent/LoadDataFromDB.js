@@ -75,7 +75,7 @@ const LoadDataFromDB = observer((props) => {
 					<Form>
 						{tables!==null ?
 							<Form.Group controlId="tablesSelect">
-								<Form.Label>Select table</Form.Label>
+								<Form.Label>Seleziona tabella</Form.Label>
 								<Form.Control
 									custom
 									as="select"
@@ -93,7 +93,7 @@ const LoadDataFromDB = observer((props) => {
 							</div>}
 						{columns.length>0 ? 
 							<><Form.Group controlId="columnsSelect">
-								<Form.Label>Select the columns to use</Form.Label>
+								<Form.Label>Seleziona dimensioni</Form.Label>
 								<Select
 									value={selectedColumns}
 									options={columns}
@@ -108,14 +108,14 @@ const LoadDataFromDB = observer((props) => {
 							<Form.Row className="align-items-center">
 								<Col>
 									<Form.Group controlId="conditionColumn">
-										<Form.Label>Where column</Form.Label>
+										<Form.Label>Dimensione</Form.Label>
 										<Form.Control
 											custom
 											as="select"
 											value={conditionColumn}
 											onChange={handleSelectConditionColumn}
 										>
-											<option value={"undefined"} key={"noConditionColumn"}>No column</option>
+											<option value={"undefined"} key={"noConditionColumn"}>-</option>
 											{columns.map((d) => {
 												return <option value={d.value} key={d.value+"Condition"}>{d.label}</option>;
 											})}
@@ -124,14 +124,14 @@ const LoadDataFromDB = observer((props) => {
 								</Col>
 								<Col xs={4}>
 									<Form.Group as={Col} controlId="conditionSign">
-										<Form.Label>sign</Form.Label>
+										<Form.Label>Condizione</Form.Label>
 										<Form.Control
 											custom
 											as="select"
 											value={conditionSign}
 											onChange={handleSelectConditionSign}
 										>
-											<option value={"undefined"} key={"noConditionSign"}>No condition</option>
+											<option value={"undefined"} key={"noConditionSign"}>-</option>
 											<option value={"like"} key={"like"}>{"like"}</option>
 											<option value={"="} key={"equal"}>{"="}</option>
 											<option value={"<="} key={"leq"}>{"<="}</option>
@@ -143,7 +143,7 @@ const LoadDataFromDB = observer((props) => {
 								</Col>
 								<Col xs={4}>
 									<Form.Group as={Col} controlId="conditionValue">
-										<Form.Label>Value</Form.Label>
+										<Form.Label>Valore</Form.Label>
 										<Form.Control
 											as="input"
 											value={conditionValue}

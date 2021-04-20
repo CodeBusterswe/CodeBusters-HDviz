@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx";
 
 export class HmPreferencesVM {
 
-    labels = ["Axis X", "Axis Y", "Heat"];
+    labels = ["Asse X:", "Asse Y:", "Colore:"];
 	identifiers = ["xAxis", "yAxis", "heat"];
 
 	constructor(rootStore){

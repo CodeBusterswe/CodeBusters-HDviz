@@ -29,7 +29,7 @@ const ScatterPlotMatrixPreferences = observer(() => {
 								value={axes[index]}
 								onChange={handleSelectChange.bind(null)}
 							>
-								<option value={"undefined"} key={"noDimensions "+identifiers}>No dimension</option>
+								<option value={"undefined"} key={"noDimensions "+identifiers}>Nessuna dimensione</option>
 								{dimensions.map((d) => {
 									return <option value={d} key={d+identifiers}>{d}</option>;
 								})}
@@ -39,14 +39,14 @@ const ScatterPlotMatrixPreferences = observer(() => {
 				})
 			}
 			<Form.Group controlId="SPMcolor" key={"SPMcolor"}>
-				<Form.Label className="labels">Color</Form.Label>
+				<Form.Label className="labels">Colore:</Form.Label>
 				<Form.Control
 					custom
 					as="select"
 					value={color}
 					onChange={handleSelectChange.bind(null)}
 				>
-					<option value={"undefined"} key={"noDimensionsColor"}>No dimension</option>
+					<option value={"undefined"} key={"noDimensionsColor"}>Nessun colore</option>
 					{dimensions.map((d) => {
 						return <option value={d} key={d+"Color"}>{d}</option>;
 					})}

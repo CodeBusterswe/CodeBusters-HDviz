@@ -21,7 +21,7 @@ const PlmaPreferences = observer(() => {
 	return(
 		<Form className="chartPreferences">
 			<Form.Group controlId="dimensionsToReduxList">
-				<Form.Label>Select the dimensions to show</Form.Label>
+				<Form.Label>Dimensioni da visualizzare:</Form.Label>
 				<Select
 					values={userDimensions}
 					defaultValue={userDimensions}
@@ -36,14 +36,14 @@ const PlmaPreferences = observer(() => {
 				/>
 			</Form.Group>
 			<Form.Group controlId="color">
-				<Form.Label>Color</Form.Label>
+				<Form.Label>Colore</Form.Label>
 				<Form.Control
 					custom
 					as="select"
 					value={userColor}
 					onChange={handleSelectChange}
 				>
-					<option value={"undefined"} key={"noDimensionsColor"}>No dimension</option>
+					<option value={"undefined"} key={"noDimensionsColor"}>Nessun colore</option>
 					{colors.map((d) => {
 						return <option value={d} key={d}>{d}</option>;
 					})}
