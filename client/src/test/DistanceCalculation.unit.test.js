@@ -37,8 +37,8 @@ describe("riduzione dimensionale tramite calcolo delle distanze", () => {
 
 	test("distanza euclidea", () => {
 		//set distance
-		fireEvent.change(screen.getByRole("textbox",{name:"Distances matrix name"}),{target:{value: "test"}});
-		fireEvent.click(screen.getByRole("button",{name: "Start reduction"}));	
+		fireEvent.change(screen.getByRole("textbox",{name:"Nome matrice delle distanze"}),{target:{value: "test"}});
+		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione"}));	
 		//test new data
 		let matrix = getData();
 		expect(matrix.links).toStrictEqual([{source: "node0", target: "node1", value: 0.5385164807134502}]);
@@ -46,9 +46,9 @@ describe("riduzione dimensionale tramite calcolo delle distanze", () => {
 
 	test("distanza manhattan", () => {
 		//set distance
-		fireEvent.change(screen.getByRole("combobox",{name:"Select distance type"}),{target:{value:"manhattan"}});
-		fireEvent.change(screen.getByRole("textbox",{name:"Distances matrix name"}),{target:{value: "test"}});
-		fireEvent.click(screen.getByRole("button",{name: "Start reduction" }));	
+		fireEvent.change(screen.getByRole("combobox",{name:"Tipo di distanza"}),{target:{value:"manhattan"}});
+		fireEvent.change(screen.getByRole("textbox",{name:"Nome matrice delle distanze"}),{target:{value: "test"}});
+		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione" }));	
 		//test new data
 		let matrix = getData();
 		expect(matrix.links).toStrictEqual([{source: "node0", target: "node1", value: 0.6999999999999993}]); 
@@ -56,9 +56,9 @@ describe("riduzione dimensionale tramite calcolo delle distanze", () => {
 
 	test("distanza canberra", () => {
 		//set distance
-		fireEvent.change(screen.getByRole("combobox",{name:"Select distance type"}),{target:{value:"canberra"}});
-		fireEvent.change(screen.getByRole("textbox",{name:"Distances matrix name"}),{target:{value: "test"}});
-		fireEvent.click(screen.getByRole("button",{name: "Start reduction" }));	
+		fireEvent.change(screen.getByRole("combobox",{name:"Tipo di distanza"}),{target:{value:"canberra"}});
+		fireEvent.change(screen.getByRole("textbox",{name:"Nome matrice delle distanze"}),{target:{value: "test"}});
+		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione" }));	
 		//test new data
 		let matrix = getData();
 		expect(matrix.links).toStrictEqual([{source: "node0", target: "node1", value: 0.09692307692307686}]);
@@ -66,9 +66,9 @@ describe("riduzione dimensionale tramite calcolo delle distanze", () => {
 
 	test("distanza chebyshev", () => {
 		//set distance
-		fireEvent.change(screen.getByRole("combobox",{name:"Select distance type"}),{target:{value:"chebyshev"}});
-		fireEvent.change(screen.getByRole("textbox",{name:"Distances matrix name"}),{target:{value: "test"}});
-		fireEvent.click(screen.getByRole("button",{name: "Start reduction"}));	
+		fireEvent.change(screen.getByRole("combobox",{name:"Tipo di distanza"}),{target:{value:"chebyshev"}});
+		fireEvent.change(screen.getByRole("textbox",{name:"Nome matrice delle distanze"}),{target:{value: "test"}});
+		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione"}));	
 		//test new data
 		let matrix = getData();
 		expect(matrix.links).toStrictEqual([{source: "node0", target: "node1", value: 0.5}]);
