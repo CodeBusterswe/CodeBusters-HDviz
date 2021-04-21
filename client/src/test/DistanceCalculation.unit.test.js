@@ -90,4 +90,14 @@ describe("dimensional reduction through distance calculation", () => {
 		let matrices = rootStore.distanceMatricesStore.distanceMatrices;
 		expect(matrices.length).toBe(1);
 	});
+
+	test("Checks that the distance matrices are calculated correctly", () => {
+		//set name
+		fireEvent.change(screen.getByRole("textbox",{name:"Nome matrice delle distanze"}),{target:{value: "test"}});
+		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione"}));	
+		//check matrix name
+		let matrix = getData();
+		expect(matrix.links).toStrictEqual([{"source": "node0", "target": "node1", "value": 0.5385164807134502}]);
+		expect(matrix.nodes).toStrictEqual([{"id": "node0", "petal": 3.5, "sepal": 5.1}, {"id": "node1", "petal": 3, "sepal": 4.9}]);
+	});
 });
