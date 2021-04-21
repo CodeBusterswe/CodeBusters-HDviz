@@ -11,11 +11,12 @@ export class HmChartVM {
     	this.datasetStore = rootStore.datasetStore;
     	this.preferencesStore = rootStore.preferencesStore;
 
-    	this.data = this.datasetStore.selectedData;
-
     	makeAutoObservable(this, {datasetStore: false, preferencesStore:false}, {autoBind: true});
     }
 
+    get data(){
+    	return this.datasetStore.selectedData;
+    }
     get columns(){
     	return new Set(this.data.map(d => d[this.asseX]));
     }
@@ -64,12 +65,12 @@ export class HmChartVM {
     			newData.forEach(x => {
     				if(d[this.asseX] === x[this.asseX] && d[this.asseY] === x[this.asseY]){
     					notFound = false;
-    					x[this.heat] = ((d[this.heat]+x[this.heat])/2).toFixed(3);
+    					x[this.heat] = +((d[this.heat]+x[this.heat])/2).toFixed(3);
     					return;
     				}
     			});
     			if(notFound){
-    				newData.push(d);
+    				newData.push({...d});
     			}
     		});
     	}else{
@@ -80,7 +81,7 @@ export class HmChartVM {
     					notFound = false;
     			});
     			if(notFound){
-    				newData.push(d);
+    				newData.push({...d});
     			}
     		});
     	}
@@ -95,7 +96,8 @@ export class HmChartVM {
     	this.svg.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
     	let newData = this.prepareData();
-		    	
+    	console.log(newData);
+    	console.log(this.data);  
     	d3.selectAll("rect").remove();
     	
     	// Build X scales and axis:
