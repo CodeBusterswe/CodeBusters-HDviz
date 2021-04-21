@@ -8,16 +8,15 @@ beforeEach(()=>{
 
 test("Scatterplot matrix", async() => {
 	fireEvent.click(screen.getByRole("button",{name: "Scatterplot Matrix" }));
-	expect(screen.getByRole("combobox",{name: "Asse uno:" })).toBeInTheDocument();	
-	fireEvent.keyDown(screen.getByRole("combobox",{name: "Asse uno:" }),{key: "sepal_length"});
-	fireEvent.keyDown(screen.getByRole("combobox",{name: "Asse due:" }),{key: "sepal_width"});
-	fireEvent.keyDown(screen.getByRole("combobox",{name: "Asse tre:" }),{key: "petal_length"});
-	fireEvent.keyDown(screen.getByRole("combobox",{name: "Asse quattro:" }),{key: "petal_width"});
-	fireEvent.keyDown(screen.getByRole("combobox",{name: "Asse cinque:" }),{key: "petal_width"});
-	fireEvent.keyDown(screen.getByRole("combobox",{name: "Colore:" }),{key: "species"});
-	fireEvent.keyDown(screen.getByRole("combobox",{name: "Colore:" }),{key: "petal_width"});
+	expect(screen.getByRole("combobox",{name: "Asse uno" })).toBeInTheDocument();	
+	fireEvent.keyDown(screen.getByRole("combobox",{name: "Asse uno" }),{key: "sepal_length"});
+	fireEvent.keyDown(screen.getByRole("combobox",{name: "Asse due" }),{key: "sepal_width"});
+	fireEvent.keyDown(screen.getByRole("combobox",{name: "Asse tre" }),{key: "petal_length"});
+	fireEvent.keyDown(screen.getByRole("combobox",{name: "Asse quattro" }),{key: "petal_width"});
+	fireEvent.keyDown(screen.getByRole("combobox",{name: "Asse cinque" }),{key: "petal_width"});
+	fireEvent.keyDown(screen.getByRole("combobox",{name: "Colore" }),{key: "species"});
+	fireEvent.keyDown(screen.getByRole("combobox",{name: "Colore" }),{key: "petal_width"});
 	fireEvent.click(screen.getByRole("button",{name: "Nascondi preferenze"}));
-	
 });
 
 test("Adjacency matrix", async() => {
