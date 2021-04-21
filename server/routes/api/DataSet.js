@@ -2,7 +2,7 @@ const express=require('express');
 const router=express.Router();
 var DB_NAME= require('../../config/default');
 const db = require('../../config/db');
-const cons = require('consolidate');
+
 
 router.post('/get-data', async (req, res, next)=>{
         const {selectField, table}=req.body

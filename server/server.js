@@ -3,7 +3,8 @@ const bodyParser =require('body-parser')
 const path =require('path')
 const db=require('./config/db')
 var port= require('./config/default');
-const cors = require('cors')
+const cors = require('cors');
+
 
 const app=express();
 app.use(cors())
@@ -14,7 +15,8 @@ app.use('/api/data', require('./routes/api/DataSet'));
 
 
 app.get('/test-server', function(req, res) {
-	res.status(200).json({ server: `server running ${port.PORT}`});
+  console.log('in server test');
+	return res.status(200).json({ server: `server running ${port.PORT}`});
 });
 
 

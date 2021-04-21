@@ -49,14 +49,15 @@ export const getColumnsByName=async(table_name)=>{
 };
 
 //for testing 
-export const serverTest=async()=>{
+/* export const serverTest=async()=>{
 	try{
 		const response= await api.get("/test-server");
-		return response.data;
+		console.log(response);
+		return response;
 	}catch(err){
 		console.error(err.message);   
 	}
-};
+}; */
 
 /* ritirna i dataset presenti nel database NOT USED
 export const getDataset=async()=>{

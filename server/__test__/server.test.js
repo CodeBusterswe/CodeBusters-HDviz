@@ -11,6 +11,7 @@ describe("Server Running /", () => {
 	  const response = await request(server).get("/test-server");
 	  expect(response.body.server).toEqual(`server running ${server.address().port}`);
 	  expect(response.statusCode).toBe(200);
+	  return response.statusCode;
 	});
 });
 

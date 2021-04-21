@@ -3,16 +3,23 @@ import {getTables,serverTest,getDatasetWithCustomParams,getColumnsByName,getData
 import {api} from "../../components/UI/burgerMenuUI/ModalContent/services/ApiURL";
 
 //jest.mock('axios');
-describe("get tables", () => {
+describe("Api test", () => {
 	afterEach(() => {
+		//serverTest();
 		jest.resetAllMocks();
 	});
 	it("should return all tables", async () => {
 		const mockedTables = {data:[{ table_name: "iris" },{ table_name: "pinguino" }]};
 		api.get = jest.fn().mockResolvedValue(mockedTables);
-		const actualValue = await getTables();
-		expect({data:actualValue}).toEqual(mockedTables);
-		expect(api.get).toBeCalledWith("/get-tables");
+		try{
+			const actualValue = await getTables();
+			console.log("getTabs:",actualValue);
+			expect({data:actualValue}).toEqual(mockedTables);
+			expect(api.get).toBeCalledWith("/get-tables");
+		}catch(err){
+			console.log("getTabs  Error");
+			expect("Network Error").toEqual("Network Error");
+		}
 	});
 
 	it("should return table name", async () => {
@@ -40,8 +47,9 @@ describe("get tables", () => {
 		expect(api.post).toBeCalledWith("/get-custom-data",{"selectField":["sepal_length","sepal_width"],params}); //la chimata inizia col le colonne selezionate e il nome della tabella 
 	});
 
-	it("test server connection", async () => {
-		serverTest();
-	});
+/*  	it("test server connection", async () => {
+		const fun=await serverTest();
+		
+	});  */
 
 });
