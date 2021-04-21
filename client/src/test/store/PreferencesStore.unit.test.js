@@ -33,7 +33,6 @@ describe("Check that the user's preferences are correctly saved in the system", 
 
 		let axes = rootStore.preferencesStore.preferencesSpm.axes;
 		expect(axes).toStrictEqual(["sepal_length","petal_length","sepal_width","petal_width",undefined]);
-		
 	});
 
 	test("PLMA preferences", () => {
@@ -48,7 +47,22 @@ describe("Check that the user's preferences are correctly saved in the system", 
 		
 		expect(color).toBe("species");
 		expect(dimensions).toStrictEqual(["sepal_width"]);
+	});
+
+	test("HM preferences", () => {
+		fireEvent.click(screen.getByRole("button",{name: "Heat Map"}));
+
+		fireEvent.change(screen.getByRole("combobox",{name: "Asse X"}),{target:{value: "sepal_length"}});
+		fireEvent.change(screen.getByRole("combobox",{name: "Asse Y"}),{target:{value: "petal_length"}});
+		fireEvent.change(screen.getByRole("combobox",{name: "Colore"}),{target:{value: "species"}});
+
+		let asseX = rootStore.preferencesStore.preferencesHm.xAxis,
+			asseY = rootStore.preferencesStore.preferencesHm.yAxis,
+			heat = rootStore.preferencesStore.preferencesHm.heat;
 		
+		expect(asseX).toStrictEqual("sepal_length");
+		expect(asseY).toStrictEqual("petal_length");
+		expect(heat).toStrictEqual("species");
 	});
 
 	describe("charts that depend on the concept of distance", ()=>{
