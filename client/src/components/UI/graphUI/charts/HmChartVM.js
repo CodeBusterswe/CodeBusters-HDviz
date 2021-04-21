@@ -96,8 +96,6 @@ export class HmChartVM {
     	this.svg.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
     	let newData = this.prepareData();
-    	console.log(newData);
-    	console.log(this.data);  
     	d3.selectAll("rect").remove();
     	
     	// Build X scales and axis:
