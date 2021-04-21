@@ -13,7 +13,7 @@ let rootStore,
 function reducedDim(value) { return value[0] === "test1" || value[0] === "test2";}
 function getData() {return rootStore.datasetStore.selectedData.map(row => Object.entries(row).filter(reducedDim));}
 
-describe("riduzione dimensionale", () => {
+describe("dimensional reduction", () => {
 
 	rootStore = new RootStore();
 	rootStore.datasetStore.reset();
@@ -35,7 +35,7 @@ describe("riduzione dimensionale", () => {
 		fireEvent.click(screen.getByRole("button",{name: "Riduci dimensioni" }));	
 	});
 
-	test("riduzione dimensionale fastmap", () => {
+	test("fastmap algorithm", () => {
 		//set algorithm
 		fireEvent.change(screen.getByRole("textbox",{name:"Nome nuove dimensioni"}),{target:{value: "test"}});
 		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione" }));	
@@ -47,7 +47,7 @@ describe("riduzione dimensionale", () => {
 		expect(row2).toStrictEqual([0, 0]);
 	});
 
-	test("riduzione dimensionale LLE", () => {
+	test("LLE algorithm", () => {
 		//set algorithm
 		fireEvent.change(screen.getByRole("combobox",{name:"Algoritmo"}),{target:{value:"lle"}});
 		fireEvent.change(screen.getByRole("textbox",{name:"Nome nuove dimensioni"}),{target:{value: "test"}});
@@ -60,7 +60,7 @@ describe("riduzione dimensionale", () => {
 		expect(row2).toStrictEqual([NaN, NaN]);
 	});
 
-	test("riduzione dimensionale IsoMap", () => {
+	test("isoMap algorithm", () => {
 		//set algorithm
 		fireEvent.change(screen.getByRole("combobox",{name:"Algoritmo"}),{target:{value:"isoMap"}});
 		fireEvent.change(screen.getByRole("textbox",{name:"Nome nuove dimensioni"}),{target:{value: "test"}});
@@ -73,7 +73,7 @@ describe("riduzione dimensionale", () => {
 		expect(row2).toStrictEqual([0.7071067811865475, -0.7071067811865475]);
 	});
 
-	test("riduzione dimensionale t-SNE", () => {
+	test("t-SNE algorithm", () => {
 		//set algorithm
 		fireEvent.change(screen.getByRole("combobox",{name:"Algoritmo"}),{target:{value:"t-sne"}});
 		fireEvent.change(screen.getByRole("textbox",{name:"Nome nuove dimensioni"}),{target:{value: "test"}});
@@ -84,5 +84,16 @@ describe("riduzione dimensionale", () => {
 		    row2 = [values[1][0][1], values[1][1][1]];
 		expect(row1).toStrictEqual([-7.964809061175129, 56.35862642658786]);
 		expect(row2).toStrictEqual([7.964809061175129, -56.35862642658786]);
+	});
+
+	test("Checks that the name chosen for new reduced dimensions is set correctly", () => {
+		//set name
+		fireEvent.change(screen.getByRole("textbox",{name:"Nome nuove dimensioni"}),{target:{value: "test"}});
+		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione" }));
+		//check names
+		let dims = rootStore.datasetStore.checkedDimensions;
+		expect(dims.length).toStrictEqual(4);
+		expect(dims[2].value).toStrictEqual("test1");
+		expect(dims[3].value).toStrictEqual("test2");
 	});
 });
