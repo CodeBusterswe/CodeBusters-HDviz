@@ -1,15 +1,9 @@
 import Dimension from "../../stores/data/Dimension";
 import DatasetStore from "../../stores/DatasetStore";
-import DistanceMatrix from "../../stores/data/DistanceMatrix";
-import DistanceMatricesStore from "../../stores/DistanceMatricesStore";
-import RootStore from "../../stores/RootStore";
-import {FfPreferencesVM } from "../../components/UI/graphUI/preferences/FfPreferencesVM";
 
 let store,
 	dimension,
 	dataset,
-	dmStore,
-	distanceMatrix,
 	dimension1,
 	dimension2;
 
@@ -42,21 +36,6 @@ describe("Datasetstore", ()=>{
 		expect(store.originalData).toStrictEqual([]);
 		expect(store.dimensions).toStrictEqual([]);
 		expect(store.selectedData).toStrictEqual([]);
-	});
-});
-
-describe("DistanceMatricesStore", ()=>{
-	beforeEach(() => {
-		store = new DatasetStore();
-		dimension = new Dimension("test");
-		dataset = [{test: "test"}];
-	});
-
-	test("store should add new distance matrices and return them", () => {
-		dmStore = new DistanceMatricesStore();
-		distanceMatrix = new DistanceMatrix();
-		dmStore.addDistanceMatrix(distanceMatrix);
-		expect(dmStore.distanceMatrices).toStrictEqual([distanceMatrix]);
 	});
 });
 

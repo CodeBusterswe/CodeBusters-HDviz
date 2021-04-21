@@ -21,7 +21,7 @@ const PlmaPreferences = observer(() => {
 	return(
 		<Form className="chartPreferences">
 			<Form.Group controlId="dimensionsToReduxList">
-				<Form.Label>Dimensioni da visualizzare:</Form.Label>
+				<Form.Label>Dimensioni da visualizzare</Form.Label>
 				<Select
 					values={userDimensions}
 					defaultValue={userDimensions}

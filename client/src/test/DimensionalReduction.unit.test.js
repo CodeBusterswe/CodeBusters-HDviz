@@ -92,8 +92,16 @@ describe("dimensional reduction", () => {
 		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione" }));
 		//check names
 		let dims = rootStore.datasetStore.checkedDimensions;
-		expect(dims.length).toStrictEqual(4);
 		expect(dims[2].value).toStrictEqual("test1");
 		expect(dims[3].value).toStrictEqual("test2");
+	});
+
+	test("Checks that the user-calculated dimensions are correctly loaded into the system", () => {
+		//set name
+		fireEvent.change(screen.getByRole("textbox",{name:"Nome nuove dimensioni"}),{target:{value: "test"}});
+		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione" }));
+		//check names
+		let dims = rootStore.datasetStore.checkedDimensions;
+		expect(dims.length).toStrictEqual(4);
 	});
 });

@@ -23,7 +23,7 @@ const AdjacencyMatrixPreferences = observer(() => {
 	return(
 		<Form className="chartPreferences">
 			<Form.Group controlId="distanceMatrix">
-				<Form.Label>Matrice delle distanze:</Form.Label>
+				<Form.Label>Matrice delle distanze</Form.Label>
 				<Form.Control
 					custom
 					as="select"
@@ -37,7 +37,7 @@ const AdjacencyMatrixPreferences = observer(() => {
 				</Form.Control>
 			</Form.Group>
 			<Form.Group controlId="orderBy">
-				<Form.Label>Ordine:</Form.Label>
+				<Form.Label>Ordine</Form.Label>
 				<Form.Control
 					custom
 					as="select"
@@ -51,7 +51,7 @@ const AdjacencyMatrixPreferences = observer(() => {
 				</Form.Control>
 			</Form.Group>
 			<Form.Group controlId="label">
-				<Form.Label>Etichette:</Form.Label>
+				<Form.Label>Etichette</Form.Label>
 				<Form.Control
 					custom
 					as="select"
@@ -65,7 +65,8 @@ const AdjacencyMatrixPreferences = observer(() => {
 				</Form.Control>
 			</Form.Group>
 			<Form.Group controlId="distMax">
-				<Form.Label>Distanza massima: {max}</Form.Label>
+				<Form.Label>Distanza massima</Form.Label>
+				<span>{max}</span>
 				<Form.Control
 					as="input"
 					value={distMax}
@@ -75,7 +76,8 @@ const AdjacencyMatrixPreferences = observer(() => {
 				</Form.Control>
 			</Form.Group>
 			<Form.Group controlId="distMin">
-				<Form.Label>Distanza minima: {min}</Form.Label>
+				<Form.Label>Distanza minima</Form.Label>
+				<span>{min}</span>
 				<Form.Control
 					as="input"
 					value={distMin}

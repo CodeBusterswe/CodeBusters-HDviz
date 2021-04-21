@@ -22,7 +22,7 @@ const ForceFieldPreferences = observer(() => {
 	return(
 		<Form className="chartPreferences">
 			<Form.Group controlId="distanceMatrix">
-				<Form.Label>Matrice delle distanze:</Form.Label>
+				<Form.Label>Matrice delle distanze</Form.Label>
 				<Form.Control
 					custom
 					as="select"
@@ -36,7 +36,7 @@ const ForceFieldPreferences = observer(() => {
 				</Form.Control>
 			</Form.Group>
 			<Form.Group controlId="color">
-				<Form.Label>Colore:</Form.Label>
+				<Form.Label>Colore</Form.Label>
 				<Form.Control
 					custom
 					as="select"
@@ -50,7 +50,8 @@ const ForceFieldPreferences = observer(() => {
 				</Form.Control>
 			</Form.Group>
 			<Form.Group controlId="distMax">
-				<Form.Label>Distanza massima: {max}</Form.Label>
+				<Form.Label>Distanza massima</Form.Label>
+				<span>{max}</span>
 				<Form.Control
 					as="input"
 					value={distMax}
@@ -59,7 +60,8 @@ const ForceFieldPreferences = observer(() => {
 				</Form.Control>
 			</Form.Group>
 			<Form.Group controlId="distMin">
-				<Form.Label>Distanza minima: {min}</Form.Label>
+				<Form.Label>Distanza minima</Form.Label>
+				<span>{min}</span>
 				<Form.Control
 					as="input"
 					value={distMin}

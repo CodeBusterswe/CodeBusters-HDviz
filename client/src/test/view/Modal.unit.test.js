@@ -1,5 +1,4 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import ReactTestUtils from "react-dom/test-utils";
 import App from "./../../components/View";
 
 test("Seleziona le dimensioni",()=>{

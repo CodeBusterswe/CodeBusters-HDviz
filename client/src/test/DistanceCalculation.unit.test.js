@@ -81,4 +81,13 @@ describe("dimensional reduction through distance calculation", () => {
 		let matrices = rootStore.distanceMatricesStore.distanceMatricesNames;
 		expect(matrices).toStrictEqual(["test"]);
 	});
+	
+	test("Check that the user-calculated distance matrices are correctly loaded into the system", () => {
+		//set name
+		fireEvent.change(screen.getByRole("textbox",{name:"Nome matrice delle distanze"}),{target:{value: "test"}});
+		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione"}));	
+		//check matrix name
+		let matrices = rootStore.distanceMatricesStore.distanceMatrices;
+		expect(matrices.length).toBe(1);
+	});
 });
