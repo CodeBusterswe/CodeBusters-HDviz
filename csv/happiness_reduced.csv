@@ -1,0 +1,51 @@
+﻿Continent;Country or region;GDP per capita;Social support;Healthy life expectancy;Freedom to make life choices;Generosity;Perceptions of corruption
+Europe;Finland;1340;1587;986;596;153;393
+Europe;Denmark;1383;1573;996;592;252;410
+Europe;Norway;1488;1582;1028;603;271;341
+Europe;Iceland;1380;1624;1026;591;354;118
+Nord America;Canada;1365;1505;1039;584;285;308
+Central America;Guatemala;800;1269;746;535;175;78
+Middle East;Saudi Arabia;1403;1357;795;439;80;132
+Middle East;Qatar;1684;1313;871;555;220;167
+Europe;Spain;1286;1484;1062;362;153;79
+Central America;Panama;1149;1442;910;516;109;54
+Sud America;Brazil;1004;1439;802;390;99;86
+Sud America;Uruguay;1124;1465;891;523;127;150
+Europe;Romania;1162;1232;825;462;83;5
+Middle East;Cyprus;1263;1223;1042;406;190;41
+Sud America;Ecuador;912;1312;868;498;126;87
+Middle East;Kuwait;1500;1319;808;493;142;97
+Asia;Thailand;1050;1409;828;557;359;28
+Europe;Latvia;1187;1465;812;264;75;64
+Asia;South Korea;1301;1219;1036;159;175;56
+Europe;Estonia;1237;1528;874;495;103;161
+Caribbean;Jamaica;831;1478;831;490;107;28
+Africa;Mauritius;1120;1402;798;498;215;60
+Asia;Japan;1327;1419;1088;445;69;140
+Asia;Honduras;642;1236;828;507;246;78
+Asia;Kazakhstan;1173;1508;729;410;146;96
+Sud America;Bolivia;776;1209;706;511;137;64
+Asia;Malaysia;1221;1171;828;508;260;24
+Europe;Belarus;1067;1465;789;235;94;142
+Europe;Greece;1181;1156;999;67;0;34
+Asia;Mongolia;948;1531;667;317;235;38
+Europe;North Macedonia;983;1294;838;345;185;34
+Oceania;Indonesia;931;1203;660;491;498;28
+Asia;China;1029;1125;893;521;58;100
+Asia;Vietnam;741;1346;851;543;147;73
+Asia;Bhutan;813;1321;604;457;370;167
+Africa;Cameroon;549;910;331;381;187;37
+Africa;Gabon;1057;1183;571;295;43;55
+Asia;Laos;764;1030;551;547;266;164
+Africa;South Africa;960;1351;469;389;130;55
+Europe;Albania;947;848;874;383;178;27
+Central America;Venezuela;960;1427;805;154;64;47
+Asia;Bangladesh;562;928;723;527;166;143
+Middle East;Iraq;1043;980;574;241;148;89
+Africa;Congo (Kinshasa);94;1125;357;269;212;53
+Africa;Mali;385;1105;308;327;153;52
+Africa;Sierra Leone;268;841;242;309;252;45
+Asia;Sri Lanka;949;1265;831;470;244;47
+Asia;Myanmar;710;1181;555;525;566;172
+Africa;Central African Republic;26;0;105;225;235;35
+Africa;South Sudan;306;575;295;10;202;91
