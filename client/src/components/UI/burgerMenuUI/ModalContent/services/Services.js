@@ -47,5 +47,3 @@ export const getColumnsByName=async(table_name)=>{
 		console.error(err.message);    
 	 }
 };
-
-
