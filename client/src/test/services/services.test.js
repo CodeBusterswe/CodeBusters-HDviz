@@ -5,7 +5,6 @@ import {api} from "../../components/UI/burgerMenuUI/ModalContent/services/ApiURL
 //jest.mock('axios');
 describe("Api test", () => {
 	afterEach(() => {
-		//serverTest();
 		jest.resetAllMocks();
 	});
 	it("should return all tables", async () => {
@@ -46,10 +45,4 @@ describe("Api test", () => {
 		expect(actualValue).toEqual(mockedColumns); // confronto delle colonne 
 		expect(api.post).toBeCalledWith("/get-custom-data",{"selectField":["sepal_length","sepal_width"],params}); //la chimata inizia col le colonne selezionate e il nome della tabella 
 	});
-
-/*  	it("test server connection", async () => {
-		const fun=await serverTest();
-		
-	});  */
-
 });

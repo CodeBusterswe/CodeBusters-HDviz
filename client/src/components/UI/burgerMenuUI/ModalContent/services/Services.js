@@ -48,40 +48,4 @@ export const getColumnsByName=async(table_name)=>{
 	 }
 };
 
-//for testing 
-/* export const serverTest=async()=>{
-	try{
-		const response= await api.get("/test-server");
-		console.log(response);
-		return response;
-	}catch(err){
-		console.error(err.message);   
-	}
-}; */
 
-/* ritirna i dataset presenti nel database NOT USED
-export const getDataset=async()=>{
-	const table="dataset";
-	const Data=[];
-	//console.log("Data api: ", Data)
-	try{
-		const dataSet= await api.post("/get-tabel-byName",{table:table});
-		Data.push(dataSet.data);
-	}catch(err){
-		console.error(err.message);    
-	 }
-	 
-	 return {data:Data};
-};*/
-
-/*export const getDatasetByName=async(table_name)=>{ NOT USED
-	const tables=[];
-
-	try{
-		const table= await api.post("/get-tabel-byName",{table:table_name});
-		tables.push(table.data);
-	}catch(err){
-		console.error(err.message);    
-	 }
-	 return tables;
-};*/

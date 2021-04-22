@@ -72,40 +72,4 @@ router.get('/get-tables', async (req, res, next)=>{
         res.status(500).send('Server error in get data');
     }
 });
-
-/*restituisce tutte le colonne di una tabella NOT USED
-router.post('/get-params', async (req, res, next)=>{
-const {table}=req.body;
-    try{
-        const query=`SELECT column_name FROM information_schema.columns WHERE table_catalog='${DB_NAME.DB_NAME}' AND table_name ='${table}'`
-        db.query(query, function (err, result) {
-            if (err) {
-                console.log(err.message);
-                res.status(400).send(err);
-            }
-            res.status(200).send(result.rows);
-        });
-    }catch(err){
-        console.error(err.message);
-        res.status(500).send('Server error in get data');
-    }
-});*/
-
-/*get all data NOT USED
-router.post('/get-tabel-byName', async (req, res, next)=>{
-const {table}=req.body;
-    
-    try{
-        if(!table){
-            return res.status(400).send({msg:'Pleas select table name!!'});
-        }
-        const query=`SELECT  * FROM ${table}`;
-        const result= await db.query(query);
-        return res.json(result.rows)
-    }catch(err){
-        console.error(err.message);
-        res.status(500).send('Server error in get data');
-    }
-});
-*/
 module.exports=router;

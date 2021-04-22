@@ -20,29 +20,6 @@ app.get('/test-server', function(req, res) {
 });
 
 
-
-const irisDataset = `
-CREATE TABLE IrisData (
-    sepal_length VARCHAR(255),
-    sepal_width VARCHAR(255),
-    petal_length VARCHAR(255),
-    petal_width VARCHAR(255),
-    species VARCHAR(255)
-);
-`;
-
-// da rimuovere 
-app.get('/c', function (req, res, next) {
-    db.query(irisDataset, (err, res) => {
-        if (err) {
-            console.error(err.message);
-            return;
-        }
-        console.log('Table is successfully created');
-        //db.end();
-    });
-});
-
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '/client/build')))
   
