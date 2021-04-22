@@ -1,8 +1,8 @@
-import {getTables,serverTest,getDatasetWithCustomParams,getColumnsByName,getDatasetWithParams} from "../../components/UI/burgerMenuUI/ModalContent/services";
-//import axios from 'axios';
+import {getTables,getDatasetWithCustomParams,getColumnsByName,getDatasetWithParams} from "../../components/UI/burgerMenuUI/ModalContent/services";
+
 import {api} from "../../components/UI/burgerMenuUI/ModalContent/services/ApiURL";
 
-//jest.mock('axios');
+
 describe("Api test", () => {
 	afterEach(() => {
 		jest.resetAllMocks();
