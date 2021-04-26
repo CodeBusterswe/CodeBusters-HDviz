@@ -1,0 +1,123 @@
+{
+  "name": "demomobx-react-lite",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@craco/craco": "^6.1.1",
+    "@saehrimnir/druidjs": "^0.3.7",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/user-event": "^12.8.3",
+    "@tippyjs/react": "^4.2.4",
+    "axios": "^0.21.1",
+    "axios-mock-adapter": "^1.19.0",
+    "bootstrap": "^4.6.0",
+    "canvas": "^2.7.0",
+    "d3": "^6.6.0",
+    "express": "^4.17.1",
+    "ml-distance": "^3.0.0",
+    "ml-kmeans": "^5.0.0",
+    "mobx": "^6.1.8",
+    "mobx-react-lite": "^3.2.0",
+    "react": "^17.0.1",
+    "react-bootstrap": "^1.5.1",
+    "react-bootstrap-range-slider": "^2.0.2",
+    "react-dom": "^17.0.1",
+    "react-icons": "^4.2.0",
+    "react-modal": "^3.12.1",
+    "react-papaparse": "^3.11.1",
+    "react-scripts": "4.0.3",
+    "react-select": "^4.2.1",
+    "web-vitals": "^1.1.0"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject"
+  },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "src/index.js",
+      "src/reportWebVitals.js",
+      "src/components/UI/graphUI/charts/pca.js",
+      "src/components/UI/burgerMenuUI/WindowWidth.js"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "react"
+    ],
+    "rules": {
+      "complexity": [
+        "error",
+        20
+      ],
+      "no-extra-parens": "error",
+      "no-extra-semi": "error",
+      "dot-location": [
+        "error",
+        "object"
+      ],
+      "dot-notation": "error",
+      "eqeqeq": "error",
+      "no-multi-spaces": "error",
+      "semi": [
+        "error",
+        "always"
+      ],
+      "indent": [
+        "error",
+        "tab"
+      ],
+      "new-parens": "error",
+      "no-multiple-empty-lines": [
+        "error",
+        {
+          "max": 1,
+          "maxEOF": 0
+        }
+      ],
+      "quotes": [
+        "error",
+        "double"
+      ]
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.13.8",
+    "@babel/plugin-proposal-private-methods": "^7.13.0",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/react-hooks": "^5.1.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
+    "enzyme": "^3.11.0",
+    "prop-types": "^15.7.2"
+  }
+}
