@@ -18,6 +18,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url("bg.png");
+    background-size: cover; /* Resize the background image to cover the entire container */
+    height: 100vh;
 }
 
 code {
@@ -124,9 +127,9 @@ code {
 
 /*posizione canvas sopra a svg per SPM*/
 .plot {position: absolute;}
-#spm-canvas, #am-canvas, #ff-canvas {z-index: -2;}
-#spm-svg, #am-svg, #plma-svg, #hm-svg{z-index: -3;}
-#spm-cell {z-index: -1;}
+#spm-canvas, #am-canvas, #ff-canvas {z-index: 2;}
+#spm-svg, #am-svg, #plma-svg, #hm-svg{z-index: 1;}
+#spm-cell {z-index: 3;}
 
 
 /* FINE GRAFICO */
@@ -140,6 +143,7 @@ code {
 	overflow-y: auto;
 	background-color: var(--bg-primary);
   padding: 0%!important;
+  z-index: 100;
 }
 
 .navbar::-webkit-scrollbar-track {
@@ -348,7 +352,6 @@ code {
     transform: rotate(360deg);
   }
 }
-
 #modal{
 	width: 50em;
 	max-width: 100%;
