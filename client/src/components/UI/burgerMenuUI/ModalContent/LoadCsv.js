@@ -1,11 +1,10 @@
 import React, {useEffect} from "react";
-import {Button} from "react-bootstrap";
 import { observer } from "mobx-react-lite";
 import MyCSVReader from "./MyCSVReader";
 import DimensionsList from "./DimensionsList";
 import { useStore } from "../../../../ContextProvider";
 import { useInstance } from "../../../../useInstance";
-import { ModalBody, ModalFooter ,Alert , Modal } from "react-bootstrap";
+import { ModalBody, ModalFooter ,Alert , Modal, Button} from "react-bootstrap";
 import {LoadCsvVM} from "./LoadCsvVM";
 import "../../../style.css";
 

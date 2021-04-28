@@ -1,7 +1,7 @@
-import AlghorithmStrategy from "../AlghorithmStrategy";
+import AlgorithmStrategy from "../AlgorithmStrategy";
 import * as dr from "@saehrimnir/druidjs";
 
-class FastmapStrategy extends AlghorithmStrategy{
+class FastmapStrategy extends AlgorithmStrategy{
 
 	startDR(parameters,data) {
 		const matrix = dr.Matrix.from(data);

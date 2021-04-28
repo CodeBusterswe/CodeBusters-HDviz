@@ -1,6 +1,5 @@
 import { makeAutoObservable} from "mobx";
 import * as d3 from "d3";
-import {select} from "d3";
 
 export class FfChartVM {
 
@@ -36,7 +35,7 @@ export class FfChartVM {
 	}
 	
 	get canvas(){
-		return select(".forceField").select("canvas");
+		return d3.select(".forceField").select("canvas");
 	}
 	
 	renderChart(){

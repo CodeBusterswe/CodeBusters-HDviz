@@ -1,6 +1,5 @@
 import { makeAutoObservable} from "mobx";
 import * as d3 from "d3";
-import { select } from "d3";
 
 export class AmChartVM {
 
@@ -32,10 +31,10 @@ export class AmChartVM {
     	return this.distanceMatricesStore.getDistanceMatrixByName(this.matrix);
     }
     get svg(){
-    	return select(".adjacencyMatrix").select("svg");
+    	return d3.select(".adjacencyMatrix").select("svg");
     }
     get canvas(){
-    	return select(".adjacencyMatrix").select("canvas");
+    	return d3.select(".adjacencyMatrix").select("canvas");
     }
 
     renderChart(){
@@ -103,12 +102,14 @@ export class AmChartVM {
     			ctx.beginPath();
     			ctx.rect(d.x*scale.bandwidth(), d.y*scale.bandwidth(), scale.bandwidth(),scale.bandwidth());
     			ctx.closePath();
-    			function hex2rgba(hexa, op){
+
+    			function hex2rgba(hexa, opa){
     				let r = parseInt(hexa.slice(1,3), 16),
     					g = parseInt(hexa.slice(3,5), 16),
     					b = parseInt(hexa.slice(5,7), 16);
-    				return "rgba("+r+", "+g+", "+b+", "+op+")";
+    				return "rgba("+r+", "+g+", "+b+", "+opa+")";
     			}
+				
     			let c, op = opacity(d.value);
     			if (d.value >= 0 && d.source[this.orderBy] === d.target[this.orderBy]) {
     				c = colors(d.source[this.orderBy]);	//appartengono allo stesso gruppo e hanno valore positivo

@@ -2,8 +2,7 @@ import React, {useEffect} from "react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../../ContextProvider";
 import { useInstance } from "../../../../useInstance";
-import {Modal,Alert, Form, Col, Spinner} from "react-bootstrap";
-import { ModalBody, ModalFooter, Button} from "react-bootstrap";
+import { ModalBody, ModalFooter, Button, Modal, Alert, Form, Col, Spinner} from "react-bootstrap";
 import Select from "react-select";
 import { LoadDataFromDBVM } from "./LoadDataFromDBVM";
 const LoadDataFromDB = observer((props) => {

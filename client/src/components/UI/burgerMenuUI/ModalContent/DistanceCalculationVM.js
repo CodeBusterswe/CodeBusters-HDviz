@@ -38,9 +38,8 @@ export class DistanceCalculationVM{
     		}	
     		this.distanceMatricesStore.addDistanceMatrix(matrix);
     		this.closeModal();
-    	}catch(e){
+    	}catch(error){
     		this.nameError=true;
-    		console.log(e);
     	}
     }
 	handleChangeDistanceType = e => {

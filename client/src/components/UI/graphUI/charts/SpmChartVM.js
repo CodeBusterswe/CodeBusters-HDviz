@@ -1,6 +1,5 @@
 import { makeAutoObservable} from "mobx";
 import * as d3 from "d3";
-import {select} from "d3";
 
 export class SpmChartVM {
 	domainByTrait={};
@@ -32,19 +31,19 @@ export class SpmChartVM {
 	}
 
 	get svgParent(){
-		return select(".scatterplotmatrix").select("#spm-svg");
+		return d3.select(".scatterplotmatrix").select("#spm-svg");
 	}
 
 	get svg(){
-		return select(".scatterplotmatrix").select("#spm-svg").select("g");
+		return d3.select(".scatterplotmatrix").select("#spm-svg").select("g");
 	}
 
 	get svgCell(){
-		return select(".scatterplotmatrix").select("#spm-cell").select("g");
+		return d3.select(".scatterplotmatrix").select("#spm-cell").select("g");
 	}
 
 	get canvas(){
-		return select(".scatterplotmatrix").select("canvas");
+		return d3.select(".scatterplotmatrix").select("canvas");
 	}
 	
 	get size(){
@@ -59,7 +58,7 @@ export class SpmChartVM {
 		this.svgParent.
 			attr("width", this.size * this.numberOfTraits + 4*this.padding + 200).
 			attr("height", this.size * this.numberOfTraits + 4*this.padding);
-		select(".scatterplotmatrix").select("#spm-cell").
+		d3.select(".scatterplotmatrix").select("#spm-cell").
 			attr("width", this.size * this.numberOfTraits + 4*this.padding + 200).
 			attr("height", this.size * this.numberOfTraits + 4*this.padding);
 		this.svg.
@@ -88,44 +87,34 @@ export class SpmChartVM {
 		return c;
 	}
 	mouseenter(e){
-		select(e.target).selectAll("line").remove();
-		select(e.target).selectAll(".yText").remove();
-		select(e.target).selectAll(".xText").remove();
-		select(e.target).append("line").
+		d3.select(e.target).selectAll("line").remove();
+		d3.select(e.target).selectAll(".yText").remove();
+		d3.select(e.target).selectAll(".xText").remove();
+		d3.select(e.target).append("line").
 			attr("class", "xLine").
 			attr("y1", this.padding / 2).
 			attr("y2", this.totalSize - this.padding / 2).
 			style("stroke-width", 1).
 			style("stroke", "red").
 			style("fill", "none");
-		select(e.target).append("line").
+		d3.select(e.target).append("line").
 			attr("class", "yLine").
 			attr("x1", this.padding / 2).
 			attr("x2", this.totalSize - this.padding / 2).
 			style("stroke-width", 1).
 			style("stroke", "red").
 			style("fill", "none");
-		select(e.target).append("text").
+		d3.select(e.target).append("text").
 			attr("class", "xText").
 			attr("x", this.totalSize).
 			attr("y", 200);
-		select(e.target).append("text").
+		d3.select(e.target).append("text").
 			attr("class", "yText").
 			attr("x", this.totalSize).
 			attr("y", 220);
-		/*select(e.target).
-			append("div").
-			style("opacity", 0).
-			attr("class", "").
-			style("background-color", "white").
-			style("border", "solid").
-			style("border-width", "2px").
-			style("border-radius", "5px").
-			style("padding", "5px");*/
-
 	}
 	mousemove(e){
-		const p = select(e.target).data()[0];
+		const p = d3.select(e.target).data()[0];
 		const xLine = this.svgCell.select(".xLine"), yLine = this.svgCell.selectAll(".yLine");
 		if((xLine.empty() || yLine.empty()) && p && p.i !== p.j){
 			this.svgCell.append("line").
@@ -162,15 +151,11 @@ export class SpmChartVM {
 				const realValX = this.xScales[dimx].invert(valx), realValY = this.yScales[dimy].invert(valy);
 				this.svgCell.select(".xText").
 					text(dimx + ": "+ realValX.toFixed(3)).
-					//attr("x", e.layerX-70).
-					//attr("y", e.layerY-this.padding).
 					style("fill", "red");
 				this.svgCell.select(".yText").
 					text(dimy + ": "+ realValY.toFixed(3)).
-					//attr("x", e.layerX-70).
-					//attr("y", e.layerY-this.padding*2).
 					style("fill", "red");
-			}catch(e){
+			}catch(error){
 				this.svgCell.select(".xText").remove();
 				this.svgCell.select(".yText").remove();
 				console.log("almeno una dimensione non é numerica");
@@ -183,9 +168,9 @@ export class SpmChartVM {
 		}
 	}
 	mouseleave(e){
-		select(e.target).selectAll("line").remove();
-		select(e.target).select(".xText").remove();
-		select(e.target).select(".yText").remove();
+		d3.select(e.target).selectAll("line").remove();
+		d3.select(e.target).select(".xText").remove();
+		d3.select(e.target).select(".yText").remove();
 	}
 	updatePointsCanvas(){
 		this.svgCell.selectAll(".cell").remove();
@@ -211,7 +196,7 @@ export class SpmChartVM {
 			text(function(d) { return d.x; });
 	}
 	draw(p, i , list){
-		let cell = select(list[i]);
+		let cell = d3.select(list[i]);
 		cell.append("rect").
 			attr("class", "frame").
 			attr("x", this.padding / 2).
@@ -275,7 +260,7 @@ export class SpmChartVM {
 				let x_axis = d3.axisBottom(this.xScales[d]).
 					ticks(6).
 					tickSize(this.size * this.numberOfTraits);
-				select(list[i]).call(x_axis);
+				d3.select(list[i]).call(x_axis);
 			});
 
 		this.svg.selectAll(".y.axis").remove();
@@ -288,7 +273,7 @@ export class SpmChartVM {
 				let y_axis = d3.axisLeft(this.yScales[d]).
 					ticks(6).
 					tickSize(-this.size * this.numberOfTraits);
-				select(list[i]).call(y_axis); 
+				d3.select(list[i]).call(y_axis); 
 			});
 	}
 	

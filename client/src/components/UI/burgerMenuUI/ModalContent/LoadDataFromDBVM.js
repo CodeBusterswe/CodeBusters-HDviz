@@ -64,10 +64,11 @@ export class LoadDataFromDBVM{
 	}
 	async getQueryResult(){
 		let data;
-		if(this.conditionValue!=="" && this.conditionSign!=="undefined" && this.conditionColumn!=="undefined")
+		if(this.conditionValue!=="" && this.conditionSign!=="undefined" && this.conditionColumn!=="undefined"){
 			data = await getDatasetWithCustomParams(this.selectedColumns, this.conditionSign, this.conditionColumn, this.conditionValue, this.table);
-		else
+		}else{
 			data = await getDatasetWithParams(this.selectedColumns, this.table);
+		}
 	   return data.data;
 	}
 
@@ -92,13 +93,10 @@ export class LoadDataFromDBVM{
 			let d = new Dimension(name);
 			allColumns.forEach(c => {
 				if(c.value === name){//vado solo a cercare quelle non numeriche, di default é true
-					switch (c.type) {
-					case "character varying":
+					if(c.type === "character varying"){
 						d.isNumeric = false;
-						break;
-					default:
+					}else{
 						d.isNumeric = true;
-						break;
 					}
 				}
 			});
@@ -129,19 +127,10 @@ export class LoadDataFromDBVM{
 	}
 
     handleChangeColumns = (value, handler) =>{
-    	switch(handler.action){
-    	case "select-option":
-    		this.selectedColumns = value;
-    		return;
-    	case "remove-value":
-    		this.selectedColumns = value;
-    		return;
-    	case "clear":
+    	if(handler.action === "clear")
     		this.selectedColumns = [];
-    		return;
-    	default:
-    		return;
-    	}
+    	else 
+    		this.selectedColumns = value;
     }
 	
     handleSelectTable = e =>{

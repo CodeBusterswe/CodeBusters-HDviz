@@ -1,7 +1,7 @@
-import AlghorithmStrategy from "../AlghorithmStrategy";
+import AlgorithmStrategy from "../AlgorithmStrategy";
 import * as dr from "@saehrimnir/druidjs";
 
-class LLEStrategy extends AlghorithmStrategy{
+class LLEStrategy extends AlgorithmStrategy{
 
 	startDR(parameters,data) {		
 		const matrix = dr.Matrix.from(data);

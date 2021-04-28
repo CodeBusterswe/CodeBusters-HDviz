@@ -1,6 +1,6 @@
 import {makeObservable, observable, computed, action } from "mobx";
 
-class distanceMatricesStore {
+class DistanceMatricesStore {
 	constructor(rootStore){
 		this.distanceMatrices = [];
 		this.rootStore = rootStore;
@@ -31,4 +31,4 @@ class distanceMatricesStore {
 	}
 }
 
-export default distanceMatricesStore;
+export default DistanceMatricesStore;

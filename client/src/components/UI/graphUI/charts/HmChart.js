@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import { useInstance } from "../../../../useInstance";
 import { HmChartVM } from "./HmChartVM";
 
-const HeatMap = observer(() => {
+const HmChart = observer(() => {
 
 	const {
 		renderChart,
@@ -28,4 +28,4 @@ const HeatMap = observer(() => {
 	);
 
 });
-export default HeatMap;
+export default HmChart;
