@@ -3,11 +3,13 @@ import {AlgorithmType} from "../../../../utils";
 import Dimension from "../../../../stores/data/Dimension";
 import DimReduction from "./StrategyDimReduction/DimReduction";
 import IsomapStrategy from "./StrategyDimReduction/alghorithms/IsomapStrategy";
+import UmapStrategy from "./StrategyDimReduction/alghorithms/UmapStrategy";
 import FastmapStrategy from "./StrategyDimReduction/alghorithms/FastmapStrategy";
 import LLEStrategy from "./StrategyDimReduction/alghorithms/LLEStrategy";
 import TsneStrategy from "./StrategyDimReduction/alghorithms/TsneStrategy";
 import FastmapParameter from "./StrategyDimReduction/parameters/FastmapParameter";
 import IsomapParameter from "./StrategyDimReduction/parameters/IsomapParameter";
+import UmapParameter from "./StrategyDimReduction/parameters/UmapParameter";
 import LLEParameter from "./StrategyDimReduction/parameters/LLEParameter";
 import TsneParameter from "./StrategyDimReduction/parameters/TsneParameter";
 
@@ -20,6 +22,8 @@ export class DimensionalReductionVM{
 		this.newDimensionsName = AlgorithmType.FastMap;
 		this.newDimensionsNumber = 2;
 		this.neighbors = 30;
+		this.localConnection = 5;
+		this.minDistance = 0.5;
 		this.perplexity = 30;
 		this.epsilon = 10;
 		this.nameError = false;
@@ -36,12 +40,14 @@ export class DimensionalReductionVM{
     			DimensionsNumber: this.newDimensionsNumber,
     			Neighbors: this.neighbors,
     			Perplexity: this.perplexity,
-    			Epsilon: this.epsilon
+    			Epsilon: this.epsilon,
+    			LocalConnection: this.localConnection,
+    			MinDistance: this.minDistance
     		};
-		    if(this.datasetStore.dimensions.some(dim => dim.value.slice(0, -1) === parameters.Name) || this.newDimensionsName ==="")
+		    
+    		if(this.datasetStore.dimensions.some(dim => dim.value.slice(0, -1) === parameters.Name) || this.newDimensionsName ==="")
 			    throw new Error("The name is already in use. Please choose a different one.");
-    		//*******************************************************************
-
+    		
 		    const drStrategy = new DimReduction();
     		let params;
 				
@@ -60,6 +66,10 @@ export class DimensionalReductionVM{
     		if(this.algorithmType === AlgorithmType.tSNE) {
     			drStrategy.setStrategy(new TsneStrategy());
     			params = new TsneParameter(parameters);
+    		}	
+    		if(this.algorithmType === AlgorithmType.UMAP) {
+    			drStrategy.setStrategy(new UmapStrategy());
+    			params = new UmapParameter(parameters);
     		}	
 
     		const reduction = drStrategy.executeStrategy(params,data);
@@ -110,6 +120,12 @@ export class DimensionalReductionVM{
 	}
 	handleChangeEspilon = (e) =>{
 		this.epsilon = e.target.value;
+	}
+	handleChangeLocalConnection = (e) =>{
+		this.localConnection = e.target.value;
+	}
+	handleChangeMinDist = (e) =>{
+		this.minDistance = e.target.value;
 	}
 	handleChangeDimensionsToRedux (value, handler){
 		switch(handler.action){

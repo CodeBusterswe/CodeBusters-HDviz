@@ -33,8 +33,11 @@ const DimensionalReduction = observer((props) => {
 		epsilon,
 		handleChangeEspilon,
 		neighbors,
-		handleChangeNeighbours
-
+		handleChangeNeighbours,
+		localConnection,
+		handleChangeLocalConnection,
+		minDistance,
+		handleChangeMinDist
 	} = useInstance(new DimensionalReductionVM(useStore(), closeModal));
 
 	function renderParams() {
@@ -60,6 +63,41 @@ const DimensionalReduction = observer((props) => {
 							onChange={handleChangeEspilon}
 							min={5}
 							max={100}
+						/>
+					</Form.Group>
+				</>
+			);
+		case AlgorithmType.UMAP:
+			return (
+				<>
+					<Form.Group>
+						<Form.Label>Local connection</Form.Label>
+						<RangeSlider
+							tooltip="on"
+							value={localConnection}
+							onChange={handleChangeLocalConnection}
+							min={1}
+							max={100}
+						/>
+					</Form.Group>
+					<Form.Group>
+						<Form.Label>Distanza minima</Form.Label>
+						<RangeSlider
+							tooltip="on"
+							value={minDistance}
+							onChange={handleChangeMinDist}
+							min={0.05}
+							max={1.5}
+						/>
+					</Form.Group>
+					<Form.Group>
+						<Form.Label>Neighbors</Form.Label>
+						<RangeSlider
+							tooltip="on"
+							value={neighbors}
+							onChange={handleChangeNeighbours}
+							min={20}
+							max={200}
 						/>
 					</Form.Group>
 				</>
@@ -119,6 +157,7 @@ const DimensionalReduction = observer((props) => {
 							<option value={AlgorithmType.LLE}>LLE</option>
 							<option value={AlgorithmType.IsoMap}>ISOMAP</option>
 							<option value={AlgorithmType.tSNE}>TSNE</option>
+							<option value={AlgorithmType.UMAP}>UMAP</option>
 						</Form.Control>
 					</Form.Group>
 					<Form.Group controlId="newDimensionsName">

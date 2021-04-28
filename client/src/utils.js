@@ -17,6 +17,7 @@ export const AlgorithmType = {
 	IsoMap: "isoMap",
 	FastMap: "fastMap",
 	LLE: "lle",
-	tSNE: "t-sne"
+	tSNE: "t-sne",
+	UMAP: "umap"
 };
 export default AlgorithmType;
