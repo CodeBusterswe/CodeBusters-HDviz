@@ -412,3 +412,28 @@ code {
   fill-opacity: .125;
   stroke: #fff;
 }
+
+#dropzone{
+
+  text-align: center;
+  border: 2px dashed grey;
+  border-radius: 1em;
+}
+
+#dropzone p{
+  padding-top: 1em;
+}
+
+#dropzone-modal-body{
+  padding-top: 0em;
+}
+
+#export-btn, #input-session{
+  display: inline;
+  vertical-align: top
+}
+
+#input-session{
+  width: 50%;
+  margin-right: 2em;
+}

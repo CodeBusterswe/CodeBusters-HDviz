@@ -49,18 +49,18 @@ const Session = observer((props) => {
 				</Modal.Header>
 
 				<ModalBody>
-					<ModalBody>
-						<MyDropzone loadSession={loadSession}/>
+					<ModalBody id="dropzone-modal-body">
+						<MyDropzone loadSession={loadSession} />
 						<hr/>
-						<p>Oppure esporta la tua sessione di lavoro:</p>
-						<Form.Label>Nome file</Form.Label>
+						<p>In alternativa, esporta la tua sessione di lavoro specificando il nome e premendo il tasto dedicato:</p>
 						<Form.Control
+							id="input-session"
 							required
 							type="text"
 							value={fileName}
 							onChange={handleChangeFileName}
 						/>
-						<Button variant="info" onClick={handleExport}>Esporta</Button>
+						<Button id="export-btn" variant="info" onClick={handleExport}>Esporta</Button>
 					</ModalBody>
 				</ModalBody>
 				

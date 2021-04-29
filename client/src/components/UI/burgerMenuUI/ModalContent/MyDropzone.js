@@ -22,9 +22,9 @@ function MyDropzone(props) {
 	const {getRootProps, getInputProps} = useDropzone({onDrop});
  
 	return (
-		<div {...getRootProps()}>
+		<div {...getRootProps()} id="dropzone">
 			<input {...getInputProps()} />
-			<p>Drag 'n' drop some files here, or click to select files</p>
+			<p>Rilascia qui il tuo file o clicca per caricare la sessione</p>
 		</div>
 	);
 }

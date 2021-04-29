@@ -10,7 +10,7 @@ export class SessionVM{
 		this.showDanger = false;
 		this.showSuccess = false;
 		this.closeModal = closeModal.bind(null);
-        this.fileName = "session";
+        this.fileName = "myWork";
 		makeAutoObservable(this, {rootStore: false, preferencesStore: false, datasetStore: false, distanceMatricesStore: false}, {autoBind: true});
 	}
 
