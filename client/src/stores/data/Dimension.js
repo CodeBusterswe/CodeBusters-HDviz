@@ -1,4 +1,4 @@
-import { makeObservable, observable } from "mobx";
+import { makeAutoObservable} from "mobx";
 
 class Dimension{
 	constructor(value = "dims", isChecked = true, isNumeric=true, isRedux = false){
@@ -6,12 +6,7 @@ class Dimension{
 		this._isChecked = isChecked;
 		this._isNumeric = isNumeric;
 		this._isRedux = isRedux;
-		makeObservable(this,{
-			_isChecked: observable,
-			_isNumeric: observable,
-			_isRedux: observable,
-			_value: observable,
-		});
+		makeAutoObservable(this);
 	}
 
 	set isChecked(bool) {
@@ -41,5 +36,6 @@ class Dimension{
 	get isReduced() {
 		return this._isRedux;
 	}
+
 }
 export default Dimension;

@@ -16,7 +16,24 @@ class PreferencesStore {
 		this.preferencesFf = new PreferencesFF();
 		makeAutoObservable(this, {rootStore: false});
 	}
-	
+	toJSON(){
+		return {
+			chart: this.chart ? this.chart : "undefined",
+			preferencesAm: this.preferencesAm,
+			preferencesFf: this.preferencesFf,
+			preferencesHm: this.preferencesHm,
+			preferencesPlma: this.preferencesPlma,
+			preferencesSpm: this.preferencesSpm
+		};
+	}
+	fromJSON(store){
+		this.chart = store.chart!== "undefined" ? store.chart : undefined;
+		this.preferencesAm.fromJSON(store.preferencesAm);
+		this.preferencesFf.fromJSON(store.preferencesFf);
+		this.preferencesHm.fromJSON(store.preferencesHm);
+		this.preferencesPlma.fromJSON(store.preferencesPlma);
+		this.preferencesSpm.fromJSON(store.preferencesSpm);
+	}
 	reset(){
 		this.chart = undefined;
 		this.preferencesAm = new PreferencesAM();

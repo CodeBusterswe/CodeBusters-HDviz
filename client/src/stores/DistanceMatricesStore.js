@@ -1,4 +1,5 @@
 import {makeObservable, observable, computed, action } from "mobx";
+import DistanceMatrix from "./data/DistanceMatrix";
 
 class DistanceMatricesStore {
 	constructor(rootStore){
@@ -28,6 +29,16 @@ class DistanceMatricesStore {
 	}
 	reset(){
 		this.distanceMatrices.clear();
+	}
+	toJSON(){
+		return this.distanceMatrices;
+	}
+	fromJSON(store){
+		store.forEach(matrix => {
+			let temp = new DistanceMatrix();
+			temp.fromJSON(matrix);
+			this.addDistanceMatrix(temp);
+		});
 	}
 }
 

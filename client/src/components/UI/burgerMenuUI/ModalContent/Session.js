@@ -3,7 +3,9 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../../../ContextProvider";
 import { useInstance } from "../../../../useInstance";
 import { ModalBody, ModalFooter ,Alert , Modal, Button} from "react-bootstrap";
+import Form from "react-bootstrap/Form";
 import {SessionVM} from "./SessionVM";
+import MyDropzone from "./MyDropzone";
 import "../../../style.css";
 
 const Session = observer((props) => {
@@ -15,9 +17,12 @@ const Session = observer((props) => {
 		showSuccess,
 		setShowSuccess,
 		showDanger,
+		fileName,
 		setShowDanger,
-		handleConfirm,
+		handleExport,
+		loadSession,
 		handleDismiss,
+		handleChangeFileName,
 	} = useInstance(new SessionVM(useStore(), closeModal));
 
 	useEffect(() => {
@@ -44,12 +49,23 @@ const Session = observer((props) => {
 				</Modal.Header>
 
 				<ModalBody>
-					<button>Prova</button>
+					<ModalBody>
+						<MyDropzone loadSession={loadSession}/>
+						<hr/>
+						<p>Oppure esporta la tua sessione di lavoro:</p>
+						<Form.Label>Nome file</Form.Label>
+						<Form.Control
+							required
+							type="text"
+							value={fileName}
+							onChange={handleChangeFileName}
+						/>
+						<Button variant="info" onClick={handleExport}>Esporta</Button>
+					</ModalBody>
 				</ModalBody>
 				
 				<ModalFooter>
 					<Button variant="secondary" onClick={handleDismiss}>Torna al menù</Button>
-					<Button variant="primary" onClick={handleConfirm}>Conferma selezione</Button>
 				</ModalFooter>
 			</Modal>
 			<Alert show={showSuccess} variant="success" className="alert" dismissible onClose={setShowSuccess.bind(null,false)}>

@@ -23,12 +23,24 @@ class PreferencesSPM{
 		this[id] = value;
 	}
 
-	serializeJSON(){
-		//return json
+	toJSON(){
+		return {
+			axis1 : this.axis1 ? this.axis1 : "undefined",
+			axis2 : this.axis2 ? this.axis2 : "undefined",
+			axis3 : this.axis3 ? this.axis3 : "undefined",
+			axis4 : this.axis4 ? this.axis4 : "undefined",
+			axis5 : this.axis5 ? this.axis5 : "undefined",
+			SPMcolor : this.SPMcolor ? this.SPMcolor : "undefined",
+		};
 	}
 
-	deserializeJSON(string){
-		//deserialize
+	fromJSON(obj){
+		this.axis1 = obj.axis1 === "undefined" ? undefined : obj.axis1;
+		this.axis2 = obj.axis2 === "undefined" ? undefined : obj.axis2;
+		this.axis3 = obj.axis3 === "undefined" ? undefined : obj.axis3;
+		this.axis4 = obj.axis4 === "undefined" ? undefined : obj.axis4;
+		this.axis5 = obj.axis5 === "undefined" ? undefined : obj.axis5;
+		this.SPMcolor = obj.SPMcolor === "undefined" ? undefined : obj.SPMcolor;
 	}
 }
 

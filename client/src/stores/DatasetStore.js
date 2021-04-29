@@ -1,6 +1,7 @@
 import {makeObservable, observable, computed, action } from "mobx";
+import Dimension from "./data/Dimension";
 class DatasetStore {
-	constructor(rootStore, init){
+	constructor(rootStore){
 		this.dimensions = [];
 		this.originalData = [];
 		this.selectedData = [];
@@ -17,7 +18,8 @@ class DatasetStore {
 			updateSelectedData: action,
 			loadData: action,
 			addDimensionsToDataset: action,
-			reset: action
+			reset: action,
+			fromJSON: action
 		});
 	}
 	isDataLoaded(){
@@ -73,11 +75,12 @@ class DatasetStore {
 	toJSON(){
 		return {dimensions: this.dimensions, data: this.originalData, selected: this.selectedData};
 	}
-	fromJSON(json){
-		let temp = JSON.parse(json);
-		this.dimensions.replace(temp.dimensions);
-		this.originalData.replace(temp.data);
-		this.selectedData.replace(temp.selected);
+	fromJSON(store){
+		this.dimensions.replace(store.dimensions.map(dim => {
+			return new Dimension(dim._value, dim._isChecked, dim._isNumeric, dim._isReduced);
+		}));
+		this.originalData.replace(store.data);
+		this.selectedData.replace(store.selected);
 	}
 }
 
