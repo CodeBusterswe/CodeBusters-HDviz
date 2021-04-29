@@ -87,6 +87,7 @@ const DimensionalReduction = observer((props) => {
 							value={minDistance}
 							onChange={handleChangeMinDist}
 							min={0.05}
+							step={0.05}
 							max={1.5}
 						/>
 					</Form.Group>

@@ -69,6 +69,16 @@ class DatasetStore {
 		this.dimensions.clear();	//metodo di mobx per array observable
 		this.selectedData.clear();
 	}   
+
+	toJSON(){
+		return {dimensions: this.dimensions, data: this.originalData, selected: this.selectedData};
+	}
+	fromJSON(json){
+		let temp = JSON.parse(json);
+		this.dimensions.replace(temp.dimensions);
+		this.originalData.replace(temp.data);
+		this.selectedData.replace(temp.selected);
+	}
 }
 
 export default DatasetStore;

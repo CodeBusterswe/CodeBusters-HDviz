@@ -10,7 +10,7 @@ import {SiGraphcool , SiJson} from "react-icons/si";
 export class MenuVM {
 
     modalIsOpen = false;
-    id = 0;
+    id = -1;
 	names = ["Carica/Salva sessione", "Carica dati dal DB", 
     	"Carica dati da CSV", "Riduci dimensioni", "Calcola distanza", "Scatterplot Matrix",
     	"Adjacency Matrix","Heat Map","Force Field","Linear Projection"]; 
