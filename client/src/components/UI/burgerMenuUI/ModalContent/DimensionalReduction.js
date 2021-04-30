@@ -45,6 +45,7 @@ const DimensionalReduction = observer((props) => {
 		setShowSuccess,
 		showDanger,
 		setShowDanger,
+		handleNormalize
 	} = useInstance(new DimensionalReductionVM(useStore(), closeModal));
 
 	function renderParams() {
@@ -130,7 +131,6 @@ const DimensionalReduction = observer((props) => {
 	}
 
 	useEffect(() => {
-		console.log(showSuccess);
 		const time = 4000;
 		let timer = setTimeout(() => setShowSuccess(false), time);
 		return () => clearTimeout(timer);
@@ -185,6 +185,15 @@ const DimensionalReduction = observer((props) => {
 								onChange={handleChangeDimensionsToRedux}
 							/>
 						</Form.Group>
+						<Form.Check 
+							custom
+							type="checkbox"
+							key="normalize"
+							value="normalize"
+							id="normalize"
+							label="Normalizza i dati"
+							onChange={handleNormalize}
+						/>
 						<Form.Group controlId="algorithmType" id="alg">	
 							<Form.Label>Algoritmo</Form.Label>
 							<Form.Control 

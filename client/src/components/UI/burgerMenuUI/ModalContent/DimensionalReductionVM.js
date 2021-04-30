@@ -12,6 +12,7 @@ import IsomapParameter from "./StrategyDimReduction/parameters/IsomapParameter";
 import UmapParameter from "./StrategyDimReduction/parameters/UmapParameter";
 import LLEParameter from "./StrategyDimReduction/parameters/LLEParameter";
 import TsneParameter from "./StrategyDimReduction/parameters/TsneParameter";
+import * as d3 from "d3";
 
 export class DimensionalReductionVM{
 	constructor(rootStore, closeModal){
@@ -31,7 +32,19 @@ export class DimensionalReductionVM{
 		this.isLoading= false;
 		this.showDanger = false;
 		this.showSuccess = false;
+		this.normalize = false;
 		makeAutoObservable(this, {datasetStore: false}, {autoBind: true}); 
+	}
+
+	handleNormalize = () => {
+		this.normalize = !this.normalize;
+	}
+
+	normalizeData(data){
+		const maxes = this.dimensionsToRedux.map((dim,i) => {
+			return d3.max(data, obj => obj[i]);
+		});
+		return data.map(obj => this.dimensionsToRedux.map((dim, j) => obj[j] / maxes[j]));
 	}
 
 	setIsLoading(value){
@@ -47,7 +60,13 @@ export class DimensionalReductionVM{
 
     handleSubmit = () => {
     	try{
-    		const data = this.datasetStore.selectedData.map(obj => this.dimensionsToRedux.map((dim) => obj[dim.value]));
+    		let data = this.datasetStore.selectedData.map(obj => this.dimensionsToRedux.map((dim) => obj[dim.value]));
+
+    		if(this.normalize){
+    			data = this.normalizeData(data);
+    			this.normalize = false;
+    		}   
+
     		const parameters = {
     			Name: this.newDimensionsName,
     			DimensionsNumber: this.newDimensionsNumber,

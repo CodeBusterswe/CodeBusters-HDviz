@@ -27,7 +27,8 @@ const DistanceCalculation = observer((props) => {
 		handleChangeNewDistanceMatrixName,
 		nameError,
 		setIsLoading,
-		isLoading
+		isLoading,
+		handleNormalize
 	}= useInstance(new DistanceCalculationVM(useStore(), closeModal));
 
 	useEffect(()=>{	
@@ -67,6 +68,15 @@ const DistanceCalculation = observer((props) => {
 							onChange={handleChangeDimensionsToRedux}
 						/>
 					</Form.Group>
+					<Form.Check 
+						custom
+						type="checkbox"
+						key="normalize"
+						value="normalize"
+						id="normalize"
+						label="Normalizza i dati"
+						onChange={handleNormalize}
+					/>
 					<Form.Group controlId="distanceType">	
 						<Form.Label>Tipo di distanza</Form.Label>
 						<Form.Control 

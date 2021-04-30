@@ -2,6 +2,8 @@ import { makeAutoObservable } from "mobx";
 import {DistanceType} from "../../../../utils";
 import DistanceMatrix from "../../../../stores/data/DistanceMatrix";
 import * as distCalc from "ml-distance";
+import * as d3 from "d3";
+
 export class DistanceCalculationVM{
 	constructor(rootStore, closeModal){
 		this.datasetStore = rootStore.datasetStore;
@@ -13,7 +15,19 @@ export class DistanceCalculationVM{
 		this.nameError = false;
 		this.isLoading= false;
 		this.closeModal = closeModal.bind(null);
+		this.normalize = false;
 		makeAutoObservable(this, {datasetStore: false, distanceMatricesStore: false}, {autoBind: true}); 
+	}
+
+	handleNormalize = () => {
+		this.normalize = !this.normalize;
+	}
+
+	normalizeData(data){
+		const maxes = this.dimensionsToRedux.map((dim,i) => {
+			return d3.max(data, obj => obj[i]);
+		});
+		return data.map(obj => this.dimensionsToRedux.map((dim, j) => obj[j] / maxes[j]));
 	}
 
 	setIsLoading(value){
@@ -22,7 +36,13 @@ export class DistanceCalculationVM{
 
     handleSubmit = () =>{
     	try{
-    		const data = this.datasetStore.selectedData.map(obj => this.dimensionsToRedux.map((dim) => obj[dim.value]));
+    		let data = this.datasetStore.selectedData.map(obj => this.dimensionsToRedux.map((dim) => obj[dim.value]));
+
+    		if(this.normalize){
+    			data = this.normalizeData(data);
+    			this.normalize = false;
+    		}   
+
     		if(this.distanceMatricesStore.getDistanceMatrixByName(this.newDistanceMatrixName) || this.newDistanceMatrixName==="")
     			throw new Error("The name is already in use. Please choose a different one.");
     		let matrix = new DistanceMatrix();
