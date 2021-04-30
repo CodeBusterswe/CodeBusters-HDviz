@@ -49,6 +49,7 @@ export class MenuVM {
 
 	closeModal = () => {
     	this.modalIsOpen = false;
+		//setTimeout(()=>{this.id=-1;}, 4000);
 	}
 
 	showChart = index => {

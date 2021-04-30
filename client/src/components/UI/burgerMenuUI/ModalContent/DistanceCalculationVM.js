@@ -11,12 +11,16 @@ export class DistanceCalculationVM{
 		this.distanceType = DistanceType.Euclidean;
 		this.newDistanceMatrixName = DistanceType.Euclidean;
 		this.nameError = false;
+		this.isLoading= false;
 		this.closeModal = closeModal.bind(null);
 		makeAutoObservable(this, {datasetStore: false, distanceMatricesStore: false}, {autoBind: true}); 
 	}
-    
-    handleSubmit = e =>{
-    	e.preventDefault();
+
+	setIsLoading(value){
+		this.isLoading = value;
+	}
+
+    handleSubmit = () =>{
     	try{
     		const data = this.datasetStore.selectedData.map(obj => this.dimensionsToRedux.map((dim) => obj[dim.value]));
     		if(this.distanceMatricesStore.getDistanceMatrixByName(this.newDistanceMatrixName) || this.newDistanceMatrixName==="")

@@ -28,11 +28,24 @@ export class DimensionalReductionVM{
 		this.epsilon = 10;
 		this.nameError = false;
 		this.closeModal = closeModal.bind(null);
+		this.isLoading= false;
+		this.showDanger = false;
+		this.showSuccess = false;
 		makeAutoObservable(this, {datasetStore: false}, {autoBind: true}); 
 	}
 
-    handleSubmit = (e) =>{
-    	e.preventDefault();
+	setIsLoading(value){
+		this.isLoading = value;
+	}
+
+    setShowDanger = bool =>{
+    	this.showDanger = bool;
+    }
+    setShowSuccess= bool =>{
+    	this.showSuccess = bool;
+    }
+
+    handleSubmit = () => {
     	try{
     		const data = this.datasetStore.selectedData.map(obj => this.dimensionsToRedux.map((dim) => obj[dim.value]));
     		const parameters = {
@@ -45,9 +58,11 @@ export class DimensionalReductionVM{
     			MinDistance: this.minDistance
     		};
 		    
-    		if(this.datasetStore.dimensions.some(dim => dim.value.slice(0, -1) === parameters.Name) || this.newDimensionsName ==="")
-			    throw new Error("The name is already in use. Please choose a different one.");
-    		
+    		if(this.datasetStore.dimensions.some(dim => dim.value.slice(0, -1) === parameters.Name) || this.newDimensionsName ===""){
+    			let e = new Error("The name is already in use. Please choose a different one.");
+    			e.name = "nameError";
+    			throw e;
+    		}
 		    const drStrategy = new DimReduction();
     		let params;
 				
@@ -91,9 +106,14 @@ export class DimensionalReductionVM{
     			});
     		}
     		this.datasetStore.addDimensionsToDataset(newDimsFromReduction);
-    		this.closeModal();
-    	}catch(error){
-    		this.nameError = true;
+    		this.setShowSuccess(true);
+    	}catch(e){
+    		console.log(e);
+    		if(e.name === "nameError")
+    		    this.nameError = true;
+    		else{
+    			this.setShowDanger(true);
+    		}
     	}
     }
 	handleChangeNeighbours = (e) =>{

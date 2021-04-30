@@ -69,15 +69,15 @@ const Session = observer((props) => {
 				</ModalFooter>
 			</Modal>
 			<Alert show={showSuccess} variant="success" className="alert" dismissible onClose={setShowSuccess.bind(null,false)}>
-				<Alert.Heading>Dati inseriti correttamente</Alert.Heading>
+				<Alert.Heading>Sessione ripristinata correttamente</Alert.Heading>
 				<p>
-					Ora puoi applicare una riduzione dimensionale ai tuoi dati o scegliere subito la visualizzazione che più preferisci
+					Ora puoi continuare con il tuo lavoro.
 				</p>
 			</Alert>
 			<Alert show={showDanger} variant="danger" className="alert" dismissible onClose={setShowDanger.bind(null,false)}>
 				<Alert.Heading>Avviso</Alert.Heading>
 				<p>
-					Nessun dato è stato caricato. Assicurati di aver inserito il file e premuto il tasto "<strong>Conferma selezione</strong>"
+					La sessione non è stata ripristinata. Assicurati di aver inserito un file ben formattato.
 				</p>
 			</Alert> 
 		</>

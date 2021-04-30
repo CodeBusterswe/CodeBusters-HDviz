@@ -43,6 +43,7 @@ const Menu = observer(() => {
 		default:
 			break;
 		}
+
 	}
 	const popover = 
 		<Popover id="popover-basic">

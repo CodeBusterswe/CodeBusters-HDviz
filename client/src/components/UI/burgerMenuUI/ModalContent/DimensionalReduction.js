@@ -1,9 +1,10 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../../ContextProvider";
 import { useInstance } from "../../../../useInstance";
 import Modal from "react-bootstrap/Modal";
-import { Button, ModalBody, ModalFooter } from "react-bootstrap";
+import { Button, ModalBody, ModalFooter, Spinner, Alert } from "react-bootstrap";
 import RangeSlider from "react-bootstrap-range-slider";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
@@ -37,7 +38,13 @@ const DimensionalReduction = observer((props) => {
 		localConnection,
 		handleChangeLocalConnection,
 		minDistance,
-		handleChangeMinDist
+		handleChangeMinDist,
+		setIsLoading,
+		isLoading,
+		showSuccess,
+		setShowSuccess,
+		showDanger,
+		setShowDanger,
 	} = useInstance(new DimensionalReductionVM(useStore(), closeModal));
 
 	function renderParams() {
@@ -122,79 +129,125 @@ const DimensionalReduction = observer((props) => {
 		
 	}
 
-	return (
-		<Modal
-			show={modalIsOpen}
-			onHide={closeModal}
-		>
-			<Form onSubmit={handleSubmit} noValidate>
-				<Modal.Header closeButton>
-					<Modal.Title>Riduzione dimensionale</Modal.Title>
-				</Modal.Header>
+	useEffect(() => {
+		console.log(showSuccess);
+		const time = 4000;
+		let timer = setTimeout(() => setShowSuccess(false), time);
+		return () => clearTimeout(timer);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	},[showSuccess]);
+	
+	useEffect(() => {
+		const time = 4000;
+		let timer = setTimeout(() => setShowDanger(false), time);
+		return () => clearTimeout(timer);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	},[showDanger]);
 
-				<ModalBody>
-					<Form.Group controlId="dimensionsToReduxList">
-						<Form.Label>Seleziona dimensioni da utilizzare</Form.Label>
-						<Select
-							value={dimensionsToRedux}
-							options={optionList}
-							isMulti
-							name="toReduxDimensionsList"
-							className="basic-multi-select"
+	useEffect(()=>{	
+		async function start(){
+			await handleSubmit();
+		}
+		if(isLoading){
+			start();
+			setIsLoading(false);
+			closeModal();
+		}
+	},[isLoading]);
+
+	return (
+		<>
+			<Modal
+				show={modalIsOpen}
+				onHide={closeModal}
+			>
+				<Form onSubmit= { (e) => {
+					e.preventDefault();
+					setIsLoading(true);
+				}} noValidate>
+
+					<Modal.Header closeButton>
+						<Modal.Title>Riduzione dimensionale</Modal.Title>
+					</Modal.Header>
+
+					<ModalBody>
+						<Form.Group controlId="dimensionsToReduxList">
+							<Form.Label>Seleziona dimensioni da utilizzare</Form.Label>
+							<Select
+								value={dimensionsToRedux}
+								options={optionList}
+								isMulti
+								name="toReduxDimensionsList"
+								className="basic-multi-select"
     						classNamePrefix="select"
-							components={makeAnimated()}
-							closeMenuOnSelect={false}
-							onChange={handleChangeDimensionsToRedux}
-						/>
-					</Form.Group>
-					<Form.Group controlId="algorithmType" id="alg">	
-						<Form.Label>Algoritmo</Form.Label>
-						<Form.Control 
-							as="select" 
-							custom 
-							value={algorithmType}
-							onChange={handleChangeAlgorithmType}>
-							<option value={AlgorithmType.FastMap}>FASTMAP</option>
-							<option value={AlgorithmType.LLE}>LLE</option>
-							<option value={AlgorithmType.IsoMap}>ISOMAP</option>
-							<option value={AlgorithmType.tSNE}>TSNE</option>
-							<option value={AlgorithmType.UMAP}>UMAP</option>
-						</Form.Control>
-					</Form.Group>
-					<Form.Group controlId="newDimensionsName">
-						<Form.Label>Nome nuove dimensioni</Form.Label>
-						<Form.Control
-							required
-							type="text"
-							value={newDimensionsName}
-							onChange={handleChangeNewDimensionsName}
-							isInvalid={nameError}
-						/>
-						<Form.Control.Feedback type="invalid">
+								components={makeAnimated()}
+								closeMenuOnSelect={false}
+								onChange={handleChangeDimensionsToRedux}
+							/>
+						</Form.Group>
+						<Form.Group controlId="algorithmType" id="alg">	
+							<Form.Label>Algoritmo</Form.Label>
+							<Form.Control 
+								as="select" 
+								custom 
+								value={algorithmType}
+								onChange={handleChangeAlgorithmType}>
+								<option value={AlgorithmType.FastMap}>FASTMAP</option>
+								<option value={AlgorithmType.LLE}>LLE</option>
+								<option value={AlgorithmType.IsoMap}>ISOMAP</option>
+								<option value={AlgorithmType.tSNE}>TSNE</option>
+								<option value={AlgorithmType.UMAP}>UMAP</option>
+							</Form.Control>
+						</Form.Group>
+						<Form.Group controlId="newDimensionsName">
+							<Form.Label>Nome nuove dimensioni</Form.Label>
+							<Form.Control
+								required
+								type="text"
+								value={newDimensionsName}
+								onChange={handleChangeNewDimensionsName}
+								isInvalid={nameError}
+							/>
+							<Form.Control.Feedback type="invalid">
                             Nome invalido o già utilizzato.
             			</Form.Control.Feedback>
-					</Form.Group>
-					<Form.Group controlId="newDimensionsNumber">
-						<Form.Label>Numero di nuove dimensioni</Form.Label>
-						<RangeSlider
-							tooltip="on"
-							value={newDimensionsNumber}
-							onChange={handleChangeNewDimensionsNumber}
-							min={2}
-							max={8}
-						/>
-					</Form.Group>
-					{
-						renderParams()
-					}
-				</ModalBody>
+						</Form.Group>
+						<Form.Group controlId="newDimensionsNumber">
+							<Form.Label>Numero di nuove dimensioni</Form.Label>
+							<RangeSlider
+								tooltip="on"
+								value={newDimensionsNumber}
+								onChange={handleChangeNewDimensionsNumber}
+								min={2}
+								max={8}
+							/>
+						</Form.Group>
+						{
+							renderParams()
+						}
+					</ModalBody>
 			
-				<ModalFooter>
-					<Button variant="secondary" onClick={closeModal}>Torna al menù</Button>
-					<Button type="submit">Esegui riduzione</Button>
-				</ModalFooter>
-			</Form>
-		</Modal>
+					<ModalFooter>
+						<Button variant="secondary" onClick={closeModal}>Torna al menù</Button>
+						<Button type="submit" >
+							{isLoading? <><Spinner animation="border" size="sm"></Spinner><span>Riduzione in corso...</span></> : <span>Esegui riduzione</span>}
+						</Button>
+					</ModalFooter>
+				</Form>
+			</Modal>
+			<Alert show={showSuccess} variant="success" className="alert" dismissible onClose={setShowSuccess.bind(null,false)}>
+				<Alert.Heading>Operazione completata con successo</Alert.Heading>
+				<p>
+					La riduzione dimensionale è avvenuta con successo. Puoi ora visualizzare le tue nuove dimensioni.
+				</p>
+			</Alert>
+			<Alert show={showDanger} variant="danger" className="alert" dismissible onClose={setShowDanger.bind(null,false)}>
+				<Alert.Heading>Avviso</Alert.Heading>
+				<p>
+					La riduzione dimensionale è fallita. Controlla di avere un dataset ben formattato.s
+				</p>
+			</Alert> 
+		</>
 	);
 });
 

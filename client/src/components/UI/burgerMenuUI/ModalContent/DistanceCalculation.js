@@ -1,9 +1,10 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect} from "react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../../ContextProvider";
 import { useInstance } from "../../../../useInstance";
 import Modal from "react-bootstrap/Modal";
-import { Button, ModalBody, ModalFooter } from "react-bootstrap";
+import { Button, ModalBody, ModalFooter, Spinner } from "react-bootstrap";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import Form from "react-bootstrap/Form";
@@ -25,14 +26,29 @@ const DistanceCalculation = observer((props) => {
 		newDistanceMatrixName,
 		handleChangeNewDistanceMatrixName,
 		nameError,
+		setIsLoading,
+		isLoading
 	}= useInstance(new DistanceCalculationVM(useStore(), closeModal));
+
+	useEffect(()=>{	
+		async function start(){
+			await handleSubmit();
+		}
+		if(isLoading){
+			start();
+			setIsLoading(false);
+		}
+	},[isLoading]);
 
 	return (
 		<Modal
 			show={modalIsOpen}
 			onHide={closeModal}
 		>
-			<Form onSubmit={handleSubmit} noValidate>
+			<Form onSubmit= { (e) => {
+				e.preventDefault();
+				setIsLoading(true);
+			}} noValidate>
 				<Modal.Header closeButton>
 					<Modal.Title>Riduzione dimensionale tramite calcolo delle distanze</Modal.Title>
 				</Modal.Header>
@@ -81,7 +97,9 @@ const DistanceCalculation = observer((props) => {
 			
 				<ModalFooter>
 					<Button variant="secondary" onClick={closeModal}>Torna al menù</Button>
-					<Button type="submit">Esegui riduzione</Button>
+					<Button type="submit" >
+						{isLoading? <><Spinner animation="border" size="sm"></Spinner><span>Riduzione in corso...</span></> : <span>Esegui riduzione</span>}
+					</Button>
 				</ModalFooter>
 			</Form>
 		</Modal>
