@@ -54,6 +54,15 @@ const DistanceCalculation = observer((props) => {
 					<Modal.Title>Riduzione dimensionale tramite calcolo delle distanze</Modal.Title>
 				</Modal.Header>
 				<ModalBody>
+					<Form.Check 
+						custom
+						type="checkbox"
+						key="normalize"
+						value="normalize"
+						id="normalize"
+						label="Normalizza i dati"
+						onChange={handleNormalize}
+					/>
 					<Form.Group controlId="dimensionsToReduxList">
 						<Form.Label>Seleziona dimensioni da utilizzare</Form.Label>
 						<Select
@@ -68,15 +77,6 @@ const DistanceCalculation = observer((props) => {
 							onChange={handleChangeDimensionsToRedux}
 						/>
 					</Form.Group>
-					<Form.Check 
-						custom
-						type="checkbox"
-						key="normalize"
-						value="normalize"
-						id="normalize"
-						label="Normalizza i dati"
-						onChange={handleNormalize}
-					/>
 					<Form.Group controlId="distanceType">	
 						<Form.Label>Tipo di distanza</Form.Label>
 						<Form.Control 

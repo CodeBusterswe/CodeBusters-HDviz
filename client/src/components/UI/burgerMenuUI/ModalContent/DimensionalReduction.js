@@ -171,6 +171,15 @@ const DimensionalReduction = observer((props) => {
 					</Modal.Header>
 
 					<ModalBody>
+						<Form.Check 
+							custom
+							type="checkbox"
+							key="normalize"
+							value="normalize"
+							id="normalize"
+							label="Normalizza i dati"
+							onChange={handleNormalize}
+						/>
 						<Form.Group controlId="dimensionsToReduxList">
 							<Form.Label>Seleziona dimensioni da utilizzare</Form.Label>
 							<Select
@@ -185,15 +194,6 @@ const DimensionalReduction = observer((props) => {
 								onChange={handleChangeDimensionsToRedux}
 							/>
 						</Form.Group>
-						<Form.Check 
-							custom
-							type="checkbox"
-							key="normalize"
-							value="normalize"
-							id="normalize"
-							label="Normalizza i dati"
-							onChange={handleNormalize}
-						/>
 						<Form.Group controlId="algorithmType" id="alg">	
 							<Form.Label>Algoritmo</Form.Label>
 							<Form.Control 
