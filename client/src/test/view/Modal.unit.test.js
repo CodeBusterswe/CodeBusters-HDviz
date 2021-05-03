@@ -4,13 +4,7 @@ import App from "./../../components/View";
 test("Seleziona le dimensioni",()=>{
 	render(<App/>);
 	fireEvent.click(screen.getByRole("button",{name: "Carica un dataset di prova" }));	
-	fireEvent.click(screen.getByRole("button",{name: "Carica dati da CSV" }));
-	expect(screen.getByRole("checkbox",{name: "petal_length" })).toBeChecked();
-	expect(screen.getByRole("checkbox",{name: "petal_width" })).toBeChecked();
-	fireEvent.click(screen.getByRole("checkbox",{name: "petal_length" }));
-	fireEvent.click(screen.getByRole("checkbox",{name: "petal_width" }));
-	expect(screen.getByRole("checkbox",{name: "petal_length" })).not.toBeChecked();
-	expect(screen.getByRole("checkbox",{name: "petal_width" })).not.toBeChecked();		
+	expect(screen.getByRole("alert", "Dati inseriti correttamente")).toBeInTheDocument();
 });
 /*
 test("Carica un csv", async() => {
