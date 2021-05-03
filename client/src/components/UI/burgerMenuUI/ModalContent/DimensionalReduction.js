@@ -45,7 +45,7 @@ const DimensionalReduction = observer((props) => {
 		setShowSuccess,
 		showDanger,
 		setShowDanger,
-		handleNormalize
+		handleNormalize,
 	} = useInstance(new DimensionalReductionVM(useStore(), closeModal));
 
 	function renderParams() {
@@ -151,7 +151,6 @@ const DimensionalReduction = observer((props) => {
 		if(isLoading){
 			start();
 			setIsLoading(false);
-			closeModal();
 		}
 	},[isLoading]);
 
@@ -188,7 +187,7 @@ const DimensionalReduction = observer((props) => {
 								isMulti
 								name="toReduxDimensionsList"
 								className="basic-multi-select"
-    						classNamePrefix="select"
+    						    classNamePrefix="select"
 								components={makeAnimated()}
 								closeMenuOnSelect={false}
 								onChange={handleChangeDimensionsToRedux}
@@ -253,7 +252,7 @@ const DimensionalReduction = observer((props) => {
 			<Alert show={showDanger} variant="danger" className="alert" dismissible onClose={setShowDanger.bind(null,false)}>
 				<Alert.Heading>Avviso</Alert.Heading>
 				<p>
-					La riduzione dimensionale è fallita. Controlla di avere un dataset ben formattato.s
+					La riduzione dimensionale è fallita. Controlla di avere un dataset ben formattato.
 				</p>
 			</Alert> 
 		</>

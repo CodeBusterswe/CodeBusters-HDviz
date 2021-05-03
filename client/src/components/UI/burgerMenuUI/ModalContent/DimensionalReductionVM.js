@@ -17,8 +17,7 @@ import * as d3 from "d3";
 export class DimensionalReductionVM{
 	constructor(rootStore, closeModal){
 		this.datasetStore = rootStore.datasetStore;
-    	this.dimensionsToRedux = this.datasetStore.numericDimensions.map(d => {return {value: d.value, label: d.value};}).slice(0,2);
-		this.optionList = this.datasetStore.numericDimensions.map(d => {return {value: d.value, label: d.value};});
+    	this._dimensionsToRedux = [];
 		this.algorithmType = AlgorithmType.FastMap;
 		this.newDimensionsName = AlgorithmType.FastMap;
 		this.newDimensionsNumber = 2;
@@ -36,20 +35,34 @@ export class DimensionalReductionVM{
 		makeAutoObservable(this, {datasetStore: false}, {autoBind: true}); 
 	}
 
-	handleNormalize = () => {
-		this.normalize = !this.normalize;
+	get optionList (){
+		this.dimensionsToRedux=[];
+		return this.datasetStore.numericDimensions.map(d => {return {value: d.value, label: d.value};});
 	}
+	get dimensionsToRedux(){
+		if(this._dimensionsToRedux.length === 0){
+			this.dimensionsToRedux = this.datasetStore.numericDimensions.map(d => {return {value: d.value, label: d.value};}).slice(0,2);
+		}
+		return this._dimensionsToRedux;
+	}
+	set dimensionsToRedux(value){
+		this._dimensionsToRedux = value;
+	}
+    
+    handleNormalize = () => {
+    	this.normalize = !this.normalize;
+    }
 
-	normalizeData(data){
-		const maxes = this.dimensionsToRedux.map((dim,i) => {
-			return d3.max(data, obj => obj[i]);
-		});
-		return data.map(obj => this.dimensionsToRedux.map((dim, j) => obj[j] / maxes[j]));
-	}
+    normalizeData(data){
+    	const maxes = this.dimensionsToRedux.map((dim,i) => {
+    		return d3.max(data, obj => obj[i]);
+    	});
+    	return data.map(obj => this.dimensionsToRedux.map((dim, j) => obj[j] / maxes[j]));
+    }
 
-	setIsLoading(value){
-		this.isLoading = value;
-	}
+    setIsLoading(value){
+    	this.isLoading = value;
+    }
 
     setShowDanger = bool =>{
     	this.showDanger = bool;
@@ -114,7 +127,6 @@ export class DimensionalReductionVM{
     			d.isReduced = true;
 	  		newDimsFromReduction.push(d);
     		}
-
     		let newDataFromReduction = this.datasetStore.selectedData;				
     		for(let i = 0; i<newDataFromReduction.length; i++){
     			let d = newDataFromReduction[i];
@@ -126,12 +138,14 @@ export class DimensionalReductionVM{
     		}
     		this.datasetStore.addDimensionsToDataset(newDimsFromReduction);
     		this.setShowSuccess(true);
+    		this.closeModal();
     	}catch(e){
     		console.log(e);
     		if(e.name === "nameError")
     		    this.nameError = true;
     		else{
     			this.setShowDanger(true);
+    			this.closeModal();
     		}
     	}
     }
@@ -167,6 +181,7 @@ export class DimensionalReductionVM{
 		this.minDistance = e.target.value;
 	}
 	handleChangeDimensionsToRedux (value, handler){
+		console.log("handle");
 		switch(handler.action){
 		case "select-option":
 			this.dimensionsToRedux = value;

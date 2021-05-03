@@ -8,15 +8,30 @@ export class DistanceCalculationVM{
 	constructor(rootStore, closeModal){
 		this.datasetStore = rootStore.datasetStore;
     	this.distanceMatricesStore = rootStore.distanceMatricesStore;
-    	this.dimensionsToRedux = this.datasetStore.numericDimensions.map(d => {return {value: d.value, label: d.value};}).slice(0,2);
-		this.optionList = this.datasetStore.numericDimensions.map(d => {return {value: d.value, label: d.value};});
+    	this._dimensionsToRedux = [];
 		this.distanceType = DistanceType.Euclidean;
 		this.newDistanceMatrixName = DistanceType.Euclidean;
 		this.nameError = false;
 		this.isLoading= false;
 		this.closeModal = closeModal.bind(null);
 		this.normalize = false;
+		this.showSuccess = false;
+		this.showDanger = false;
 		makeAutoObservable(this, {datasetStore: false, distanceMatricesStore: false}, {autoBind: true}); 
+	}
+
+	get optionList (){
+		this.dimensionsToRedux=[];
+		return this.datasetStore.numericDimensions.map(d => {return {value: d.value, label: d.value};});
+	}
+	get dimensionsToRedux(){
+		if(this._dimensionsToRedux.length === 0){
+			this.dimensionsToRedux = this.datasetStore.numericDimensions.map(d => {return {value: d.value, label: d.value};}).slice(0,2);
+		}
+		return this._dimensionsToRedux;
+	}
+	set dimensionsToRedux(value){
+		this._dimensionsToRedux = value;
 	}
 
 	handleNormalize = () => {
@@ -43,8 +58,12 @@ export class DistanceCalculationVM{
     			this.normalize = false;
     		}   
 
-    		if(this.distanceMatricesStore.getDistanceMatrixByName(this.newDistanceMatrixName) || this.newDistanceMatrixName==="")
-    			throw new Error("The name is already in use. Please choose a different one.");
+    		if(this.distanceMatricesStore.getDistanceMatrixByName(this.newDistanceMatrixName) || this.newDistanceMatrixName===""){
+    			let e = new Error("The name is already in use. Please choose a different one.");
+    			e.name= "nameError";
+    			throw e;
+    		} 
+    			
     		let matrix = new DistanceMatrix();
     		matrix.name = this.newDistanceMatrixName;
     		for (let i = 0; i < data.length; i++) {
@@ -61,10 +80,23 @@ export class DistanceCalculationVM{
     			matrix.pushNode(node);
     		}	
     		this.distanceMatricesStore.addDistanceMatrix(matrix);
+    		this.setShowSuccess(true);
     		this.closeModal();
-    	}catch(error){
-    		this.nameError=true;
+    	}catch(e){
+    		console.log(e);
+    		if(e.name === "nameError")
+    		    this.nameError = true;
+    		else{
+    			this.setShowDanger(true);
+    			this.closeModal();
+    		}
     	}
+    }
+    setShowDanger = bool =>{
+    	this.showDanger = bool;
+    }
+    setShowSuccess= bool =>{
+    	this.showSuccess = bool;
     }
 	handleChangeDistanceType = e => {
 		this.newDistanceMatrixName=e.target.value;
