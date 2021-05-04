@@ -1,5 +1,5 @@
 import React from "react";
-import {render, fireEvent, screen} from "@testing-library/react";
+import {render, fireEvent, screen, waitFor} from "@testing-library/react";
 import RootStore from "../stores/RootStore";
 import {AppContextProvider} from "../ContextProvider";
 import Menu from "../components/UI/burgerMenuUI/Menu";
@@ -73,6 +73,17 @@ describe("dimensional reduction through distance calculation", () => {
 		expect(matrix.links).toStrictEqual([{source: "node0", target: "node1", value: 0.5}]);
 	});
 
+	test("normalize data", () =>{
+		fireEvent.click(screen.getByRole("checkbox", {name: "Normalizza i dati"}));
+		//set algorithm
+		fireEvent.change(screen.getByRole("combobox",{name:"Tipo di distanza"}),{target:{value:"chebyshev"}});
+		fireEvent.change(screen.getByRole("textbox",{name:"Nome matrice delle distanze"}),{target:{value: "test"}});
+		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione"}));		
+		//test new data
+		let matrix = getData();
+		expect(matrix.links).toStrictEqual([{source: "node0", target: "node1", value: 0.1428571428571429}]);
+	});
+
 	test("Checks that the name chosen for a new distance matrix is set correctly", () => {
 		//set name
 		fireEvent.change(screen.getByRole("textbox",{name:"Nome matrice delle distanze"}),{target:{value: "test"}});
@@ -99,5 +110,34 @@ describe("dimensional reduction through distance calculation", () => {
 		let matrix = getData();
 		expect(matrix.links).toStrictEqual([{"source": "node0", "target": "node1", "value": 0.5385164807134502}]);
 		expect(matrix.nodes).toStrictEqual([{"id": "node0", "petal": 3.5, "sepal": 5.1}, {"id": "node1", "petal": 3, "sepal": 4.9}]);
+	});
+
+	test("alert success", async () => {
+		fireEvent.change(screen.getByRole("textbox",{name:"Nome matrice delle distanze"}),{target:{value: "test"}});
+		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione" }));
+		await waitFor(() => {
+			expect(screen.getByRole("alert", "Operazione completata con successo")).toBeInTheDocument();
+		});
+	});
+	test("error already used name", async() => {
+		fireEvent.change(screen.getByRole("textbox",{name:"Nome matrice delle distanze"}),{target:{value: "test"}});
+		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione" }));
+		await waitFor(() => {
+			fireEvent.click(screen.getByRole("button",{name: "Calcola distanza" }));	
+		});
+		fireEvent.change(screen.getByRole("textbox",{name:"Nome matrice delle distanze"}),{target:{value: ""}});
+		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione" }));
+		expect(screen.getByRole("textbox",{name:"Nome matrice delle distanze"})).toBeInvalid();
+	});
+	test("alert error", async () => {
+		let wrongdataset = [{prova: NaN, petal: "ciao"},{prova: 4.9, petal: 3.0}];
+		rootStore.datasetStore.loadData(wrongdataset);
+		rootStore.datasetStore.addDimensionsToDataset(new Dimension("prova"));
+		rootStore.datasetStore.updateSelectedData();
+		fireEvent.change(screen.getByRole("textbox",{name:"Nome matrice delle distanze"}),{target:{value: "test"}});
+		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione" }));
+		await waitFor(() => {
+			expect(screen.getByRole("alert", "Avviso")).toBeInTheDocument();
+		});
 	});
 });

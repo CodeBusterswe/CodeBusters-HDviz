@@ -146,7 +146,6 @@ export class DimensionalReductionVM{
     		this.setShowSuccess(true);
     		this.closeModal();
     	}catch(e){
-    		console.log(e);
     		if(e.name === "nameError")
     		    this.nameError = true;
     		else{
@@ -187,7 +186,6 @@ export class DimensionalReductionVM{
 		this.minDistance = e.target.value;
 	}
 	handleChangeDimensionsToRedux (value, handler){
-		console.log("handle");
 		switch(handler.action){
 		case "select-option":
 			this.dimensionsToRedux = value;
