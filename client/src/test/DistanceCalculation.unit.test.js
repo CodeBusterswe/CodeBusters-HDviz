@@ -34,12 +34,13 @@ describe("dimensional reduction through distance calculation", () => {
 		fireEvent.click(screen.getByRole("button",{name: "Calcola distanza" }));	
 	});
 
-	test("uclidean distance", () => {
+	test("euclidean distance", () => {
 		//set distance
 		fireEvent.change(screen.getByRole("textbox",{name:"Nome matrice delle distanze"}),{target:{value: "test"}});
 		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione"}));	
 		//test new data
 		let matrix = getData();
+		console.log(matrix.name, matrix.nodes, matrix.links);
 		expect(matrix.links).toStrictEqual([{source: "node0", target: "node1", value: 0.5385164807134502}]);
 	});
 
