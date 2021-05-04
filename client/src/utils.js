@@ -18,6 +18,7 @@ export const AlgorithmType = {
 	FastMap: "fastMap",
 	LLE: "lle",
 	tSNE: "t-sne",
-	UMAP: "umap"
+	UMAP: "umap",
+	PCA: "pca"
 };
 export default AlgorithmType;

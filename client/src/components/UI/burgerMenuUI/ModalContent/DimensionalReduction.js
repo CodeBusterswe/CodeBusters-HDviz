@@ -113,6 +113,8 @@ const DimensionalReduction = observer((props) => {
 			);
 		case AlgorithmType.FastMap:
 			return null;
+		case AlgorithmType.PCA:
+			return null;
 		default:
 			return (
 				<Form.Group>
@@ -201,6 +203,7 @@ const DimensionalReduction = observer((props) => {
 								value={algorithmType}
 								onChange={handleChangeAlgorithmType}>
 								<option value={AlgorithmType.FastMap}>FASTMAP</option>
+								<option value={AlgorithmType.PCA}>PCA</option>
 								<option value={AlgorithmType.LLE}>LLE</option>
 								<option value={AlgorithmType.IsoMap}>ISOMAP</option>
 								<option value={AlgorithmType.tSNE}>TSNE</option>

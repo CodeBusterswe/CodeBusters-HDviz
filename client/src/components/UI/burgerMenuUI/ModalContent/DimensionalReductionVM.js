@@ -12,6 +12,8 @@ import IsomapParameter from "./StrategyDimReduction/parameters/IsomapParameter";
 import UmapParameter from "./StrategyDimReduction/parameters/UmapParameter";
 import LLEParameter from "./StrategyDimReduction/parameters/LLEParameter";
 import TsneParameter from "./StrategyDimReduction/parameters/TsneParameter";
+import PcaStrategy from "./StrategyDimReduction/alghorithms/PcaStrategy";
+import PcaParameter from "./StrategyDimReduction/parameters/PcaParameter";
 import * as d3 from "d3";
 
 export class DimensionalReductionVM{
@@ -105,6 +107,10 @@ export class DimensionalReductionVM{
     		if(this.algorithmType === AlgorithmType.FastMap) {
     			drStrategy.setStrategy(new FastmapStrategy());
     			params = new FastmapParameter(parameters);
+    		}
+    		if(this.algorithmType === AlgorithmType.PCA) {
+    			drStrategy.setStrategy(new PcaStrategy());
+    			params = new PcaParameter(parameters);
     		}
     		if(this.algorithmType === AlgorithmType.LLE) {
     			drStrategy.setStrategy(new LLEStrategy());
