@@ -83,7 +83,6 @@ export class DistanceCalculationVM{
     		this.setShowSuccess(true);
     		this.closeModal();
     	}catch(e){
-    		console.log(e);
     		if(e.name === "nameError")
     		    this.nameError = true;
     		else{
