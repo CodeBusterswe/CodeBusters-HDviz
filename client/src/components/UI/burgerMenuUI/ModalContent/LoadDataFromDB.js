@@ -71,7 +71,7 @@ const LoadDataFromDB = observer((props) => {
 					<Modal.Title>Seleziona Dataset</Modal.Title>
 				</Modal.Header>
 				<ModalBody>
-					<Form>
+					<Form data-testid ="formDB">
 						{tables!==null ?
 							<Form.Group controlId="tablesSelect">
 								<Form.Label>Seleziona tabella</Form.Label>
@@ -94,6 +94,7 @@ const LoadDataFromDB = observer((props) => {
 							<><Form.Group controlId="columnsSelect">
 								<Form.Label>Seleziona dimensioni</Form.Label>
 								<Select
+									inputId="columnsSelect"
 									value={selectedColumns}
 									options={columns}
 									isMulti

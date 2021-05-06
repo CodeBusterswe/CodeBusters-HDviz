@@ -6,7 +6,6 @@ import Menu from "../components/UI/burgerMenuUI/Menu";
 import Dimension from "../stores/data/Dimension";
 import DistanceMatrix from "../stores/data/DistanceMatrix";
 import Header from "../components/UI/headerUI/Header";
-import FileSaver from "file-saver";
 
 const json = {
 	"preferencesStore":{

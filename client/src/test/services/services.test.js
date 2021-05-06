@@ -18,7 +18,7 @@ describe("Api test", () => {
 		}
 	});
 
-	it("should return table name", async () => {
+	it("should return columns of a table", async () => {
 		const mockedColumn = {data:[{ column_name: "sepal_length" }]};
 		api.post = jest.fn().mockResolvedValue(mockedColumn);
 		const actualValue = await getColumnsByName("iris");
