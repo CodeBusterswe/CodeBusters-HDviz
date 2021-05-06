@@ -2,7 +2,6 @@ import {getTables,getDatasetWithCustomParams,getColumnsByName,getDatasetWithPara
 
 import {api} from "../../components/UI/burgerMenuUI/ModalContent/services/ApiURL";
 
-
 describe("Api test", () => {
 	afterEach(() => {
 		jest.resetAllMocks();
@@ -12,12 +11,10 @@ describe("Api test", () => {
 		api.get = jest.fn().mockResolvedValue(mockedTables);
 		try{
 			const actualValue = await getTables();
-			console.log("getTabs:",actualValue);
 			expect({data:actualValue}).toEqual(mockedTables);
 			expect(api.get).toBeCalledWith("/get-tables");
 		}catch(err){
-			console.log("getTabs  Error");
-			expect("Network Error").toEqual("Network Error");
+			//expect("Network Error").toEqual("Network Error");
 		}
 	});
 

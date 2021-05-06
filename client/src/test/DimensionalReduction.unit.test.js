@@ -8,6 +8,7 @@ import Dimension from "./../stores/data/Dimension";
 let rootStore,
 	dimension1,
 	dimension2,
+	dimension3,
 	dataset;
 
 function reducedDim(value) { return value[0] === "test1" || value[0] === "test2";}
@@ -19,12 +20,13 @@ describe("dimensional reduction", () => {
 	rootStore.datasetStore.reset();
 	dimension1 = new Dimension("sepal");
 	dimension2 = new Dimension("petal");
-	dataset = [{sepal: 5.1, petal: 3.5},{sepal: 4.9, petal: 3.0}];
+	dimension3 = new Dimension("id");
+	dataset = [{sepal: 5.1, petal: 3.5, id:1},{sepal: 4.9, petal: 3.0, id:2}];
 
 	beforeEach(()=>{
 
 		rootStore.datasetStore.loadData(dataset);
-		rootStore.datasetStore.loadDimensions([dimension1,dimension2]);
+		rootStore.datasetStore.loadDimensions([dimension1,dimension2, dimension3]);
 		rootStore.datasetStore.updateSelectedData();
 		
 		render(
@@ -117,8 +119,8 @@ describe("dimensional reduction", () => {
 		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione" }));
 		//check names
 		let dims = rootStore.datasetStore.checkedDimensions;
-		expect(dims[2].value).toStrictEqual("test1");
-		expect(dims[3].value).toStrictEqual("test2");
+		expect(dims[3].value).toStrictEqual("test1");
+		expect(dims[4].value).toStrictEqual("test2");
 	});
 
 	test("Checks that the user-calculated dimensions are correctly loaded into the system", () => {
@@ -127,7 +129,7 @@ describe("dimensional reduction", () => {
 		fireEvent.click(screen.getByRole("button",{name: "Esegui riduzione" }));
 		//check names
 		let dims = rootStore.datasetStore.checkedDimensions;
-		expect(dims.length).toStrictEqual(4);
+		expect(dims.length).toStrictEqual(5);
 	});
 	test("normalize data", () =>{
 		fireEvent.click(screen.getByRole("checkbox", {name: "Normalizza i dati"}));

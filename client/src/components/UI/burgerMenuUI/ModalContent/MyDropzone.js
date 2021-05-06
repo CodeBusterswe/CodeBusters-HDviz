@@ -23,7 +23,7 @@ function MyDropzone(props) {
  
 	return (
 		<div {...getRootProps()} id="dropzone">
-			<input {...getInputProps()} />
+			<input data-testid="drop-input" {...getInputProps()} />
 			<p>Rilascia qui il tuo file o clicca per caricare la sessione</p>
 		</div>
 	);
