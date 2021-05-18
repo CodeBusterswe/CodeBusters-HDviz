@@ -3,45 +3,100 @@ import {AlgorithmType} from "../../../../utils";
 import Dimension from "../../../../stores/data/Dimension";
 import DimReduction from "./StrategyDimReduction/DimReduction";
 import IsomapStrategy from "./StrategyDimReduction/alghorithms/IsomapStrategy";
+import UmapStrategy from "./StrategyDimReduction/alghorithms/UmapStrategy";
 import FastmapStrategy from "./StrategyDimReduction/alghorithms/FastmapStrategy";
 import LLEStrategy from "./StrategyDimReduction/alghorithms/LLEStrategy";
 import TsneStrategy from "./StrategyDimReduction/alghorithms/TsneStrategy";
 import FastmapParameter from "./StrategyDimReduction/parameters/FastmapParameter";
 import IsomapParameter from "./StrategyDimReduction/parameters/IsomapParameter";
+import UmapParameter from "./StrategyDimReduction/parameters/UmapParameter";
 import LLEParameter from "./StrategyDimReduction/parameters/LLEParameter";
 import TsneParameter from "./StrategyDimReduction/parameters/TsneParameter";
+import PcaStrategy from "./StrategyDimReduction/alghorithms/PcaStrategy";
+import PcaParameter from "./StrategyDimReduction/parameters/PcaParameter";
+import * as d3 from "d3";
 
 export class DimensionalReductionVM{
 	constructor(rootStore, closeModal){
 		this.datasetStore = rootStore.datasetStore;
-    	this.dimensionsToRedux = this.datasetStore.numericDimensions.map(d => {return {value: d.value, label: d.value};}).slice(0,2);
-		this.optionList = this.datasetStore.numericDimensions.map(d => {return {value: d.value, label: d.value};});
+    	this._dimensionsToRedux = [];
 		this.algorithmType = AlgorithmType.FastMap;
 		this.newDimensionsName = AlgorithmType.FastMap;
 		this.newDimensionsNumber = 2;
 		this.neighbors = 30;
+		this.localConnection = 5;
+		this.minDistance = 0.5;
 		this.perplexity = 30;
 		this.epsilon = 10;
 		this.nameError = false;
 		this.closeModal = closeModal.bind(null);
+		this.isLoading= false;
+		this.showDanger = false;
+		this.showSuccess = false;
+		this.normalize = false;
 		makeAutoObservable(this, {datasetStore: false}, {autoBind: true}); 
 	}
 
-    handleSubmit = (e) =>{
-    	e.preventDefault();
+	get optionList (){
+		this.dimensionsToRedux=[];
+		return this.datasetStore.numericDimensions.map(d => {return {value: d.value, label: d.value};});
+	}
+	get dimensionsToRedux(){
+		if(this._dimensionsToRedux.length === 0){
+			this.dimensionsToRedux = this.datasetStore.numericDimensions.map(d => {return {value: d.value, label: d.value};}).slice(0,2);
+		}
+		return this._dimensionsToRedux;
+	}
+	set dimensionsToRedux(value){
+		this._dimensionsToRedux = value;
+	}
+    
+    handleNormalize = () => {
+    	this.normalize = !this.normalize;
+    }
+
+    normalizeData(data){
+    	const maxes = this.dimensionsToRedux.map((dim,i) => {
+    		return d3.max(data, obj => obj[i]);
+    	});
+    	return data.map(obj => this.dimensionsToRedux.map((dim, j) => obj[j] / maxes[j]));
+    }
+
+    setIsLoading(value){
+    	this.isLoading = value;
+    }
+
+    setShowDanger = bool =>{
+    	this.showDanger = bool;
+    }
+    setShowSuccess= bool =>{
+    	this.showSuccess = bool;
+    }
+
+    handleSubmit = () => {
     	try{
-    		const data = this.datasetStore.selectedData.map(obj => this.dimensionsToRedux.map((dim) => obj[dim.value]));
+    		let data = this.datasetStore.selectedData.map(obj => this.dimensionsToRedux.map((dim) => obj[dim.value]));
+
+    		if(this.normalize){
+    			data = this.normalizeData(data);
+    			this.normalize = false;
+    		}   
+
     		const parameters = {
     			Name: this.newDimensionsName,
     			DimensionsNumber: this.newDimensionsNumber,
     			Neighbors: this.neighbors,
     			Perplexity: this.perplexity,
-    			Epsilon: this.epsilon
+    			Epsilon: this.epsilon,
+    			LocalConnection: this.localConnection,
+    			MinDistance: this.minDistance
     		};
-		    if(this.datasetStore.dimensions.some(dim => dim.value.slice(0, -1) === parameters.Name) || this.newDimensionsName ==="")
-			    throw new Error("The name is already in use. Please choose a different one.");
-    		//*******************************************************************
-
+		    
+    		if(this.datasetStore.dimensions.some(dim => dim.value.slice(0, -1) === parameters.Name) || this.newDimensionsName ===""){
+    			let e = new Error("The name is already in use. Please choose a different one.");
+    			e.name = "nameError";
+    			throw e;
+    		}
 		    const drStrategy = new DimReduction();
     		let params;
 				
@@ -53,6 +108,10 @@ export class DimensionalReductionVM{
     			drStrategy.setStrategy(new FastmapStrategy());
     			params = new FastmapParameter(parameters);
     		}
+    		if(this.algorithmType === AlgorithmType.PCA) {
+    			drStrategy.setStrategy(new PcaStrategy());
+    			params = new PcaParameter(parameters);
+    		}
     		if(this.algorithmType === AlgorithmType.LLE) {
     			drStrategy.setStrategy(new LLEStrategy());
     			params = new LLEParameter(parameters);
@@ -60,6 +119,10 @@ export class DimensionalReductionVM{
     		if(this.algorithmType === AlgorithmType.tSNE) {
     			drStrategy.setStrategy(new TsneStrategy());
     			params = new TsneParameter(parameters);
+    		}	
+    		if(this.algorithmType === AlgorithmType.UMAP) {
+    			drStrategy.setStrategy(new UmapStrategy());
+    			params = new UmapParameter(parameters);
     		}	
 
     		const reduction = drStrategy.executeStrategy(params,data);
@@ -70,7 +133,6 @@ export class DimensionalReductionVM{
     			d.isReduced = true;
 	  		newDimsFromReduction.push(d);
     		}
-
     		let newDataFromReduction = this.datasetStore.selectedData;				
     		for(let i = 0; i<newDataFromReduction.length; i++){
     			let d = newDataFromReduction[i];
@@ -81,9 +143,15 @@ export class DimensionalReductionVM{
     			});
     		}
     		this.datasetStore.addDimensionsToDataset(newDimsFromReduction);
+    		this.setShowSuccess(true);
     		this.closeModal();
     	}catch(e){
-    		this.nameError = true;
+    		if(e.name === "nameError")
+    		    this.nameError = true;
+    		else{
+    			this.setShowDanger(true);
+    			this.closeModal();
+    		}
     	}
     }
 	handleChangeNeighbours = (e) =>{
@@ -110,6 +178,12 @@ export class DimensionalReductionVM{
 	}
 	handleChangeEspilon = (e) =>{
 		this.epsilon = e.target.value;
+	}
+	handleChangeLocalConnection = (e) =>{
+		this.localConnection = e.target.value;
+	}
+	handleChangeMinDist = (e) =>{
+		this.minDistance = e.target.value;
 	}
 	handleChangeDimensionsToRedux (value, handler){
 		switch(handler.action){

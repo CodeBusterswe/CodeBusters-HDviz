@@ -2,8 +2,7 @@ import React, {useEffect} from "react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../../ContextProvider";
 import { useInstance } from "../../../../useInstance";
-import {Modal,Alert, Form, Col, Spinner} from "react-bootstrap";
-import { ModalBody, ModalFooter, Button} from "react-bootstrap";
+import { ModalBody, ModalFooter, Button, Modal, Alert, Form, Col, Spinner} from "react-bootstrap";
 import Select from "react-select";
 import { LoadDataFromDBVM } from "./LoadDataFromDBVM";
 const LoadDataFromDB = observer((props) => {
@@ -72,7 +71,7 @@ const LoadDataFromDB = observer((props) => {
 					<Modal.Title>Seleziona Dataset</Modal.Title>
 				</Modal.Header>
 				<ModalBody>
-					<Form>
+					<Form data-testid ="formDB">
 						{tables!==null ?
 							<Form.Group controlId="tablesSelect">
 								<Form.Label>Seleziona tabella</Form.Label>
@@ -95,6 +94,7 @@ const LoadDataFromDB = observer((props) => {
 							<><Form.Group controlId="columnsSelect">
 								<Form.Label>Seleziona dimensioni</Form.Label>
 								<Select
+									inputId="columnsSelect"
 									value={selectedColumns}
 									options={columns}
 									isMulti

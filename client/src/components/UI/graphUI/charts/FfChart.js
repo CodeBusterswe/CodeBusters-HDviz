@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import { useInstance } from "../../../../useInstance";
 import { FfChartVM } from "./FfChartVM";
 
-const ForceField = observer(() => {
+const FfChart = observer(() => {
 
 	const {
 		renderChart,
@@ -25,4 +25,4 @@ const ForceField = observer(() => {
 		</div>
 	);
 });
-export default ForceField;
+export default FfChart;

@@ -24,12 +24,11 @@ export class HmPreferencesVM {
 	}
 
 	get values(){
-		let pref = {
+		return {
 			xAxis : this.preferencesStore.preferencesHm.xAxis,
 			yAxis : this.preferencesStore.preferencesHm.yAxis,
 			heat : this.preferencesStore.preferencesHm.heat
 		};
-		return pref;
 	}
 	
 	setHmPreferences(identifier, value){

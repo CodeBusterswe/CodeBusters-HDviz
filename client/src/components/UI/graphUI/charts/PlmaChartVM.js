@@ -1,6 +1,5 @@
 import { makeAutoObservable} from "mobx";
 import * as d3 from "d3";
-import {select} from "d3";
 import * as PCA from "./pca";
 
 export class PlmaChartVM {
@@ -16,11 +15,11 @@ export class PlmaChartVM {
 	}
 
 	get svgParent(){
-		return select(".plma").select("svg");
+		return d3.select(".plma").select("svg");
 	}
     
 	get svg(){
-		return select(".plma").select("svg").select(".plma-chart");
+		return d3.select(".plma").select("svg").select(".plma-chart");
 	}
 
 	get dimensionsNames(){
@@ -38,8 +37,7 @@ export class PlmaChartVM {
 		const colorAxis = d3.scaleOrdinal(d3.schemeCategory10);
 		const x = d3.scaleLinear([0, this.width]);
 		const y = d3.scaleLinear([0, this.height]);
-		//const xAxis = d3.axisBottom(x).ticks(6);
-		//const yAxis = d3.axisLeft(y).ticks(6);
+
 		let data = this.datasetStore.selectedData.map(d => {return {...d};});
 		if(this.dimensionsNames.length<1){
 			this.svg.selectAll("*").remove();
@@ -59,10 +57,6 @@ export class PlmaChartVM {
 		var B = pc[1]; // autovettori(2), ogni colonna é un autovettore, quindi sará N*2 dove N é il numero di dimensioni
 		//i valori che uso per tracciare si trovano sulla riga relativa a quella dimensione, es: B[i][0] e B[i][1], rispettivamente autovettore 1 e autovettore2
 		  
-		//console.log("-------------PCA a 2 DIMENSIONI DI RITORNO---------------")
-		//console.log("value trimmed:", A);
-		//console.log("autovettori trimmed:", B)
-		//console.log("-----------------------------------------")
 		let min, minData1, minData2, minDims2, minDims1, max, maxData1, maxData2, maxDims1, maxDims2;
 		minData1 = d3.min(A.map(line => line[0]));
 		minData2 = d3.min(A.map(line => line[1]));
@@ -76,8 +70,7 @@ export class PlmaChartVM {
 		max = d3.max([maxData1, maxData2, maxDims1, maxDims2]);
 		x.domain([min, max]).nice();
 		y.domain([min, max]).nice();
-		//x.domain([-3.5, 3.5])
-		//y.domain([-3.5, 3.5])
+		
 		for (let i = 0; i < data.length; i++) {
 			data[i].pc1 = isNaN(A[i][0]) ? 0 : A[i][0];
 			data[i].pc2 = isNaN(A[i][1]) ? 0 : A[i][1];
@@ -91,31 +84,7 @@ export class PlmaChartVM {
 				  id: i,
 				};
 			  });
-		/*var showAxis = false;
-		if (showAxis) {
-			this.svg.selectAll("g").remove();
-			this.svg.append("g").
-				attr("class", "x axis").
-				attr("transform", "translate(0," + this.height + ")").
-				call(xAxis).
-				append("text").
-				attr("class", "label").
-				attr("x", this.width).
-				attr("y", -6).
-				style("text-anchor", "end").
-				text("PC1");
-			
-			this.svg.append("g").
-				attr("class", "y axis").
-				call(yAxis).
-				append("text").
-				attr("class", "label").
-				attr("transform", "rotate(-90)").
-				attr("y", 6).
-				attr("dy", ".71em").
-				style("text-anchor", "end").
-				text("PC2");
-		}*/
+		
 		const colorDomain = d3.extent(data, (d)=>{return +d[this.color]; });
 		const palette = colorDomain[0] || colorDomain[0] === 0 ? 
 			d3.scaleLinear().domain(colorDomain).range(["red", "lightblue"]) : 
@@ -244,7 +213,7 @@ export class PlmaChartVM {
 			d3.scaleLinear().domain(colorDomain).range(["red", "lightblue"]) : 
 			d3.scaleOrdinal(d3.schemeTableau10).domain(new Set(data.map(d => d[this.color])));
 		this.svgParent.selectAll(".legend").remove();
-		//console.log(this.color);
+		
 		if(this.dimensionsNames.length<1 || this.color === undefined){
 			return;
 		}

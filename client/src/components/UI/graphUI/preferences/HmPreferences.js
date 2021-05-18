@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import { useInstance } from "./../../../../useInstance";
 import { HmPreferencesVM } from "./HmPreferencesVM";
 
-const HeatMapPreferences = observer(() => {
+const HmPreferences = observer(() => {
 
 	const {
 		handleSelectChange,
@@ -18,19 +18,19 @@ const HeatMapPreferences = observer(() => {
 	return(
 		<Form className="chartPreferences">
 			{
-				identifiers.map((identifiers, index) => {
+				identifiers.map((id, index) => {
 					return (
-						<Form.Group controlId={identifiers} key={identifiers}>
+						<Form.Group controlId={id} key={id}>
 							<Form.Label>{labels[index]}</Form.Label>
 							<Form.Control
 								custom
 								as="select"
-								value={values[identifiers]}
+								value={values[id]}
 								onChange={handleSelectChange}
 							>
-								<option value={"undefined"} key={"noDimensions"+identifiers}>No dimension</option>
+								<option value={"undefined"} key={"noDimensions"+id}>No dimension</option>
 								{keys.map((d) => {
-									return <option value={d} key={d+identifiers}>{d}</option>;
+									return <option value={d} key={d+id}>{d}</option>;
 								})}
 							</Form.Control>
 						</Form.Group>
@@ -40,4 +40,4 @@ const HeatMapPreferences = observer(() => {
 		</Form>
 	);
 });
-export default HeatMapPreferences;
+export default HmPreferences;

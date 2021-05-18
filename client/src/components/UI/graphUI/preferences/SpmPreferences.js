@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import { SpmPreferencesVM } from "./SpmPreferencesVM";
 import { useInstance } from "../../../../useInstance";
 
-const ScatterPlotMatrixPreferences = observer(() => {
+const SpmPreferences = observer(() => {
 
 	const {
 		handleSelectChange,
@@ -19,9 +19,9 @@ const ScatterPlotMatrixPreferences = observer(() => {
 	return (
 		<Form className="chartPreferences">
 			{
-				identifiers.map((identifiers, index) => {
+				identifiers.map((id, index) => {
 					return (
-						<Form.Group controlId={identifiers} key={identifiers}>
+						<Form.Group controlId={id} key={id}>
 							<Form.Label className="labels">{labels[index]}</Form.Label>
 							<Form.Control
 								custom
@@ -29,9 +29,9 @@ const ScatterPlotMatrixPreferences = observer(() => {
 								value={axes[index]}
 								onChange={handleSelectChange.bind(null)}
 							>
-								<option value={"undefined"} key={"noDimensions "+identifiers}>Nessuna dimensione</option>
+								<option value={"undefined"} key={"noDimensions "+id}>Nessuna dimensione</option>
 								{dimensions.map((d) => {
-									return <option value={d} key={d+identifiers}>{d}</option>;
+									return <option value={d} key={d+id}>{d}</option>;
 								})}
 							</Form.Control>
 						</Form.Group>
@@ -55,4 +55,4 @@ const ScatterPlotMatrixPreferences = observer(() => {
 		</Form>
 	);
 });
-export default ScatterPlotMatrixPreferences;
+export default SpmPreferences;

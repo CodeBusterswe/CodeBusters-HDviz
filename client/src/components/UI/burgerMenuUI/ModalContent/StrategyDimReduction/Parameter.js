@@ -20,4 +20,12 @@ export default class Parameter {
 		throw new TypeError("Method 'getNeighbours()' must be implemented.");
 	}
 
+	getLocalConnection() {
+		throw new TypeError("Method 'getLocalConnection()' must be implemented.");
+	}
+
+	getMinDist() {
+		throw new TypeError("Method 'getMinDist()' must be implemented.");
+	}
+
 }	

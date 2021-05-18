@@ -4,17 +4,18 @@ import {AiOutlineDotChart , AiOutlineFunction} from "react-icons/ai";
 import {ImDatabase} from "react-icons/im";
 import {FaFileCsv} from "react-icons/fa";
 import { RiMistFill } from "react-icons/ri";
-import { IoGrid, IoShareSocialOutline, IoMoveSharp } from "react-icons/io5";
-import {SiGraphcool , SiJson} from "react-icons/si";
+import { IoGrid, IoShareSocialOutline, IoMoveSharp} from "react-icons/io5";
+import {SiGraphcool} from "react-icons/si";
+import {IoIosSave} from "react-icons/io";
 
 export class MenuVM {
 
     modalIsOpen = false;
-    id = 0;
-	names = ["Carica/Salva sessione", "Carica dati dal DB", 
+    id = -1;
+	names = ["Salva/Carica sessione", "Carica dati dal DB", 
     	"Carica dati da CSV", "Riduci dimensioni", "Calcola distanza", "Scatterplot Matrix",
     	"Adjacency Matrix","Heat Map","Force Field","Linear Projection"]; 
-	icons = [<SiJson size={32} className="icon"/>, 
+	icons = [<IoIosSave size={40} className="icon"/>, 
 		<ImDatabase size={32} className="icon"/>,
 		<FaFileCsv size={32} className="icon"/>, 
 		<SiGraphcool size={32} className="icon"/>,
@@ -49,6 +50,7 @@ export class MenuVM {
 
 	closeModal = () => {
     	this.modalIsOpen = false;
+		//setTimeout(()=>{this.id=-1;}, 4000);
 	}
 
 	showChart = index => {

@@ -8,7 +8,8 @@ import "../../style.css";
 import {OverlayTrigger , Popover} from "react-bootstrap";
 import {AiOutlineArrowRight} from "react-icons/ai";
 import LoadDataFromDB from "./ModalContent/LoadDataFromDB";
-//import useWindowWidth from "./WindowWidth";
+import Session from "./ModalContent/Session";
+import useWindowWidth from "./WindowWidth";
 import { MenuVM } from "./MenuVM";
 import { useInstance } from "../../../useInstance";
 
@@ -25,11 +26,13 @@ const Menu = observer(() => {
 		checkToDisabled,
 	} = useInstance(new MenuVM(useStore()));
 	
-	//const {width} = useWindowWidth();
+	const {width} = useWindowWidth();
 
 	function handleContent(index) {
 		switch (index) {
-		case 1: 
+		case 0:
+			return <Session modalIsOpen={modalIsOpen} closeModal={closeModal.bind(null)}/>;
+		case 1:
 		  return <LoadDataFromDB modalIsOpen={modalIsOpen} closeModal={closeModal.bind(null)}/>;
 		case 2:
 			return <LoadCsv modalIsOpen={modalIsOpen} closeModal={closeModal.bind(null)}/>;
@@ -40,6 +43,7 @@ const Menu = observer(() => {
 		default:
 			break;
 		}
+
 	}
 	const popover = 
 		<Popover id="popover-basic">
@@ -50,10 +54,6 @@ const Menu = observer(() => {
 				 	"Prima devi aver calcolato una matrice delle distanze"}
 			</Popover.Content>
 		</Popover>;
-
-	//? CON QUESTA IL POPOVER CAMBIA POSIZIONE A TOP SOLO IN UNA NUOVA SESSIONE
-	//? RICEVE LA WIDTH SOLO APPENA INIZIATA LA SESSIONE (quindi non cambia il valore se si ridimensiona la pagina)
-	//const { innerWidth: width } = window;
 					
 	return (
 		<> 
@@ -71,8 +71,7 @@ const Menu = observer(() => {
 								{checkToDisabled(index) ?		
 									<OverlayTrigger 
 										overlay={popover} 
-										//placement={width > 600 ? "right" : "top"} 
-										placement = "right"
+										placement={width > 780 ? "right" : "top"} 
 										delay={{ show: 200, hide: 0 }}>
 										<span className="d-inline-block" style={{ width: "100%" }} > 
 											<button className="nav-link" disabled aria-disabled="true" style={{ pointerEvents: "none"}}>	

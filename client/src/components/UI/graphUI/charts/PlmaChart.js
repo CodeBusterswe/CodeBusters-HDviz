@@ -4,7 +4,7 @@ import { useStore } from "../../../../ContextProvider";
 import { observer } from "mobx-react-lite";
 import { useInstance } from "../../../../useInstance";
 import { PlmaChartVM } from "./PlmaChartVM";
-const Plma = observer(() => {
+const PlmaChart = observer(() => {
 	const {
 		dimensionsNames,
 		color,
@@ -21,4 +21,4 @@ const Plma = observer(() => {
 		</div>
 	);
 });
-export default Plma;
+export default PlmaChart;

@@ -1,30 +1,29 @@
 import React, {useEffect} from "react";
 import { observer } from "mobx-react-lite";
-import MyCSVReader from "./MyCSVReader";
-import DimensionsList from "./DimensionsList";
 import { useStore } from "../../../../ContextProvider";
 import { useInstance } from "../../../../useInstance";
 import { ModalBody, ModalFooter ,Alert , Modal, Button} from "react-bootstrap";
-import {LoadCsvVM} from "./LoadCsvVM";
+import Form from "react-bootstrap/Form";
+import {SessionVM} from "./SessionVM";
+import MyDropzone from "./MyDropzone";
 import "../../../style.css";
 
-const LoadCsv = observer((props) => {
+const Session = observer((props) => {
 	const {
 		modalIsOpen,
 		closeModal
 	} = props;
 	const {
-		localDimensions,
 		showSuccess,
 		setShowSuccess,
 		showDanger,
+		fileName,
 		setShowDanger,
-		setLocalStates,
-		selectAllDimensions,
-		selectDimension,
-		handleConfirm,
+		handleExport,
+		loadSession,
 		handleDismiss,
-	} = useInstance(new LoadCsvVM(useStore(), closeModal));
+		handleChangeFileName,
+	} = useInstance(new SessionVM(useStore(), closeModal));
 
 	useEffect(() => {
 		const time = 4000;
@@ -39,44 +38,49 @@ const LoadCsv = observer((props) => {
 		return () => clearTimeout(timer);
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[showDanger]);
-    
 	return(
 		<>
-			<Modal
+			<Modal      
 				show={modalIsOpen}
 				onHide={handleDismiss}
 			>
 				<Modal.Header closeButton>
-					<Modal.Title>Carica i dati</Modal.Title>
+					<Modal.Title>Carica/Esporta sessione</Modal.Title>
 				</Modal.Header>
 
 				<ModalBody>
-					<div>
-						<MyCSVReader setLocalStates={setLocalStates.bind(null)}/>
-						<DimensionsList dimensions={localDimensions} selectAllDimensions={selectAllDimensions.bind(null)} 
-							selectDimension={selectDimension.bind(null)}/>
-					</div>
+					<ModalBody id="dropzone-modal-body">
+						<MyDropzone loadSession={loadSession} />
+						<hr/>
+						<p>In alternativa, esporta la tua sessione di lavoro specificando il nome e premendo il tasto dedicato:</p>
+						<Form.Control
+							id="input-session"
+							required
+							type="text"
+							value={fileName}
+							onChange={handleChangeFileName}
+						/>
+						<Button id="export-btn" variant="info" onClick={handleExport}>Esporta</Button>
+					</ModalBody>
 				</ModalBody>
 				
 				<ModalFooter>
 					<Button variant="secondary" onClick={handleDismiss}>Torna al menù</Button>
-					<Button variant="primary" onClick={handleConfirm}>Conferma selezione</Button>
 				</ModalFooter>
 			</Modal>
 			<Alert show={showSuccess} variant="success" className="alert" dismissible onClose={setShowSuccess.bind(null,false)}>
-				<Alert.Heading>Dati inseriti correttamente</Alert.Heading>
+				<Alert.Heading>Sessione ripristinata correttamente</Alert.Heading>
 				<p>
-					Ora puoi applicare una riduzione dimensionale ai tuoi dati o scegliere subito la visualizzazione che più preferisci
+					Ora puoi continuare con il tuo lavoro.
 				</p>
 			</Alert>
 			<Alert show={showDanger} variant="danger" className="alert" dismissible onClose={setShowDanger.bind(null,false)}>
 				<Alert.Heading>Avviso</Alert.Heading>
 				<p>
-					Nessun dato è stato caricato. Assicurati di aver inserito il file e premuto il tasto "<strong>Conferma selezione</strong>"
+					La sessione non è stata ripristinata. Assicurati di aver inserito un file ben formattato.
 				</p>
 			</Alert> 
 		</>
 	);
 });
-
-export default LoadCsv;
+export default Session;

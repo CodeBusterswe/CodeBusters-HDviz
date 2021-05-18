@@ -19,8 +19,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image: url("bg.png");
-    background-size: cover; /* Resize the background image to cover the entire container */
-    height: 100vh;
+	background-size: cover;                      
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-attachment: fixed;
+  height: 100vh;
 }
 
 code {
@@ -82,9 +85,9 @@ code {
 	margin-top: 2em;
   width: 100%;
   padding: 1em;
-  border: 2px solid var(--bg-primary);
-	box-shadow: 2px 3px var(--bg-primary);
-	border-radius: 5px;
+  border: 1.5px solid var(--bg-primary);
+	box-shadow: 3px 3px var(--bg-primary);
+	border-radius: 10px;
 }
 
 .show-pref {
@@ -226,8 +229,7 @@ code {
 }
 
 .icon {
-  width: 2em;
-  min-width: 2em;
+  min-width: 2.5em;
   margin: 0 1.4em;
 }
 
@@ -411,4 +413,29 @@ code {
   fill: #000;
   fill-opacity: .125;
   stroke: #fff;
+}
+
+#dropzone{
+
+  text-align: center;
+  border: 2px dashed grey;
+  border-radius: 1em;
+}
+
+#dropzone p{
+  padding-top: 1em;
+}
+
+#dropzone-modal-body{
+  padding-top: 0em;
+}
+
+#export-btn, #input-session{
+  display: inline;
+  vertical-align: top
+}
+
+#input-session{
+  width: 50%;
+  margin-right: 2em;
 }

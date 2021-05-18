@@ -25,6 +25,18 @@ class DistanceMatrix {
     pushLink(link) {
     	this.#links.push(link);
     }
+    toJSON(){
+    	return {
+    		nodes: this.nodes,
+    		link: this.links,
+    		name: this.name,
+    	};
+    }
+    fromJSON(obj){
+    	this.#links = obj.link;
+    	this.#name = obj.name;
+    	this.#nodes = obj.nodes;
+    }
 }
 
 export default DistanceMatrix;

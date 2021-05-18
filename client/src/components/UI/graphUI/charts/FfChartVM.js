@@ -1,12 +1,11 @@
 import { makeAutoObservable} from "mobx";
 import * as d3 from "d3";
-import {select} from "d3";
 
 export class FfChartVM {
 
 	myColor = d3.scaleOrdinal(d3.schemeCategory10);
 	margin = {top: 30, right: 30, bottom: 100, left: 100};
-	width = 950 - this.margin.left - this.margin.right;
+	width = 1000 - this.margin.left - this.margin.right;
 	height = 850 - this.margin.top - this.margin.bottom;
 	radius = 4;
 	
@@ -36,7 +35,7 @@ export class FfChartVM {
 	}
 	
 	get canvas(){
-		return select(".forceField").select("canvas");
+		return d3.select(".forceField").select("canvas");
 	}
 	
 	renderChart(){
@@ -46,11 +45,28 @@ export class FfChartVM {
 			attr("width", this.width).
 			attr("height", this.height);
 		if(this.distanceMatrix){
-			nodes = this.distanceMatrix.nodes.map(node => {return {...node};}); 
+			
 			links = this.distanceMatrix.
 				links.filter(link => link.value < this.distMax && link.value > this.distMin).
 				map(link => {return {...link};
 				});
+
+			/*let nodesIntoChart = new Set();
+			
+			links.forEach(link => {
+				nodesIntoChart.add(link.target);
+				nodesIntoChart.add(link.source);
+			});
+*/
+			nodes = this.distanceMatrix.nodes.map(node => {return {...node};}); 
+			/*
+			let scarti = [];
+			nodes.forEach(node => {
+				if(nodesIntoChart.has(node.id))
+					scarti.push(node);
+			});
+			nodes = scarti;
+*/
 			context = this.canvas.node().getContext("2d");
 
 			simulation = d3.forceSimulation(nodes).
@@ -62,6 +78,7 @@ export class FfChartVM {
 			simulation.
 				tick(40).	//riduce il numero di chiamate a ticked, maggiore é il numero, meno lagga
 				on("tick", ticked);
+			
 			this.canvas.call(
 				d3.drag().
 					container(this.canvas.node()).

@@ -31,12 +31,18 @@ class PreferencesHM{
 		this._heat = value;
 	}
 
-	serializeJSON(){
-		//return json
+	toJSON(){
+		return {
+			xAxis : this.xAxis ? this.xAxis : "undefined",
+			yAxis : this.yAxis ? this.yAxis : "undefined",
+			heat: this.heat ? this.heat : "undefined",
+		};
 	}
 
-	deserializeJSON(string){
-		//deserialize
+	fromJSON(obj){
+		this.xAxis = obj.xAxis === "undefined" ? undefined : obj.xAxis;
+		this.yAxis = obj.yAxis === "undefined" ? undefined : obj.yAxis;
+		this.heat = obj.heat === "undefined" ? undefined : obj.heat;
 	}
 }
 

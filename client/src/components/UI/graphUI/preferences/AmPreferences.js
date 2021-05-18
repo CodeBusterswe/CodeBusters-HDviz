@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import { useInstance } from "./../../../../useInstance";
 import { AmPreferencesVM } from "./AmPreferencesVM";
 
-const AdjacencyMatrixPreferences = observer(() => {
+const AmPreferences = observer(() => {
 
 	const {
 		handleSelectChange,
@@ -66,7 +66,7 @@ const AdjacencyMatrixPreferences = observer(() => {
 			</Form.Group>
 			<Form.Group controlId="distMax">
 				<Form.Label>Distanza massima</Form.Label>
-				<span>{max}</span>
+				<p>{max}</p>
 				<Form.Control
 					as="input"
 					value={distMax}
@@ -77,7 +77,7 @@ const AdjacencyMatrixPreferences = observer(() => {
 			</Form.Group>
 			<Form.Group controlId="distMin">
 				<Form.Label>Distanza minima</Form.Label>
-				<span>{min}</span>
+				<p>{min}</p>
 				<Form.Control
 					as="input"
 					value={distMin}
@@ -89,4 +89,4 @@ const AdjacencyMatrixPreferences = observer(() => {
 		</Form>
 	);
 });
-export default AdjacencyMatrixPreferences;
+export default AmPreferences;

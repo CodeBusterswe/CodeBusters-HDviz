@@ -4,6 +4,7 @@ import Dimension from "./../stores/data/Dimension";
 
 const rootStore = new RootStore();
 const loadCsv = new LoadCsvVM(rootStore, function(){});
+
 describe("save data and dims in store", () => {
 	const dim1 = new Dimension("sepal"), dim2 = new Dimension("petal");
 	const dataset = [{sepal: 5.1, petal: 3.5},{sepal: 4.9, petal: 3.0}];

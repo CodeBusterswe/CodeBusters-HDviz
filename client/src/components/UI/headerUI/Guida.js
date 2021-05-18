@@ -6,7 +6,8 @@ import {ImDatabase} from "react-icons/im";
 import {FaFileCsv} from "react-icons/fa";
 import { RiMistFill } from "react-icons/ri";
 import { IoGrid, IoShareSocialOutline, IoMoveSharp } from "react-icons/io5";
-import {SiGraphcool , SiJson} from "react-icons/si";
+import {SiGraphcool} from "react-icons/si";
+import {IoIosSave} from "react-icons/io";
 
 function Guida(props) {
 	const {
@@ -46,9 +47,11 @@ function Guida(props) {
 					</p>
 					<ul>
 						<li><strong>Fastmap</strong></li>
+						<li><strong>PCA</strong></li>
 						<li><strong>LLE</strong></li>
 						<li><strong>Isomap</strong></li>
 						<li><strong>TSNE</strong></li>
+						<li><strong>UMAP</strong></li>
 					</ul>
 					<p>
 						E le seguenti funzioni di calcolo della distanza:
@@ -75,16 +78,16 @@ function Guida(props) {
 						laterale a scomparsa. <br/> <em>Inizialmente sono utilizzabili solo le prime voci:</em> 
 					</p>	
 					<div style={{display: "flex",flexDirection: "row",alignItems: "center"}}>
-						<SiJson size={32} style={{marginLeft: "2em"}}/> 
-						<p style={{marginTop: "1em", marginLeft: "1em"}}>Salva/Carica sessione</p>
+						<IoIosSave size={32} style={{marginLeft: "2em"}}/> 
+						<p style={{marginTop: "1em", marginLeft: "1em"}}><a className="linkTutorial" target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v=klcikIUolXc">Salva/Carica sessione</a></p>
 					</div>
 					<div style={{display: "flex",flexDirection: "row",alignItems: "center"}}>
 						<ImDatabase size={32} style={{marginLeft: "2em"}}/> 
-						<p style={{marginTop: "1em", marginLeft: "1em"}}><a class="linkTutorial" href="https://www.youtube.com/watch?v=MJ0WDG5yX-Y">Carica dati dal DB</a></p>
+						<p style={{marginTop: "1em", marginLeft: "1em"}}><a className="linkTutorial" target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v=MJ0WDG5yX-Y">Carica dati dal DB</a></p>
 					</div>
 					<div style={{display: "flex",flexDirection: "row",alignItems: "center"}}>
 						<FaFileCsv size={32} style={{marginLeft: "2em"}}/> 
-						<p style={{marginTop: "1em", marginLeft: "1em"}}><a class="linkTutorial" href="https://www.youtube.com/watch?v=7NIiFvb8XLY">Carica dati da CSV</a></p>
+						<p style={{marginTop: "1em", marginLeft: "1em"}}><a className="linkTutorial" target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v=7NIiFvb8XLY">Carica dati da CSV</a></p>
 					</div>
 					<p>
 						Tutte e tre aprono una finestra per compiere le operazioni indicate. In particolare:
@@ -101,11 +104,11 @@ function Guida(props) {
 					</p>
 					<div style={{display: "flex",flexDirection: "row",alignItems: "center"}}>
 						<SiGraphcool size={32} style={{marginLeft: "2em"}}/> 
-						<p style={{marginTop: "1em", marginLeft: "1em"}}><a class="linkTutorial" target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v=HSNzSRYAfGc">Riduci dimensioni</a></p>
+						<p style={{marginTop: "1em", marginLeft: "1em"}}><a className="linkTutorial" target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v=HSNzSRYAfGc">Riduci dimensioni</a></p>
 					</div>
 					<div style={{display: "flex",flexDirection: "row",alignItems: "center"}}>
 						<AiOutlineFunction size={32} style={{marginLeft: "2em"}}/> 
-						<p style={{marginTop: "1em", marginLeft: "1em"}}><a class="linkTutorial" target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v=uEAzlijpLmM">Calcola distanza</a></p>
+						<p style={{marginTop: "1em", marginLeft: "1em"}}><a className="linkTutorial" target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v=uEAzlijpLmM">Calcola distanza</a></p>
 					</div>
 					<p>
 						Anche in questo caso le voci apriranno una finestra per compiere le operazioni indicate. In particolare:
@@ -126,23 +129,23 @@ function Guida(props) {
 					</p>
 					<div style={{display: "flex",flexDirection: "row",alignItems: "center"}}>
 						<AiOutlineDotChart size={32} style={{marginLeft: "2em"}}/> 
-						<p style={{marginTop: "1em", marginLeft: "1em"}}><a class="linkTutorial" target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v=1YtSDGRU8N8">Scatterplot Matrix</a></p>
+						<p style={{marginTop: "1em", marginLeft: "1em"}}><a className="linkTutorial" target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v=1YtSDGRU8N8">Scatterplot Matrix</a></p>
 					</div>
 					<div style={{display: "flex",flexDirection: "row",alignItems: "center"}}>
 						<IoGrid size={32} style={{marginLeft: "2em"}}/> 
-						<p style={{marginTop: "1em", marginLeft: "1em"}}><a class="linkTutorial" target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v=UQl7Rl9yRAQ">Adjency Matrix</a></p>
+						<p style={{marginTop: "1em", marginLeft: "1em"}}><a className="linkTutorial" target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v=UQl7Rl9yRAQ">Adjency Matrix</a></p>
 					</div>
 					<div style={{display: "flex",flexDirection: "row",alignItems: "center"}}>
 						<RiMistFill size={32} style={{marginLeft: "2em"}}/> 
-						<p style={{marginTop: "1em", marginLeft: "1em"}}><a class="linkTutorial" target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v=GH6PCy3pm_k">Heat Map</a></p>
+						<p style={{marginTop: "1em", marginLeft: "1em"}}><a className="linkTutorial" target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v=GH6PCy3pm_k">Heat Map</a></p>
 					</div>
 					<div style={{display: "flex",flexDirection: "row",alignItems: "center"}}>
 						<IoShareSocialOutline size={32} style={{marginLeft: "2em"}}/> 
-						<p style={{marginTop: "1em", marginLeft: "1em"}}><a class="linkTutorial" target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v=unLz7DA8gW0">Force Field</a></p>
+						<p style={{marginTop: "1em", marginLeft: "1em"}}><a className="linkTutorial" target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v=unLz7DA8gW0">Force Field</a></p>
 					</div>
 					<div style={{display: "flex",flexDirection: "row",alignItems: "center"}}>
 						<IoMoveSharp size={32} style={{marginLeft: "2em"}}/> 
-						<p style={{marginTop: "1em", marginLeft: "1em"}}><a class="linkTutorial" target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v=PISKxPttkQ0">Linear Projection</a></p>
+						<p style={{marginTop: "1em", marginLeft: "1em"}}><a className="linkTutorial" target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v=PISKxPttkQ0">Linear Projection</a></p>
 					</div>
 					<p>
 						Una volta selezionata una di queste si aprirà una finestra sulla destra

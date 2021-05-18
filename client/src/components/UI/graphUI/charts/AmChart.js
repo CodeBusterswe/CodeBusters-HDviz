@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import { useInstance } from "../../../../useInstance";
 import { AmChartVM } from "./AmChartVM";
 
-const AdjacencyMatrix = observer(() => {
+const AmChart = observer(() => {
 
 	const {
 		renderChart,
@@ -27,4 +27,4 @@ const AdjacencyMatrix = observer(() => {
 		</div>
 	);
 });
-export default AdjacencyMatrix;
+export default AmChart;

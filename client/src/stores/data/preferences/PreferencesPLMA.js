@@ -23,12 +23,16 @@ class PreferencesPLMA{
 		this._color = value;
 	}
 
-	serializeJSON(){
-		//return json
+	toJSON(){
+		return {
+			dimensions : this.dimensions,
+			color : this.color ? this.color : "undefined",
+		};
 	}
 
-	deserializeJSON(string){
-		//deserialize
+	fromJSON(obj){
+		this.dimensions = obj.dimensions;
+		this.color = obj.color === "undefined" ? undefined : obj.color;
 	}
 }
 

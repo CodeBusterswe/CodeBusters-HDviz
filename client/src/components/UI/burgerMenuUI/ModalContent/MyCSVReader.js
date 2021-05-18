@@ -18,7 +18,7 @@ function MyCSVReader(props){
 				onError={handleOnError.bind(null)}
 				accept={".csv"}
 			>
-				Carica un file CSV
+				Rilascia qui il tuo file CSV o clicca per caricare
 			</CSVReader>
 		</>
 	);

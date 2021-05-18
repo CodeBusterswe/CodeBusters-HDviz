@@ -66,7 +66,6 @@ export class HmChartVM {
     				if(d[this.asseX] === x[this.asseX] && d[this.asseY] === x[this.asseY]){
     					notFound = false;
     					x[this.heat] = +((d[this.heat]+x[this.heat])/2).toFixed(3);
-    					return;
     				}
     			});
     			if(notFound){

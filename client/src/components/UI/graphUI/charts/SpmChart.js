@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import { useInstance } from "../../../../useInstance";
 import { SpmChartVM } from "./SpmChartVM";
 
-const ScatterPlotMatrix = observer(() => {
+const SpmChart = observer(() => {
 
 	const {
 		renderChart,
@@ -23,4 +23,4 @@ const ScatterPlotMatrix = observer(() => {
 		</div>
 	);
 });
-export default ScatterPlotMatrix;
+export default SpmChart;

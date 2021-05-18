@@ -1,4 +1,4 @@
-import { makeObservable, observable, action } from "mobx";
+import { observable, makeAutoObservable } from "mobx";
 
 export class LoadCsvVM {
 	constructor(rootStore, closeModal){
@@ -8,25 +8,11 @@ export class LoadCsvVM {
     	this.localData = [];
     	this.showSuccess = false;
     	this.showDanger = false;
-		this.localDimensions = [...this.datasetStore.dimensions];
+		this.localDimensions = [];
     	this.closeModal = closeModal.bind(null);
-    	makeObservable(this, {
-			localData: observable.shallow,
-			showSuccess: observable,
-			showDanger: observable,
-			localDimensions: observable,
-			resetAndClose: action,
-			setLocalStates: action,
-			selectAllDimensions: action,
-			selectDimension: action,
-			openAlertSuccess: action,
-			openAlertDanger: action,
-			setShowDanger: action,
-			setShowSuccess: action,
-			handleConfirm: action,
-			handleDismiss: action,
-		});
+		makeAutoObservable(this, {datasetStore: false, distanceMatricesStore: false, preferencesStore: false, localData: observable.shallow}, {autoBind: true});
 	}
+
 	loadDataAndDims=()=>{
     	if(this.localData.length>0){
     		this.datasetStore.reset();
@@ -43,6 +29,7 @@ export class LoadCsvVM {
 	}
 	resetAndClose=()=>{
     	this.localData.clear();
+		this.localDimensions.clear();
     	this.closeModal();
 	}
 	setLocalStates = (newData, newDims) =>{
